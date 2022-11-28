@@ -1,21 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../modules/models/detailed_event.dart';
+import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../widgets/splash_screen.dart';
 
-class FeaturedEventDetail extends StatelessWidget {
-  final Future<DetailedEvent> _event;
+import 'package:get/get.dart';
 
-  const FeaturedEventDetail({
-    super.key,
-    required Future<DetailedEvent> event,
-  }) : _event = event;
+class FeaturedEventDetail extends StatelessWidget {
+  const FeaturedEventDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _event,
+        future: RestService().fetchEventDetails(Get.arguments),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -26,7 +23,7 @@ class FeaturedEventDetail extends StatelessWidget {
               );
             }
           } else {
-            return SplashScreen();
+            return const SplashScreen();
           }
         });
   }
