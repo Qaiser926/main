@@ -6,6 +6,7 @@ import 'package:othia/modules/models/detailed_event.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../core/detailed/detailed_event.dart';
+import '../../core/favourites/favourite_screen.dart';
 import '../../widgets/splash_screen.dart';
 
 class Pages {
@@ -21,6 +22,7 @@ class Pages {
                   locationTitle: 'loc_title',
                   price: 12.12,
                   title: 'Main_Title')),
-        )
+        ),
+    Routes.favouriteRoute: (context) => const FavouritePage()
   };
 }
