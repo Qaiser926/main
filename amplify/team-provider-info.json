@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-othia-dev-141535-authRole",
+      "UnauthRoleArn": "arn:aws:iam::637881652028:role/amplify-othia-dev-141535-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::637881652028:role/amplify-othia-dev-141535-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-othia-dev-141535-deployment",
+      "UnauthRoleName": "amplify-othia-dev-141535-unauthRole",
+      "StackName": "amplify-othia-dev-141535",
+      "StackId": "arn:aws:cloudformation:eu-central-1:637881652028:stack/amplify-othia-dev-141535/c1ae6fd0-6f1e-11ed-90ce-02301166f434",
+      "AmplifyAppId": "d37h3sgofmt86r"
+    },
+    "categories": {
+      "auth": {
+        "othia1e23d22c": {}
+      }
+    }
+  }
+}
