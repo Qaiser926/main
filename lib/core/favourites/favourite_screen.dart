@@ -13,7 +13,8 @@ class FavouritePage extends StatefulWidget {
   State<FavouritePage> createState() => _FavouritePageState();
 }
 
-class _FavouritePageState extends State<FavouritePage> with SingleTickerProviderStateMixin {
+class _FavouritePageState extends State<FavouritePage>
+    with SingleTickerProviderStateMixin {
   late TabController controller;
   PageController pageController = PageController(
     initialPage: 0,
@@ -25,28 +26,32 @@ class _FavouritePageState extends State<FavouritePage> with SingleTickerProvider
     controller = TabController(length: 2, vsync: this);
   }
 
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildAppBar(),
-        Divider(color: dividerColor, thickness: 1.h, height: 1.h),
-        getVerSpace(20.h),
-        buildTabBar(),
-        Expanded(
-          flex: 1,
-          child: PageView(
-            controller: pageController,
-            scrollDirection: Axis.horizontal,
-            // TODO define cases here
-            children: const [Text("test"), Text("test")],
-            onPageChanged: (value) {
-              controller.animateTo(value);
-            },
-          ),
-        )
-      ],
+    return Scaffold(
+      body: Column(
+        children: [
+          buildAppBar(),
+          Divider(color: dividerColor, thickness: 1.h, height: 1.h),
+          getVerSpace(20.h),
+          buildTabBar(),
+          Expanded(
+            flex: 1,
+            child: PageView(
+              controller: pageController,
+              scrollDirection: Axis.horizontal,
+              // TODO define cases here
+              children: const [Text("test"), Text("test")],
+              onPageChanged: (value) {
+                controller.animateTo(value);
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
+
   Container buildTabBar() {
     return Container(
       padding: EdgeInsets.all(5.h),

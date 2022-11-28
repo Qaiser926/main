@@ -3,6 +3,7 @@ import 'package:othia/widgets/status_bar.dart';
 import 'package:get/get.dart';
 import '../utils/ui/ui_utils.dart';
 import '../config/routes/routes.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // initializeScreenSize(context);
+    initializeScreenSize(context);
     return Scaffold(
       appBar: getColorStatusBar(),
       body: SafeArea(
@@ -37,4 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+}
+
+initializeScreenSize(BuildContext context,
+    {double width = 414, double height = 896}) {
+  ScreenUtil.init(context, designSize: Size(width, height), minTextAdapt: true);
 }

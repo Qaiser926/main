@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/routes/pages.dart';
 
-void main() {
+void main() async{
+  await ScreenUtil.ensureScreenSize();
   runApp(const MyApp());
 }
 
@@ -13,7 +14,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    initializeScreenSize(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-initializeScreenSize(BuildContext context,
-    {double width = 414, double height = 896}) {
-  ScreenUtil.init(context, designSize: Size(width, height), minTextAdapt: true);
-}
+
+
+
