@@ -17,7 +17,8 @@ class FavouritePage extends StatefulWidget {
 
 class _FavouritePageState extends State<FavouritePage>
     with SingleTickerProviderStateMixin {
-  late TabController controller;
+  late TabController _tabController;
+  var _scrollController;
   PageController pageController = PageController(
     initialPage: 0,
   );
@@ -25,39 +26,36 @@ class _FavouritePageState extends State<FavouritePage>
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
+    _scrollController = ScrollController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          buildAppBar(),
-          // Divider ist der schmale Strich unter der Appbar
-          Divider(color: dividerColor, thickness: 1.h, height: 1.h),
-          getVerSpace(17.h),
-          buildTabBar(),
-          getVerSpace(20.h),
-          Expanded(
-            flex: 1,
-            child: PageView(
-              controller: pageController,
-              scrollDirection: Axis.horizontal,
-              // TODO define cases here
-              children: [UpcomingAndPastEventList(), EventActivityList()],
-              onPageChanged: (value) {
-                controller.animateTo(value);
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
+      body: NestedScrollView(
+        controller: _scrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
 
-  Container buildTabBar() {
-    return Container(
+        // TODO align for different languages
+
+
+            SliverAppBar(
+              backgroundColor: Colors.white,
+
+              title: getCustomFont("Favoriten", 24.sp, Colors.black, 1,
+                  fontWeight: FontWeight.w700, textAlign: TextAlign.center),
+                automaticallyImplyLeading: false,
+              pinned: true,
+              floating: false,
+              snap: false,
+
+              forceElevated: innerBoxIsScrolled,
+              bottom: AppBar(
+                backgroundColor: Colors.white,
+                  automaticallyImplyLeading: false,
+          title: Container(
       // space between blue and and white
       height: 50,
       padding: EdgeInsets.all(5.h),
@@ -69,53 +67,136 @@ class _FavouritePageState extends State<FavouritePage>
             BoxShadow(
                 color: shadowColor, offset: const Offset(0, 8), blurRadius: 27)
           ]),
-      child: TabBar(
-          controller: controller,
-          unselectedLabelColor: greyColor,
-          labelColor: Colors.white,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(44.h), color: accentColor),
-          onTap: (index) {
-            pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-          },
-          tabs: [
-            Tab(
-              child: Align(
-                alignment: Alignment.center,
-                // todo language setting
-                child: Text("Events",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: AssetConstants.fontsFamily,
-                        fontSize: 18.sp)),
-              ),
-            ),
-            Tab(
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Aktivitäten",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: AssetConstants.fontsFamily,
-                        fontSize: 18.sp)),
-              ),
-            ),
-          ]),
+      child:
+              TabBar(
+
+
+                  controller: _tabController,
+                  unselectedLabelColor: greyColor,
+                  labelColor: Colors.white,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(44.h), color: accentColor),
+                  onTap: (index) {
+                    pageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 400),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  tabs: [
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        // todo language setting
+                        child: Text("Events",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontFamily: AssetConstants.fontsFamily,
+                                fontSize: 18.sp)),
+                      ),
+                    ),
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Aktivitäten",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontFamily: AssetConstants.fontsFamily,
+                                fontSize: 18.sp)),
+                      ),
+                    ),
+                  ]),
+            ))),
+          ];
+        },
+        body: TabBarView(
+          controller: _tabController,
+          children: <Widget>[
+            _pageView(),
+            _pageView(),
+          ],
+        ),
+      ),
     );
   }
 
-  AppBar buildAppBar() {
-    return getToolBar(() {},
-        // TODO align for different languages
-        title: getCustomFont("Favoriten", 24.sp, Colors.black, 1,
-            fontWeight: FontWeight.w700, textAlign: TextAlign.center),
-        leading: false);
+  _pageView() {
+    return ListView.builder(
+      itemCount: 20,
+      itemBuilder: (BuildContext context, int index) {
+        return Card(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Text('List Item $index'),
+          ),
+        );
+      },
+    );
   }
 
-
 }
+
+//   Container buildTabBar() {
+//     return Container(
+//       // space between blue and and white
+//       height: 50,
+//       padding: EdgeInsets.all(5.h),
+//       margin: EdgeInsets.symmetric(horizontal: 12.h),
+//       decoration: BoxDecoration(
+//           color: Colors.white,
+//           borderRadius: BorderRadius.circular(41.h),
+//           boxShadow: [
+//             BoxShadow(
+//                 color: shadowColor, offset: const Offset(0, 8), blurRadius: 27)
+//           ]),
+//       child: TabBar(
+//           controller: _tabController,
+//           unselectedLabelColor: greyColor,
+//           labelColor: Colors.white,
+//           indicatorSize: TabBarIndicatorSize.tab,
+//           indicator: BoxDecoration(
+//               borderRadius: BorderRadius.circular(44.h), color: accentColor),
+//           onTap: (index) {
+//             pageController.animateToPage(
+//               index,
+//               duration: const Duration(milliseconds: 400),
+//               curve: Curves.easeInOut,
+//             );
+//           },
+//           tabs: [
+//             Tab(
+//               child: Align(
+//                 alignment: Alignment.center,
+//                 // todo language setting
+//                 child: Text("Events",
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.w700,
+//                         fontFamily: AssetConstants.fontsFamily,
+//                         fontSize: 18.sp)),
+//               ),
+//             ),
+//             Tab(
+//               child: Align(
+//                 alignment: Alignment.center,
+//                 child: Text("Aktivitäten",
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.w700,
+//                         fontFamily: AssetConstants.fontsFamily,
+//                         fontSize: 18.sp)),
+//               ),
+//             ),
+//           ]),
+//     );
+//   }
+//
+//   AppBar buildAppBar() {
+//     return getToolBar(() {},
+//         // TODO align for different languages
+//         title: getCustomFont("Favoriten", 24.sp, Colors.black, 1,
+//             fontWeight: FontWeight.w700, textAlign: TextAlign.center),
+//         leading: false);
+//   }
+//
+//
+// }
