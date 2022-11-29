@@ -12,6 +12,15 @@ Widget getAssetImage(String image,
     color: color,
     width: width,
     height: height,
-    fit: boxFit,
+    fit: BoxFit.fill,
+  );
+}
+
+
+Widget getRoundImage(Image image) {
+  return ClipRRect(
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    clipBehavior: Clip.hardEdge,
+    child: Container(child:image),
   );
 }

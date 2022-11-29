@@ -2,13 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:readmore/readmore.dart';
+import '../../../config/themes/color_data.dart';
 import '../../../constants/asset_constants.dart';
 
 Widget getVerSpace(double verSpace) {
   return SizedBox(
     height: verSpace,
   );}
+
+Widget getHorSpace(double horSpace) {
+  return SizedBox(
+    width: horSpace,
+  );
+}
 
 Widget getPaddingWidget(EdgeInsets edgeInsets, Widget widget) {
   return Padding(
@@ -74,3 +81,5 @@ Widget getCustomFont(String text, double fontSize, Color fontColor, int maxLine,
     textAlign: textAlign,
   );
 }
+
+

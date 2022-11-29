@@ -5,6 +5,8 @@ import 'package:othia/constants/asset_constants.dart';
 
 import '../../config/themes/color_data.dart';
 import '../../utils/services/from_bought_ui/widget_utils.dart';
+import '../../utils/ui/upcoming_past_eventlist.dart';
+import '../../widgets/event_activity_list.dart';
 
 class FavouritePage extends StatefulWidget {
   const FavouritePage({Key? key}) : super(key: key);
@@ -32,8 +34,9 @@ class _FavouritePageState extends State<FavouritePage>
       body: Column(
         children: [
           buildAppBar(),
+          // Divider ist der schmale Strich unter der Appbar
           Divider(color: dividerColor, thickness: 1.h, height: 1.h),
-          getVerSpace(20.h),
+          getVerSpace(17.h),
           buildTabBar(),
           Expanded(
             flex: 1,
@@ -41,7 +44,7 @@ class _FavouritePageState extends State<FavouritePage>
               controller: pageController,
               scrollDirection: Axis.horizontal,
               // TODO define cases here
-              children: const [Text("test"), Text("test")],
+              children: [UpcomingAndPastEventList(), EventActivityList()],
               onPageChanged: (value) {
                 controller.animateTo(value);
               },
@@ -54,6 +57,8 @@ class _FavouritePageState extends State<FavouritePage>
 
   Container buildTabBar() {
     return Container(
+      // space between blue and and white
+      height: 50,
       padding: EdgeInsets.all(5.h),
       margin: EdgeInsets.symmetric(horizontal: 20.h),
       decoration: BoxDecoration(
@@ -81,7 +86,8 @@ class _FavouritePageState extends State<FavouritePage>
             Tab(
               child: Align(
                 alignment: Alignment.center,
-                child: Text("Upcoming",
+                // todo language setting
+                child: Text("Events",
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: AssetConstants.fontsFamily,
@@ -91,7 +97,7 @@ class _FavouritePageState extends State<FavouritePage>
             Tab(
               child: Align(
                 alignment: Alignment.center,
-                child: Text("Past",
+                child: Text("Aktivitäten",
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: AssetConstants.fontsFamily,
@@ -104,8 +110,11 @@ class _FavouritePageState extends State<FavouritePage>
 
   AppBar buildAppBar() {
     return getToolBar(() {},
-        title: getCustomFont("My Ticket", 24.sp, Colors.black, 1,
+        // TODO align for different languages
+        title: getCustomFont("Favoriten", 24.sp, Colors.black, 1,
             fontWeight: FontWeight.w700, textAlign: TextAlign.center),
         leading: false);
   }
+
+
 }
