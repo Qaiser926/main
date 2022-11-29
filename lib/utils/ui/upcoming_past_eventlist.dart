@@ -21,11 +21,16 @@ class _UpcomingAndPastEventListState extends State<UpcomingAndPastEventList> {
 
 
   @override
+
   Widget build(BuildContext context) {
 
-    return Container(child: ListView(
+    return SingleChildScrollView(
 
+      child: Column(
+
+        mainAxisSize: MainAxisSize.min,
       children: [
+
 
         EventActivityList(),
         Divider(
@@ -33,6 +38,7 @@ class _UpcomingAndPastEventListState extends State<UpcomingAndPastEventList> {
           thickness: 1.h,
         ),
       ],
-    ),);
+    ),)
+    ;
   }
 }
