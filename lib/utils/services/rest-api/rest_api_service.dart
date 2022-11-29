@@ -19,6 +19,7 @@ class RestService {
   }
 
   Future<Object> fetchEventDetails(String eventId) async {
+    print('fetching event details');
     CustomRestOptions restOptions = const CustomRestOptions(path: 'details');
     final result = await get(restOptions);
     return result;

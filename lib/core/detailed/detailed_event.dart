@@ -15,6 +15,7 @@ class FeaturedEventDetail extends StatelessWidget {
         future: RestService().fetchEventDetails(Get.arguments),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            print('builder called');
             if (snapshot.hasError) {
               throw Exception();
             } else {
