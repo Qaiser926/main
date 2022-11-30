@@ -1,33 +1,32 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:othia/utils/services/rest-api/amplify/amp.dart';
-import 'package:othia/utils/services/rest-api/custom_rest_options.dart';
 
-Future<Object> get(CustomRestOptions restOptions) async {
-  final response = amplifyGet(restOptions as RestOptions);
+Future<Object> get(RestOptions restOptions) async {
+  final response = amplifyGet(restOptions);
   return response;
 }
 
-Future<Object> put(CustomRestOptions restOptions) async {
-  final response = await amplifyPut(restOptions as RestOptions);
+Future<Object> put(RestOptions restOptions) async {
+  final response = await amplifyPut(restOptions);
   return response;
 }
 
-Future<Object> post(CustomRestOptions restOptions) async {
-  final response = amplifyPost(restOptions as RestOptions);
+Future<Object> post(RestOptions restOptions) async {
+  final response = amplifyPost(restOptions);
   return response;
 }
 
-Future<Object> delete(CustomRestOptions restOptions) async {
-  final response = amplifyDelete(restOptions as RestOptions);
+Future<Object> delete(RestOptions restOptions) async {
+  final response = amplifyDelete(restOptions);
   return response;
 }
 
-Future<Object> signIn(String username, String password) async {
-  try {
-    final result = amplifySignIn(username, password);
-    return result;
-  } on AuthException catch (e) {
-    safePrint(e.message);
-    throw Exception("TODO");
-  }
-}
+// Future<Object> signIn(String username, String password) async {
+//   try {
+//     final result = amplifySignIn(username, password);
+//     return result;
+//   } on AuthException catch (e) {
+//     safePrint(e.message);
+//     throw Exception("TODO");
+//   }
+// }

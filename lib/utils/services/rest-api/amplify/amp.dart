@@ -1,4 +1,3 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 
 Future<Object> amplifyGet(RestOptions restOptions) async {
@@ -25,23 +24,23 @@ Future<Object> amplifyDelete(RestOptions restOptions) async {
   return response;
 }
 
-Future<Object> amplifySignIn(String username, String password) async {
-  try {
-    final result = await Amplify.Auth.signIn(
-      username: username,
-      password: password,
-    );
-    return result;
-  } on AuthException catch (e) {
-    safePrint(e.message);
-    throw Exception("TODO");
-  }
-}
+// Future<Object> amplifySignIn(String username, String password) async {
+//   try {
+//     final result = await Amplify.Auth.signIn(
+//       username: username,
+//       password: password,
+//     );
+//     return result;
+//   } on AuthException catch (e) {
+//     safePrint(e.message);
+//     throw Exception("TODO");
+//   }
+// }
 
-Future<String> amplifyGetIdToken() async {
-  final CognitoAuthSession user = await Amplify.Auth.fetchAuthSession(
-          options: CognitoSessionOptions(getAWSCredentials: true))
-      as CognitoAuthSession;
-  String token = user.userPoolTokens!.idToken;
-  return token;
-}
+// Future<String> amplifyGetIdToken() async {
+//   final CognitoAuthSession user = await Amplify.Auth.fetchAuthSession(
+//           options: CognitoSessionOptions(getAWSCredentials: true))
+//       as CognitoAuthSession;
+//   String token = user.userPoolTokens!.idToken;
+//   return token;
+// }
