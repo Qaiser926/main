@@ -39,7 +39,7 @@ class EventSummary extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start,
                   // TODO: sove that title can flow into price information
                   children: [
-                    LocationInformationWidget(city,
+                    LocationInformationWidget(city,street: 'olaf',streetNumber: 12,
                         locationTitle: locationName),
                     getVerSpace(10.h),
                     // no logic implemented regarding times-> wait for actual data

@@ -98,7 +98,7 @@ class _EventDetailState extends State<EventDetail> {
                               // space between ImageWidget and ticket price
                               getVerSpace(10.h),
                               // Container(height: 250, width: 250, child: SimpleMap(),)                      ,
-                              buildFollowWidget(context),
+                              getFollowWidget(context),
                               getVerSpace(20.h),
                               DescriptionWidget(
                                   description: str.description),

@@ -41,7 +41,7 @@ Widget buildButtonWidget(BuildContext context) {
   );
 }
 
-Widget buildFollowWidget(BuildContext context) {
+Widget getFollowWidget(BuildContext context) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.h),
     child: Row(

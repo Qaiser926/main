@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
-// import 'package:maps_launcher/maps_launcher.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 class SimpleMap extends StatefulWidget {
   final latLng.LatLng latlong;
@@ -58,10 +58,8 @@ class _SimpleMapState extends State<SimpleMap> {
                         rotate: true,
                         point: latlong,
                         builder: (ctx) => GestureDetector(
-                              onTap: () =>
-                                  print("df"),
-                                  // MapsLauncher.launchCoordinates(
-                                  // latlong.latitude, latlong.longitude),
+                              onTap: () => MapsLauncher.launchCoordinates(
+                                  latlong.latitude, latlong.longitude),
                               child: Container(
                                 child: Icon(
                                   Icons.location_on,

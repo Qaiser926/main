@@ -18,16 +18,17 @@ class LocationInformationWidget extends StatelessWidget {
           fontWeight: FontWeight.w500);
     }
     if ((street != null)) {
-      finalStringWidget = getCustomFont('${this.city}, ${street}', 15.sp, 1,
+      finalStringWidget = getCustomFont(
+          '${this.city}, ${street}', 15.sp,  1,
           fontWeight: FontWeight.w500);
     }
     if ((locationTitle != null)) {
       finalStringWidget = getCustomFont(
-          '${this.city}, ${locationTitle}', 15.sp, 1,
+          '${this.city}, ${locationTitle}', 15.sp,  1,
           fontWeight: FontWeight.w500);
     } else {
-      finalStringWidget =
-          getCustomFont('${this.city}', 15.sp, 1, fontWeight: FontWeight.w500);
+      finalStringWidget = getCustomFont('${this.city}', 15.sp,  1,
+          fontWeight: FontWeight.w500);
     }
   }
 
@@ -35,7 +36,8 @@ class LocationInformationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        getSvgImage("location.svg", height: 20.h, width: 20.h),
+        getSvgImage("location.svg",
+            height: 20.h, width: 20.h, color: Colors.grey),
         getHorSpace(5.h),
         finalStringWidget
       ],
