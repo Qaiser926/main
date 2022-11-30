@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/asset_constants.dart';
 import 'package:readmore/readmore.dart';
@@ -19,14 +20,35 @@ Widget getAssetImage(String image,
   );
 }
 
+AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
+  return AppBar(
+    toolbarHeight: 73.h,
+    title: title,
+    backgroundColor: Colors.white,
+    elevation: 0,
+    centerTitle: true,
+    leading: leading == true
+        ? Padding(
+            padding: EdgeInsets.only(top: 26.h, bottom: 23.h),
+            child: GestureDetector(
+                onTap: () {
+                  function();
+                },
+                child:
+                    getSvgImage("arrow_back.svg", height: 24.h, width: 24.h)),
+          )
+        : null,
+  );
+}
 
 Widget getRoundImage(Image image) {
   return ClipRRect(
     borderRadius: BorderRadius.all(Radius.circular(20)),
     clipBehavior: Clip.hardEdge,
-    child: Container(child:image),
+    child: Container(child: image),
   );
 }
+
 Widget getVerSpace(double verSpace) {
   return SizedBox(
     height: verSpace,
@@ -42,10 +64,10 @@ Widget getHorSpace(double verSpace) {
 Widget getMultilineCustomFontRestricted(
     String text, double fontSize, Color fontColor, int maxLines,
     {String fontFamily = 'Gilroy',
-      TextDecoration decoration = TextDecoration.none,
-      FontWeight fontWeight = FontWeight.normal,
-      TextAlign textAlign = TextAlign.start,
-      txtHeight = 1.0}) {
+    TextDecoration decoration = TextDecoration.none,
+    FontWeight fontWeight = FontWeight.normal,
+    TextAlign textAlign = TextAlign.start,
+    txtHeight = 1.0}) {
   return ReadMoreText(
     text,
     trimLines: maxLines,
@@ -82,8 +104,10 @@ Widget getMultilineCustomFontRestricted(
     ),
   );
 }
-Widget getCustomFont(String text, double fontSize, int maxLine,
-    {TextOverflow overflow = TextOverflow.ellipsis,
+
+Widget getCustomFont(String text, double fontSize, Color fontColor, int maxLine,
+    {String fontFamily = AssetConstants.fontsFamily,
+    TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
     TextAlign textAlign = TextAlign.start,
@@ -95,6 +119,8 @@ Widget getCustomFont(String text, double fontSize, int maxLine,
         decoration: decoration,
         fontSize: fontSize,
         fontStyle: FontStyle.normal,
+        color: fontColor,
+        fontFamily: fontFamily,
         height: txtHeight,
         fontWeight: fontWeight),
     maxLines: maxLine,
@@ -117,12 +143,11 @@ Widget getSvgImage(String image,
   );
 }
 
-
 BoxDecoration getButtonDecoration(Color bgColor,
     {BorderRadius? borderRadius,
-      Border? border,
-      List<BoxShadow> shadow = const [],
-      DecorationImage? image}) {
+    Border? border,
+    List<BoxShadow> shadow = const [],
+    DecorationImage? image}) {
   return BoxDecoration(
       color: bgColor,
       borderRadius: borderRadius,

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/asset_constants.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 
 import '../../config/themes/color_data.dart';
 import '../../widgets/event_activity_list.dart';
-import '../services/from_bought_ui/widget_utils.dart';
 import 'event_section.dart';
 
 class UpcomingAndPastEventList extends StatefulWidget {

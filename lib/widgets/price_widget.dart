@@ -47,7 +47,7 @@ class PriceWidget extends StatelessWidget {
           getHorSpace(5.h),
           getCustomFont(
             "ab $price€",
-            15.sp,
+            15.sp,Colors.black,
             1,
             fontWeight: FontWeight.w500,
           )

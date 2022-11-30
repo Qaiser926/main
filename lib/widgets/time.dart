@@ -17,6 +17,7 @@ class TimeWidget extends StatelessWidget {
         getCustomFont(
           time,
           15.sp,
+          Colors.black,
           1,
           fontWeight: FontWeight.w500,
         )

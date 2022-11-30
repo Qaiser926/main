@@ -25,4 +25,13 @@ class RestService {
     final result = await get(restOptions);
     return result;
   }
+
+  Future<Object> fetchFavouriteEventsAndActivities() async {
+    print('fetching event details with id');
+
+    RestOptions restOptions = RestOptions(
+        path: '/favouriteeventsandactivities/', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
 }

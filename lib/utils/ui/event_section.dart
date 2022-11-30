@@ -8,7 +8,6 @@ import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../config/themes/color_data.dart';
 import '../services/from_bought_ui/controllers.dart';
-import '../services/from_bought_ui/widget_utils.dart';
 import 'app_dialogs.dart';
 
 class Section extends MultiSliver {

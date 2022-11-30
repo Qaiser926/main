@@ -7,7 +7,7 @@ import 'package:othia/constants/asset_constants.dart';
 import 'package:othia/widgets/event_summary.dart';
 
 import '../../config/routes/routes.dart';
-import '../../modules/models/detailed_event.dart';
+import '../../modules/models/detailed_event/detailed_event.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../../widgets/button.dart';

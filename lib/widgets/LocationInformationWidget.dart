@@ -14,20 +14,20 @@ class LocationInformationWidget extends StatelessWidget {
     // depending on the final implementation a dictionary is given
     if ((street != null) & (streetNumber != null)) {
       finalStringWidget = getCustomFont(
-          '${this.city}, ${street} ${streetNumber}', 15.sp, 1,
+          '${this.city}, ${street} ${streetNumber}', 15.sp, Colors.black, 1,
           fontWeight: FontWeight.w500);
     }
     if ((street != null)) {
       finalStringWidget = getCustomFont(
-          '${this.city}, ${street}', 15.sp,  1,
+          '${this.city}, ${street}', 15.sp, Colors.black, 1,
           fontWeight: FontWeight.w500);
     }
     if ((locationTitle != null)) {
       finalStringWidget = getCustomFont(
-          '${this.city}, ${locationTitle}', 15.sp,  1,
+          '${this.city}, ${locationTitle}', 15.sp, Colors.black, 1,
           fontWeight: FontWeight.w500);
     } else {
-      finalStringWidget = getCustomFont('${this.city}', 15.sp,  1,
+      finalStringWidget = getCustomFont('${this.city}', 15.sp, Colors.black, 1,
           fontWeight: FontWeight.w500);
     }
   }

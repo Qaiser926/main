@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../config/themes/color_data.dart';
 import '../utils/services/from_bought_ui/controllers.dart';
-import '../utils/services/from_bought_ui/widget_utils.dart';
 import '../utils/ui/app_dialogs.dart';
 import '../utils/ui/ui_utils.dart';
 

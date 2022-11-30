@@ -54,10 +54,10 @@ Widget getFollowWidget(BuildContext context) {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getCustomFont("Bella Flores", 18.sp, 1,
+                getCustomFont("Bella Flores", 18.sp, Colors.black, 1,
                     fontWeight: FontWeight.w600, txtHeight: 1.5.h),
                 getVerSpace(1.h),
-                getCustomFont("Organizer", 15.sp, 1,
+                getCustomFont("Organizer", 15.sp, Colors.black, 1,
                     fontWeight: FontWeight.w500, txtHeight: 1.46.h)
               ],
             )
