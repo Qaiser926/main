@@ -17,7 +17,6 @@ class Section extends MultiSliver {
     required String title,
     Color headerColor = Colors.white,
     Color titleColor = Colors.black,
-    required List<Widget> items,
   }) : super(
     key: key,
     pushPinnedChildren: true,

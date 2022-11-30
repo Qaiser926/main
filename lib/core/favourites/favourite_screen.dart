@@ -38,6 +38,7 @@ class _FavouritePageState extends State<FavouritePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         toolbarHeight: 91.h,
         flexibleSpace: Row(children: [getCustomFont("Favoriten", 24.sp, Colors.black, 1,
             fontWeight: FontWeight.w700, textAlign: TextAlign.center)],),
@@ -57,24 +58,7 @@ class _FavouritePageState extends State<FavouritePage>
                 getSvgImage("arrow_back.svg", height: 24.h, width: 24.h)))
             : null,
         bottom: PreferredSize(preferredSize: Size(double.infinity, 70),child:Column(children: [ Container(
-          height: 2,
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: Colors.white,
-                width: 0.05,
-              ),
-            ),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.grey,
-                Colors.white,
-              ],
-            ),
-          ),
-        ) , Container(
+
           // space between blue and and white
           height: 50,
           padding: EdgeInsets.all(5.h),
@@ -155,18 +139,14 @@ class _FavouritePageState extends State<FavouritePage>
       slivers: [
         Section(
           title: 'Category #1',
-          headerColor: Colors.blue,
-          items: List.generate(10, (index) => ListTile(
-            title: Text('Item #${index + 1}'),
-          )),
-        ),
+          headerColor: Colors.white,
+          ),
+
         Section(
           title: 'Category #2',
-          headerColor: Colors.red,
-          items: List.generate(10, (index) => ListTile(
-            title: Text('Item #${index + 11}'),
-          )),
-        ),
+          headerColor: Colors.white,
+          ),
+
       ]
     );
   }
