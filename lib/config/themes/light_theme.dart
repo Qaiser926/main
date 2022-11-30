@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ThemeData getLightThemeData() {
   return ThemeData(
+
+
+    textTheme: TextTheme(headline4: TextStyle(fontWeight: FontWeight.w500,fontSize: 15.sp)),
+
+
 // This is the theme of your application.
 //
 // Try running your application with "flutter run". You'll see the

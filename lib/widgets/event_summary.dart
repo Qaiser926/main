@@ -4,7 +4,7 @@ import 'package:othia/widgets/price_widget.dart';
 import 'package:othia/widgets/time.dart';
 import '../constants/colors.dart';
 import '../utils/ui/ui_utils.dart';
-import 'LocationInformationWidget.dart';
+import 'location_information_widget.dart';
 
 class EventSummary extends StatelessWidget {
   final String title;
