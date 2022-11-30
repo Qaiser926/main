@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'amplifyconfiguration.dart';
 import 'config/routes/pages.dart';
+import 'config/themes/light_theme.dart';
 
 void main() async{
   await ScreenUtil.ensureScreenSize();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
-      routes: Pages.routes,
+      routes: Pages.routes,theme: getLightThemeData(),
     );
   }
 }

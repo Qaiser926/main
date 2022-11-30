@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/price_widget.dart';
 import 'package:othia/widgets/time.dart';
+import '../constants/colors.dart';
 import '../utils/ui/ui_utils.dart';
 import 'LocationInformationWidget.dart';
 
@@ -24,7 +25,9 @@ class EventSummary extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(22.h),
-          boxShadow: const [BoxShadow(blurRadius: 27, offset: Offset(0, 8))]),
+          boxShadow: [
+            BoxShadow(color: shadowColor, blurRadius: 27, offset: Offset(0, 8))
+          ]),
       padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +42,9 @@ class EventSummary extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start,
                   // TODO: sove that title can flow into price information
                   children: [
-                    LocationInformationWidget(city,street: 'olaf',streetNumber: 12,
+                    LocationInformationWidget(city,
+                        street: 'olaf',
+                        streetNumber: 12,
                         locationTitle: locationName),
                     getVerSpace(10.h),
                     // no logic implemented regarding times-> wait for actual data
