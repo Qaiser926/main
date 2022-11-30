@@ -31,99 +31,116 @@ class _FavouritePageState extends State<FavouritePage>
     _scrollController = ScrollController();
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: AppBar(
+        toolbarHeight: 91.h,
+        flexibleSpace: Row(children: [getCustomFont("Favoriten", 24.sp, Colors.black, 1,
+            fontWeight: FontWeight.w700, textAlign: TextAlign.center)],),
+        title: getCustomFont("Favoriten", 24.sp, Colors.black, 1,
+            fontWeight: FontWeight.w700, textAlign: TextAlign.center),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        leading: true
+            ? getPaddingWidget(
+            EdgeInsets.only(top: 26.h, bottom: 50.h),
+            GestureDetector(
+                onTap: () {
+                      () {};
+                },
+                child:
+                getSvgImage("arrow_back.svg", height: 24.h, width: 24.h)))
+            : null,
+        bottom: PreferredSize(preferredSize: Size(double.infinity, 70),child:Column(children: [ Container(
+          height: 2,
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.white,
+                width: 0.05,
+              ),
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.grey,
+                Colors.white,
+              ],
+            ),
+          ),
+        ) , Container(
+          // space between blue and and white
+          height: 50,
+          padding: EdgeInsets.all(5.h),
+          margin: EdgeInsets.symmetric(horizontal: 12.h, vertical: 15.h),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(41.h),
+              boxShadow: [
+                BoxShadow(
+                    color: shadowColor, offset: const Offset(0, 8), blurRadius: 27)
+              ]),
+          child:TabBar(
+              controller: _tabController,
+              unselectedLabelColor: greyColor,
+              labelColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(44.h), color: accentColor),
+              onTap: (index) {
+                pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                );
+              },
+              tabs: [
+                Tab(
+                  child: Align(
+                    alignment: Alignment.center,
+                    // todo language setting
+                    child: Text("Events",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontFamily: AssetConstants.fontsFamily,
+                            fontSize: 18.sp)),
+                  ),
+                ),
+                Tab(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text("Aktivitäten",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontFamily: AssetConstants.fontsFamily,
+                            fontSize: 18.sp)),
+                  ),
+                ),
+              ]) ,)],)),
+
+      ),
+
+
       body: NestedScrollView(
         controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
 
-        // TODO align for different languages
-
-
-            SliverAppBar(
-              toolbarHeight: 50.h,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              centerTitle: true,
+            // TODO align for different languages
 
 
 
-              title: Row(mainAxisAlignment: MainAxisAlignment.center,crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min, children: [getCustomFont("Favoriten", 24.sp, Colors.black, 1,
-                    fontWeight: FontWeight.w700, textAlign: TextAlign.center),],),
-                automaticallyImplyLeading: false,
-              pinned: true,
-              floating: false,
-              snap: false,
-
-              forceElevated: innerBoxIsScrolled,
-              bottom: AppBar(
-                toolbarHeight: 100.h,
-
-                elevation: 0,
-                backgroundColor: Colors.white,
-                  automaticallyImplyLeading: false,
-          // TODO try container in container approach but first try to implement that headings are really exchanged
-          title: Container(
-      // space between blue and and white
-      height: 50,
-      padding: EdgeInsets.all(5.h),
-      margin: EdgeInsets.symmetric(horizontal: 12.h),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(41.h),
-          boxShadow: [
-            BoxShadow(
-                color: shadowColor, offset: const Offset(0, 8), blurRadius: 27)
-          ]),
-      child: TabBar(
-
-
-          controller: _tabController,
-          unselectedLabelColor: greyColor,
-          labelColor: Colors.white,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicator: BoxDecoration(
-              borderRadius: BorderRadius.circular(44.h), color: accentColor),
-          onTap: (index) {
-            pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-          },
-          tabs: [
-            Tab(
-              child: Align(
-                alignment: Alignment.center,
-                // todo language setting
-                child: Text("Events",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: AssetConstants.fontsFamily,
-                        fontSize: 18.sp)),
-              ),
-            ),
-            Tab(
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Aktivitäten",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: AssetConstants.fontsFamily,
-                        fontSize: 18.sp)),
-              ),
-            ),
-          ])
-              ,
-            ))),
           ];
         },
         body: TabBarView(
           controller: _tabController,
+
           children: <Widget>[
             _pageView(),
             _pageView(),
@@ -158,7 +175,9 @@ class _FavouritePageState extends State<FavouritePage>
         // TODO align for different languages
         title: getCustomFont("Favoriten", 24.sp, Colors.black, 1,
             fontWeight: FontWeight.w700, textAlign: TextAlign.center),
-        leading: false);
+
+        leading: false,
+    );
   }
 
 }
