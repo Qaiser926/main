@@ -10,7 +10,7 @@ class Pages {
   static const initialRoute = Routes.homeRoute;
   static Map<String, WidgetBuilder> routes = {
     Routes.homeRoute: (context) => const SplashScreen(),
-    Routes.homeScreenRoute: (context) => const FeaturedEventDetail(),
-    Routes.detailedEventRoute: (context) => const FeaturedEventDetail(),
+    Routes.homeScreenRoute: (context) => const EventDetail(),
+    Routes.detailedEventRoute: (context) => const EventDetail(),
   };
 }

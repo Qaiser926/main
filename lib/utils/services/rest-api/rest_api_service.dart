@@ -1,7 +1,6 @@
 import 'dart:async';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
-
-import 'package:othia/utils/services/rest-api/custom_rest_options.dart';
 
 class RestService {
   static final RestService _singleton = RestService._internal();
@@ -13,14 +12,16 @@ class RestService {
   RestService._internal();
 
   Future<Object> fetchTenEvents() async {
-    CustomRestOptions restOptions = const CustomRestOptions(path: 'tenevnets');
+    RestOptions restOptions = const RestOptions(path: 'tenevnets');
     final result = await get(restOptions);
     return result;
   }
 
-  Future<Object> fetchEventDetails(String eventId) async {
-    print('fetching event details');
-    CustomRestOptions restOptions = const CustomRestOptions(path: 'details');
+  Future<Object> fetchEventDetails({required String eventId}) async {
+    print('fetching event details with id $eventId');
+
+    RestOptions restOptions =
+        RestOptions(path: '/events/$eventId', headers: {'auth': ''});
     final result = await get(restOptions);
     return result;
   }
