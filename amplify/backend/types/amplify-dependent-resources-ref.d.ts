@@ -1,13 +1,23 @@
 export type AmplifyDependentResourcesAttributes = {
-    "auth": {
-        "othia1e23d22c": {
-            "IdentityPoolId": "string",
-            "IdentityPoolName": "string",
-            "UserPoolId": "string",
-            "UserPoolArn": "string",
-            "UserPoolName": "string",
-            "AppClientIDWeb": "string",
-            "AppClientID": "string"
+    "function": {
+        "apiLambda": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getFavouriteEventsAndActivities": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        }
+    },
+    "api": {
+        "othiaApi": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     }
 }
