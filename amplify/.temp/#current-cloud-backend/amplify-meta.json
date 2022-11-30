@@ -1,0 +1,70 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-othia-dev-141535-authRole",
+      "UnauthRoleArn": "arn:aws:iam::637881652028:role/amplify-othia-dev-141535-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::637881652028:role/amplify-othia-dev-141535-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-othia-dev-141535-deployment",
+      "UnauthRoleName": "amplify-othia-dev-141535-unauthRole",
+      "StackName": "amplify-othia-dev-141535",
+      "StackId": "arn:aws:cloudformation:eu-central-1:637881652028:stack/amplify-othia-dev-141535/c1ae6fd0-6f1e-11ed-90ce-02301166f434",
+      "AmplifyAppId": "d37h3sgofmt86r"
+    }
+  },
+  "auth": {},
+  "function": {
+    "apiLambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2022-11-30T09:56:21.996Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-11-30T09:56:24.252Z",
+      "distZipFilename": "apiLambda-7645704a776a46306c6f-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-othia-dev-141535-deployment",
+        "s3Key": "amplify-builds/apiLambda-7645704a776a46306c6f-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-othia-dev-141535-deployment/amplify-cfn-templates/function/apiLambda-cloudformation-template.json",
+        "logicalId": "functionapiLambda"
+      },
+      "lastPushTimeStamp": "2022-11-30T09:57:28.441Z",
+      "output": {
+        "Region": "eu-central-1",
+        "Arn": "arn:aws:lambda:eu-central-1:637881652028:function:apiLambda-dev",
+        "Name": "apiLambda-dev",
+        "LambdaExecutionRole": "othiaLambdaRole032839f9-dev"
+      },
+      "lastPushDirHash": "nUM/j2OQrE5USRKdRNsZQlrxtxg="
+    }
+  },
+  "api": {
+    "othiaApi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "apiLambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-othia-dev-141535-deployment/amplify-cfn-templates/api/othiaApi-cloudformation-template.json",
+        "logicalId": "apiothiaApi"
+      },
+      "lastPushTimeStamp": "2022-11-30T09:57:28.263Z",
+      "output": {
+        "ApiName": "othiaApi",
+        "RootUrl": "https://296g17wt2h.execute-api.eu-central-1.amazonaws.com/dev",
+        "ApiId": "296g17wt2h"
+      },
+      "lastPushDirHash": "ZYkrdkqGoOBjinxPDYBjHPqfm5w="
+    }
+  }
+}
