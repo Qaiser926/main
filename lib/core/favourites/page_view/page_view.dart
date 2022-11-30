@@ -22,7 +22,7 @@ class PageViewBuilder extends StatefulWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         getCustomFont(
-                          "Bevorstehende Events",
+                          element.tabName,
                           18,
                           Colors.black,
                           1,

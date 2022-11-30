@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-
 import 'package:sliver_tools/sliver_tools.dart';
-
 import '../../config/themes/color_data.dart';
 import '../services/from_bought_ui/controllers.dart';
 import 'app_dialogs.dart';
@@ -13,7 +11,8 @@ import 'app_dialogs.dart';
 class Section extends MultiSliver {
   Section({
     Key? key,
-    required Widget headerWidget
+    required Widget headerWidget,
+
   }) : super(
     key: key,
     pushPinnedChildren: true,
