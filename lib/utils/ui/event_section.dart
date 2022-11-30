@@ -14,21 +14,13 @@ import 'app_dialogs.dart';
 class Section extends MultiSliver {
   Section({
     Key? key,
-    required String title,
-    Color headerColor = Colors.white,
-    Color titleColor = Colors.black,
+    required Widget headerWidget
   }) : super(
     key: key,
     pushPinnedChildren: true,
     children: [
   SliverPinnedHeader(
-  child: ColoredBox(
-  color: headerColor,
-    child: ListTile(
-      textColor: titleColor,
-      title: Text(title),
-    ),
-  ),),
+  child: headerWidget,),
   SliverList(
   delegate: SliverChildListDelegate([SingleChildScrollView(child: Column(
     mainAxisSize: MainAxisSize.min,
