@@ -24,13 +24,10 @@ class PageViewBuilder extends StatefulWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        getCustomFont(
-                          element.tabName,
+                        getCustomFont(text:
+                          element.tabName,fontSize:
                           18,
-                          Colors.black,
-                          1,
                           fontWeight: FontWeight.w600,
-                          fontFamily: AssetConstants.fontsFamily,
                         )
                       ],
                     ),

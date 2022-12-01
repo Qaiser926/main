@@ -47,21 +47,21 @@ class _EventOrActivityContainer extends State<EventOrActivityContainer> {
                     photo: favouriteEventOrActivity.photo,
                     width: 100.h,
                     height: 82.h)),
-
                 getHorSpace(10.h),
-
                 Flexible(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getCustomFont(
-                        favouriteEventOrActivity.title, 18.sp, Colors.black, 1,
-                        fontWeight: FontWeight.w600, txtHeight: 1.5.h),
+                        text: favouriteEventOrActivity.title,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                        txtHeight: 1.5.h),
                     getVerSpace(4.h),
 
                     // TODO change for activities + convert utc time
-                    getCustomFont(favouriteEventOrActivity.startTimeUtc ?? '',
-                        15.sp, greyColor, 1,
+                    getCustomFont(text:favouriteEventOrActivity.startTimeUtc ?? '',fontSize:
+                        15.sp,color: greyColor,
                         fontWeight: FontWeight.w500, txtHeight: 1.46.h)
                   ],
                 ))

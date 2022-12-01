@@ -67,10 +67,10 @@ Widget getMultilineCustomFontRestricted({
   Color fontColor = Colors.black,
   required int maxLines,
   String fontFamily = 'Gilroy',
-    TextDecoration decoration = TextDecoration.none,
-    FontWeight fontWeight = FontWeight.normal,
-    TextAlign textAlign = TextAlign.start,
-    }) {
+  TextDecoration decoration = TextDecoration.none,
+  FontWeight fontWeight = FontWeight.normal,
+  TextAlign textAlign = TextAlign.start,
+}) {
   return ReadMoreText(
     text,
     trimLines: maxLines,
@@ -84,9 +84,11 @@ Widget getMultilineCustomFontRestricted({
   );
 }
 
-Widget getCustomFont({required String text,
-    required double fontSize, Color fontColor, int maxLine = 1,
-    {String fontFamily = AssetConstants.fontsFamily,
+Widget getCustomFont(
+    {required String text,
+    required double fontSize,
+    int maxLine = 1,
+    Color color = Colors.black,
     TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
@@ -96,11 +98,10 @@ Widget getCustomFont({required String text,
     text,
     overflow: overflow,
     style: TextStyle(
+        color: color,
         decoration: decoration,
         fontSize: fontSize,
         fontStyle: FontStyle.normal,
-        color: fontColor,
-        fontFamily: fontFamily,
         height: txtHeight,
         fontWeight: fontWeight),
     maxLines: maxLine,
