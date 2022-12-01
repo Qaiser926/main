@@ -18,11 +18,17 @@ Container buildTicketPrice() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("TEXTI TEXT")
-        // getRichText("Ticket Price ", Colors.black, FontWeight.w600, 15.sp,
-        //     '(Economy)', greyColor, FontWeight.w500, 13.sp),
-        // getCustomFont("\$21.00", 20.sp, Colors.black, 1,
-        //     fontWeight: FontWeight.w700)
+        getRichText(
+            firstText: "Ticket Price ",
+            firstColor: Colors.black,
+            firstWeight: FontWeight.w600,
+            firstSize: 15.sp,
+            secondText: '(Economy)',
+            secondColor: Colors.grey,
+            secondWeight: FontWeight.w500,
+            secondSize: 13.sp),
+        getCustomFont(
+            text: "\$21.00", fontSize: 20.sp, fontWeight: FontWeight.w700)
       ],
     ),
   );
@@ -32,10 +38,15 @@ Widget buildButtonWidget(BuildContext context) {
   // can be transformed to rating or similar
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 20.h),
-    child: getButton(context, Colors.red, "Buy Ticket", Colors.white, () {
-      Get.toNamed(Routes.detailedEventRoute);
-    }, 18.sp,
-        weight: FontWeight.w700,
+    child: getButton(
+        context: context,
+        bgColor: Colors.red,
+        text: "Buy Ticket",
+        textColor: Colors.white,
+        function: () {
+          Get.toNamed(Routes.detailedEventRoute);
+        },
+        fontsize: 18.sp,
         buttonHeight: 60.h,
         borderRadius: BorderRadius.circular(22.h)),
   );
@@ -54,17 +65,28 @@ Widget getFollowWidget(BuildContext context) {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getCustomFont("Bella Flores", 18.sp, Colors.black, 1,
-                    fontWeight: FontWeight.w600, txtHeight: 1.5.h),
+                getCustomFont(
+                    text: "Bella Flores",
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    txtHeight: 1.5.h),
                 getVerSpace(1.h),
-                getCustomFont("Organizer", 15.sp, Colors.black, 1,
-                    fontWeight: FontWeight.w500, txtHeight: 1.46.h)
+                getCustomFont(
+                    text: "Organizer",
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w500,
+                    txtHeight: 1.46.h)
               ],
             )
           ],
         ),
-        getButton(context, Colors.white, "Follow", Colors.black, () {}, 14.sp,
-            weight: FontWeight.w700,
+        getButton(
+            context: context,
+            bgColor: Colors.white,
+            text: "Follow",
+            textColor: Colors.black,
+            function: () {},
+            fontsize: 14.sp,
             buttonHeight: 40.h,
             buttonWidth: 76.h,
             isBorder: true,

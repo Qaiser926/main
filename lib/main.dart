@@ -7,23 +7,41 @@ import 'amplifyconfiguration.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/routes/pages.dart';
 import 'config/themes/light_theme.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() async{
+import 'constants/supported_locales.dart';
+
+void main() async {
   await ScreenUtil.ensureScreenSize();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key}) {
+    _configureAmplify();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    _configureAmplify();
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/",
-      routes: Pages.routes,theme: getLightThemeData(),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: supportedLocales,
+          debugShowCheckedModeBanner: false,
+          initialRoute: "/",
+          routes: Pages.routes,
+          theme: getLightThemeData(),
+        );
+      },
     );
   }
 }

@@ -15,10 +15,8 @@ class TimeWidget extends StatelessWidget {
         getSvgImage("calender.svg", width: 20.h, height: 20.h),
         getHorSpace(5.h),
         getCustomFont(
-          time,
-          15.sp,
-          Colors.black,
-          1,
+          text: time,
+          fontSize: 15.sp,
           fontWeight: FontWeight.w500,
         )
       ],
