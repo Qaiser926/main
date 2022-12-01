@@ -11,12 +11,16 @@ class EventSummary extends StatelessWidget {
   final String locationName;
   final String city;
   final String time;
+  final String street;
+  final String streetNumber;
 
   const EventSummary(
       {super.key,
       required this.title,
       required this.locationName,
       required this.city,
+      required this.streetNumber,
+      required this.street,
       required this.time});
 
   @override
@@ -33,8 +37,8 @@ class EventSummary extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getVerSpace(13.h),
-          getMultilineCustomFontRestricted(title, 19.sp, Colors.black, 2,
-              fontWeight: FontWeight.w700, txtHeight: 1.5.h),
+          getMultilineCustomFontRestricted(
+              text: title, maxLines: 2, context: context),
           getVerSpace(10.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,9 +46,10 @@ class EventSummary extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start,
                   // TODO: sove that title can flow into price information
                   children: [
-                    LocationInformationWidget(city,
-                        street: 'olaf',
-                        streetNumber: 12,
+                    LocationInformationWidget(
+                        city: city,
+                        street: street,
+                        streetNumber: streetNumber,
                         locationTitle: locationName),
                     getVerSpace(10.h),
                     // no logic implemented regarding times-> wait for actual data

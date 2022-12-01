@@ -10,7 +10,21 @@ class ImageWidget extends StatelessWidget {
   final pictures;
   final String title;
 
-  const ImageWidget({super.key, required this.pictures, required this.title});
+  final street;
+  final city;
+  final time;
+  final locationName;
+  final streetNumber;
+
+  const ImageWidget(
+      {super.key,
+      required this.pictures,
+      required this.title,
+      required this.street,
+      required this.city,
+      required this.time,
+      required this.locationName,
+      required this.streetNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -95,11 +109,13 @@ class ImageWidget extends StatelessWidget {
               // position is fixed from bottom, so with increasing text, the summary box will go into the picture
               bottom: 13,
               width: 374.w,
-              child: EventSummary(
+              child: const EventSummary(
+                street: "binse",
                 city: "Kiel",
                 time: 'fddsfd',
                 title: 'localTitle',
                 locationName: 'localLocationName',
+                streetNumber: '34',
               )),
         ],
       ),

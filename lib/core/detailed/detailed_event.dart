@@ -35,6 +35,16 @@ class EventDetail extends StatefulWidget {
 
 class _EventDetailState extends State<EventDetail> {
   late Future<Object> deets;
+  final street = "street";
+  final city = "city_name";
+  final time = "Time_val";
+  final locationName = "loc_name";
+  final streetNumber = "12 dstret";
+  var pure_pictures = [
+    AssetImage("${AssetConstants.imagePath}select3.png"),
+    AssetImage("${AssetConstants.imagePath}select8.png"),
+    AssetImage("${AssetConstants.imagePath}select4.png")
+  ];
 
   void backClick() {
     print('backclick');
@@ -47,12 +57,6 @@ class _EventDetailState extends State<EventDetail> {
     deets = RestService().fetchEventDetails(eventId: eventId);
     super.initState();
   }
-
-  var pure_pictures = [
-    AssetImage("${AssetConstants.imagePath}select3.png"),
-    AssetImage("${AssetConstants.imagePath}select8.png"),
-    AssetImage("${AssetConstants.imagePath}select4.png")
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -94,16 +98,23 @@ class _EventDetailState extends State<EventDetail> {
                             children: [
                               // in the image widget, the event details (name, place, time are contained)
                               ImageWidget(
-                                  pictures: pure_pictures, title: str.title),
+                                pictures: pure_pictures,
+                                title: str.title,
+                                locationName: locationName,
+                                time: time,
+                                city: city,
+                                street: street,
+                                streetNumber: streetNumber,
+                              ),
                               // space between ImageWidget and ticket price
                               getVerSpace(10.h),
                               // Container(height: 250, width: 250, child: SimpleMap(),)                      ,
                               getFollowWidget(context),
                               getVerSpace(20.h),
-                              DescriptionWidget(
-                                  description: str.description),
+                              DescriptionWidget(description: str.description),
                               getVerSpace(30.h),
-                              SimpleMap(latLng.LatLng(str.latitude,str.longitude)),
+                              SimpleMap(
+                                  latLng.LatLng(str.latitude, str.longitude)),
                               // this is were later the map should be shown
                               getVerSpace(120.h),
                             ],

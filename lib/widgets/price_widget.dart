@@ -27,14 +27,13 @@ class PriceWidget extends StatelessWidget {
           // also include "ab" if only one price --> lowerText has to be dynamically given
           // if clicked on ticket link, add event to favourites
           PriceButton(
-              context, Colors.white, "Tickets", "102€-200€", _launchUrl, 14.sp,
+              textUpper: "Tickets",
+              textLower: "102€-200€",
+              function: _launchUrl,
+              fontsize: 14.sp,
               weight: FontWeight.w700,
               buttonHeight: 45.h,
               buttonWidth: 76.h,
-              isBorder: true,
-              borderColor: Colors.black,
-              borderWidth: 1.h,
-              borderRadius: BorderRadius.circular(14.h),
               functionArguments: Uri.parse('https://flutter.dev'));
     } else {
       return Row(
@@ -46,9 +45,8 @@ class PriceWidget extends StatelessWidget {
           ),
           getHorSpace(5.h),
           getCustomFont(
-            "ab $price€",
-            15.sp,
-            1,
+            text: "ab $price€",
+            fontSize: 15.sp,
             fontWeight: FontWeight.w500,
           )
         ],
@@ -58,68 +56,28 @@ class PriceWidget extends StatelessWidget {
 }
 
 class PriceButton extends StatelessWidget {
-  BuildContext context;
-
-  Color bgColor;
-
   String textUpper;
-
   String textLower;
-
   Function function;
-
   double fontsize;
-
-  bool isBorder;
-
-  var borderColor;
-
   EdgeInsetsGeometry? insetsGeometry;
-
   FontWeight weight;
-
-  String? image;
-
   var functionArguments;
-
-  double? imageHeight;
-
-  double? imageWidth;
-
-  Color? imageColor;
-
-  bool smallFont;
-
   double? buttonHeight;
-
   double? buttonWidth;
-
-  List<BoxShadow> boxShadow;
-
   EdgeInsetsGeometry? insetsGeometrypadding;
 
-  BorderRadius? borderRadius;
-
-  double? borderWidth;
-
-  PriceButton(this.context, this.bgColor, this.textUpper, this.textLower,
-      this.function, this.fontsize,
-      {super.key,
-      this.isBorder = false,
+  PriceButton(
+      {required this.textUpper,
+      required this.textLower,
+      required this.function,
+      required this.fontsize,
+      super.key,
       this.insetsGeometry,
-      this.borderColor = Colors.transparent,
       this.weight = FontWeight.bold,
-      this.image,
-      this.imageColor,
-      this.imageWidth,
-      this.imageHeight,
-      this.smallFont = false,
       this.buttonHeight,
       this.buttonWidth,
-      this.boxShadow = const [],
       this.insetsGeometrypadding,
-      this.borderRadius,
-      this.borderWidth,
       var this.functionArguments});
 
   @override

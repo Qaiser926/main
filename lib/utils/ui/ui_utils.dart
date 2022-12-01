@@ -31,13 +31,16 @@ Widget getHorSpace(double verSpace) {
   );
 }
 
-Widget getMultilineCustomFontRestricted(
-    String text, double fontSize, Color fontColor, int maxLines,
-    {String fontFamily = 'Gilroy',
-      TextDecoration decoration = TextDecoration.none,
-      FontWeight fontWeight = FontWeight.normal,
-      TextAlign textAlign = TextAlign.start,
-      txtHeight = 1.0}) {
+Widget getMultilineCustomFontRestricted({
+  required BuildContext context,
+  required String text,
+  Color fontColor = Colors.black,
+  required int maxLines,
+  String fontFamily = 'Gilroy',
+  TextDecoration decoration = TextDecoration.none,
+  FontWeight fontWeight = FontWeight.normal,
+  TextAlign textAlign = TextAlign.start,
+}) {
   return ReadMoreText(
     text,
     trimLines: maxLines,
@@ -45,37 +48,17 @@ Widget getMultilineCustomFontRestricted(
     trimCollapsedText: ' Read more',
     trimExpandedText: ' Show less',
     textAlign: textAlign,
-    style: TextStyle(
-      decoration: decoration,
-      fontSize: fontSize,
-      fontStyle: FontStyle.normal,
-      color: fontColor,
-      fontFamily: fontFamily,
-      height: txtHeight,
-      fontWeight: fontWeight,
-    ),
-    lessStyle: TextStyle(
-      decoration: decoration,
-      fontSize: fontSize,
-      fontStyle: FontStyle.normal,
-      color: Colors.green,
-      fontFamily: fontFamily,
-      height: txtHeight,
-      fontWeight: fontWeight,
-    ),
-    moreStyle: TextStyle(
-      decoration: decoration,
-      fontSize: fontSize,
-      fontStyle: FontStyle.normal,
-      color: Colors.green,
-      fontFamily: fontFamily,
-      height: txtHeight,
-      fontWeight: fontWeight,
-    ),
+    style: Theme.of(context).textTheme.headline2,
+    lessStyle: Theme.of(context).textTheme.headline2,
+    moreStyle: Theme.of(context).textTheme.headline2,
   );
 }
-Widget getCustomFont(String text, double fontSize, int maxLine,
-    {TextOverflow overflow = TextOverflow.ellipsis,
+
+Widget getCustomFont(
+    {required String text,
+    required double fontSize,
+    int maxLine = 1,
+    TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
     TextAlign textAlign = TextAlign.start,
@@ -109,16 +92,48 @@ Widget getSvgImage(String image,
   );
 }
 
-
 BoxDecoration getButtonDecoration(Color bgColor,
     {BorderRadius? borderRadius,
-      Border? border,
-      List<BoxShadow> shadow = const [],
-      DecorationImage? image}) {
+    Border? border,
+    List<BoxShadow> shadow = const [],
+    DecorationImage? image}) {
   return BoxDecoration(
       color: bgColor,
       borderRadius: borderRadius,
       border: border,
       boxShadow: shadow,
       image: image);
+}
+
+Widget getRichText(
+    {required String firstText,
+    required Color firstColor,
+    required FontWeight firstWeight,
+    required double firstSize,
+    required String secondText,
+    required Color secondColor,
+    required FontWeight secondWeight,
+    required double secondSize,
+    TextAlign textAlign = TextAlign.center,
+    double? txtHeight}) {
+  return RichText(
+    textAlign: textAlign,
+    text: TextSpan(
+        text: firstText,
+        style: TextStyle(
+          color: firstColor,
+          fontWeight: firstWeight,
+          fontSize: firstSize,
+          height: txtHeight,
+        ),
+        children: [
+          TextSpan(
+              text: secondText,
+              style: TextStyle(
+                  color: secondColor,
+                  fontWeight: secondWeight,
+                  fontSize: secondSize,
+                  height: txtHeight))
+        ]),
+  );
 }
