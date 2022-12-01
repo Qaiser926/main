@@ -3,7 +3,7 @@ import '../../config/themes/color_data.dart';
 
 
 //TODO build dialog flexible
-Future<void> getShowDialog(context, modalEvent) {
+Future<void> getShowDialog(context, objectTitle) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -11,8 +11,7 @@ Future<void> getShowDialog(context, modalEvent) {
           title:
 // TODO language alignment
           Text(
-              'Möchtest du "${modalEvent
-                  .name}" von deinen Favoriten entfernen?'),
+              'Möchtest du "${objectTitle}" von deinen Favoriten entfernen?'),
 // To display the title it is optional
 // Message which will be pop up on the screen
 // Action widget which will provide the user to acknowledge the choice

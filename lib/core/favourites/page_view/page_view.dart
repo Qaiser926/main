@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:othia/config/themes/color_data.dart';
 import '../../../constants/asset_constants.dart';
 import '../../../utils/ui/event_section.dart';
 import '../../../utils/ui/ui_utils.dart';
@@ -10,11 +11,13 @@ class PageViewBuilder extends StatefulWidget {
   List<Section> sectionList = [];
 
   PageViewBuilder({Key? key, required List<TabView> tabViewList}) {
+    // initialize sectionList
     tabViewList.forEach((TabView element) {
       if (element.informationList.isNotEmpty) {
         this.sectionList.add(Section(
+          informationList: element.informationList,
               headerWidget: Container(
-                color: Colors.white.withOpacity(0.8),
+                color: lightGrey.withOpacity(0.8),
                 child: Column(
                   children: [
                     getVerSpace(8),
@@ -50,12 +53,10 @@ class _PageViewBuilderState extends State<PageViewBuilder> {
   void backClick() {
     Get.back();
   }
-
   _PageViewBuilderState(this.sectionList);
 
   @override
   Widget build(BuildContext context) {
-    // TODO dynamically initialize whether there are future events or not
     return CustomScrollView(slivers: sectionList
     );
   }

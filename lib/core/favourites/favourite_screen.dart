@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/asset_constants.dart';
 import 'package:othia/core/favourites/page_view/page_view.dart';
 import '../../config/themes/color_data.dart';
-import '../../modules/models/favourite_event_and_activity/favourite_event_and_activity.dart';
+import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../../widgets/splash_screen.dart';
@@ -59,7 +59,7 @@ class _FavouritePageState extends State<FavouritePage>
             } else {
               RestResponse data = snapshot.data as RestResponse;
               Map<String, dynamic> json = jsonDecode(data.body);
-              FavouriteEventAndActivity favouriteEventAndActivity = FavouriteEventAndActivity
+              FavouriteEventsAndActivities favouriteEventAndActivity = FavouriteEventsAndActivities
                   .fromJson(json);
               TabView tabViewFutureEvents = TabView(tabName:futureEvents, informationList: favouriteEventAndActivity.futureEvents);
               TabView tabViewPastEvents = TabView(tabName:pastEvents, informationList: favouriteEventAndActivity.pastEvents);

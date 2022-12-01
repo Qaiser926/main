@@ -44,6 +44,7 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   flutter_svg: ^1.1.1+1
   url_launcher: ^6.1.7
+  instant: ^0.4.1
   #widgets
   readmore: ^2.1.0
   carousel_slider: ^4.1.1
