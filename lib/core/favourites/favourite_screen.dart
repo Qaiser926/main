@@ -11,6 +11,7 @@ import '../../modules/models/favourite_event_and_activity/favourite_events_and_a
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../../widgets/splash_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavouritePage extends StatefulWidget {
   const FavouritePage({Key? key}) : super(key: key);
@@ -28,7 +29,6 @@ class _FavouritePageState extends State<FavouritePage>
   final String activityDescription = "Aktivität";
   final String eventDescription = "Event";
   final String appBarName = "Favoriten";
-  final String futureEvents = "Zukünftige Events";
   final String pastEvents = "Vergangene Events";
   final String openActivities = "Derzeit geöffnete Akitivitäten";
   final String closedActivities = "Derzeit geschlossene Aktivitäten";
@@ -61,7 +61,7 @@ class _FavouritePageState extends State<FavouritePage>
               FavouriteEventsAndActivities favouriteEventAndActivity =
                   FavouriteEventsAndActivities.fromJson(json);
               TabView tabViewFutureEvents = TabView(
-                  tabName: futureEvents,
+                  tabName: AppLocalizations.of(context)!.helloWorld,
                   informationList: favouriteEventAndActivity.futureEvents);
               TabView tabViewPastEvents = TabView(
                   tabName: pastEvents,

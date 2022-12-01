@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/routes/pages.dart';
 import 'config/themes/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'constants/supported_locales.dart';
 
 void main() async {
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           localizationsDelegates: const [
+            AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
