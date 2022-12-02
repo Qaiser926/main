@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:othia/config/themes/color_data.dart';
 import 'package:othia/core/favourites/exclusive_widgets/section_builder.dart';
+import 'package:othia/modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'event_section.dart';
 
@@ -16,7 +17,7 @@ class PageViewBuilder extends StatefulWidget {
   PageViewBuilder({Key? key, required List<TabView> tabViewList, required String this.nothingToShowMessage}) {
     // initialize sectionList
     tabViewList.forEach((TabView element) {
-      if (element.informationList.isNotEmpty) {
+      if (element.informationList2.isNotEmpty) {
         this
             .sectionList
             .add(buildSection(element: element));
@@ -51,8 +52,10 @@ class _PageViewBuilderState extends State<PageViewBuilder> {
 }
 
 class TabView {
-  List informationList;
+  List<FavouriteEventOrActivity> informationList2 = [];
   String tabName;
 
-  TabView({required final String this.tabName, required List this.informationList});
+  TabView({required final String this.tabName, required informationList}){
+    this.informationList2 = informationList;
+  }
 }

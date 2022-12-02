@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../config/themes/color_data.dart';
+import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/ui/app_dialogs.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'list_change_notifier.dart';
 
 class FavouriteScrollView extends StatefulWidget {
-  List<dynamic> informationList = [];
+  List<FavouriteEventOrActivity> informationList = [];
 
   FavouriteScrollView(
       {super.key,

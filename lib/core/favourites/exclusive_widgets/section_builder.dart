@@ -7,7 +7,7 @@ import '../../../utils/ui/ui_utils.dart';
 
 Section buildSection({required TabView element}) {
   return Section(
-    informationList: element.informationList,
+    informationList: element.informationList2,
     headerWidget: Container(
       color: lightGrey.withOpacity(0.8),
       child: Column(

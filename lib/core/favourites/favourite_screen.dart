@@ -146,7 +146,9 @@ class _FavouritePageState extends State<FavouritePage>
                         create: (_) => ListNotifier(
                             listenedList: favouriteEventAndActivity.futureEvents),
                         child: Consumer<ListNotifier>(
-                          builder: (context, model, child) => TabBarView(
+                          builder: (context, model, child) {
+
+                            return TabBarView(
                             controller: _tabController,
                             // TODO define multiprovider here
                             children: <Widget>[
@@ -175,7 +177,7 @@ class _FavouritePageState extends State<FavouritePage>
                                         .closedActivities)
                               ], nothingToShowMessage: "Nichts Aktivitäten"),
                             ],
-                          ),
+                          );},
                         ))),
               ));
             }
