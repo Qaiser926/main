@@ -7,7 +7,9 @@ import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/app_dialogs.dart';
 import '../utils/ui/ui_utils.dart';
 
+
 class EventOrActivityContainer extends StatefulWidget {
+  ValueNotifier<bool> isVisible = ValueNotifier(true);
   final FavouriteEventOrActivity favouriteEventOrActivity;
 
 // TODO make events clickable and forward to their detail page
@@ -16,14 +18,12 @@ class EventOrActivityContainer extends StatefulWidget {
 
   @override
   State<EventOrActivityContainer> createState() =>
-      _EventOrActivityContainer(favouriteEventOrActivity);
+      _EventOrActivityContainer();
 }
 
 class _EventOrActivityContainer extends State<EventOrActivityContainer> {
-  final FavouriteEventOrActivity favouriteEventOrActivity;
 
-  _EventOrActivityContainer(
-      FavouriteEventOrActivity this.favouriteEventOrActivity);
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class _EventOrActivityContainer extends State<EventOrActivityContainer> {
             child: Row(
               children: [
                 getRoundImage(getPhotoNullSave(
-                    categoryId: favouriteEventOrActivity.categoryId,
-                    photo: favouriteEventOrActivity.photo,
+                    categoryId: widget.favouriteEventOrActivity.categoryId,
+                    photo: widget.favouriteEventOrActivity.photo,
                     width: 100.h,
                     height: 82.h)),
                 getHorSpace(10.h),
@@ -53,16 +53,22 @@ class _EventOrActivityContainer extends State<EventOrActivityContainer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getCustomFont(
-                        text: favouriteEventOrActivity.title,
+                        text: widget.favouriteEventOrActivity.title,
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
                         txtHeight: 1.5.h),
                     getVerSpace(4.h),
-
-                    // TODO change for activities + convert utc time
-                    getCustomFont(text:favouriteEventOrActivity.startTimeUtc ?? '',fontSize:
-                        15.sp,color: greyColor,
-                        fontWeight: FontWeight.w500, txtHeight: 1.46.h)
+                    getCustomFont(
+                        text: getTimeInformation(
+                            context: context,
+                            openingTimeCode:
+                                widget.favouriteEventOrActivity.openingTimeCode,
+                            startTimeUtc:
+                                widget.favouriteEventOrActivity.startTimeUtc),
+                        fontSize: 15.sp,
+                        color: greyColor,
+                        fontWeight: FontWeight.w500,
+                        txtHeight: 1.46.h)
                   ],
                 ))
               ],
@@ -77,9 +83,11 @@ class _EventOrActivityContainer extends State<EventOrActivityContainer> {
                   ),
 
                   // on pressed open dialog window
-                  onPressed: () {
-                    getShowDialog(
-                        context, favouriteEventOrActivity.startTimeUtc);
+                  onPressed: () async {
+                    bool? removed = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => getDialog(objectTitle: widget.favouriteEventOrActivity.title));
+                  widget.isVisible.value = !removed!;
                   }),
             ],
           ),

@@ -1,4 +1,51 @@
 {
   "helloWorld": "Hallo Welt!",
-  "follow": "Folgen"
+  "follow": "Folgen",
+   "favourites": "Favoriten",
+
+
+
+
+  "futureEvents": "Bevorstehende Events",
+  "pastEvents": "Vergangene Events",
+  "openActivities": "Derzeit geöffnete Akitivitäten",
+  "closedActivities": "Derzeit geschlossene Aktivitäten",
+  "activity": "Aktivität",
+  "event": "Event",
+  "activities": "Aktivitäten",
+  "events": "Events",
+
+
+  "removeFavoriteDialog": "Möchtest du \"{objectTitle}\" von deinen Favoriten entfernen?",
+  "@removeFavoriteDialog": {
+          "placeholders": {
+              "objectTitle": {
+                  "type": "String"
+
+              }
+          }
+      },
+
+  "monday": "Montag",
+   "mondayShort": "Mo",
+   "tuesday": "Dienstag",
+   "tuesdayShort": "Di",
+   "wednesday": "Mittwoch",
+    "wednesdayShort": "Mi",
+   "thursday": "Donnerstag",
+    "thursdayShort": "Do",
+    "friday": "Freitag",
+     "fridayShort": "Fr",
+    "saturday": "Samstag",
+     "saturdayShort": "Sa",
+    "sunday": "Sonntag",
+     "sundayShort": "So",
+
+
+    "open": "Geöffnet",
+    "closed": "Geschlossen",
+    "openSoon": "Öffnet bald",
+    "closedSoon": "Schließt bald"
+
+
 }

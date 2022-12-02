@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import '../../widgets/event_or_activity_key_data.dart';
+import '../../../widgets/event_or_activity_key_data.dart';
 
 
 class Section extends MultiSliver {
+
   Section({
     Key? key,
     required Widget headerWidget,
@@ -20,11 +21,16 @@ class Section extends MultiSliver {
             SliverList(
                 delegate: SliverChildListDelegate([
               SingleChildScrollView(
-                  child: Column(
+                  child:
+
+                  Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Flexible(
-                    child: ListView.builder(
+
+                    child:
+
+                    ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 12.h),
                       itemCount: informationList.length,
                       primary: false,
@@ -32,8 +38,14 @@ class Section extends MultiSliver {
                       itemBuilder: (context, index) {
                         var favouriteEventOrActivity = informationList[index];
                         // in theory the individual widget could be put in a class from here on with modalEvent as parameter
+                        // if nur in einem Fall return
 
-                        return EventOrActivityContainer(favouriteEventOrActivity: favouriteEventOrActivity,);
+
+
+                        EventOrActivityContainer eventOrActivityContainer = EventOrActivityContainer(favouriteEventOrActivity: favouriteEventOrActivity,);
+
+                        return eventOrActivityContainer;
+
                       },
                     ),
                   )

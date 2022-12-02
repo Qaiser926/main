@@ -15,7 +15,7 @@ def handler(event, context):
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
-      #TODO: define from server side what code to send in activity openingTimeCode (geöffnet, schließt bald, etc.), perhaps send location time with request
+      #TODO: send request witch user_id and local time
       'body': json.dumps({'futureEvents': [{'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e15', 'title': "test_event", "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)), 'id': 'test_id_123', 'photo': photo_binary}, {'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e15','title': "test_event2", "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)), 'id': 'test_id_123', 'photo': photo_binary}]
                           , 'pastEvents': [{'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e16','title': "test_event3", "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)), 'id': 'test_id_123', 'photo': photo_binary}],
                           "openActivities": [{'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e15','title': "test_activity", "openingTimeCode": 'open', 'id': 'test_id_123', 'photo': photo_binary}],

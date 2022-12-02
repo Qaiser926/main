@@ -3,5 +3,45 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "follow": "Follow"
+  "follow": "Follow",
+  "favourites": "Favourites",
+   "futureEvents": "Future Events",
+   "pastEvents": "Past Events",
+   "openActivities": "Currently open activities",
+   "closedActivities": "Currently closed activities",
+   "activity": "Activity",
+   "event": "Event",
+   "activities": "Activities",
+    "events": "Events",
+
+
+    "removeFavoriteDialog": "Do you want to remove \"{objectTitle}\" from your favourites?",
+    "@removeFavoriteDialog": {
+              "placeholders": {
+                  "objectTitle": {
+                      "type": "String"
+
+                  }
+              }
+          },
+
+  "monday": "Monday",
+   "mondayShort": "Mon",
+   "tuesday": "Tuesday",
+   "tuesdayShort": "Tue",
+   "wednesday": "Wednesday",
+    "wednesdayShort": "Wed",
+   "thursday": "Thursday",
+    "thursdayShort": "Th",
+    "friday": "Friday",
+     "fridayShort": "Fri",
+    "saturday": "Saturday",
+     "saturdayShort": "Sat",
+    "sunday": "Sunday",
+     "sundayShort": "Sun",
+
+    "open": "Open",
+    "closed": "Closed",
+    "openSoon": "Opens soon",
+    "closedSoon": "Closes soon"
 }

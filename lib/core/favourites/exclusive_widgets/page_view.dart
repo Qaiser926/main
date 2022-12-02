@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:othia/config/themes/color_data.dart';
-import '../../../constants/asset_constants.dart';
-import '../../../utils/ui/event_section.dart';
-import '../../../utils/ui/ui_utils.dart';
+import 'package:othia/core/favourites/exclusive_widgets/section_builder.dart';
+import 'event_section.dart';
+
 
 class PageViewBuilder extends StatefulWidget {
   List<Section> sectionList = [];
@@ -14,28 +13,7 @@ class PageViewBuilder extends StatefulWidget {
     // initialize sectionList
     tabViewList.forEach((TabView element) {
       if (element.informationList.isNotEmpty) {
-        this.sectionList.add(Section(
-          informationList: element.informationList,
-              headerWidget: Container(
-                color: lightGrey.withOpacity(0.8),
-                child: Column(
-                  children: [
-                    getVerSpace(8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        getCustomFont(text:
-                          element.tabName,fontSize:
-                          18,
-                          fontWeight: FontWeight.w600,
-                        )
-                      ],
-                    ),
-                    getVerSpace(8),
-                  ],
-                ),
-              ),
-            ));
+        this.sectionList.add(buildSection(element: element));
       }
     });
   }

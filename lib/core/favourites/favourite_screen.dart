@@ -5,13 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/asset_constants.dart';
-import 'package:othia/core/favourites/page_view/page_view.dart';
 import '../../config/themes/color_data.dart';
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../../widgets/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'exclusive_widgets/page_view.dart';
 
 class FavouritePage extends StatefulWidget {
   const FavouritePage({Key? key}) : super(key: key);
@@ -24,14 +25,6 @@ class _FavouritePageState extends State<FavouritePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   var _scrollController;
-
-  // TODO align for different languages
-  final String activityDescription = "Aktivität";
-  final String eventDescription = "Event";
-  final String appBarName = "Favoriten";
-  final String pastEvents = "Vergangene Events";
-  final String openActivities = "Derzeit geöffnete Akitivitäten";
-  final String closedActivities = "Derzeit geschlossene Aktivitäten";
   late Future<Object> future;
   PageController pageController = PageController(
     initialPage: 0,
@@ -61,16 +54,16 @@ class _FavouritePageState extends State<FavouritePage>
               FavouriteEventsAndActivities favouriteEventAndActivity =
                   FavouriteEventsAndActivities.fromJson(json);
               TabView tabViewFutureEvents = TabView(
-                  tabName: AppLocalizations.of(context)!.helloWorld,
+                  tabName: AppLocalizations.of(context)!.futureEvents,
                   informationList: favouriteEventAndActivity.futureEvents);
               TabView tabViewPastEvents = TabView(
-                  tabName: pastEvents,
+                  tabName: AppLocalizations.of(context)!.pastEvents,
                   informationList: favouriteEventAndActivity.pastEvents);
               TabView tabViewOpenActivities = TabView(
-                  tabName: openActivities,
+                  tabName: AppLocalizations.of(context)!.openActivities,
                   informationList: favouriteEventAndActivity.openActivities);
               TabView tabViewClosedActivities = TabView(
-                  tabName: closedActivities,
+                  tabName: AppLocalizations.of(context)!.closedActivities,
                   informationList: favouriteEventAndActivity.closedActivities);
               return SafeArea(
                   child: Scaffold(
@@ -83,7 +76,7 @@ class _FavouritePageState extends State<FavouritePage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         getCustomFont(
-                            text: appBarName,
+                            text: AppLocalizations.of(context)!.favourites,
                             fontSize: 24.sp,
                             fontWeight: FontWeight.w700,
                             textAlign: TextAlign.center)
@@ -129,7 +122,7 @@ class _FavouritePageState extends State<FavouritePage>
                               Tab(
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(eventDescription,
+                                  child: Text(AppLocalizations.of(context)!.events,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontFamily:
@@ -140,7 +133,7 @@ class _FavouritePageState extends State<FavouritePage>
                               Tab(
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(activityDescription,
+                                  child: Text(AppLocalizations.of(context)!.activities,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontFamily:
