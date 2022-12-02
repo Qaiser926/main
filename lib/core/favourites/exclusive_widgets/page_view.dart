@@ -2,18 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:othia/config/themes/color_data.dart';
 import 'package:othia/core/favourites/exclusive_widgets/section_builder.dart';
+import '../../../utils/ui/ui_utils.dart';
 import 'event_section.dart';
 
 
 class PageViewBuilder extends StatefulWidget {
+  // TODO: implement empty screen message
   List<Section> sectionList = [];
+  final String nothingToShowMessage;
 
-  PageViewBuilder({Key? key, required List<TabView> tabViewList}) {
+  PageViewBuilder({Key? key, required List<TabView> tabViewList, required String this.nothingToShowMessage}) {
     // initialize sectionList
     tabViewList.forEach((TabView element) {
       if (element.informationList.isNotEmpty) {
-        this.sectionList.add(buildSection(element: element));
+        this
+            .sectionList
+            .add(buildSection(element: element));
       }
     });
   }
@@ -23,23 +29,30 @@ class PageViewBuilder extends StatefulWidget {
 }
 
 class _PageViewBuilderState extends State<PageViewBuilder> {
-  final List<Section> sectionList;
+  List<Section> sectionList;
 
   void backClick() {
     Get.back();
   }
+
   _PageViewBuilderState(this.sectionList);
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: sectionList
-    );
+    if (sectionList.isEmpty){
+      return getCustomFont(fontSize: 18, text: "placeholder", color: greyColor);
+    } else {
+      return CustomScrollView(slivers: sectionList);
+    }
   }
+
+
+
 }
 
 class TabView {
   List informationList;
   String tabName;
-  TabView({required final String this.tabName, required final List this.informationList});
 
+  TabView({required final String this.tabName, required List this.informationList});
 }

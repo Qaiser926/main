@@ -16,9 +16,9 @@ Section buildSection({required TabView element}) {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              getCustomFont(text:
-              element.tabName,fontSize:
-              18,
+              getCustomFont(
+                text: element.tabName,
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
               )
             ],

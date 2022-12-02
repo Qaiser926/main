@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/asset_constants.dart';
+import 'package:provider/provider.dart';
 import '../../config/themes/color_data.dart';
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -12,6 +13,7 @@ import '../../utils/ui/ui_utils.dart';
 import '../../widgets/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'exclusive_widgets/list_change_notifier.dart';
 import 'exclusive_widgets/page_view.dart';
 
 class FavouritePage extends StatefulWidget {
@@ -53,18 +55,6 @@ class _FavouritePageState extends State<FavouritePage>
               Map<String, dynamic> json = jsonDecode(data.body);
               FavouriteEventsAndActivities favouriteEventAndActivity =
                   FavouriteEventsAndActivities.fromJson(json);
-              TabView tabViewFutureEvents = TabView(
-                  tabName: AppLocalizations.of(context)!.futureEvents,
-                  informationList: favouriteEventAndActivity.futureEvents);
-              TabView tabViewPastEvents = TabView(
-                  tabName: AppLocalizations.of(context)!.pastEvents,
-                  informationList: favouriteEventAndActivity.pastEvents);
-              TabView tabViewOpenActivities = TabView(
-                  tabName: AppLocalizations.of(context)!.openActivities,
-                  informationList: favouriteEventAndActivity.openActivities);
-              TabView tabViewClosedActivities = TabView(
-                  tabName: AppLocalizations.of(context)!.closedActivities,
-                  informationList: favouriteEventAndActivity.closedActivities);
               return SafeArea(
                   child: Scaffold(
                 primary: true,
@@ -122,7 +112,8 @@ class _FavouritePageState extends State<FavouritePage>
                               Tab(
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(AppLocalizations.of(context)!.events,
+                                  child: Text(
+                                      AppLocalizations.of(context)!.events,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontFamily:
@@ -133,7 +124,8 @@ class _FavouritePageState extends State<FavouritePage>
                               Tab(
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(AppLocalizations.of(context)!.activities,
+                                  child: Text(
+                                      AppLocalizations.of(context)!.activities,
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontFamily:
@@ -145,25 +137,46 @@ class _FavouritePageState extends State<FavouritePage>
                       )),
                 ),
                 body: NestedScrollView(
-                  controller: _scrollController,
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) {
-                    return <Widget>[];
-                  },
-                  body: TabBarView(
-                    controller: _tabController,
-                    children: <Widget>[
-                      PageViewBuilder(tabViewList: [
-                        tabViewFutureEvents,
-                        tabViewPastEvents
-                      ]),
-                      PageViewBuilder(tabViewList: [
-                        tabViewOpenActivities,
-                        tabViewClosedActivities
-                      ]),
-                    ],
-                  ),
-                ),
+                    controller: _scrollController,
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[];
+                    },
+                    body: ChangeNotifierProvider<ListNotifier>(
+                        create: (_) => ListNotifier(
+                            listenedList: favouriteEventAndActivity.futureEvents),
+                        child: Consumer<ListNotifier>(
+                          builder: (context, model, child) => TabBarView(
+                            controller: _tabController,
+                            // TODO define multiprovider here
+                            children: <Widget>[
+                              PageViewBuilder(tabViewList: [
+                                TabView(
+                                    tabName: AppLocalizations.of(context)!
+                                        .futureEvents,
+                                    informationList:
+                                        model.updatedList),
+                                TabView(
+                                    tabName: AppLocalizations.of(context)!
+                                        .pastEvents,
+                                    informationList:
+                                        favouriteEventAndActivity.pastEvents)
+                              ], nothingToShowMessage: "nicht Event"),
+                              PageViewBuilder(tabViewList: [
+                                TabView(
+                                    tabName: AppLocalizations.of(context)!
+                                        .openActivities,
+                                    informationList: favouriteEventAndActivity
+                                        .openActivities),
+                                TabView(
+                                    tabName: AppLocalizations.of(context)!
+                                        .closedActivities,
+                                    informationList: favouriteEventAndActivity
+                                        .closedActivities)
+                              ], nothingToShowMessage: "Nichts Aktivitäten"),
+                            ],
+                          ),
+                        ))),
               ));
             }
           }
