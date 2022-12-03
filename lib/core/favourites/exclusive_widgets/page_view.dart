@@ -51,7 +51,7 @@ class _PageViewBuilderState extends State<PageViewBuilder> {
 
 }
 
-class TabView {
+class TabView{
   List<FavouriteEventOrActivity> informationList2 = [];
   String tabName;
 

@@ -104,10 +104,16 @@ class _FavouriteScrollViewState extends State<FavouriteScrollView> {
                                           favouriteEventOrActivity.title));
                               print(removed);
                               if (removed!) {
+                                // setState(() {
+                                //
+                                // });
                                 print('deleted index: $index');
-                                widget.informationList.removeAt(index);
-                                var newList = widget.informationList;
-                                context.read<ListNotifier>().updatedList =  newList;
+                                // widget.informationList.removeAt(index);
+                                // var newList = widget.informationList;
+                                Provider.of<ListNotifier>(context,listen:false).removeAt(index);
+                                Provider.of<ListNotifier>(context,listen:false).notify();
+
+                                // context.read<ListNotifier>().updatedList =  newList;
                               }
                             }),
                       ],
