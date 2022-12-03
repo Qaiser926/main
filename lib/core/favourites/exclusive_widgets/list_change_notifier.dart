@@ -2,25 +2,45 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 
-class ListNotifier extends ChangeNotifier {
-  List<FavouriteEventOrActivity> _listenedList = [];
+enum FavouriteType {
+  pastEvent,
+  upcomingEvent,
+  pastActivity,
+  upcomingActivity,
+}
 
-  ListNotifier(
-    List<FavouriteEventOrActivity> futureEvents,
-  ) {
-    this._listenedList = futureEvents;
-  }
+abstract class AbstractFavouriteNotifier extends ChangeNotifier {
+  final Map<String, FavouriteEventOrActivity> listenedFavourite;
+  late final FavouriteType favouriteType;
 
-  List<FavouriteEventOrActivity> get updatedList => _listenedList;
+  AbstractFavouriteNotifier(
+      {required this.listenedFavourite, required this.favouriteType});
 
-  set updatedList(List<FavouriteEventOrActivity> newList) {
-    if (_listenedList.isEmpty) {
-      _listenedList = newList;
-    }
-  }
+  Map<String, FavouriteEventOrActivity> get getListenedFavourite =>
+      listenedFavourite;
 
-  void removeAt(index) {
-    _listenedList.removeAt(index);
+  void removeKey({required final key}) {
+    listenedFavourite.remove(key);
     notifyListeners();
   }
+}
+
+class FavouritePastEventNotifier extends AbstractFavouriteNotifier {
+  FavouritePastEventNotifier(
+      {required super.listenedFavourite, required super.favouriteType});
+}
+
+class FavouriteUpcomingEventNotifier extends AbstractFavouriteNotifier {
+  FavouriteUpcomingEventNotifier(
+      {required super.listenedFavourite, required super.favouriteType});
+}
+
+class FavouriteOpenActivityNotifier extends AbstractFavouriteNotifier {
+  FavouriteOpenActivityNotifier(
+      {required super.listenedFavourite, required super.favouriteType});
+}
+
+class FavouriteClosedActivityNotifier extends AbstractFavouriteNotifier {
+  FavouriteClosedActivityNotifier(
+      {required super.listenedFavourite, required super.favouriteType});
 }

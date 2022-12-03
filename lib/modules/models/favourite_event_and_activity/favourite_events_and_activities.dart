@@ -8,16 +8,16 @@ part 'favourite_events_and_activities.g.dart';
 
 @JsonSerializable()
 class FavouriteEventsAndActivities {
-  List<FavouriteEventOrActivity> futureEvents;
-  List<FavouriteEventOrActivity> pastEvents;
-  List<FavouriteEventOrActivity> openActivities;
-  List<FavouriteEventOrActivity> closedActivities;
+  Map<String, FavouriteEventOrActivity> futureEvents;
+  Map<String, FavouriteEventOrActivity> pastEvents;
+  Map<String, FavouriteEventOrActivity> openActivities;
+  Map<String, FavouriteEventOrActivity> closedActivities;
 
   FavouriteEventsAndActivities({
-    required final List<FavouriteEventOrActivity> this.futureEvents,
-    required final List<FavouriteEventOrActivity> this.pastEvents,
-    required final List<FavouriteEventOrActivity> this.openActivities,
-    required final List<FavouriteEventOrActivity> this.closedActivities,
+    required final this.futureEvents,
+    required final this.pastEvents,
+    required final this.openActivities,
+    required final this.closedActivities,
   });
 
   factory FavouriteEventsAndActivities.fromJson(Map<String, dynamic> json) =>

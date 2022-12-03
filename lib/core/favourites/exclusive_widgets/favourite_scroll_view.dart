@@ -1,129 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/favourites/exclusive_widgets/pinned_header.dart';
 import 'package:provider/provider.dart';
-import '../../../config/themes/color_data.dart';
-import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
-import '../../../utils/services/data_handling/data_handling.dart';
-import '../../../utils/ui/app_dialogs.dart';
-import '../../../utils/ui/ui_utils.dart';
+import 'package:sliver_tools/sliver_tools.dart';
+
+import '../../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
+import 'favourite_list_item.dart';
 import 'list_change_notifier.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FavouriteScrollView extends StatefulWidget {
-  List<FavouriteEventOrActivity> informationList = [];
+class FavouriteSrollView extends StatelessWidget {
+  FavouriteEventsAndActivities favouriteEventAndActivity;
+  TabController tabController;
+  var scrollController;
 
-  FavouriteScrollView(
-      {super.key,
-      required List<dynamic> informationList}) {
-    this.informationList = List.from(informationList);
-  }
+  FavouriteSrollView(
+      {required TabController this.tabController,
+      required this.scrollController,
+      required this.favouriteEventAndActivity});
 
-  @override
-  State<FavouriteScrollView> createState() => _FavouriteScrollViewState();
-}
-
-class _FavouriteScrollViewState extends State<FavouriteScrollView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 12.h),
-            itemCount: widget.informationList.length,
-            primary: false,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              var favouriteEventOrActivity =
-                  widget.informationList[index];
-              // after return should be own widget
-              return Container(
-                margin: EdgeInsets.only(bottom: 20.h),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: shadowColor,
-                          blurRadius: 27,
-                          offset: const Offset(0, 8))
-                    ],
-                    borderRadius: BorderRadius.circular(22.h)),
-                padding: EdgeInsets.only(
-                    top: 7.h, left: 7.h, bottom: 6.h, right: 10.h),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Row(
-                        children: [
-                          getRoundImage(getPhotoNullSave(
-                              categoryId: favouriteEventOrActivity.categoryId,
-                              photo: favouriteEventOrActivity.photo,
-                              width: 100.h,
-                              height: 82.h)),
-                          getHorSpace(10.h),
-                          Flexible(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              getCustomFont(
-                                  text: favouriteEventOrActivity.title,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w600,
-                                  txtHeight: 1.5.h),
-                              getVerSpace(4.h),
-                              getCustomFont(
-                                  text: getTimeInformation(
-                                      context: context,
-                                      openingTimeCode: favouriteEventOrActivity
-                                          .openingTimeCode,
-                                      startTimeUtc: favouriteEventOrActivity
-                                          .startTimeUtc),
-                                  fontSize: 15.sp,
-                                  color: greyColor,
-                                  fontWeight: FontWeight.w500,
-                                  txtHeight: 1.46.h)
-                            ],
-                          ))
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            ),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+              value: FavouritePastEventNotifier(
+                  favouriteType: FavouriteType.pastEvent,
+                  listenedFavourite: favouriteEventAndActivity.pastEvents)),
+          ChangeNotifierProvider.value(
+              value: FavouriteUpcomingEventNotifier(
+                  favouriteType: FavouriteType.upcomingEvent,
+                  listenedFavourite: favouriteEventAndActivity.futureEvents))
+        ],
+        child: NestedScrollView(
+          controller: scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[];
+          },
+          body: TabBarView(controller: tabController, children: [
+            getFavouriteEventPart(context),
+            getFavouriteActivityPart()
+          ]),
+        ));
+  }
 
-                            // on pressed open dialog window
-                            onPressed: () async {
-                              bool? removed = await showDialog<bool>(
-                                  context: context,
-                                  builder: (context) => getDialog(
-                                      objectTitle:
-                                          favouriteEventOrActivity.title));
-                              print(removed);
-                              if (removed!) {
-                                // setState(() {
-                                //
-                                // });
-                                print('deleted index: $index');
-                                // widget.informationList.removeAt(index);
-                                // var newList = widget.informationList;
-                                Provider.of<ListNotifier>(context,listen:false).removeAt(index);
+  Widget getFavouriteActivityPart() {
+    return CustomScrollView(slivers: []);
+  }
 
-                                // context.read<ListNotifier>().updatedList =  newList;
-                              }
-                            }),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        )
-      ],
-    );
+  Widget getFavouriteEventPart(BuildContext context) {
+    return CustomScrollView(slivers: [
+      Consumer<FavouriteUpcomingEventNotifier>(
+          builder: (context, model, child) => getSliverSection(
+              headerText: AppLocalizations.of(context)!.futureEvents,
+              model: model)),
+      Consumer<FavouritePastEventNotifier>(
+          builder: (context, model, child) => getSliverSection(
+              headerText: AppLocalizations.of(context)!.pastEvents,
+              model: model))
+    ]);
+  }
+
+  Widget getSliverSection({required final String headerText, required model}) {
+    if (model.updatedList.isEmpty) {
+      return SliverToBoxAdapter();
+    } else {
+      return MultiSliver(pushPinnedChildren: true, children: [
+        SliverPinnedHeader(
+          child: getHeader(text: headerText),
+        ),
+        SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+          while (index < model.updatedList.length) {
+            return getFavouriteListItem(
+                context, model.updatedList.values.elementAt(index), index);
+          }
+        }))
+      ]);
+    }
   }
 }
