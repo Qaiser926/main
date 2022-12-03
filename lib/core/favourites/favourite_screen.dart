@@ -55,9 +55,6 @@ class _FavouritePageState extends State<FavouritePage>
 
     var infoList = favouriteEventAndActivity.futureEvents;
 
-    Provider.of<ListNotifier>(context).updatedList =
-        favouriteEventAndActivity.futureEvents;
-
     return FutureBuilder(
         future: future,
         builder: (context, snapshot) {
@@ -162,7 +159,6 @@ class _FavouritePageState extends State<FavouritePage>
                       scrollController: _scrollController,
                       tabController: _tabController,
                       favouriteEventAndActivity: favouriteEventAndActivity,
-                      te: infoList,
                     )),
               );
             }
@@ -175,60 +171,61 @@ class Test extends StatelessWidget {
   FavouriteEventsAndActivities favouriteEventAndActivity;
   TabController tabController;
   var scrollController;
-  var te;
 
   Test(
       {required TabController this.tabController,
       required this.scrollController,
-      required this.favouriteEventAndActivity,
-      this.te}) {}
+      required this.favouriteEventAndActivity}) {}
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      controller: scrollController,
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[];
-      },
-      body: TabBarView(controller: tabController, children: [
-        CustomScrollView(slivers: [
-          Consumer<ListNotifier>(builder: (context, model, child) {
-            if (model.updatedList.isEmpty) {
-              return SizedBox(
-                height: 1,
-                width: 1,
-              );
-            } else {
-              return MultiSliver(pushPinnedChildren: true, children: [
-                SliverPinnedHeader(
-                  child: getHeader('I am Pinned'),
-                ),
-                SliverList(
-                    delegate: SliverChildBuilderDelegate((context, index) {
-                  while (index < model.updatedList.length) {
-                    return som(context, model.updatedList[index], index);
-                  }
-                }))
-              ]);
-            }
-          }),
-          MultiSliver(pushPinnedChildren: true, children: [
-            SliverPinnedHeader(
-              child: getHeader('I am Pinned Toooooo'),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                while (index < favouriteEventAndActivity.pastEvents.length) {
-                  return som(context,
-                      favouriteEventAndActivity.pastEvents[index], index);
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+              value: ListNotifier(favouriteEventAndActivity.futureEvents))
+        ],
+        child: NestedScrollView(
+          controller: scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[];
+          },
+          body: TabBarView(controller: tabController, children: [
+            CustomScrollView(slivers: [
+              Consumer<ListNotifier>(builder: (context, model, child) {
+                if (model.updatedList.isEmpty) {
+                  return SliverToBoxAdapter();
+                } else {
+                  return MultiSliver(pushPinnedChildren: true, children: [
+                    SliverPinnedHeader(
+                      child: getHeader('I am Pinned'),
+                    ),
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                      while (index < model.updatedList.length) {
+                        return som(context, model.updatedList[index], index);
+                      }
+                    }))
+                  ]);
                 }
               }),
-            ),
+              MultiSliver(pushPinnedChildren: true, children: [
+                SliverPinnedHeader(
+                  child: getHeader('I am Pinned Toooooo'),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    while (
+                        index < favouriteEventAndActivity.pastEvents.length) {
+                      return som(context,
+                          favouriteEventAndActivity.pastEvents[index], index);
+                    }
+                  }),
+                ),
+              ]),
+            ]),
+            CustomScrollView(slivers: []),
           ]),
-        ]),
-        CustomScrollView(slivers: []),
-      ]),
-    );
+        ));
   }
 
   Widget getHeader(String text) {

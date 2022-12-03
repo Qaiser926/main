@@ -5,10 +5,13 @@ import '../../../modules/models/favourite_event_and_activity/favourite_single_ev
 class ListNotifier extends ChangeNotifier {
   List<FavouriteEventOrActivity> _listenedList = [];
 
-  ListNotifier({listenedList}) {}
+  ListNotifier(
+    List<FavouriteEventOrActivity> futureEvents,
+  ) {
+    this._listenedList = futureEvents;
+  }
 
   List<FavouriteEventOrActivity> get updatedList => _listenedList;
-
 
   set updatedList(List<FavouriteEventOrActivity> newList) {
     if (_listenedList.isEmpty) {
@@ -20,6 +23,4 @@ class ListNotifier extends ChangeNotifier {
     _listenedList.removeAt(index);
     notifyListeners();
   }
-
-
 }
