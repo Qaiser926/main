@@ -18,9 +18,8 @@ class ListNotifier extends ChangeNotifier {
 
   void removeAt(index) {
     _listenedList.removeAt(index);
-  }
-
-  void notify() {
     notifyListeners();
   }
+
+
 }

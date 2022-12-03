@@ -111,7 +111,6 @@ class _FavouriteScrollViewState extends State<FavouriteScrollView> {
                                 // widget.informationList.removeAt(index);
                                 // var newList = widget.informationList;
                                 Provider.of<ListNotifier>(context,listen:false).removeAt(index);
-                                Provider.of<ListNotifier>(context,listen:false).notify();
 
                                 // context.read<ListNotifier>().updatedList =  newList;
                               }

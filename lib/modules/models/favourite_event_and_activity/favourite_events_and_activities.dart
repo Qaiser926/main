@@ -9,11 +9,8 @@ part 'favourite_events_and_activities.g.dart';
 @JsonSerializable()
 class FavouriteEventsAndActivities {
   List<FavouriteEventOrActivity> futureEvents;
-
   List<FavouriteEventOrActivity> pastEvents;
-
   List<FavouriteEventOrActivity> openActivities;
-
   List<FavouriteEventOrActivity> closedActivities;
 
   FavouriteEventsAndActivities({

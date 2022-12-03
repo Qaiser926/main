@@ -17,17 +17,11 @@ enum OpeningTimeCode {
 @JsonSerializable()
 class FavouriteEventOrActivity {
   String? photo;
-
   String title;
-
   String id;
-
   String? startTimeUtc;
-
   OpeningTimeCode? openingTimeCode;
-
   String categoryId;
-
   bool? visible;
 
   FavouriteEventOrActivity({
