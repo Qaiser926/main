@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/themes/color_data.dart';
@@ -7,10 +8,9 @@ import '../../../modules/models/favourite_event_and_activity/favourite_single_ev
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/ui/app_dialogs.dart';
 import '../../../utils/ui/ui_utils.dart';
-import 'list_change_notifier.dart';
 
-Widget getFavouriteListItem(BuildContext context,
-    FavouriteEventOrActivity favouriteEventOrActivity, int index) {
+Widget getFavouriteListItem(
+    BuildContext context, FavouriteEventOrActivity favouriteEventOrActivity) {
   return Container(
     margin: EdgeInsets.only(bottom: 20.h),
     decoration: BoxDecoration(
@@ -77,8 +77,10 @@ Widget getFavouriteListItem(BuildContext context,
                     //
                     // });
                     print('deleted index: $favouriteEventOrActivity');
+
                     // var newList = widget.informationList;
-                    Provider.of<ListNotifier>(context, listen: false)
+                    Provider.of<FavouritePastEventNotifier>(context,
+                            listen: false)
                         .removeKey(key: favouriteEventOrActivity.id);
 
                     // context.read<ListNotifier>().updatedList =  newList;

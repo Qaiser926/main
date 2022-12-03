@@ -44,6 +44,7 @@ class FavouriteSrollView extends StatelessWidget {
   }
 
   Widget getFavouriteActivityPart() {
+    //TODO
     return CustomScrollView(slivers: []);
   }
 
@@ -71,7 +72,7 @@ class FavouriteSrollView extends StatelessWidget {
         SliverList(delegate: SliverChildBuilderDelegate((context, index) {
           while (index < model.updatedList.length) {
             return getFavouriteListItem(
-                context, model.updatedList.values.elementAt(index), index);
+                context, model.updatedList.values.elementAt(index));
           }
         }))
       ]);

@@ -25,6 +25,8 @@ abstract class AbstractFavouriteNotifier extends ChangeNotifier {
   }
 }
 
+//TODO alle notifier in einem vereinen und alle vier listen drinne haben.
+//TODO wenn was gelöscht, suche in welcher map die id vorhanden. lösche dann in dieser map und baue alle notifier neu
 class FavouritePastEventNotifier extends AbstractFavouriteNotifier {
   FavouritePastEventNotifier(
       {required super.listenedFavourite, required super.favouriteType});

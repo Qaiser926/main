@@ -24,6 +24,7 @@ class FavouriteEventOrActivity {
   String categoryId;
   bool? visible;
 
+
   FavouriteEventOrActivity({
     final String? this.photo,
     required final String this.title,
