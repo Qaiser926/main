@@ -11,33 +11,19 @@ class DetailedEventOrActivity {
   final String id;
   final String categoryId;
   final double? longitude;
-
   final String ownerId;
-
   final List<String>? photo;
-
   final String? description;
-
   final String? eventSeriesId;
-
   final double? price;
-
   final String? moreInformationUrl;
-
   final String? startTimeUtc;
-
   final Status? status;
-
   final OpeningTimeCode? openingTimeCode;
-
   final List? openingTime;
-
   final double? latitude;
-
   final bool isOnline;
-
   final String? locationTitle;
-
   final String? locationId;
 
   DetailedEventOrActivity({

@@ -12,7 +12,6 @@ import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../../widgets/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'exclusive_widgets/list_change_notifier.dart';
 import 'exclusive_widgets/page_view.dart';
 

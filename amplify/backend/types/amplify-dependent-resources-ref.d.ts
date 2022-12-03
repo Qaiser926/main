@@ -1,5 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
     "function": {
+        "apiLambda": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
         "getFavouriteEventsAndActivities": {
             "Name": "string",
             "Arn": "string",

@@ -15,11 +15,11 @@
       "function": {
         "apiLambda": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/apiLambda-43636147766a504d584f-build.zip"
+          "s3Key": "amplify-builds/apiLambda-576f7a512f6b58645577-build.zip"
         },
         "getFavouriteEventsAndActivities": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getFavouriteEventsAndActivities-6965753546316d365544-build.zip"
+          "s3Key": "amplify-builds/getFavouriteEventsAndActivities-4a356572426568785574-build.zip"
         }
       },
       "api": {

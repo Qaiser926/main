@@ -120,6 +120,9 @@ class _EventDetailState extends State<EventDetail> {
                               if(detailedEventOrActivity.description != null) getVerSpace(30.h),
                               if(!detailedEventOrActivity.isOnline) SimpleMap(
                                   latLng.LatLng(detailedEventOrActivity.latitude!, detailedEventOrActivity.longitude!)),
+                              getVerSpace(20.h),
+                              if(detailedEventOrActivity.openingTime != null) OpeningTimes(),
+
                               // this is were later the map should be shown
                               getVerSpace(120.h),
                             ],
