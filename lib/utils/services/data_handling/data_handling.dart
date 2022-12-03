@@ -4,6 +4,7 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
+import '../../../modules/models/shared_data_models.dart';
 
 Image getPhotoNullSave(
     {required String categoryId,

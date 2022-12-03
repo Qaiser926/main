@@ -19,7 +19,7 @@
         },
         "getFavouriteEventsAndActivities": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getFavouriteEventsAndActivities-58733461784968396e57-build.zip"
+          "s3Key": "amplify-builds/getFavouriteEventsAndActivities-6965753546316d365544-build.zip"
         }
       },
       "api": {

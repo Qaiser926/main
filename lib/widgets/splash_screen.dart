@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _getIsFirst() async {
     await Future.delayed(const Duration(seconds: 3));
-    Get.toNamed(Routes.favouriteRoute);
+    Get.toNamed(Routes.detailedEventRoute,arguments: "as",);
   }
 
   @override
