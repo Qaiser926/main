@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../modules/models/detailed_event/detailed_event.dart';
 import '../../../utils/ui/ui_utils.dart';
 import '../../../widgets/carousel_widget.dart';
 import '../../../widgets/event_summary.dart';
@@ -9,7 +10,7 @@ import '../../../widgets/filtered_image_stack.dart';
 class ImageWidget extends StatelessWidget {
   final pictures;
   final String title;
-
+  final DetailedEventOrActivity detailedEventOrActivity;
   final street;
   final city;
   final time;
@@ -18,6 +19,7 @@ class ImageWidget extends StatelessWidget {
 
   const ImageWidget(
       {super.key,
+        required this.detailedEventOrActivity,
       required this.pictures,
       required this.title,
       required this.street,

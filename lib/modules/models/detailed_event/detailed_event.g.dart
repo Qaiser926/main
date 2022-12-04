@@ -6,26 +6,70 @@ part of 'detailed_event.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_DetailedEvent _$$_DetailedEventFromJson(Map<String, dynamic> json) =>
-    _$_DetailedEvent(
-      id: json['id'] as String,
+DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
+        Map<String, dynamic> json) =>
+    DetailedEventOrActivity(
       title: json['title'] as String,
-      description: json['description'] as String,
-      locationTitle: json['locationTitle'] as String,
-      locationId: json['locationId'] as String,
-      price: (json['price'] as num).toDouble(),
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
+      id: json['id'] as String,
+      categoryId: json['categoryId'] as String,
+      ownerId: json['ownerId'] as String,
+      eventSeriesId: json['eventSeriesId'] as String?,
+      photo:
+          (json['photo'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      description: json['description'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
+      moreInformationUrl: json['moreInformationUrl'] as String?,
+      status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
+      startTimeUtc: json['startTimeUtc'] as String?,
+      openingTimeCode: $enumDecodeNullable(
+          _$OpeningTimeCodeEnumMap, json['openingTimeCode']),
+      openingTime: json['openingTime'] as List<dynamic>?,
+      isOnline: json['isOnline'] as bool,
+      locationTitle: json['locationTitle'] as String?,
+      locationId: json['locationId'] as String?,
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$_DetailedEventToJson(_$_DetailedEvent instance) =>
+Map<String, dynamic> _$DetailedEventOrActivityToJson(
+        DetailedEventOrActivity instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'title': instance.title,
+      'id': instance.id,
+      'categoryId': instance.categoryId,
+      'longitude': instance.longitude,
+      'ownerId': instance.ownerId,
+      'photo': instance.photo,
       'description': instance.description,
+      'eventSeriesId': instance.eventSeriesId,
+      'price': instance.price,
+      'moreInformationUrl': instance.moreInformationUrl,
+      'startTimeUtc': instance.startTimeUtc,
+      'status': _$StatusEnumMap[instance.status],
+      'openingTimeCode': _$OpeningTimeCodeEnumMap[instance.openingTimeCode],
+      'openingTime': instance.openingTime,
+      'latitude': instance.latitude,
+      'isOnline': instance.isOnline,
       'locationTitle': instance.locationTitle,
       'locationId': instance.locationId,
-      'price': instance.price,
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
     };
+
+const _$StatusEnumMap = {
+  Status.PUBLIC: 'PUBLIC',
+  Status.PRIVATE: 'PRIVATE',
+  Status.DELETED: 'DELETED',
+  Status.DRAFT: 'DRAFT',
+  Status.LIVE: 'LIVE',
+  Status.STARTED: 'STARTED',
+  Status.ENDED: 'ENDED',
+  Status.COMPLETED: 'COMPLETED',
+  Status.CANCELED: 'CANCELED',
+  Status.SOLDOUT: 'SOLDOUT',
+};
+
+const _$OpeningTimeCodeEnumMap = {
+  OpeningTimeCode.open: 'open',
+  OpeningTimeCode.closed: 'closed',
+  OpeningTimeCode.openSoon: 'openSoon',
+  OpeningTimeCode.closedSoon: 'closedSoon',
+};

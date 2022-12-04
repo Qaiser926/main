@@ -26,6 +26,8 @@ import '../../utils/services/rest-api/rest_api_service.dart';
 import 'exclusive_widgets/image_widgets.dart';
 import 'exclusive_widgets/other.dart';
 
+
+
 class EventDetail extends StatefulWidget {
   const EventDetail({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class EventDetail extends StatefulWidget {
 }
 
 class _EventDetailState extends State<EventDetail> {
-  late Future<Object> deets;
+  late Future<Object> detailedEventOrActivity;
   final street = "street";
   final city = "city_name";
   final time = "Time_val";
@@ -50,18 +52,20 @@ class _EventDetailState extends State<EventDetail> {
     print('backclick');
     // Constant.backToPrev(context);
   }
+  // TODO: include share button, openingtimes, online event case, status
+  // TODO: link to organizer id
 
   @override
   void initState() {
     String eventId = Get.arguments;
-    deets = RestService().fetchEventDetails(eventId: eventId);
+    detailedEventOrActivity = RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: deets,
+        future: detailedEventOrActivity,
         builder: (context, snapshot) {
           print('builder called');
           if (snapshot.connectionState != ConnectionState.done) {
@@ -72,7 +76,7 @@ class _EventDetailState extends State<EventDetail> {
             } else {
               RestResponse data = snapshot.data as RestResponse;
               Map<String, dynamic> json = jsonDecode(data.body);
-              DetailedEvent str = DetailedEvent.fromJson(json);
+              DetailedEventOrActivity detailedEventOrActivity = DetailedEventOrActivity.fromJson(json);
 
               return WillPopScope(
                 onWillPop: () async {
@@ -98,8 +102,9 @@ class _EventDetailState extends State<EventDetail> {
                             children: [
                               // in the image widget, the event details (name, place, time are contained)
                               ImageWidget(
+                                detailedEventOrActivity: detailedEventOrActivity,
                                 pictures: pure_pictures,
-                                title: str.title,
+                                title: detailedEventOrActivity.title,
                                 locationName: locationName,
                                 time: time,
                                 city: city,
@@ -108,13 +113,16 @@ class _EventDetailState extends State<EventDetail> {
                               ),
                               // space between ImageWidget and ticket price
                               getVerSpace(10.h),
-                              // Container(height: 250, width: 250, child: SimpleMap(),)                      ,
+                              // TODO follower only if not Othia scraped
                               getFollowWidget(context),
                               getVerSpace(20.h),
-                              DescriptionWidget(description: str.description),
-                              getVerSpace(30.h),
-                              SimpleMap(
-                                  latLng.LatLng(str.latitude, str.longitude)),
+                              if(detailedEventOrActivity.description != null) DescriptionWidget(description: detailedEventOrActivity.description!),
+                              if(detailedEventOrActivity.description != null) getVerSpace(30.h),
+                              if(!detailedEventOrActivity.isOnline) SimpleMap(
+                                  latLng.LatLng(detailedEventOrActivity.latitude!, detailedEventOrActivity.longitude!)),
+                              getVerSpace(20.h),
+                              if(detailedEventOrActivity.openingTime != null) OpeningTimes(),
+
                               // this is were later the map should be shown
                               getVerSpace(120.h),
                             ],
