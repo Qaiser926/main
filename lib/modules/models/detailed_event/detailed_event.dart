@@ -18,6 +18,7 @@ class DetailedEventOrActivity {
   final double? price;
   final String? moreInformationUrl;
   final String? startTimeUtc;
+  final String? endTimeUtc;
   final Status? status;
   final OpeningTimeCode? openingTimeCode;
   final Map? openingTime;
@@ -25,6 +26,11 @@ class DetailedEventOrActivity {
   final bool isOnline;
   final String? locationTitle;
   final String? locationId;
+
+  final String? street;
+  final String? streetNumber;
+  final String? city;
+  final String? locationName;
 
   DetailedEventOrActivity({
     required this.title,
@@ -45,6 +51,11 @@ class DetailedEventOrActivity {
     this.locationId,
     this.latitude,
     this.longitude,
+    this.street,
+    this.streetNumber,
+    this.city,
+    this.locationName,
+    this.endTimeUtc,
   });
 
   factory DetailedEventOrActivity.fromJson(Map<String, dynamic> json) =>

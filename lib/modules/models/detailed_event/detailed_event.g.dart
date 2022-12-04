@@ -29,6 +29,11 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       locationId: json['locationId'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
+      street: json['street'] as String?,
+      streetNumber: json['streetNumber'] as String?,
+      city: json['city'] as String?,
+      locationName: json['locationName'] as String?,
+      endTimeUtc: json['endTimeUtc'] as String?,
     );
 
 Map<String, dynamic> _$DetailedEventOrActivityToJson(
@@ -45,6 +50,7 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'price': instance.price,
       'moreInformationUrl': instance.moreInformationUrl,
       'startTimeUtc': instance.startTimeUtc,
+      'endTimeUtc': instance.endTimeUtc,
       'status': _$StatusEnumMap[instance.status],
       'openingTimeCode': _$OpeningTimeCodeEnumMap[instance.openingTimeCode],
       'openingTime': instance.openingTime,
@@ -52,6 +58,10 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'isOnline': instance.isOnline,
       'locationTitle': instance.locationTitle,
       'locationId': instance.locationId,
+      'street': instance.street,
+      'streetNumber': instance.streetNumber,
+      'city': instance.city,
+      'locationName': instance.locationName,
     };
 
 const _$StatusEnumMap = {

@@ -1,9 +1,6 @@
-// import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'favourite_single_event_or_activity/favourite_event_or_activity.dart';
-
-// part 'favourite_events_and_activities.freezed.dart';
 part 'favourite_events_and_activities.g.dart';
 
 @JsonSerializable()

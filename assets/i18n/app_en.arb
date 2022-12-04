@@ -44,6 +44,7 @@
     "alwaysOpen": "24h open",
     "openingHours": "Opening Hours",
      "noLikedEvents": "No liked Events yet",
-      "noLikedActivities": "No liked Activities yet"
+    "noLikedActivities": "No liked Activities yet",
+    "shareMessage": "I have found an event on Othia that you might like"
 
 }

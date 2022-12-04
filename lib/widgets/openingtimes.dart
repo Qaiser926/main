@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/config/themes/color_data.dart';
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,8 +38,12 @@ class OpeningTimes extends StatelessWidget {
                   openingText = "$startTimeFormatted - $endTimeFormatted";
                 }
                 return Row(children: [
-                  getCustomFont(
-                      text: openingText, fontSize: 12, color: greyColor),
+                  Text(
+                    openingText,
+                    style: Theme.of(context).textTheme.headline4,
+                    maxLines: 1,
+                  ),
+
                   getVerSpace(8.h),
                 ]);
               },
@@ -49,10 +53,12 @@ class OpeningTimes extends StatelessWidget {
           else {
             rowContent = [
               Row(children: [
-                getCustomFont(
-                    text: AppLocalizations.of(context)!.closed,
-                    fontSize: 12,
-                    color: greyColor),
+                Text(
+                  AppLocalizations.of(context)!.closed,
+                  style: Theme.of(context).textTheme.headline4,
+                  maxLines: 1,
+                ),
+
               ])
             ];
           }
@@ -63,11 +69,12 @@ class OpeningTimes extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getCustomFont(
-                    text: getWeekday(
-                        weekDayNumber: indexOuter + 1, context: context)[0],
-                    color: greyColor,
-                    fontSize: 12),
+                Text(
+                  getWeekday(
+                      weekDayNumber: indexOuter + 1, context: context)[0],
+                  style: Theme.of(context).textTheme.headline4,
+                  maxLines: 1,
+                ),
                 Column(children: rowContent)
               ],
             ),

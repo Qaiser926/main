@@ -48,6 +48,10 @@ dependencies:
   flutter_svg: ^1.1.1+1
   url_launcher: ^6.1.7
   instant: ^0.4.1
+  provider: ^6.0.4
+  like_button: ^2.0.5
+  share_plus: ^6.3.0
+  add_2_calendar: ^2.2.3
   #widgets
   readmore: ^2.1.0
   carousel_slider: ^4.1.1
@@ -67,7 +71,9 @@ dependencies:
   amplify_api: ^0.6.0
 #  amplify_auth_cognito: ^0.6.0
   amplify_authenticator: ^0.2.0
-  provider: ^6.0.4
+
+
+
 
 dev_dependencies:
   flutter_test:

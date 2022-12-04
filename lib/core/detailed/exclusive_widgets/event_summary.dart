@@ -2,26 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/price_widget.dart';
 import 'package:othia/widgets/time.dart';
-import '../constants/colors.dart';
-import '../utils/ui/ui_utils.dart';
+import '../../../constants/colors.dart';
+import '../../../utils/ui/ui_utils.dart';
 import 'location_information_widget.dart';
+import 'package:latlong2/latlong.dart' as latLng;
+import 'package:add_2_calendar/add_2_calendar.dart';
 
 class EventSummary extends StatelessWidget {
   final String title;
-  final String locationName;
-  final String city;
+  final String locationText;
   final String time;
-  final String street;
-  final String streetNumber;
+  latLng.LatLng? latLong;
+  Event? iCalElement;
 
-  const EventSummary(
+
+  EventSummary(
       {super.key,
       required this.title,
-      required this.locationName,
-      required this.city,
-      required this.streetNumber,
-      required this.street,
-      required this.time});
+      required this.locationText,
+      required this.time,
+        double? latitude,
+        double? longitude,
+        this.iCalElement
+      }){
+    if ((latitude != null) & (longitude != null)) {
+      latLong = latLng.LatLng(latitude!, longitude!);
+  }}
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +53,10 @@ class EventSummary extends StatelessWidget {
                   // TODO: sove that title can flow into price information
                   children: [
                     LocationInformationWidget(
-                        city: city,
-                        street: street,
-                        streetNumber: streetNumber,
-                        locationTitle: locationName),
+                        locationText: locationText, latLong: latLong),
                     getVerSpace(10.h),
                     // no logic implemented regarding times-> wait for actual data
-                    TimeWidget(time: time),
+                    TimeWidget(time: time, iCalElement: iCalElement),
                   ]),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,4 +85,7 @@ class EventSummary extends StatelessWidget {
       ),
     );
   }
+
 }
+
+

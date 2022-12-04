@@ -1,34 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../modules/models/detailed_event/detailed_event.dart';
-import '../../../utils/ui/ui_utils.dart';
-import '../../../widgets/carousel_widget.dart';
-import '../../../widgets/event_summary.dart';
-import '../../../widgets/filtered_image_stack.dart';
+import '../../../utils/services/data_handling/data_handling.dart';
+import 'event_summary.dart';
 import 'get_image_carousel.dart';
 import 'icon_row.dart';
+import 'package:add_2_calendar/add_2_calendar.dart';
 
 class ImageWidget extends StatelessWidget {
-  final pictures;
-  final String title;
-  final DetailedEventOrActivity detailedEventOrActivity;
-  final street;
-  final city;
-  final time;
-  final locationName;
-  final streetNumber;
 
-  const ImageWidget(
+  final DetailedEventOrActivity detailedEventOrActivity;
+  Event? iCalElement;
+
+
+  ImageWidget(
       {super.key,
-        required this.detailedEventOrActivity,
-      required this.pictures,
-      required this.title,
-      required this.street,
-      required this.city,
-      required this.time,
-      required this.locationName,
-      required this.streetNumber});
+      required this.detailedEventOrActivity, this.iCalElement
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +29,26 @@ class ImageWidget extends StatelessWidget {
         alignment: AlignmentDirectional.topCenter,
         // clip means that elements can go beyond borders of stack
         clipBehavior: Clip.none,
-
         children: [
           // first Container is picture
           Positioned(
-            child: getImageCarousel(categoryId: detailedEventOrActivity.categoryId, pictures: detailedEventOrActivity.photos),
+            child: getImageCarousel(
+                categoryId: detailedEventOrActivity.categoryId,
+                pictures: detailedEventOrActivity.photos),
           ),
           Positioned(
             child: Container(
               // in this contianer, the items are placed (back and heart)
               // height defines the hight of this box
               height: 50.h,
-
               // the next child is the heart
               child: Padding(
-                padding: EdgeInsets.only(top: 26.h, right: 20.h, left: 20.h),
-                child: getIconRow(),
+                padding: EdgeInsets.only(top: 20.h, right: 20.h, left: 20.h),
+                // TODO get userID from logged in details
+                child: IconRow(
+                    objectId: detailedEventOrActivity.id,
+                    isLiked: true,
+                    userId: "something"),
               ),
             ),
           ),
@@ -67,14 +59,22 @@ class ImageWidget extends StatelessWidget {
               // position is fixed from bottom, so with increasing text, the summary box will go into the picture
               bottom: 13,
               width: 374.w,
-              child: const EventSummary(
-                street: "binse",
-                city: "Kiel",
-                time: 'fddsfd',
-                title: 'localTitle',
-                locationName: 'localLocationName',
-                streetNumber: '34',
-              )),
+              child: EventSummary(
+                  time: getTimeInformation(
+                      context: context,
+                      startTimeUtc: detailedEventOrActivity.startTimeUtc,
+                      openingTimeCode: detailedEventOrActivity.openingTimeCode),
+                  title: detailedEventOrActivity.title,
+                  locationText: getLocationString(
+                      isOnline: detailedEventOrActivity.isOnline,
+                      locationTitle: detailedEventOrActivity.locationTitle,
+                      city: detailedEventOrActivity.city,
+                      street: detailedEventOrActivity.street,
+                      streetNumber: detailedEventOrActivity.streetNumber),
+                latitude: detailedEventOrActivity.latitude,
+                longitude: detailedEventOrActivity.latitude,
+              iCalElement: iCalElement)),
+
         ],
       ),
     );

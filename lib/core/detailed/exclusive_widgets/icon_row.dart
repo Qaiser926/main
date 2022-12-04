@@ -1,42 +1,69 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../utils/services/data_handling/data_handling.dart';
+import '../../../constants/asset_constants.dart';
 import '../../../utils/ui/ui_utils.dart';
-import '../../../widgets/carousel_widget.dart';
-import '../../../widgets/filtered_image_stack.dart';
+import 'package:like_button/like_button.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
-class getIconRow extends StatelessWidget {
+Future<bool> onLikeButtonTapped(bool isLiked) async{
 
-  getIconRow({super.key, });
+  /// send your request here
+  // final bool success= await sendRequest();
+
+  /// if failed, you can do nothing
+  // return success? !isLiked:isLiked;
+
+  return !isLiked;
+}
+
+
+
+class IconRow extends StatelessWidget {
+  String?  userId;
+  String objectId;
+  bool? isLiked;
+  String objectUrl = 'https://example.com';
+  // TODO define if URL is built or directly sent & initial status of liked button + update of button & share Image as Othia image
+  String shareImage = '8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg';
+
+  IconRow({super.key, this.userId, required this.objectId, this.isLiked});
 
   @override
   Widget build(BuildContext context) {
+    Image image = getAssetImage(shareImage) as Image;
+    // define if Like button exists
+    List<Widget> buttonsOnRightSide = [TextButton(
+      child: const Icon(
+        Icons.share,
+        color: Colors.white,
+      ),
+
+      onPressed: () => Share.shareXFiles([XFile("assets/images/8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg")], text: '${AppLocalizations.of(context)!.shareMessage} $objectUrl'),
+    ),];
+    if (userId != null) {
+      buttonsOnRightSide.add(getHorSpace(15.h));
+      buttonsOnRightSide.add(LikeButton(isLiked: true,
+          onTap: onLikeButtonTapped),
+        );
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // TODO include share button and make heart coloured
         GestureDetector(
           onTap: () {
             // should bring back to previous screen
             Navigator.of(context).pop();
           },
-          child: getSvgImage("arrow_back.svg",
-              width: 24.h, height: 24.h, color: Colors.white),
+          child: const BackButton(color: Colors.white,
+          ),
         ),
         // when clicking of favourite, business logic must define to add that event
-        GestureDetector(
-            onTap: () {
-              //TODO on click, add event to account favourites
-              print("bobo");
-              // backClick();
-            },
-            child: getSvgImage(
-              "favourite_white.svg",
-              width: 24.h,
-              height: 24.h,
-            ))
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: buttonsOnRightSide,)
       ],
     );
   }}

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:othia/core/favourites/exclusive_widgets/pinned_header.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-
 import '../../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import 'empty_favourite_screen.dart';
 import 'favourite_list_item.dart';
