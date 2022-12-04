@@ -43,5 +43,8 @@
     "open": "Open",
     "closed": "Closed",
     "openSoon": "Opens soon",
-    "closedSoon": "Closes soon"
+    "closedSoon": "Closes soon",
+
+    "alwaysOpen": "24h open",
+    "openingHours": "Opening Hours"
 }

@@ -6,6 +6,8 @@ import '../../../utils/ui/ui_utils.dart';
 import '../../../widgets/carousel_widget.dart';
 import '../../../widgets/event_summary.dart';
 import '../../../widgets/filtered_image_stack.dart';
+import 'get_image_carousel.dart';
+import 'icon_row.dart';
 
 class ImageWidget extends StatelessWidget {
   final pictures;
@@ -43,28 +45,7 @@ class ImageWidget extends StatelessWidget {
         children: [
           // first Container is picture
           Positioned(
-            child: Container(
-              // height of picture
-              height: 327.h,
-              width: double.infinity,
-              //decoration: BoxDecoration(
-              //borderRadius:
-              // radius of the picture
-              //BorderRadius.vertical(bottom: Radius.circular(22.h)),
-              //image: DecorationImage(
-              // image: AssetImage(
-              //    "${Constant.assetImagePath}white.jpg"),
-              //fit: BoxFit.fill)),
-              alignment: Alignment.topCenter,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.zero,
-                    topRight: Radius.zero,
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
-                child: PictureCarousel(getFilteredImageStackList(pictures)),
-              ),
-            ),
+            child: getImageCarousel(categoryId: detailedEventOrActivity.categoryId, pictures: detailedEventOrActivity.photos),
           ),
           Positioned(
             child: Container(
@@ -75,32 +56,7 @@ class ImageWidget extends StatelessWidget {
               // the next child is the heart
               child: Padding(
                 padding: EdgeInsets.only(top: 26.h, right: 20.h, left: 20.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        print("nono");
-                        // backClick();
-                      },
-                      child: getSvgImage("arrow_back.svg",
-                          width: 24.h, height: 24.h, color: Colors.white),
-                    ),
-                    // when clicking of favourite, business logic must define to add that event
-                    GestureDetector(
-                        onTap: () {
-                          //TODO on click, add event to account favourites
-                          print("bobo");
-                          // backClick();
-                        },
-                        child: getSvgImage(
-                          "favourite_white.svg",
-                          width: 24.h,
-                          height: 24.h,
-                        ))
-                  ],
-                ),
+                child: getIconRow(),
               ),
             ),
           ),

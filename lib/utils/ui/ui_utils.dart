@@ -169,3 +169,9 @@ Widget getRichText(
         ]),
   );
 }
+
+double getFontSize({required String fontSizeType}) {
+  final Map fontSizeDict = { "headerFontSize": 18.0,
+                              "textFontSize": 12.0};
+  return fontSizeDict[fontSizeType];
+}

@@ -15,6 +15,7 @@ import '../../widgets/carousel_widget.dart';
 import '../../widgets/description_widget.dart';
 import '../../widgets/filtered_image_stack.dart';
 import '../../widgets/map_widget.dart';
+import '../../widgets/openingtimes.dart';
 import '../../widgets/splash_screen.dart';
 
 import 'package:get/get.dart';
@@ -24,6 +25,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
 import 'exclusive_widgets/image_widgets.dart';
+import 'exclusive_widgets/opening_times.dart';
 import 'exclusive_widgets/other.dart';
 
 
@@ -121,7 +123,7 @@ class _EventDetailState extends State<EventDetail> {
                               if(!detailedEventOrActivity.isOnline) SimpleMap(
                                   latLng.LatLng(detailedEventOrActivity.latitude!, detailedEventOrActivity.longitude!)),
                               getVerSpace(20.h),
-                              if(detailedEventOrActivity.openingTime != null) OpeningTimes(),
+                              if(detailedEventOrActivity.openingTime != null) OpeningTimesSection(openingTime: detailedEventOrActivity.openingTime!),
 
                               // this is were later the map should be shown
                               getVerSpace(120.h),

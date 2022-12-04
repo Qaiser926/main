@@ -45,7 +45,10 @@
     "open": "Geöffnet",
     "closed": "Geschlossen",
     "openSoon": "Öffnet bald",
-    "closedSoon": "Schließt bald"
+    "closedSoon": "Schließt bald",
+
+    "alwaysOpen": "24h offen",
+    "openingHours": "Öffnungszeiten"
 
 
 }

@@ -12,7 +12,7 @@ class DetailedEventOrActivity {
   final String categoryId;
   final double? longitude;
   final String ownerId;
-  final List<String>? photo;
+  final List<String>? photos;
   final String? description;
   final String? eventSeriesId;
   final double? price;
@@ -20,7 +20,7 @@ class DetailedEventOrActivity {
   final String? startTimeUtc;
   final Status? status;
   final OpeningTimeCode? openingTimeCode;
-  final List? openingTime;
+  final Map? openingTime;
   final double? latitude;
   final bool isOnline;
   final String? locationTitle;
@@ -32,7 +32,7 @@ class DetailedEventOrActivity {
     required this.categoryId,
     required this.ownerId,
     this.eventSeriesId,
-    this.photo,
+    this.photos,
     this.description,
     this.price,
     this.moreInformationUrl, // either ticket_url or website_url

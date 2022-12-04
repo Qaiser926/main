@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -8,8 +9,8 @@ import '../../../modules/models/shared_data_models.dart';
 
 Image getPhotoNullSave(
     {required String categoryId,
-    required double width,
-    required double height,
+     double? width,
+     double? height,
     String? photo}) {
   if (photo != null) {
     return Image.memory(
@@ -22,6 +23,10 @@ Image getPhotoNullSave(
         as Image;
   }
 }
+
+
+
+
 
 String getTimeInformation({required BuildContext context, String? startTimeUtc, OpeningTimeCode? openingTimeCode}) {
   if (startTimeUtc != null) {
@@ -73,3 +78,9 @@ String languageSensibleOpeningTimeCode({required OpeningTimeCode openingTimeCode
   // weird code below necessary to get the enum name and access the dictionary
   return weekDayDict[openingTimeCode.toString().substring(openingTimeCode.toString().indexOf('.') + 1)]!;
 }
+
+String formatTime({required double unformattedTime}) {
+  String formattedTime = unformattedTime.toInt().toString().padLeft(4, '0');
+  return "${formattedTime.substring(0, 2)}:${formattedTime.substring(2, 4)}";
+}
+

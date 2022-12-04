@@ -14,8 +14,8 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       categoryId: json['categoryId'] as String,
       ownerId: json['ownerId'] as String,
       eventSeriesId: json['eventSeriesId'] as String?,
-      photo:
-          (json['photo'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      photos:
+          (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       description: json['description'] as String?,
       price: (json['price'] as num?)?.toDouble(),
       moreInformationUrl: json['moreInformationUrl'] as String?,
@@ -23,7 +23,7 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       startTimeUtc: json['startTimeUtc'] as String?,
       openingTimeCode: $enumDecodeNullable(
           _$OpeningTimeCodeEnumMap, json['openingTimeCode']),
-      openingTime: json['openingTime'] as List<dynamic>?,
+      openingTime: json['openingTime'] as Map<String, dynamic>?,
       isOnline: json['isOnline'] as bool,
       locationTitle: json['locationTitle'] as String?,
       locationId: json['locationId'] as String?,
@@ -39,7 +39,7 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'categoryId': instance.categoryId,
       'longitude': instance.longitude,
       'ownerId': instance.ownerId,
-      'photo': instance.photo,
+      'photos': instance.photos,
       'description': instance.description,
       'eventSeriesId': instance.eventSeriesId,
       'price': instance.price,
