@@ -5,26 +5,22 @@
   },
   "follow": "Follow",
   "favourites": "Favourites",
-   "futureEvents": "Future Events",
-   "pastEvents": "Past Events",
-   "openActivities": "Currently open activities",
-   "closedActivities": "Currently closed activities",
-   "activity": "Activity",
-   "event": "Event",
-   "activities": "Activities",
-    "events": "Events",
-
-
-    "removeFavoriteDialog": "Do you want to remove \"{objectTitle}\" from your favourites?",
-    "@removeFavoriteDialog": {
-              "placeholders": {
-                  "objectTitle": {
-                      "type": "String"
-
-                  }
-              }
-          },
-
+  "futureEvents": "Future Events",
+  "pastEvents": "Past Events",
+  "openActivities": "Currently open activities",
+  "closedActivities": "Currently closed activities",
+  "activity": "Activity",
+  "event": "Event",
+  "activities": "Activities",
+  "events": "Events",
+  "removeFavoriteDialog": "Do you want to remove \"{objectTitle}\" from your favourites?",
+  "@removeFavoriteDialog": {
+    "placeholders": {
+      "objectTitle": {
+        "type": "String"
+      }
+    }
+  },
   "monday": "Monday",
    "mondayShort": "Mon",
    "tuesday": "Tuesday",
@@ -46,5 +42,8 @@
     "closedSoon": "Closes soon",
 
     "alwaysOpen": "24h open",
-    "openingHours": "Opening Hours"
+    "openingHours": "Opening Hours",
+     "noLikedEvents": "No liked Events yet",
+      "noLikedActivities": "No liked Activities yet"
+
 }

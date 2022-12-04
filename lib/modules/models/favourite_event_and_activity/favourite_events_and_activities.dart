@@ -1,23 +1,36 @@
-
-import 'package:freezed_annotation/freezed_annotation.dart';
+// import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-
+import 'package:json_annotation/json_annotation.dart';
 import 'favourite_single_event_or_activity/favourite_event_or_activity.dart';
-part 'favourite_events_and_activities.freezed.dart';
+
+// part 'favourite_events_and_activities.freezed.dart';
 part 'favourite_events_and_activities.g.dart';
 
-@freezed
-class FavouriteEventsAndActivities with _$FavouriteEventsAndActivities {
-  @JsonSerializable(explicitToJson: true)
-  const factory FavouriteEventsAndActivities({
-    required final List<FavouriteEventOrActivity> futureEvents,
-    required final List<FavouriteEventOrActivity> pastEvents,
-    required final List<FavouriteEventOrActivity> openActivities,
-    required final List<FavouriteEventOrActivity> closedActivities,
+@JsonSerializable()
+class FavouriteEventsAndActivities {
+  Map<String, FavouriteEventOrActivity> futureEvents;
+  Map<String, FavouriteEventOrActivity> pastEvents;
+  Map<String, FavouriteEventOrActivity> openActivities;
+  Map<String, FavouriteEventOrActivity> closedActivities;
 
+  FavouriteEventsAndActivities({
+    required final this.futureEvents,
+    required final this.pastEvents,
+    required final this.openActivities,
+    required final this.closedActivities,
+  });
 
-  }) = _FavouriteEventsAndActivities;
+  bool allEmpty() {
+    if (futureEvents.isEmpty &&
+        pastEvents.isEmpty &&
+        openActivities.isEmpty &&
+        closedActivities.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  factory FavouriteEventsAndActivities.fromJson(Map<String, dynamic> json)
-  => _$FavouriteEventsAndActivitiesFromJson(json);
+  factory FavouriteEventsAndActivities.fromJson(Map<String, dynamic> json) =>
+      _$FavouriteEventsAndActivitiesFromJson(json);
 }

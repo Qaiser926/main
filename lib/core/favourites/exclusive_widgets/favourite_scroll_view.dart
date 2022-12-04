@@ -1,124 +1,109 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/favourites/exclusive_widgets/pinned_header.dart';
 import 'package:provider/provider.dart';
-import '../../../config/themes/color_data.dart';
-import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
-import '../../../utils/services/data_handling/data_handling.dart';
-import '../../../utils/ui/app_dialogs.dart';
-import '../../../utils/ui/ui_utils.dart';
+import 'package:sliver_tools/sliver_tools.dart';
+
+import '../../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
+import 'empty_favourite_screen.dart';
+import 'favourite_list_item.dart';
 import 'list_change_notifier.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FavouriteScrollView extends StatefulWidget {
-  List<FavouriteEventOrActivity> informationList = [];
+class FavouriteScrollView extends StatelessWidget {
+  final FavouriteEventsAndActivities favouriteEventAndActivity;
+  final TabController tabController;
+  final ScrollController scrollController;
 
-  FavouriteScrollView(
+  const FavouriteScrollView(
       {super.key,
-      required List<dynamic> informationList}) {
-    this.informationList = List.from(informationList);
-  }
+      required this.tabController,
+      required this.scrollController,
+      required this.favouriteEventAndActivity});
 
-  @override
-  State<FavouriteScrollView> createState() => _FavouriteScrollViewState();
-}
-
-class _FavouriteScrollViewState extends State<FavouriteScrollView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 12.h),
-            itemCount: widget.informationList.length,
-            primary: false,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              var favouriteEventOrActivity =
-                  widget.informationList[index];
-              // after return should be own widget
-              return Container(
-                margin: EdgeInsets.only(bottom: 20.h),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: shadowColor,
-                          blurRadius: 27,
-                          offset: const Offset(0, 8))
-                    ],
-                    borderRadius: BorderRadius.circular(22.h)),
-                padding: EdgeInsets.only(
-                    top: 7.h, left: 7.h, bottom: 6.h, right: 10.h),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: Row(
-                        children: [
-                          getRoundImage(getPhotoNullSave(
-                              categoryId: favouriteEventOrActivity.categoryId,
-                              photo: favouriteEventOrActivity.photo,
-                              width: 100.h,
-                              height: 82.h)),
-                          getHorSpace(10.h),
-                          Flexible(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              getCustomFont(
-                                  text: favouriteEventOrActivity.title,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w600,
-                                  txtHeight: 1.5.h),
-                              getVerSpace(4.h),
-                              getCustomFont(
-                                  text: getTimeInformation(
-                                      context: context,
-                                      openingTimeCode: favouriteEventOrActivity
-                                          .openingTimeCode,
-                                      startTimeUtc: favouriteEventOrActivity
-                                          .startTimeUtc),
-                                  fontSize: 15.sp,
-                                  color: greyColor,
-                                  fontWeight: FontWeight.w500,
-                                  txtHeight: 1.46.h)
-                            ],
-                          ))
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Colors.red,
-                            ),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+              value: FavouriteNotifier(
+                  openActivities: favouriteEventAndActivity.openActivities,
+                  closedActivities: favouriteEventAndActivity.closedActivities,
+                  pastEvents: favouriteEventAndActivity.pastEvents,
+                  upcomingEvents: favouriteEventAndActivity.futureEvents))
+        ],
+        child: NestedScrollView(
+          controller: scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[];
+          },
+          body: TabBarView(
+              controller: tabController,
+              children: [getFavouriteEventPart(), getFavouriteActivityPart()]),
+        ));
+  }
 
-                            // on pressed open dialog window
-                            onPressed: () async {
-                              bool? removed = await showDialog<bool>(
-                                  context: context,
-                                  builder: (context) => getDialog(
-                                      objectTitle:
-                                          favouriteEventOrActivity.title));
-                              print(removed);
-                              if (removed!) {
-                                print('deleted index: $index');
-                                widget.informationList.removeAt(index);
-                                var newList = widget.informationList;
-                                context.read<ListNotifier>().updatedList =  newList;
-                              }
-                            }),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
+  Widget getFavouriteActivityPart() {
+    return Consumer<FavouriteNotifier>(builder: (context, model, child) {
+      if (model.openActivities.isEmpty && model.closedActivities.isEmpty) {
+        return EmptyFavourite(
+          noElementsText: AppLocalizations.of(context)!.noLikedActivities,
+        );
+      } else {
+        return CustomScrollView(slivers: [
+          getSliverSection(
+              headerText: AppLocalizations.of(context)!.openActivities,
+              favouriteList: model.openActivities),
+          getSliverSection(
+              headerText: AppLocalizations.of(context)!.closedActivities,
+              favouriteList: model.closedActivities)
+        ]);
+      }
+    });
+  }
+
+  Widget getFavouriteEventPart() {
+    return Consumer<FavouriteNotifier>(builder: (context, model, child) {
+      if (model.pastEvents.isEmpty && model.upcomingEvents.isEmpty) {
+        return EmptyFavourite(
+          noElementsText: AppLocalizations.of(context)!.noLikedEvents,
+        );
+      } else {
+        return CustomScrollView(slivers: [
+          Consumer<FavouriteNotifier>(
+              builder: (context, model, child) => getSliverSection(
+                  headerText: AppLocalizations.of(context)!.futureEvents,
+                  favouriteList: model.upcomingEvents)),
+          Consumer<FavouriteNotifier>(
+              builder: (context, model, child) => getSliverSection(
+                  headerText: AppLocalizations.of(context)!.pastEvents,
+                  favouriteList: model.pastEvents))
+        ]);
+      }
+    });
+  }
+
+  Widget getSliverSection(
+      {required final String headerText, required Map favouriteList}) {
+    if (favouriteList.isEmpty) {
+      return const SliverToBoxAdapter();
+    } else {
+      return MultiSliver(
+        pushPinnedChildren: true,
+        children: [
+          SliverPinnedHeader(
+            child: getHeader(text: headerText),
           ),
-        )
-      ],
-    );
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              while (index < favouriteList.length) {
+                return getFavouriteListItem(
+                    context, favouriteList.values.elementAt(index));
+              }
+              return null;
+            }),
+          )
+        ],
+      );
+    }
   }
 }

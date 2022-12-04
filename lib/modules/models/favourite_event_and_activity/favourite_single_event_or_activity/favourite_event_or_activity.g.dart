@@ -6,9 +6,9 @@ part of 'favourite_event_or_activity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FavouriteEventOrActivity _$$_FavouriteEventOrActivityFromJson(
+FavouriteEventOrActivity _$FavouriteEventOrActivityFromJson(
         Map<String, dynamic> json) =>
-    _$_FavouriteEventOrActivity(
+    FavouriteEventOrActivity(
       photo: json['photo'] as String?,
       title: json['title'] as String,
       id: json['id'] as String,
@@ -16,11 +16,11 @@ _$_FavouriteEventOrActivity _$$_FavouriteEventOrActivityFromJson(
       openingTimeCode: $enumDecodeNullable(
           _$OpeningTimeCodeEnumMap, json['openingTimeCode']),
       categoryId: json['categoryId'] as String,
-      visible: json['visible'] as bool? ?? true,
+      visible: json['visible'] as bool?,
     );
 
-Map<String, dynamic> _$$_FavouriteEventOrActivityToJson(
-        _$_FavouriteEventOrActivity instance) =>
+Map<String, dynamic> _$FavouriteEventOrActivityToJson(
+        FavouriteEventOrActivity instance) =>
     <String, dynamic>{
       'photo': instance.photo,
       'title': instance.title,

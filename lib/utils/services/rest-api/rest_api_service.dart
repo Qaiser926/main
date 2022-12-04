@@ -34,4 +34,13 @@ class RestService {
     final result = await get(restOptions);
     return result;
   }
+
+  Future<Object> removeFavouriteEventOrActivity({required id}) async {
+    print('removing favourite event or activity with id: $id');
+
+    RestOptions restOptions =
+        RestOptions(path: '/removeFavourite-dev/$id', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
 }

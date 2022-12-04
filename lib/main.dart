@@ -3,6 +3,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'amplifyconfiguration.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/routes/pages.dart';
@@ -10,6 +11,7 @@ import 'config/themes/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'constants/supported_locales.dart';
+import 'core/favourites/exclusive_widgets/list_change_notifier.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -25,25 +27,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return GetMaterialApp(
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: supportedLocales,
-          debugShowCheckedModeBanner: false,
-          initialRoute: "/",
-          routes: Pages.routes,
-          theme: getLightThemeData(),
+          designSize: const Size(360, 690),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
+            return GetMaterialApp(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: supportedLocales,
+              debugShowCheckedModeBanner: false,
+              initialRoute: "/",
+              routes: Pages.routes,
+              theme: getLightThemeData(),
+            );
+          },
         );
-      },
-    );
   }
 }
 
