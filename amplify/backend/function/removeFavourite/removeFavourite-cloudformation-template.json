@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"10.5.1\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "apiLambda",
+            "removeFavourite",
             {
               "Fn::Join": [
                 "",
                 [
-                  "apiLambda",
+                  "removeFavourite",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "othiaLambdaRole032839f9",
+            "othiaLambdaRolede01e940",
             {
               "Fn::Join": [
                 "",
                 [
-                  "othiaLambdaRole032839f9",
+                  "othiaLambdaRolede01e940",
                   "-",
                   {
                     "Ref": "env"

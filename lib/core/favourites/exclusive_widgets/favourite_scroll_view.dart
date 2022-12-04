@@ -4,17 +4,19 @@ import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
+import 'empty_favourite_screen.dart';
 import 'favourite_list_item.dart';
 import 'list_change_notifier.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FavouriteSrollView extends StatelessWidget {
-  FavouriteEventsAndActivities favouriteEventAndActivity;
-  TabController tabController;
-  var scrollController;
+class FavouriteScrollView extends StatelessWidget {
+  final FavouriteEventsAndActivities favouriteEventAndActivity;
+  final TabController tabController;
+  final ScrollController scrollController;
 
-  FavouriteSrollView(
-      {required TabController this.tabController,
+  const FavouriteScrollView(
+      {super.key,
+      required this.tabController,
       required this.scrollController,
       required this.favouriteEventAndActivity});
 
@@ -23,59 +25,85 @@ class FavouriteSrollView extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
-              value: FavouritePastEventNotifier(
-                  favouriteType: FavouriteType.pastEvent,
-                  listenedFavourite: favouriteEventAndActivity.pastEvents)),
-          ChangeNotifierProvider.value(
-              value: FavouriteUpcomingEventNotifier(
-                  favouriteType: FavouriteType.upcomingEvent,
-                  listenedFavourite: favouriteEventAndActivity.futureEvents))
+              value: FavouriteNotifier(
+                  openActivities: favouriteEventAndActivity.openActivities,
+                  closedActivities: favouriteEventAndActivity.closedActivities,
+                  pastEvents: favouriteEventAndActivity.pastEvents,
+                  upcomingEvents: favouriteEventAndActivity.futureEvents))
         ],
         child: NestedScrollView(
           controller: scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[];
           },
-          body: TabBarView(controller: tabController, children: [
-            getFavouriteEventPart(context),
-            getFavouriteActivityPart()
-          ]),
+          body: TabBarView(
+              controller: tabController,
+              children: [getFavouriteEventPart(), getFavouriteActivityPart()]),
         ));
   }
 
   Widget getFavouriteActivityPart() {
-    //TODO
-    return CustomScrollView(slivers: []);
+    return Consumer<FavouriteNotifier>(builder: (context, model, child) {
+      if (model.openActivities.isEmpty && model.closedActivities.isEmpty) {
+        return EmptyFavourite(
+          noElementsText: AppLocalizations.of(context)!.noLikedActivities,
+        );
+      } else {
+        return CustomScrollView(slivers: [
+          getSliverSection(
+              headerText: AppLocalizations.of(context)!.openActivities,
+              favouriteList: model.openActivities),
+          getSliverSection(
+              headerText: AppLocalizations.of(context)!.closedActivities,
+              favouriteList: model.closedActivities)
+        ]);
+      }
+    });
   }
 
-  Widget getFavouriteEventPart(BuildContext context) {
-    return CustomScrollView(slivers: [
-      Consumer<FavouriteUpcomingEventNotifier>(
-          builder: (context, model, child) => getSliverSection(
-              headerText: AppLocalizations.of(context)!.futureEvents,
-              model: model)),
-      Consumer<FavouritePastEventNotifier>(
-          builder: (context, model, child) => getSliverSection(
-              headerText: AppLocalizations.of(context)!.pastEvents,
-              model: model))
-    ]);
+  Widget getFavouriteEventPart() {
+    return Consumer<FavouriteNotifier>(builder: (context, model, child) {
+      if (model.pastEvents.isEmpty && model.upcomingEvents.isEmpty) {
+        return EmptyFavourite(
+          noElementsText: AppLocalizations.of(context)!.noLikedEvents,
+        );
+      } else {
+        return CustomScrollView(slivers: [
+          Consumer<FavouriteNotifier>(
+              builder: (context, model, child) => getSliverSection(
+                  headerText: AppLocalizations.of(context)!.futureEvents,
+                  favouriteList: model.upcomingEvents)),
+          Consumer<FavouriteNotifier>(
+              builder: (context, model, child) => getSliverSection(
+                  headerText: AppLocalizations.of(context)!.pastEvents,
+                  favouriteList: model.pastEvents))
+        ]);
+      }
+    });
   }
 
-  Widget getSliverSection({required final String headerText, required model}) {
-    if (model.updatedList.isEmpty) {
-      return SliverToBoxAdapter();
+  Widget getSliverSection(
+      {required final String headerText, required Map favouriteList}) {
+    if (favouriteList.isEmpty) {
+      return const SliverToBoxAdapter();
     } else {
-      return MultiSliver(pushPinnedChildren: true, children: [
-        SliverPinnedHeader(
-          child: getHeader(text: headerText),
-        ),
-        SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-          while (index < model.updatedList.length) {
-            return getFavouriteListItem(
-                context, model.updatedList.values.elementAt(index));
-          }
-        }))
-      ]);
+      return MultiSliver(
+        pushPinnedChildren: true,
+        children: [
+          SliverPinnedHeader(
+            child: getHeader(text: headerText),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              while (index < favouriteList.length) {
+                return getFavouriteListItem(
+                    context, favouriteList.values.elementAt(index));
+              }
+              return null;
+            }),
+          )
+        ],
+      );
     }
   }
 }

@@ -1,11 +1,7 @@
 {
   "helloWorld": "Hallo Welt!",
   "follow": "Folgen",
-   "favourites": "Favoriten",
-
-
-
-
+  "favourites": "Favoriten",
   "futureEvents": "Bevorstehende Events",
   "pastEvents": "Vergangene Events",
   "openActivities": "Derzeit geöffnete Akitivitäten",
@@ -14,38 +10,32 @@
   "event": "Event",
   "activities": "Aktivitäten",
   "events": "Events",
-
-
   "removeFavoriteDialog": "Möchtest du \"{objectTitle}\" von deinen Favoriten entfernen?",
   "@removeFavoriteDialog": {
-          "placeholders": {
-              "objectTitle": {
-                  "type": "String"
-
-              }
-          }
-      },
-
+    "placeholders": {
+      "objectTitle": {
+        "type": "String"
+      }
+    }
+  },
   "monday": "Montag",
-   "mondayShort": "Mo",
-   "tuesday": "Dienstag",
-   "tuesdayShort": "Di",
-   "wednesday": "Mittwoch",
-    "wednesdayShort": "Mi",
-   "thursday": "Donnerstag",
-    "thursdayShort": "Do",
-    "friday": "Freitag",
-     "fridayShort": "Fr",
-    "saturday": "Samstag",
-     "saturdayShort": "Sa",
-    "sunday": "Sonntag",
-     "sundayShort": "So",
-
-
-    "open": "Geöffnet",
-    "closed": "Geschlossen",
-    "openSoon": "Öffnet bald",
-    "closedSoon": "Schließt bald"
-
-
+  "mondayShort": "Mo",
+  "tuesday": "Dienstag",
+  "tuesdayShort": "Di",
+  "wednesday": "Mittwoch",
+  "wednesdayShort": "Mi",
+  "thursday": "Donnerstag",
+  "thursdayShort": "Do",
+  "friday": "Freitag",
+  "fridayShort": "Fr",
+  "saturday": "Samstag",
+  "saturdayShort": "Sa",
+  "sunday": "Sonntag",
+  "sundayShort": "So",
+  "open": "Geöffnet",
+  "closed": "Geschlossen",
+  "openSoon": "Öffnet bald",
+  "closedSoon": "Schließt bald",
+  "noLikedEvents": "Du hast noch keine Events geliked",
+  "noLikedActivities": "Du hast noch keine Aktitivitäten geliked"
 }

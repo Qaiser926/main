@@ -18,50 +18,49 @@ def handler(event, context):
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
         # TODO: send request witch user_id and local time
-        'body': json.dumps(
-            {
-                "futureEvents": {
-                    "test_id_1": {
-                        "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                        "title": "test_event",
-                        "startTimeUtc": str(
-                            datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                        "id": "test_id_123",
-                        "photo": photo_binary},
-                    "test_id_2": {
-                        "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                        "title": "test_event2",
-                        "startTimeUtc": str(
-                            datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                        "id": "test_id_123",
-                        "photo": photo_binary}
+        'body': json.dumps({
+            "futureEvents": {
+                "test_id_1": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_event",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_1",
+                    "photo": photo_binary
                 },
-                "pastEvents": {
-                    "test_id_3": {
-                        "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                        "title": "test_event3",
-                        "startTimeUtc": str(
-                            datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                        "id": "test_id_123",
-                        "photo": photo_binary}
-                },
-                "openActivities": {
-                    "test_id_4": {
-                        "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                        "title": "test_activity",
-                        "openingTimeCode": "open",
-                        "id": "test_id_123",
-                        "photo": photo_binary}
-                },
-                "closedActivities": {
-                    "test_id_4": {
-                        "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                        "title": "test_activity1",
-                        "openingTimeCode": "closedSoon",
-                        "id": "test_id_123",
-                        "photo": photo_binary}
+                "test_id_2": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_event2",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_2",
+                    "photo": photo_binary
+                }
+            },
+            "pastEvents": {
+                "test_id_3": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                }
+            },
+            "openActivities": {
+                "test_id_4": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_activity",
+                    "openingTimeCode": "open",
+                    "id": "test_id_4",
+                    "photo": photo_binary
+                }
+            },
+            "closedActivities": {
+                "test_id_5": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_activity1",
+                    "openingTimeCode": "closedSoon",
+                    "id": "test_id_5",
+                    "photo": photo_binary
                 }
             }
-
-        )
+        })
     }

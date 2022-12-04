@@ -2,47 +2,37 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 
-enum FavouriteType {
-  pastEvent,
-  upcomingEvent,
-  pastActivity,
-  upcomingActivity,
-}
+class FavouriteNotifier extends ChangeNotifier {
+  final Map<String, FavouriteEventOrActivity> upcomingEvents;
+  final Map<String, FavouriteEventOrActivity> pastEvents;
+  final Map<String, FavouriteEventOrActivity> closedActivities;
+  final Map<String, FavouriteEventOrActivity> openActivities;
 
-abstract class AbstractFavouriteNotifier extends ChangeNotifier {
-  final Map<String, FavouriteEventOrActivity> listenedFavourite;
-  late final FavouriteType favouriteType;
+  FavouriteNotifier(
+      {required this.pastEvents,
+      required this.closedActivities,
+      required this.openActivities,
+      required this.upcomingEvents});
 
-  AbstractFavouriteNotifier(
-      {required this.listenedFavourite, required this.favouriteType});
+  Map<String, FavouriteEventOrActivity> get getUpcomingEvents => upcomingEvents;
 
-  Map<String, FavouriteEventOrActivity> get getListenedFavourite =>
-      listenedFavourite;
+  Map<String, FavouriteEventOrActivity> get getPastEvents => pastEvents;
+
+  Map<String, FavouriteEventOrActivity> get getClosedActivities =>
+      closedActivities;
+
+  Map<String, FavouriteEventOrActivity> get getOpenActivities => openActivities;
 
   void removeKey({required final key}) {
-    listenedFavourite.remove(key);
+    if (upcomingEvents.containsKey(key)) {
+      upcomingEvents.remove(key);
+    } else if (pastEvents.containsKey(key)) {
+      pastEvents.remove(key);
+    } else if (closedActivities.containsKey(key)) {
+      closedActivities.remove(key);
+    } else if (openActivities.containsKey(key)) {
+      openActivities.remove(key);
+    }
     notifyListeners();
   }
-}
-
-//TODO alle notifier in einem vereinen und alle vier listen drinne haben.
-//TODO wenn was gelöscht, suche in welcher map die id vorhanden. lösche dann in dieser map und baue alle notifier neu
-class FavouritePastEventNotifier extends AbstractFavouriteNotifier {
-  FavouritePastEventNotifier(
-      {required super.listenedFavourite, required super.favouriteType});
-}
-
-class FavouriteUpcomingEventNotifier extends AbstractFavouriteNotifier {
-  FavouriteUpcomingEventNotifier(
-      {required super.listenedFavourite, required super.favouriteType});
-}
-
-class FavouriteOpenActivityNotifier extends AbstractFavouriteNotifier {
-  FavouriteOpenActivityNotifier(
-      {required super.listenedFavourite, required super.favouriteType});
-}
-
-class FavouriteClosedActivityNotifier extends AbstractFavouriteNotifier {
-  FavouriteClosedActivityNotifier(
-      {required super.listenedFavourite, required super.favouriteType});
 }

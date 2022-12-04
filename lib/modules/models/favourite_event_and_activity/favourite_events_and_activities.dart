@@ -20,6 +20,17 @@ class FavouriteEventsAndActivities {
     required final this.closedActivities,
   });
 
+  bool allEmpty() {
+    if (futureEvents.isEmpty &&
+        pastEvents.isEmpty &&
+        openActivities.isEmpty &&
+        closedActivities.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   factory FavouriteEventsAndActivities.fromJson(Map<String, dynamic> json) =>
       _$FavouriteEventsAndActivitiesFromJson(json);
 }

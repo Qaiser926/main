@@ -35,7 +35,7 @@ class FavouriteAppBar extends AppBar {
           elevation: 0,
           centerTitle: true,
           bottom: PreferredSize(
-            preferredSize: Size(double.infinity, 70),
+            preferredSize: const Size(double.infinity, 70),
             child: Container(
               // space between blue and and white
               height: 50,

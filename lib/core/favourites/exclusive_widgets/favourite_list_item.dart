@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../config/themes/color_data.dart';
 import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
+import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../../utils/ui/app_dialogs.dart';
 import '../../../utils/ui/ui_utils.dart';
 
@@ -64,27 +65,31 @@ Widget getFavouriteListItem(
                   Icons.favorite,
                   color: Colors.red,
                 ),
-
-                // on pressed open dialog window
-                onPressed: () async {
-                  bool? removed = await showDialog<bool>(
-                      context: context,
-                      builder: (context) => getDialog(
-                          objectTitle: favouriteEventOrActivity.title));
-                  print(removed);
-                  if (removed!) {
-                    // setState(() {
-                    //
-                    // });
-                    print('deleted index: $favouriteEventOrActivity');
-
-                    // var newList = widget.informationList;
-                    Provider.of<FavouritePastEventNotifier>(context,
-                            listen: false)
-                        .removeKey(key: favouriteEventOrActivity.id);
-
-                    // context.read<ListNotifier>().updatedList =  newList;
-                  }
+                onPressed: () {
+                  showDialog<bool>(
+                          context: context,
+                          builder: (context) => getDialog(
+                              objectTitle: favouriteEventOrActivity.title))
+                      .then((value) {
+                    if (value!) {
+                      try {
+                        RestService()
+                            .removeFavouriteEventOrActivity(
+                                id: favouriteEventOrActivity.id)
+                            .then((value) {
+                              print(value);
+                          Provider.of<FavouriteNotifier>(context, listen: false)
+                              .removeKey(key: favouriteEventOrActivity.id);
+                        });
+                      } on Exception catch (e) {
+                        //TODO
+                        throw e;
+                      } catch (e) {
+                        //TODO
+                        throw e;
+                      }
+                    }
+                  });
                 }),
           ],
         ),
