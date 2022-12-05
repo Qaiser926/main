@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../utils/ui/ui_utils.dart';
+import '../../../utils/ui/ui_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> _launchUrl(_url) async {

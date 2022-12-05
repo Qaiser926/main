@@ -10,13 +10,13 @@ ThemeData getLightThemeData() {
     primaryTextTheme: TextTheme(
         headline4: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
         headline2: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.5.h)),
+            fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h)),
 
     /// Text with a color that contrasts with the card and canvas colors.
     textTheme: TextTheme(
         headline4: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
         headline2: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.5.h)),
+            fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h)),
 
 // This is the theme of your application.
 //

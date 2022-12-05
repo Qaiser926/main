@@ -73,6 +73,8 @@ Widget getMultilineCustomFontRestricted({
 }) {
   return ReadMoreText(
     text,
+
+
     trimLines: maxLines,
     trimMode: TrimMode.Line,
     trimCollapsedText: ' Read more',

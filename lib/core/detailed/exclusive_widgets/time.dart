@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
-import '../utils/ui/ui_utils.dart';
+import 'package:othia/config/themes/color_data.dart';
+import '../../../utils/ui/ui_utils.dart';
 
 class TimeWidget extends StatelessWidget {
   final String time;
@@ -22,12 +23,14 @@ class TimeWidget extends StatelessWidget {
     onTap: () => function(),
     child: Row(
       children: [
-        getSvgImage("calender.svg", width: 20.h, height: 20.h),
+        Icon(Icons.access_time_outlined,
+        color: greyColor,
+          size: 20.h,),
         getHorSpace(5.h),
-        getCustomFont(
-          text: time,
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w500,
+        Text(
+          time,
+          style: Theme.of(context).textTheme.headline4,
+          maxLines: 1,
         )
       ],
     ),);

@@ -14,6 +14,8 @@ def handler(event, context):
                    {'weekday_id': 4, 'is_open': True, 'time': '0800'},
                    {'weekday_id': 4, 'is_open': False, 'time': '0930'}]
     openingTime = getOpeningTimesDict(openingTimes=openingTime)
+    prices = [1.0, 5.0, 10.0]
+    prices = getPrices(prices=prices)
 
     return {
         'statusCode': 200,
@@ -29,10 +31,12 @@ def handler(event, context):
                             "isOnline": False, 'openingTime': openingTime,
                             "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
                             "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
-                            "city": "Kiel"})
+                            "city": "Kiel", "prices": prices})
     }
 
-
+def getPrices(prices: list):
+    if len(prices) > 2:
+        return [min(prices), max(prices)]
 def getOpeningTimesDict(openingTimes: list):
     openingTimesDict = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []}
     alwaysOpen = True
