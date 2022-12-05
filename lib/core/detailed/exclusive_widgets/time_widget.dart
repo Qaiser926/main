@@ -17,8 +17,6 @@ class TimeWidget extends StatelessWidget {
       function = () =>
           Add2Calendar.addEvent2Cal(iCalElement!);
     }
-
-
     return GestureDetector(
     onTap: () => function(),
     child: Row(

@@ -17,8 +17,11 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       photos:
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       description: json['description'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
-      moreInformationUrl: json['moreInformationUrl'] as String?,
+      prices: (json['prices'] as List<dynamic>?)
+          ?.map((e) => (e as num).toDouble())
+          .toList(),
+      ticketUrl: json['ticketUrl'] as String?,
+      websiteUrl: json['websiteUrl'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
       startTimeUtc: json['startTimeUtc'] as String?,
       openingTimeCode: $enumDecodeNullable(
@@ -47,8 +50,9 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'photos': instance.photos,
       'description': instance.description,
       'eventSeriesId': instance.eventSeriesId,
-      'price': instance.price,
-      'moreInformationUrl': instance.moreInformationUrl,
+      'prices': instance.prices,
+      'ticketUrl': instance.ticketUrl,
+      'websiteUrl': instance.websiteUrl,
       'startTimeUtc': instance.startTimeUtc,
       'endTimeUtc': instance.endTimeUtc,
       'status': _$StatusEnumMap[instance.status],

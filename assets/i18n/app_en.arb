@@ -45,6 +45,33 @@
     "openingHours": "Opening Hours",
      "noLikedEvents": "No liked Events yet",
     "noLikedActivities": "No liked Activities yet",
-    "shareMessage": "I have found an event on Othia that you might like"
+    "shareMessage": "I have found an event on Othia that you might like",
+
+    "noPriceAvailable": "No price information available",
+    "isFree": "Free entry",
+    "priceStartingAt": "from €{price}",
+          "@priceStartingAt": {
+            "placeholders": {
+              "price": {
+                "type": "double",
+                "format": "decimalPattern"
+              }
+            }
+          },
+          "priceRange": "€{firstPrice} - €{secondPrice}",
+                      "@priceRange": {
+                        "placeholders": {
+                          "firstPrice": {
+                            "type": "double",
+                            "format": "decimalPattern"
+                          },
+                          "secondPrice": {
+                                            "type": "double",
+                                            "format": "decimalPattern"
+                                          }
+                        }
+                      },
+   "cancelled": "ABGESAGT",
+   "soldOut": "AUSVERKAUFT"
 
 }

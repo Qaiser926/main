@@ -15,7 +15,7 @@
       "function": {
         "apiLambda": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/apiLambda-7950304a504f2b507870-build.zip"
+          "s3Key": "amplify-builds/apiLambda-56354c375038506f7869-build.zip"
         },
         "getFavouriteEventsAndActivities": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",

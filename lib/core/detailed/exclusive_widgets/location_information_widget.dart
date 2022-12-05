@@ -9,11 +9,11 @@ class FunctionWrapper {
   Function()? function;
 }
 
-class LocationInformationWidget extends StatelessWidget {
+class LocationWidget extends StatelessWidget {
   final String locationText;
   latLng.LatLng? latLong;
 
-  LocationInformationWidget(
+  LocationWidget(
       {super.key, required this.locationText, this.latLong});
 
   @override

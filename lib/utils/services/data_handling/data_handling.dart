@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 import '../../../modules/models/shared_data_models.dart';
+import 'dart:math';
+
+double roundDouble(double value, int places){
+  num mod = pow(10.0, places);
+  return ((value * mod).round().toDouble() / mod);
+}
 
 Image getPhotoNullSave(
     {required String categoryId,
@@ -131,4 +134,33 @@ String getLocationString(
   } else {
     return city!;
   }
+}
+
+String getPriceText({required BuildContext context, List<double>? prices}) {
+  String priceText = AppLocalizations.of(context)!.noPriceAvailable;
+  if (prices != null) {
+    if (prices.length == 1) {
+      if (prices[0] == 0) {
+        priceText = AppLocalizations.of(context)!.isFree;
+      } else {
+        priceText = AppLocalizations.of(context)!.priceStartingAt(roundDouble(prices[0], 2));
+      }
+    }
+    else {
+      priceText = AppLocalizations.of(context)!.priceRange(roundDouble(prices[0], 2), roundDouble(prices[1], 2));
+    }
+  }
+  return priceText;
+}
+
+String getTicketStatus({required BuildContext context, Status? status}){
+  String ticketStatus = "";
+  if (status != null){
+    if (status.toString().substring(status.toString().indexOf('.') + 1) == "CANCELED"){
+      ticketStatus = ' | ${AppLocalizations.of(context)!.cancelled}';
+    } else if (status.toString().substring(status.toString().indexOf('.') + 1) == "SOLDOUT"){
+      ticketStatus = ' | ${AppLocalizations.of(context)!.soldOut}';
+
+  }}
+  return ticketStatus;
 }

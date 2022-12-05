@@ -44,8 +44,34 @@
 
     "noLikedEvents": "Du hast noch keine Events geliket",
       "noLikedActivities": "Du hast noch keine Aktitivitäten geliket",
-    "shareMessage": "Ich habe auf Othia ein Event gefunden, das dich interessieren könnte"
+    "shareMessage": "Ich habe auf Othia ein Event gefunden, das dich interessieren könnte",
 
+    "noPriceAvailable": "Keine Preisinformationen verfügbar",
+    "isFree": "Gratis Eintritt",
+    "priceStartingAt": "ab {price}€",
+      "@priceStartingAt": {
+        "placeholders": {
+          "price": {
+            "type": "double",
+            "format": "decimalPattern"
+          }
+        }
+      },
+      "priceRange": "{firstPrice}€ - {secondPrice}€",
+            "@priceRange": {
+              "placeholders": {
+                "firstPrice": {
+                  "type": "double",
+                  "format": "decimalPattern"
+                },
+                "secondPrice": {
+                                  "type": "double",
+                                  "format": "decimalPattern"
+                                }
+              }
+            },
+    "cancelled": "CANCELLED",
+    "soldOut": "SOLD OUT"
 
 
 }

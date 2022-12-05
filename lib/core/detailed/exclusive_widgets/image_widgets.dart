@@ -24,7 +24,7 @@ class ImageWidget extends StatelessWidget {
 
     // Stack to put items upon each other (here: Weiße box auf Bild)
     return Container(
-      height: 330,
+      height: 350,
       child: Stack(
         alignment: AlignmentDirectional.topCenter,
         // clip means that elements can go beyond borders of stack
@@ -44,7 +44,9 @@ class ImageWidget extends StatelessWidget {
               // the next child is the heart
               child: Padding(
                 padding: EdgeInsets.only(top: 20.h, right: 20.h, left: 20.h),
-                // TODO get userID from logged in details
+                // TODO get userID from logged in details + decide what to do if user performs action that requires login
+                // idea would be to open a notification window and inform user that she/ he needs to be logged in to perform this action
+                // user can either cancel or is forwarded to login screen
                 child: IconRow(
                     objectId: detailedEventOrActivity.id,
                     isLiked: true,
@@ -60,7 +62,7 @@ class ImageWidget extends StatelessWidget {
               bottom: 13,
               width: 374.w,
               child: EventSummary(
-                  time: getTimeInformation(
+                  timeText: getTimeInformation(
                       context: context,
                       startTimeUtc: detailedEventOrActivity.startTimeUtc,
                       openingTimeCode: detailedEventOrActivity.openingTimeCode),
@@ -73,8 +75,11 @@ class ImageWidget extends StatelessWidget {
                       streetNumber: detailedEventOrActivity.streetNumber),
                 latitude: detailedEventOrActivity.latitude,
                 longitude: detailedEventOrActivity.latitude,
-              iCalElement: iCalElement)),
-
+              iCalElement: iCalElement,
+              prices: detailedEventOrActivity.prices,
+              ticketUrl: detailedEventOrActivity.ticketUrl,
+              websiteUrl: detailedEventOrActivity.websiteUrl,
+              status: detailedEventOrActivity.status,)),
         ],
       ),
     );

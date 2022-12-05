@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'amplifyconfiguration.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/routes/pages.dart';
+import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               initialRoute: "/",
               routes: Pages.routes,
-              theme: getLightThemeData(),
+              theme: getDarkThemeData(),
             );
           },
         );

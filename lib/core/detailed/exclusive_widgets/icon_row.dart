@@ -1,15 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../constants/asset_constants.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'package:like_button/like_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-Future<bool> onLikeButtonTapped(bool isLiked) async{
-
+Future<bool> onLikeButtonTapped(bool isLiked) async {
   /// send your request here
   // final bool success= await sendRequest();
 
@@ -19,35 +19,45 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
   return !isLiked;
 }
 
-
-
 class IconRow extends StatelessWidget {
-  String?  userId;
+  String? userId;
   String objectId;
   bool? isLiked;
+  var appDocDir;
   String objectUrl = 'https://example.com';
+
   // TODO define if URL is built or directly sent & initial status of liked button + update of button & share Image as Othia image
   String shareImage = '8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg';
 
-  IconRow({super.key, this.userId, required this.objectId, this.isLiked});
+  IconRow({super.key, this.userId, required this.objectId, this.isLiked}) {
+    getApplicationDocumentsDirectory().then((value) {
+      appDocDir = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     Image image = getAssetImage(shareImage) as Image;
     // define if Like button exists
-    List<Widget> buttonsOnRightSide = [TextButton(
-      child: const Icon(
-        Icons.share,
-        color: Colors.white,
+    List<Widget> buttonsOnRightSide = [
+      TextButton(
+        child: const Icon(
+          Icons.share,
+          color: Colors.white,
+        ),
+        onPressed: () async {
+          XFile xFile =new XFile("${appDocDir.path}/assets/images/select1");
+          var text = '${AppLocalizations.of(context)!.shareMessage} $objectUrl';
+          var test = await Share.shareXFiles([xFile], text: text);
+          print("Claadee");
+        },
       ),
-
-      onPressed: () => Share.shareXFiles([XFile("assets/images/8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg")], text: '${AppLocalizations.of(context)!.shareMessage} $objectUrl'),
-    ),];
+    ];
     if (userId != null) {
       buttonsOnRightSide.add(getHorSpace(15.h));
-      buttonsOnRightSide.add(LikeButton(isLiked: true,
-          onTap: onLikeButtonTapped),
-        );
+      buttonsOnRightSide.add(
+        LikeButton(isLiked: true, onTap: onLikeButtonTapped),
+      );
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,11 +69,16 @@ class IconRow extends StatelessWidget {
             // should bring back to previous screen
             Navigator.of(context).pop();
           },
-          child: const BackButton(color: Colors.white,
+          child: const BackButton(
+            color: Colors.white,
           ),
         ),
         // when clicking of favourite, business logic must define to add that event
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: buttonsOnRightSide,)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: buttonsOnRightSide,
+        )
       ],
     );
-  }}
+  }
+}
