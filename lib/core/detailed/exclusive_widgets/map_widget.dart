@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../utils/ui/ui_utils.dart';
 
 class SimpleMap extends StatefulWidget {
   final latLng.LatLng latlong;
@@ -19,12 +22,22 @@ class _SimpleMapState extends State<SimpleMap> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO only show in case no online event/ activity
-    return ClipRRect(
+    return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.h),
+    child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+        [Divider(),
+        getVerSpace(10),
+        Text(AppLocalizations.of(context)!.location, style: Theme.of(context).textTheme.headline2,),
+        getVerSpace(10),
+        ClipRRect(
+      clipBehavior: Clip.hardEdge,
         borderRadius: BorderRadius.circular(20),
         child: Container(
+
             height: 210,
-            width: 250,
+
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             child: FlutterMap(
@@ -40,10 +53,6 @@ class _SimpleMapState extends State<SimpleMap> {
                     padding: EdgeInsetsDirectional.only(end: 8, bottom: 2),
                     child: Text('© OpenStreetMap'),
                   )
-
-                  // source: '© OpenStreetMap contributors',
-                  // onSourceTapped: () {},
-                  // sourceTextStyle: TextStyle(fontSize: 5),
                 ],
                 children: [
                   TileLayer(
@@ -69,33 +78,6 @@ class _SimpleMapState extends State<SimpleMap> {
                               ),
                             ))
                   ])
-                ])));
-
-    // layers: [
-    //
-    //   TileLayerOptions(
-    //     urlTemplate:
-    //         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    //     subdomains: ['a', 'b', 'c'],
-    //   ),
-    //   MarkerLayerOptions(markers: [
-    //     Marker(
-    //         width: 50.0,
-    //         height: 500.0,
-    //         rotate: true,
-    //         point: latlong,
-    //         builder: (ctx) => GestureDetector(
-    //               onTap: () => MapsLauncher.launchCoordinates(
-    //                   latlong.latitude, latlong.longitude),
-    //               child: Container(
-    //                 child: Icon(
-    //                   Icons.location_on,
-    //                   size: 50,
-    //                   color: Colors.red,
-    //                 ),
-    //               ),
-    //             ))
-    //   ])
-    // ])));
+                ])))]));
   }
 }

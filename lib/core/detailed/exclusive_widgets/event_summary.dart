@@ -52,7 +52,7 @@ class EventSummary extends StatelessWidget {
         children: [
           getVerSpace(10.h),
           getMultilineCustomFontRestricted(
-              text: title, maxLines: 2, context: context),
+              text: title, maxLines: 2, textTheme: Theme.of(context).textTheme.headline2),
           getVerSpace(10.h),
 
               Column(crossAxisAlignment: CrossAxisAlignment.start,

@@ -70,8 +70,17 @@
                                 }
               }
             },
-    "cancelled": "CANCELLED",
-    "soldOut": "SOLD OUT"
+            "cancelled": "ABGESAGT",
+               "soldOut": "AUSVERKAUFT",
+
+
+    "description": "Beschreibung",
+    "location": "Ort",
+
+    "ticket": "Ticket",
+    "website": "Mehr Informationen",
+    "calendar": "Kalender",
+    "share": "Teilen"
 
 
 }

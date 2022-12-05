@@ -62,7 +62,7 @@ Widget getHorSpace(double verSpace) {
 }
 
 Widget getMultilineCustomFontRestricted({
-  required BuildContext context,
+  required TextStyle? textTheme,
   required String text,
   Color fontColor = Colors.black,
   required int maxLines,
@@ -80,9 +80,9 @@ Widget getMultilineCustomFontRestricted({
     trimCollapsedText: ' Read more',
     trimExpandedText: ' Show less',
     textAlign: textAlign,
-    style: Theme.of(context).textTheme.headline2,
-    lessStyle: Theme.of(context).textTheme.headline2,
-    moreStyle: Theme.of(context).textTheme.headline2,
+    style: textTheme,
+    lessStyle: textTheme,
+    moreStyle: textTheme,
   );
 }
 

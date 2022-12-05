@@ -74,6 +74,7 @@ dependencies:
   amplify_authenticator: ^0.2.0
   # ui
   typicons_flutter: ^0.5.0
+  json_theme: ^4.0.3
 
 
 
@@ -109,6 +110,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/themes/app_theme.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,9 +28,7 @@ class IconRow extends StatelessWidget {
   String shareImage = '8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg';
 
   IconRow({super.key, this.userId, required this.objectId, this.isLiked}) {
-    getApplicationDocumentsDirectory().then((value) {
-      appDocDir = value;
-    });
+
   }
 
   @override
@@ -45,12 +41,8 @@ class IconRow extends StatelessWidget {
           Icons.share,
           color: Colors.white,
         ),
-        onPressed: () async {
-          XFile xFile =new XFile("${appDocDir.path}/assets/images/select1");
-          var text = '${AppLocalizations.of(context)!.shareMessage} $objectUrl';
-          var test = await Share.shareXFiles([xFile], text: text);
-          print("Claadee");
-        },
+        onPressed: () {
+          Share.share('${AppLocalizations.of(context)!.shareMessage} $objectUrl');},
       ),
     ];
     if (userId != null) {

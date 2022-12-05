@@ -7,8 +7,9 @@ import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/services/data_handling/get_ical_element.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
-import '../../widgets/description_widget.dart';
-import '../../widgets/map_widget.dart';
+import 'exclusive_widgets/button_widget.dart';
+import 'exclusive_widgets/description_widget.dart';
+import 'exclusive_widgets/map_widget.dart';
 import '../../widgets/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
@@ -16,7 +17,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'exclusive_widgets/image_widgets.dart';
 import 'exclusive_widgets/opening_times.dart';
 import 'exclusive_widgets/other.dart';
-import 'package:add_2_calendar/add_2_calendar.dart';
 
 
 class EventDetail extends StatefulWidget {
@@ -28,7 +28,6 @@ class EventDetail extends StatefulWidget {
 
 class _EventDetailState extends State<EventDetail> {
   late Future<Object> detailedEventOrActivity;
-
 
   void backClick() {
     print('backclick');
@@ -59,22 +58,22 @@ class _EventDetailState extends State<EventDetail> {
             } else {
               RestResponse data = snapshot.data as RestResponse;
               Map<String, dynamic> json = jsonDecode(data.body);
-              DetailedEventOrActivity detailedEventOrActivity = DetailedEventOrActivity
-                  .fromJson(json);
+              DetailedEventOrActivity detailedEventOrActivity =
+                  DetailedEventOrActivity.fromJson(json);
               var iCalElement = null;
               if (detailedEventOrActivity.startTimeUtc != null) {
                 iCalElement = getIcalElement(
-                    startTimeUtc: detailedEventOrActivity.startTimeUtc!,
-                    title: detailedEventOrActivity.title,
-                    locationText: getLocationString(
-                        isOnline: detailedEventOrActivity.isOnline,
-                        locationTitle: detailedEventOrActivity.locationTitle,
-                        city: detailedEventOrActivity.city,
-                        street: detailedEventOrActivity.street,
-                        streetNumber: detailedEventOrActivity.streetNumber),
-                    description: detailedEventOrActivity.description,
-                    endTimeUtc: detailedEventOrActivity.endTimeUtc,
-                    );
+                  startTimeUtc: detailedEventOrActivity.startTimeUtc!,
+                  title: detailedEventOrActivity.title,
+                  locationText: getLocationString(
+                      isOnline: detailedEventOrActivity.isOnline,
+                      locationTitle: detailedEventOrActivity.locationTitle,
+                      city: detailedEventOrActivity.city,
+                      street: detailedEventOrActivity.street,
+                      streetNumber: detailedEventOrActivity.streetNumber),
+                  description: detailedEventOrActivity.description,
+                  endTimeUtc: detailedEventOrActivity.endTimeUtc,
+                );
               }
 
               return WillPopScope(
@@ -101,31 +100,38 @@ class _EventDetailState extends State<EventDetail> {
                             children: [
                               // in the image widget, the event details (name, place, time are contained)
                               ImageWidget(
-                                detailedEventOrActivity: detailedEventOrActivity, iCalElement: iCalElement,
+                                detailedEventOrActivity:
+                                    detailedEventOrActivity,
+                                iCalElement: iCalElement,
                               ),
                               // space between ImageWidget and ticket price
                               getVerSpace(10.h),
                               // TODO follower only if not Othia scraped
                               getFollowWidget(context),
                               getVerSpace(20.h),
-                              if(detailedEventOrActivity.description !=
-                                  null) DescriptionWidget(
-                                  description: detailedEventOrActivity
-                                      .description!),
-                              if(detailedEventOrActivity.description !=
-                                  null) getVerSpace(30.h),
-                              if(!detailedEventOrActivity.isOnline) SimpleMap(
-                                  latLng.LatLng(
-                                      detailedEventOrActivity.latitude!,
-                                      detailedEventOrActivity.longitude!)),
+                              if (detailedEventOrActivity.description != null)
+                                DescriptionWidget(
+                                    description:
+                                        detailedEventOrActivity.description!),
+                              if (detailedEventOrActivity.description != null)
+                                getVerSpace(30.h),
+                              if (!detailedEventOrActivity.isOnline)
+                                SimpleMap(latLng.LatLng(
+                                    detailedEventOrActivity.latitude!,
+                                    detailedEventOrActivity.longitude!)),
                               getVerSpace(20.h),
-                              if(detailedEventOrActivity.openingTime !=
-                                  null) OpeningTimesSection(
-                                  openingTime: detailedEventOrActivity
-                                      .openingTime!),
-
-                              // this is were later the map should be shown
-                              getVerSpace(120.h),
+                              if (detailedEventOrActivity.openingTime != null)
+                                OpeningTimesSection(
+                                    openingTime:
+                                        detailedEventOrActivity.openingTime!),
+                              getVerSpace(20.h),
+                              // TODO include share url + decide where to integrate
+                              ButtonWidget(
+                                  iCalElement: iCalElement,
+                                  shareUrl: "temp",
+                                  websiteUrl:
+                                      detailedEventOrActivity.websiteUrl,
+                                  ticketUrl: detailedEventOrActivity.ticketUrl),
                             ],
                           ),
                         )
