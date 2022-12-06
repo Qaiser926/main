@@ -64,17 +64,10 @@ class ImageWidget extends StatelessWidget {
               child: EventSummary(
                   timeText: getTimeInformation(
                       context: context,
-                      startTimeUtc: detailedEventOrActivity.startTimeUtc,
-                      openingTimeCode: detailedEventOrActivity.openingTimeCode),
+                      startTimeUtc: detailedEventOrActivity.time.startTimeUtc,
+                      openingTimeCode: detailedEventOrActivity.time.openingTimeCode),
                   title: detailedEventOrActivity.title,
-                  locationText: getLocationString(
-                      isOnline: detailedEventOrActivity.isOnline,
-                      locationTitle: detailedEventOrActivity.locationTitle,
-                      city: detailedEventOrActivity.city,
-                      street: detailedEventOrActivity.street,
-                      streetNumber: detailedEventOrActivity.streetNumber),
-                latitude: detailedEventOrActivity.latitude,
-                longitude: detailedEventOrActivity.latitude,
+                  location:detailedEventOrActivity.location,
               iCalElement: iCalElement,
               prices: detailedEventOrActivity.prices,
               ticketUrl: detailedEventOrActivity.ticketUrl,

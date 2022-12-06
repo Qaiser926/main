@@ -9,6 +9,8 @@ part of 'detailed_event.dart';
 DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
         Map<String, dynamic> json) =>
     DetailedEventOrActivity(
+      time: Time.fromJson(json['time'] as Map<String, dynamic>),
+      location: Location.fromJson(json['location'] as Map<String, dynamic>),
       title: json['title'] as String,
       id: json['id'] as String,
       categoryId: json['categoryId'] as String,
@@ -23,20 +25,7 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       ticketUrl: json['ticketUrl'] as String?,
       websiteUrl: json['websiteUrl'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
-      startTimeUtc: json['startTimeUtc'] as String?,
-      openingTimeCode: $enumDecodeNullable(
-          _$OpeningTimeCodeEnumMap, json['openingTimeCode']),
-      openingTime: json['openingTime'] as Map<String, dynamic>?,
       isOnline: json['isOnline'] as bool,
-      locationTitle: json['locationTitle'] as String?,
-      locationId: json['locationId'] as String?,
-      latitude: (json['latitude'] as num?)?.toDouble(),
-      longitude: (json['longitude'] as num?)?.toDouble(),
-      street: json['street'] as String?,
-      streetNumber: json['streetNumber'] as String?,
-      city: json['city'] as String?,
-      locationName: json['locationName'] as String?,
-      endTimeUtc: json['endTimeUtc'] as String?,
     );
 
 Map<String, dynamic> _$DetailedEventOrActivityToJson(
@@ -45,7 +34,6 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'title': instance.title,
       'id': instance.id,
       'categoryId': instance.categoryId,
-      'longitude': instance.longitude,
       'ownerId': instance.ownerId,
       'photos': instance.photos,
       'description': instance.description,
@@ -53,19 +41,10 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'prices': instance.prices,
       'ticketUrl': instance.ticketUrl,
       'websiteUrl': instance.websiteUrl,
-      'startTimeUtc': instance.startTimeUtc,
-      'endTimeUtc': instance.endTimeUtc,
       'status': _$StatusEnumMap[instance.status],
-      'openingTimeCode': _$OpeningTimeCodeEnumMap[instance.openingTimeCode],
-      'openingTime': instance.openingTime,
-      'latitude': instance.latitude,
       'isOnline': instance.isOnline,
-      'locationTitle': instance.locationTitle,
-      'locationId': instance.locationId,
-      'street': instance.street,
-      'streetNumber': instance.streetNumber,
-      'city': instance.city,
-      'locationName': instance.locationName,
+      'time': instance.time,
+      'location': instance.location,
     };
 
 const _$StatusEnumMap = {
@@ -79,11 +58,4 @@ const _$StatusEnumMap = {
   Status.COMPLETED: 'COMPLETED',
   Status.CANCELED: 'CANCELED',
   Status.SOLDOUT: 'SOLDOUT',
-};
-
-const _$OpeningTimeCodeEnumMap = {
-  OpeningTimeCode.open: 'open',
-  OpeningTimeCode.closed: 'closed',
-  OpeningTimeCode.openSoon: 'openSoon',
-  OpeningTimeCode.closedSoon: 'closedSoon',
 };

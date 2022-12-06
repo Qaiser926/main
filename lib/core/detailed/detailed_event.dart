@@ -61,18 +61,13 @@ class _EventDetailState extends State<EventDetail> {
               DetailedEventOrActivity detailedEventOrActivity =
                   DetailedEventOrActivity.fromJson(json);
               var iCalElement = null;
-              if (detailedEventOrActivity.startTimeUtc != null) {
+              if (detailedEventOrActivity.time.startTimeUtc != null) {
                 iCalElement = getIcalElement(
-                  startTimeUtc: detailedEventOrActivity.startTimeUtc!,
+                  startTimeUtc: detailedEventOrActivity.time.startTimeUtc!,
                   title: detailedEventOrActivity.title,
-                  locationText: getLocationString(
-                      isOnline: detailedEventOrActivity.isOnline,
-                      locationTitle: detailedEventOrActivity.locationTitle,
-                      city: detailedEventOrActivity.city,
-                      street: detailedEventOrActivity.street,
-                      streetNumber: detailedEventOrActivity.streetNumber),
+                  locationText: getLocationString(location: detailedEventOrActivity.location),
                   description: detailedEventOrActivity.description,
-                  endTimeUtc: detailedEventOrActivity.endTimeUtc,
+                  endTimeUtc: detailedEventOrActivity.time.endTimeUtc,
                 );
               }
 
@@ -117,13 +112,13 @@ class _EventDetailState extends State<EventDetail> {
                                 getVerSpace(30.h),
                               if (!detailedEventOrActivity.isOnline)
                                 SimpleMap(latLng.LatLng(
-                                    detailedEventOrActivity.latitude!,
-                                    detailedEventOrActivity.longitude!)),
+                                    detailedEventOrActivity.location.latitude!,
+                                    detailedEventOrActivity.location.longitude!)),
                               getVerSpace(20.h),
-                              if (detailedEventOrActivity.openingTime != null)
+                              if (detailedEventOrActivity.time.openingTime != null)
                                 OpeningTimesSection(
                                     openingTime:
-                                        detailedEventOrActivity.openingTime!),
+                                        detailedEventOrActivity.time.openingTime!),
                               getVerSpace(20.h),
                               // TODO include share url + decide where to integrate
                               ButtonWidget(

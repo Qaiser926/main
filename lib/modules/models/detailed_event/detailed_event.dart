@@ -9,7 +9,6 @@ class DetailedEventOrActivity {
   final String title;
   final String id;
   final String categoryId;
-  final double? longitude;
   final String ownerId;
   final List<String>? photos;
   final String? description;
@@ -17,22 +16,14 @@ class DetailedEventOrActivity {
   final List<double>? prices;
   final String? ticketUrl;
   final String? websiteUrl;
-  final String? startTimeUtc;
-  final String? endTimeUtc;
   final Status? status;
-  final OpeningTimeCode? openingTimeCode;
-  final Map? openingTime;
-  final double? latitude;
   final bool isOnline;
-  final String? locationTitle;
-  final String? locationId;
-
-  final String? street;
-  final String? streetNumber;
-  final String? city;
-  final String? locationName;
+  final Time time;
+  final Location location;
 
   DetailedEventOrActivity({
+    required this.time,
+    required this.location,
     required this.title,
     required this.id,
     required this.categoryId,
@@ -44,19 +35,7 @@ class DetailedEventOrActivity {
     this.ticketUrl,
     this.websiteUrl,// either ticket_url or website_url
     this.status,
-    this.startTimeUtc,
-    this.openingTimeCode,
-    this.openingTime,
     required this.isOnline,
-    this.locationTitle,
-    this.locationId,
-    this.latitude,
-    this.longitude,
-    this.street,
-    this.streetNumber,
-    this.city,
-    this.locationName,
-    this.endTimeUtc,
   });
 
   factory DetailedEventOrActivity.fromJson(Map<String, dynamic> json) =>

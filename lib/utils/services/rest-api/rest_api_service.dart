@@ -43,4 +43,13 @@ class RestService {
     final result = await get(restOptions);
     return result;
   }
+
+  Future<Object> getEAIdsForCategory({required categoryId}) async {
+    print('requesting ids for: $categoryId');
+
+    RestOptions restOptions =
+    RestOptions(path: '/getEAIdsForCategory-dev/$categoryId', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
 }

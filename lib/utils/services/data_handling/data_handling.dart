@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../modules/models/shared_data_models.dart';
 import 'dart:math';
 
-double roundDouble(double value, int places){
+double roundDouble(double value, int places) {
   num mod = pow(10.0, places);
   return ((value * mod).round().toDouble() / mod);
 }
@@ -47,6 +47,24 @@ DateTime getLocalDateTime({required String dateTimeUtc}) {
   return datetimeutc.add(now.timeZoneOffset);
 }
 
+String getMonthName({required int month, required BuildContext context}) {
+  Map monthDict = {
+    1: AppLocalizations.of(context)!.januaryShort,
+    2: AppLocalizations.of(context)!.februaryShort,
+    3: AppLocalizations.of(context)!.marchShort,
+    4: AppLocalizations.of(context)!.aprilShort,
+    5: AppLocalizations.of(context)!.mayShort,
+    6: AppLocalizations.of(context)!.juneShort,
+    7: AppLocalizations.of(context)!.julyShort,
+    8: AppLocalizations.of(context)!.augustShort,
+    9: AppLocalizations.of(context)!.septemberShort,
+    10: AppLocalizations.of(context)!.octoberShort,
+    11: AppLocalizations.of(context)!.novemberShort,
+    12: AppLocalizations.of(context)!.decemberShort,
+  };
+  return monthDict[month];
+}
+
 String getLocalTimeString(
     {required String dateTimeUtc, required BuildContext context}) {
   final DateTime now = DateTime.now();
@@ -54,9 +72,9 @@ String getLocalTimeString(
   final String weekday =
       getWeekday(weekDayNumber: TimeLocal.weekday, context: context)[1];
   if (now.year == TimeLocal.year) {
-    return "$weekday, ${TimeLocal.day.toString().padLeft(2, '0')}.${TimeLocal.month.toString().padLeft(2, '0')}, ${TimeLocal.hour.toString().padLeft(2, '0')}:${TimeLocal.minute.toString().padLeft(2, '0')}";
+    return "$weekday, ${TimeLocal.day.toString().padLeft(2, '0')}. ${getMonthName(context: context, month: TimeLocal.month)}, ${TimeLocal.hour.toString().padLeft(2, '0')}:${TimeLocal.minute.toString().padLeft(2, '0')}";
   } else {
-    return "$weekday, ${TimeLocal.day.toString().padLeft(2, '0')}.${TimeLocal.month.toString().padLeft(2, '0')}.${TimeLocal.year}, ${TimeLocal.hour.toString().padLeft(2, '0')}:${TimeLocal.minute.toString().padLeft(2, '0')}";
+    return "$weekday, ${TimeLocal.day.toString().padLeft(2, '0')}. ${getMonthName(context: context, month: TimeLocal.month)} ${TimeLocal.year}, ${TimeLocal.hour.toString().padLeft(2, '0')}:${TimeLocal.minute.toString().padLeft(2, '0')}";
   }
 }
 
@@ -115,52 +133,67 @@ String formatTime({required double unformattedTime}) {
 }
 
 String getLocationString(
-    {String? street,
-    String? streetNumber,
-    String? city,
-    required bool isOnline,
-    String? locationTitle}) {
-  if (isOnline) {
+    {required Location location,
+    bool isShort=false}) {
+  if (location.isOnline) {
     return "Online";
   }
-  if ((street != null) & (streetNumber != null)) {
-    return '$city, $street $streetNumber';
+  if ((location.street != null) & (location.streetNumber != null) & (!isShort)) {
+    return '${location.city}, ${location.street} ${location.streetNumber}';
   }
-  if ((street != null)) {
-    return '$city, $street';
+  if ((location.street != null)) {
+    if(!isShort) {
+      return '${location.city}, ${location.street}';
+    } else {
+      return '${location.street}, ${location.city}';
+    }
+
   }
-  if ((locationTitle != null)) {
-    return '$city, $locationTitle';
+  if ((location.locationTitle != null)) {
+    if (!isShort) {
+      return '${location.city}, ${location.locationTitle}';
+    } else {
+      return '${location.locationTitle}, ${location.city}';
+    }
+
   } else {
-    return city!;
+    return location.city!;
   }
 }
 
-String getPriceText({required BuildContext context, List<double>? prices}) {
+String getPriceText({required BuildContext context, List<double>? prices, bool isShort = false}) {
   String priceText = AppLocalizations.of(context)!.noPriceAvailable;
+  if (isShort) {
+    priceText = " - ";
+  }
   if (prices != null) {
     if (prices.length == 1) {
       if (prices[0] == 0) {
         priceText = AppLocalizations.of(context)!.isFree;
       } else {
-        priceText = AppLocalizations.of(context)!.priceStartingAt(roundDouble(prices[0], 2));
+        priceText = AppLocalizations.of(context)!
+            .priceStartingAt(roundDouble(prices[0], 2));
       }
-    }
-    else {
-      priceText = AppLocalizations.of(context)!.priceRange(roundDouble(prices[0], 2), roundDouble(prices[1], 2));
+    } else {
+      priceText = AppLocalizations.of(context)!
+          .priceRange(roundDouble(prices[0], 2), roundDouble(prices[1], 2));
     }
   }
   return priceText;
 }
 
-String getTicketStatus({required BuildContext context, Status? status}){
+String getTicketStatus({required BuildContext context, Status? status}) {
   String ticketStatus = "";
-  if (status != null){
-    if (status.toString().substring(status.toString().indexOf('.') + 1) == "CANCELED"){
+  if (status != null) {
+    if (status.toString().substring(status.toString().indexOf('.') + 1) ==
+        "CANCELED") {
       ticketStatus = ' | ${AppLocalizations.of(context)!.cancelled}';
-    } else if (status.toString().substring(status.toString().indexOf('.') + 1) == "SOLDOUT"){
+    } else if (status
+            .toString()
+            .substring(status.toString().indexOf('.') + 1) ==
+        "SOLDOUT") {
       ticketStatus = ' | ${AppLocalizations.of(context)!.soldOut}';
-
-  }}
+    }
+  }
   return ticketStatus;
 }

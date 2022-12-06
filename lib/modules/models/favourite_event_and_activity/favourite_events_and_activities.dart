@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 import 'favourite_single_event_or_activity/favourite_event_or_activity.dart';
 part 'favourite_events_and_activities.g.dart';

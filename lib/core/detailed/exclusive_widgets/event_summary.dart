@@ -11,8 +11,8 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 
 class EventSummary extends StatelessWidget {
   final String title;
-  final String locationText;
   final String timeText;
+  final Location location;
   latLng.LatLng? latLong;
   Event? iCalElement;
   List<double>? prices;
@@ -22,20 +22,16 @@ class EventSummary extends StatelessWidget {
 
   EventSummary(
       {super.key,
+        required this.location,
       required this.title,
-      required this.locationText,
       required this.timeText,
-        double? latitude,
-        double? longitude,
         this.iCalElement,
         this.prices,
         this.websiteUrl,
         this.ticketUrl,
         this.status
       }){
-    if ((latitude != null) & (longitude != null)) {
-      latLong = latLng.LatLng(latitude!, longitude!);
-  }}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +54,7 @@ class EventSummary extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start,
                   // TODO: sove that title can flow into price information
                   children: [
-                    LocationWidget(
-                        locationText: locationText, latLong: latLong),
+                    LocationWidget(location: location),
                     getVerSpace(10.h),
                     // no logic implemented regarding times-> wait for actual data
                     TimeWidget(time: timeText, iCalElement: iCalElement),

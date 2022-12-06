@@ -80,7 +80,21 @@
     "ticket": "Ticket",
     "website": "Mehr Informationen",
     "calendar": "Kalender",
-    "share": "Teilen"
+    "share": "Teilen",
+
+    "januaryShort": "Jan",
+    "februaryShort": "Feb",
+    "marchShort": "Mär",
+    "aprilShort": "Apr",
+    "mayShort": "Mai",
+    "juneShort": "Jun",
+    "julyShort": "Jul",
+    "augustShort": "Aug",
+    "septemberShort": "Sep",
+    "octoberShort": "Okt",
+    "novemberShort": "Nov",
+    "decemberShort": "Dez"
+
 
 
 }
