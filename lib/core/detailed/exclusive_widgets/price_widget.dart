@@ -39,7 +39,7 @@ class PriceWidget extends StatelessWidget {
       onTap: () => function(),
       child: Row(
         children: [
-          Icon(Typicons.tag, color: greyColor, size: 20.h,),
+          Icon(Typicons.tag, size: 20.h,),
           getHorSpace(5.h),
           Text(
             priceText,

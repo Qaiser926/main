@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/ui/ui_utils.dart';
 
+// TODO work in progress
+
 SizedBox buildDropdownBar() {
   return SizedBox(
     height: 50.h,

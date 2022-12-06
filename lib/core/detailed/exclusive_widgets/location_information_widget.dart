@@ -14,8 +14,10 @@ class LocationWidget extends StatelessWidget {
   final Location location;
   var latLong;
 
-  LocationWidget(
-      {super.key, required this.location,}){
+  LocationWidget({
+    super.key,
+    required this.location,
+  }) {
     if ((location.latitude != null) & (location.longitude != null)) {
       this.latLong = latLng.LatLng(location.latitude!, location.longitude!);
     }
@@ -36,7 +38,6 @@ class LocationWidget extends StatelessWidget {
           Icon(
             Icons.location_on_outlined,
             size: 20.h,
-
           ),
           getHorSpace(5.h),
           Text(

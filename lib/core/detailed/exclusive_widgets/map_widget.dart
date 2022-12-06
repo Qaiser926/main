@@ -27,12 +27,11 @@ class _SimpleMapState extends State<SimpleMap> {
     child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:
-        [Divider(),
-        getVerSpace(10),
+        [Divider(thickness: 3.h),
+          getVerSpace(25),
         Text(AppLocalizations.of(context)!.location, style: Theme.of(context).textTheme.headline2,),
-        getVerSpace(10),
+        getVerSpace(25),
         ClipRRect(
-      clipBehavior: Clip.hardEdge,
         borderRadius: BorderRadius.circular(20),
         child: Container(
 
@@ -73,7 +72,6 @@ class _SimpleMapState extends State<SimpleMap> {
                                 child: Icon(
                                   Icons.location_on,
                                   size: 50,
-                                  color: Colors.red,
                                 ),
                               ),
                             ))

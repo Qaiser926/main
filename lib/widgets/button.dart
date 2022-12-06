@@ -5,9 +5,8 @@ import '../utils/ui/ui_utils.dart';
 
 Widget getButton(
     {required BuildContext context,
-    required Color bgColor,
+    Color? bgColor,
     required String text,
-    required Color textColor,
     required Function function,
     required double fontsize,
     bool isBorder = false,

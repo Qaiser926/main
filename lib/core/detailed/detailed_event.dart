@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:amplify_api/amplify_api.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../modules/models/detailed_event/detailed_event.dart';
@@ -8,6 +7,7 @@ import '../../utils/services/data_handling/get_ical_element.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/future_service.dart';
 import '../../utils/ui/ui_utils.dart';
+import '../../widgets/disccover_events_horizontally.dart';
 import 'exclusive_widgets/button_widget.dart';
 import 'exclusive_widgets/description_widget.dart';
 import 'exclusive_widgets/map_widget.dart';
@@ -96,30 +96,32 @@ class _EventDetailState extends State<EventDetail> {
                             getVerSpace(10.h),
                             // TODO follower only if not Othia scraped
                             getFollowWidget(context),
-                            getVerSpace(20.h),
+                            getVerSpace(25.h),
                             if (detailedEventOrActivity.description != null)
                               DescriptionWidget(
                                   description:
                                       detailedEventOrActivity.description!),
                             if (detailedEventOrActivity.description != null)
-                              getVerSpace(30.h),
+                              getVerSpace(25.h),
                             if (!detailedEventOrActivity.isOnline)
                               SimpleMap(latLng.LatLng(
                                   detailedEventOrActivity.location.latitude!,
                                   detailedEventOrActivity.location.longitude!)),
-                            getVerSpace(20.h),
+                            getVerSpace(25.h),
                             if (detailedEventOrActivity.time.openingTime !=
                                 null)
                               OpeningTimesSection(
                                   openingTime: detailedEventOrActivity
                                       .time.openingTime!),
-                            getVerSpace(20.h),
+                            getVerSpace(25.h),
                             // TODO include share url + decide where to integrate
                             ButtonWidget(
                                 iCalElement: iCalElement,
                                 shareUrl: "temp",
                                 websiteUrl: detailedEventOrActivity.websiteUrl,
                                 ticketUrl: detailedEventOrActivity.ticketUrl),
+                            getVerSpace(25.5),
+                            HorizontalEADiscovery(functionParameter: detailedEventOrActivity.categoryId,)
                           ],
                         ),
                       )

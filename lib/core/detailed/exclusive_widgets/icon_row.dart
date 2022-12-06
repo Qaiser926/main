@@ -47,7 +47,7 @@ class IconRow extends StatelessWidget {
     if (userId != null) {
       buttonsOnRightSide.add(getHorSpace(15.h));
       buttonsOnRightSide.add(
-        LikeButton(isLiked: true, onTap: onLikeButtonTapped),
+        LikeButton(isLiked: true, onTap: onLikeButtonTapped, circleColor: CircleColor(end: Theme.of(context).colorScheme.primary , start:  Theme.of(context).colorScheme.tertiary),),
       );
     }
     return Row(

@@ -51,7 +51,7 @@ Widget getFavouriteListItem(
                               favouriteEventOrActivity.openingTimeCode,
                           startTimeUtc: favouriteEventOrActivity.startTimeUtc),
                       fontSize: 15.sp,
-                      color: greyColor,
+
                       fontWeight: FontWeight.w500,
                       txtHeight: 1.46.h)
                 ],

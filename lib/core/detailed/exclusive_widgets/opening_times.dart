@@ -17,15 +17,16 @@ class OpeningTimesSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(),
-            getVerSpace(10),
+            Divider(thickness: 3.h),
+            getVerSpace(25),
             Text(
               AppLocalizations.of(context)!.openingHours,
               style: Theme.of(context).textTheme.headline2,
             ),
-            getVerSpace(10),
+            getVerSpace(25),
             OpeningTimes(openingTime: openingTime)
           ],
         ));
   }
 }
+

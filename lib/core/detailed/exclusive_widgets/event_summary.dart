@@ -36,10 +36,12 @@ class EventSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(22.h),
-          boxShadow: [BoxShadow(blurRadius: 27, offset: Offset(0, 8))]
+          color: Theme.of(context).colorScheme.tertiary,
+
+          // boxShadow: [BoxShadow(blurRadius: 27, offset: Offset(0, 8))]
           ),
       padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Column(
@@ -53,7 +55,7 @@ class EventSummary extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start,
                   // TODO: sove that title can flow into price information
                   children: [
-                    LocationWidget(location: location),
+                LocationWidget(location: location),
                 getVerSpace(10.h),
                 // no logic implemented regarding times-> wait for actual data
                 TimeWidget(time: timeText, iCalElement: iCalElement),
@@ -66,21 +68,6 @@ class EventSummary extends StatelessWidget {
                   status: status,
                 ),
               ]),
-
-          // Row(children: [ SizedBox(height: 50, width: 50)]),
-
-          // GestureDetector(onTap: () => print("123"),child: SizedBox(height: 50, width: 50,
-          //   child:alternativeGetButton(context,  "",  () => print("123"), 14.sp,
-          //   weight: FontWeight.w700,
-          //   buttonHeight: 50.h,
-          //   buttonWidth: 50.h,
-          //   isBorder: true,
-          //   borderWidth: 1.h,
-          //   borderRadius: BorderRadius.circular(14.h))))]),
-
-          //fix issue that null and initialize dynamically
-
-          // definiert den unteren Rand
           getVerSpace(13.h),
         ],
       ),

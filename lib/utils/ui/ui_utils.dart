@@ -90,7 +90,6 @@ Widget getCustomFont(
     {required String text,
     required double fontSize,
     int maxLine = 1,
-    Color color = Colors.black,
     TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
@@ -100,7 +99,6 @@ Widget getCustomFont(
     text,
     overflow: overflow,
     style: TextStyle(
-        color: color,
         decoration: decoration,
         fontSize: fontSize,
         fontStyle: FontStyle.normal,
@@ -126,7 +124,7 @@ Widget getSvgImage(String image,
   );
 }
 
-BoxDecoration getButtonDecoration(Color bgColor,
+BoxDecoration getButtonDecoration(Color? bgColor,
     {BorderRadius? borderRadius,
     Border? border,
     List<BoxShadow> shadow = const [],

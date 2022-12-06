@@ -42,7 +42,6 @@ Widget buildButtonWidget(BuildContext context) {
         context: context,
         bgColor: Colors.red,
         text: "Buy Ticket",
-        textColor: Colors.white,
         function: () {
           Get.toNamed(Routes.detailedEventRoute);
         },
@@ -82,14 +81,13 @@ Widget getFollowWidget(BuildContext context) {
         ),
         getButton(
             context: context,
-            bgColor: Colors.white,
             text: AppLocalizations.of(context)!.follow,
-            textColor: Colors.black,
             function: () {},
             fontsize: 14.sp,
             buttonHeight: 40.h,
             buttonWidth: 76.h,
             isBorder: true,
+
             borderColor: Colors.red,
             borderWidth: 1.h,
             borderRadius: BorderRadius.circular(14.h))
