@@ -15,9 +15,10 @@ Color shadowColor = "#2690B7B9".toColor();
 Color darkShadow = "#99000000".toColor();
 Color lightShadow = "#00000000".toColor();
 
-Color prim = "#1E95A7".toColor();
+Color primaryColor = "#dd855f".toColor();
 Color sliverListHeaderColor = bgColor.withOpacity(0.8);
-Color inverseColor = Colors.deepOrangeAccent;
+Color listItemColor = "#1d3344".toColor();
+
 
 extension ColorExtension on String {
   toColor() {

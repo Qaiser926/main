@@ -19,7 +19,7 @@ ThemeData getDarkThemeData() {
   return ThemeData(
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
-      primary: prim,
+      primary: primaryColor,
       onPrimary: Colors.white,
       secondary: bgColor,
       onSecondary: Colors.green,
@@ -28,8 +28,8 @@ ThemeData getDarkThemeData() {
       background: bgColor,
       onBackground: Colors.yellow,
       surface: bgColor,
-      onSurface: Colors.white,
-    ),iconTheme: IconThemeData(color: inverseColor),
+      onSurface: Colors.white,tertiary:listItemColor
+    ),iconTheme: IconThemeData(color: primaryColor),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700),
@@ -40,7 +40,7 @@ ThemeData getDarkThemeData() {
       overlayColor: NoAnimationColor(),
       indicator: BoxDecoration(
         borderRadius: BorderRadius.circular(44.h),
-        color: prim,
+        color: primaryColor,
       ),
       indicatorSize: TabBarIndicatorSize.tab,
       labelColor: Colors.white,
