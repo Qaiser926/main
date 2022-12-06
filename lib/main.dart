@@ -21,6 +21,8 @@ import 'package:json_theme/json_theme_schemas.dart';
 
 
 
+
+
 void main() async {
   await ScreenUtil.ensureScreenSize();
   runApp(MyApp());
@@ -36,25 +38,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ScreenUtilInit(
-          designSize: const Size(360, 690),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return GetMaterialApp(
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: supportedLocales,
-              debugShowCheckedModeBanner: false,
-              initialRoute: "/",
-              routes: Pages.routes,
-              theme: getLightThemeData(),
-            );
-          },
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: supportedLocales,
+          debugShowCheckedModeBanner: false,
+          initialRoute: "/",
+          routes: Pages.routes,
+          theme: getDarkThemeData(),
         );
+      },
+    );
   }
 }
 

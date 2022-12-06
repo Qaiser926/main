@@ -77,7 +77,7 @@ class _EventDetailState extends State<EventDetail> {
                   height: double.infinity,
                   width: double.infinity,
                   // Hintergrundfarbe des Containers
-                  color: Colors.white,
+
                   child: Column(
                     // alle elemente sind in der column angeordnet
                     children: [

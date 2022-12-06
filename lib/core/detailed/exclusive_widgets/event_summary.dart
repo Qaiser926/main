@@ -39,9 +39,8 @@ class EventSummary extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(22.h),
-          boxShadow: [
-            BoxShadow(color: shadowColor, blurRadius: 27, offset: Offset(0, 8))
-          ]),
+          boxShadow: [BoxShadow(blurRadius: 27, offset: Offset(0, 8))]
+          ),
       padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,26 +54,27 @@ class EventSummary extends StatelessWidget {
                   // TODO: sove that title can flow into price information
                   children: [
                     LocationWidget(location: location),
-                    getVerSpace(10.h),
-                    // no logic implemented regarding times-> wait for actual data
-                    TimeWidget(time: timeText, iCalElement: iCalElement),
-                    getVerSpace(10.h),
-                    // no logic implemented regarding times-> wait for actual data
-                    PriceWidget(prices: prices, ticketUrl: ticketUrl, websiteUrl: websiteUrl, status: status,),
-                  ]),
-
-
-
+                getVerSpace(10.h),
+                // no logic implemented regarding times-> wait for actual data
+                TimeWidget(time: timeText, iCalElement: iCalElement),
+                getVerSpace(10.h),
+                // no logic implemented regarding times-> wait for actual data
+                PriceWidget(
+                  prices: prices,
+                  ticketUrl: ticketUrl,
+                  websiteUrl: websiteUrl,
+                  status: status,
+                ),
+              ]),
 
           // Row(children: [ SizedBox(height: 50, width: 50)]),
 
           // GestureDetector(onTap: () => print("123"),child: SizedBox(height: 50, width: 50,
-          //   child:alternativeGetButton(context, Colors.white, "", accentColor,  () => print("123"), 14.sp,
+          //   child:alternativeGetButton(context,  "",  () => print("123"), 14.sp,
           //   weight: FontWeight.w700,
           //   buttonHeight: 50.h,
           //   buttonWidth: 50.h,
           //   isBorder: true,
-          //   borderColor: accentColor,
           //   borderWidth: 1.h,
           //   borderRadius: BorderRadius.circular(14.h))))]),
 
@@ -86,7 +86,4 @@ class EventSummary extends StatelessWidget {
       ),
     );
   }
-
 }
-
-

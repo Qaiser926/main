@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
-import 'package:othia/config/themes/color_data.dart';
 import '../../../utils/ui/ui_utils.dart';
 
 class TimeWidget extends StatelessWidget {
@@ -22,7 +21,7 @@ class TimeWidget extends StatelessWidget {
     child: Row(
       children: [
         Icon(Icons.access_time_outlined,
-        color: greyColor,
+
           size: 20.h,),
         getHorSpace(5.h),
         Text(

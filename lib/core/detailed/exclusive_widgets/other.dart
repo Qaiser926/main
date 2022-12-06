@@ -21,12 +21,12 @@ Container buildTicketPrice() {
         getRichText(
             firstText: "Ticket Price ",
             firstColor: Colors.black,
-            firstWeight: FontWeight.w600,
-            firstSize: 15.sp,
-            secondText: '(Economy)',
-            secondColor: Colors.grey,
-            secondWeight: FontWeight.w500,
-            secondSize: 13.sp),
+      firstWeight: FontWeight.w600,
+      firstSize: 15.sp,
+      secondText: '(Economy)',
+      secondColor: Colors.grey,
+      secondWeight: FontWeight.w500,
+      secondSize: 13.sp),
         getCustomFont(
             text: "\$21.00", fontSize: 20.sp, fontWeight: FontWeight.w700)
       ],

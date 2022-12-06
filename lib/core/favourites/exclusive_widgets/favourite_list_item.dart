@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../config/themes/color_data.dart';
+import '../../../config/themes/theme_config.dart';
+import '../../../constants/colors.dart';
 import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
@@ -13,13 +14,13 @@ import '../../../utils/ui/ui_utils.dart';
 Widget getFavouriteListItem(
     BuildContext context, FavouriteEventOrActivity favouriteEventOrActivity) {
   return Container(
-    margin: EdgeInsets.only(bottom: 20.h),
+    margin: EdgeInsets.only(bottom: 12.h, left: 12.h, right: 12.h),
     decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-              color: shadowColor, blurRadius: 27, offset: const Offset(0, 8))
-        ],
+        color: getCurrentDefaultTheme().colorScheme.tertiary,
+        // boxShadow: [
+        //   BoxShadow(
+        //       color: Colors.white, blurRadius: 27, offset: const Offset(0, 8))
+        // ],
         borderRadius: BorderRadius.circular(22.h)),
     padding: EdgeInsets.only(top: 7.h, left: 7.h, bottom: 6.h, right: 10.h),
     child: Row(
@@ -63,7 +64,6 @@ Widget getFavouriteListItem(
             IconButton(
                 icon: const Icon(
                   Icons.favorite,
-                  color: Colors.red,
                 ),
                 onPressed: () {
                   showDialog<bool>(
@@ -77,7 +77,7 @@ Widget getFavouriteListItem(
                             .removeFavouriteEventOrActivity(
                                 id: favouriteEventOrActivity.id)
                             .then((value) {
-                              print(value);
+                          print(value);
                           Provider.of<FavouriteNotifier>(context, listen: false)
                               .removeKey(key: favouriteEventOrActivity.id);
                         });

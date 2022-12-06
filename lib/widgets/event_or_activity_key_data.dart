@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../config/themes/color_data.dart';
+import '../../../constants/colors.dart';
 import '../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/app_dialogs.dart';
