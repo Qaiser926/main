@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../constants/colors.dart';
 import '../../../modules/models/shared_data_models.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:othia/config/themes/color_data.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
 

@@ -39,7 +39,6 @@ class IconRow extends StatelessWidget {
       TextButton(
         child: const Icon(
           Icons.share,
-          color: Colors.white,
         ),
         onPressed: () {
           Share.share('${AppLocalizations.of(context)!.shareMessage} $objectUrl');},
@@ -62,7 +61,6 @@ class IconRow extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: const BackButton(
-            color: Colors.white,
           ),
         ),
         // when clicking of favourite, business logic must define to add that event

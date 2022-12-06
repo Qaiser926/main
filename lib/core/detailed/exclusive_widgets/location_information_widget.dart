@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:othia/config/themes/color_data.dart';
-import 'package:othia/utils/services/data_handling/data_handling.dart';
+import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/modules/models/shared_data_models.dart';
@@ -36,7 +35,6 @@ class LocationWidget extends StatelessWidget {
         children: [
           Icon(
             Icons.location_on_outlined,
-            color: greyColor,
             size: 20.h,
 
           ),

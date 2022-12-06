@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../config/themes/color_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../constants/colors.dart';
 
 class getDialog extends StatefulWidget {
   final String objectTitle;

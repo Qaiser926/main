@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/config/themes/color_data.dart';
-import '../modules/models/eA_summary/eA_summary.dart';
 import '../modules/models/shared_data_models.dart';
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';

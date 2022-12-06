@@ -1,18 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../constants/colors.dart';
+
+class NoAnimationColor extends MaterialStateColor {
+  const NoAnimationColor() : super(_pressedColor);
+
+  static const int _pressedColor = 0x006666;
+
+  @override
+  Color resolve(Set<MaterialState> states) {
+    return const Color(_pressedColor);
+  }
+}
 
 ThemeData getDarkThemeData() {
   return ThemeData(
-    backgroundColor: Colors.blueGrey.shade900,
-    brightness: Brightness.dark,
-    primarySwatch: Colors.red,
-    primaryColor: Colors.blue,
-
+    colorScheme: ColorScheme(
+      brightness: Brightness.dark,
+      primary: primaryColor,
+      onPrimary: Colors.white,
+      secondary: bgColor,
+      onSecondary: Colors.green,
+      error: Colors.red,
+      onError: Colors.white,
+      background: bgColor,
+      onBackground: Colors.yellow,
+      surface: bgColor,
+      onSurface: Colors.white,tertiary:listItemColor
+    ),iconTheme: IconThemeData(color: primaryColor),
+    appBarTheme: AppBarTheme(
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700),
+      backgroundColor: Colors.transparent,
+    ),
+    tabBarTheme: TabBarTheme(
+      splashFactory: NoSplash.splashFactory,
+      overlayColor: NoAnimationColor(),
+      indicator: BoxDecoration(
+        borderRadius: BorderRadius.circular(44.h),
+        color: primaryColor,
+      ),
+      indicatorSize: TabBarIndicatorSize.tab,
+      labelColor: Colors.white,
+      labelStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp),
+      unselectedLabelColor: Colors.white70,
+      unselectedLabelStyle:
+          TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp),
+    ),
+    scaffoldBackgroundColor: bgColor,
+    // backgroundColor: bgColor,
+    // scaffoldBackgroundColor: bgColor,
+    // brightness: Brightness.dark,
     /// A text theme that contrasts with the primary color.
+
     primaryTextTheme: TextTheme(
-        headline4: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
-        headline2: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h)),
+      headline4: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+      headline3: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+      headline2:
+          TextStyle(fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h),
+    ),
 
     /// Text with a color that contrasts with the card and canvas colors.
     textTheme: TextTheme(
