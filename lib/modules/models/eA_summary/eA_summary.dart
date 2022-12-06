@@ -4,7 +4,7 @@ import '../shared_data_models.dart';
 part 'eA_summary.g.dart';
 
 @JsonSerializable()
-class SummaryEventorActivity {
+class SummaryEventOrActivity {
   final String title;
   final String id;
   final String categoryId;
@@ -14,7 +14,7 @@ class SummaryEventorActivity {
   final Time time;
   final Location location;
 
-  SummaryEventorActivity({
+  SummaryEventOrActivity({
     required this.time,
     required this.location,
     required this.title,
@@ -25,6 +25,6 @@ class SummaryEventorActivity {
     required this.isOnline,
   });
 
-  factory SummaryEventorActivity.fromJson(Map<String, dynamic> json) =>
-      _$SummaryEventorActivityFromJson(json);
+  factory SummaryEventOrActivity.fromJson(Map<String, dynamic> json) =>
+      _$SummaryEventOrActivityFromJson(json);
 }

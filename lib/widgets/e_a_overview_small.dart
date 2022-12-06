@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/config/themes/color_data.dart';
+import '../modules/models/eA_summary/eA_summary.dart';
 import '../modules/models/shared_data_models.dart';
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';
 
-class FilteredImageStack extends StatelessWidget {
+class EASummaryCard extends StatelessWidget {
+  final SummaryEventOrActivity eASummary;
   final Image image;
   final int index;
   final String categoryId;
@@ -16,7 +18,7 @@ class FilteredImageStack extends StatelessWidget {
   String title;
   List<double>? prices;
 
-  FilteredImageStack(
+  EASummaryCard(
       {Key? key,
         required this.location,
       required this.image,
