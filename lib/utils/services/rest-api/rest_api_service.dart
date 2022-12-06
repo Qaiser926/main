@@ -17,11 +17,29 @@ class RestService {
     return result;
   }
 
-  Future<Object> fetchEventDetails({required String eventId}) async {
-    print('fetching event details with id $eventId');
+  Future<Object> fetchEventOrActivityDetails({required String eventOrActivityId}) async {
+    print('fetching event details with id $eventOrActivityId');
 
     RestOptions restOptions =
-        RestOptions(path: '/events/$eventId', headers: {'auth': ''});
+        RestOptions(path: '/events/$eventOrActivityId', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> fetchFavouriteEventsAndActivities() async {
+    print('fetching event details with id');
+
+    RestOptions restOptions = RestOptions(
+        path: '/favouriteeventsandactivities/', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> removeFavouriteEventOrActivity({required id}) async {
+    print('removing favourite event or activity with id: $id');
+
+    RestOptions restOptions =
+        RestOptions(path: '/removeFavourite-dev/$id', headers: {'auth': ''});
     final result = await get(restOptions);
     return result;
   }

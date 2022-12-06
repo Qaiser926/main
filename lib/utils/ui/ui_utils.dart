@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/asset_constants.dart';
 import 'package:readmore/readmore.dart';
@@ -15,7 +16,36 @@ Widget getAssetImage(String image,
     color: color,
     width: width,
     height: height,
-    fit: boxFit,
+    fit: BoxFit.fill,
+  );
+}
+
+AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
+  return AppBar(
+    toolbarHeight: 73.h,
+    title: title,
+    backgroundColor: Colors.white,
+    elevation: 0,
+    centerTitle: true,
+    leading: leading == true
+        ? Padding(
+            padding: EdgeInsets.only(top: 26.h, bottom: 23.h),
+            child: GestureDetector(
+                onTap: () {
+                  function();
+                },
+                child:
+                    getSvgImage("arrow_back.svg", height: 24.h, width: 24.h)),
+          )
+        : null,
+  );
+}
+
+Widget getRoundImage(Image image) {
+  return ClipRRect(
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    clipBehavior: Clip.hardEdge,
+    child: Container(child: image),
   );
 }
 
@@ -43,6 +73,8 @@ Widget getMultilineCustomFontRestricted({
 }) {
   return ReadMoreText(
     text,
+
+
     trimLines: maxLines,
     trimMode: TrimMode.Line,
     trimCollapsedText: ' Read more',
@@ -58,6 +90,7 @@ Widget getCustomFont(
     {required String text,
     required double fontSize,
     int maxLine = 1,
+    Color color = Colors.black,
     TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
@@ -67,6 +100,7 @@ Widget getCustomFont(
     text,
     overflow: overflow,
     style: TextStyle(
+        color: color,
         decoration: decoration,
         fontSize: fontSize,
         fontStyle: FontStyle.normal,
@@ -136,4 +170,10 @@ Widget getRichText(
                   height: txtHeight))
         ]),
   );
+}
+
+double getFontSize({required String fontSizeType}) {
+  final Map fontSizeDict = { "headerFontSize": 18.0,
+                              "textFontSize": 12.0};
+  return fontSizeDict[fontSizeType];
 }

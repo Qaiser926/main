@@ -1,0 +1,33 @@
+
+import 'package:json_annotation/json_annotation.dart';
+import 'favourite_single_event_or_activity/favourite_event_or_activity.dart';
+part 'favourite_events_and_activities.g.dart';
+
+@JsonSerializable()
+class FavouriteEventsAndActivities {
+  Map<String, FavouriteEventOrActivity> futureEvents;
+  Map<String, FavouriteEventOrActivity> pastEvents;
+  Map<String, FavouriteEventOrActivity> openActivities;
+  Map<String, FavouriteEventOrActivity> closedActivities;
+
+  FavouriteEventsAndActivities({
+    required final this.futureEvents,
+    required final this.pastEvents,
+    required final this.openActivities,
+    required final this.closedActivities,
+  });
+
+  bool allEmpty() {
+    if (futureEvents.isEmpty &&
+        pastEvents.isEmpty &&
+        openActivities.isEmpty &&
+        closedActivities.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  factory FavouriteEventsAndActivities.fromJson(Map<String, dynamic> json) =>
+      _$FavouriteEventsAndActivitiesFromJson(json);
+}

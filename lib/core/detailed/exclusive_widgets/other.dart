@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
 import '../../../config/routes/routes.dart';
 import '../../../constants/asset_constants.dart';
 import '../../../utils/ui/ui_utils.dart';
 import '../../../widgets/button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Container buildTicketPrice() {
   // must define ticket to be empty in case no price is given
@@ -83,7 +83,7 @@ Widget getFollowWidget(BuildContext context) {
         getButton(
             context: context,
             bgColor: Colors.white,
-            text: "Follow",
+            text: AppLocalizations.of(context)!.follow,
             textColor: Colors.black,
             function: () {},
             fontsize: 14.sp,

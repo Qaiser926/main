@@ -2,15 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-List<FilteredImageStack> getFilteredImageStackList(List pure_pictures) {
+List<FilteredImageStack> getFilteredImages({required List unfilteredImages}) {
   List<FilteredImageStack> filteredPictures = [];
-  pure_pictures.forEach((image) =>
+  unfilteredImages.forEach((image) =>
       filteredPictures.add(FilteredImageStack(image: image)));
   return filteredPictures;
 }
 
 class FilteredImageStack extends StatelessWidget {
-  final ImageProvider image;
+  final Image image;
 
   const FilteredImageStack({Key? key, required this.image}) : super(key: key);
 
@@ -23,7 +23,7 @@ class FilteredImageStack extends StatelessWidget {
               margin: const EdgeInsets.all(0.0),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: image,
+                  image: image.image,
                   fit: BoxFit.cover,
                 ),
               ),

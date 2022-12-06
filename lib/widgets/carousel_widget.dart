@@ -6,7 +6,7 @@ import 'filtered_image_stack.dart';
 class PictureCarousel extends StatefulWidget {
   List<FilteredImageStack> imageList = [];
 
-  PictureCarousel(List<FilteredImageStack> images, {super.key}) {
+  PictureCarousel({required List<FilteredImageStack> images, super.key}) {
     imageList = images;
   }
 
