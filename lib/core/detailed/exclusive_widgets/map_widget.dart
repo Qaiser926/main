@@ -76,6 +76,7 @@ class _SimpleMapState extends State<SimpleMap> {
                               ),
                             ))
                   ])
-                ])))]));
+                ]))),
+          getVerSpace(25.h),]));
   }
 }

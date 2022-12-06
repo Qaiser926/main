@@ -23,7 +23,8 @@ class DescriptionWidget extends StatelessWidget {
               Text(AppLocalizations.of(context)!.description, style: Theme.of(context).textTheme.headline2,),
               getVerSpace(25),
               getMultilineCustomFontRestricted(textTheme: Theme.of(context)
-                  .textTheme.headline4, text: description, maxLines: 3)]),)
+                  .textTheme.headline4, text: description, maxLines: 3),
+              getVerSpace(25.h),]),)
     ,
     );
 

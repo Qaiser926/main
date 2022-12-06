@@ -1,15 +1,16 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:othia/utils/services/exceptions.dart';
 import '../../modules/models/detailed_event/detailed_event.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/services/data_handling/get_ical_element.dart';
+import '../../utils/services/data_handling/keep_alive_future_builder.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/future_service.dart';
 import '../../utils/ui/ui_utils.dart';
-import '../../widgets/disccover_events_horizontally.dart';
 import 'exclusive_widgets/button_widget.dart';
 import 'exclusive_widgets/description_widget.dart';
+import 'exclusive_widgets/horizontal_exploration.dart';
 import 'exclusive_widgets/map_widget.dart';
 import '../../widgets/splash_screen.dart';
 import 'package:get/get.dart';
@@ -41,12 +42,13 @@ class _EventDetailState extends State<EventDetail> {
     String eventId = Get.arguments;
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return KeepAliveFutureBuilder(
         future: detailedEventOrActivity,
         builder: (context, snapshot) {
           try {
@@ -65,67 +67,79 @@ class _EventDetailState extends State<EventDetail> {
               );
             }
 
-            return WillPopScope(
-              onWillPop: () async {
-                backClick();
-                return false;
-              },
-              child: Scaffold(
-                body: Container(
-                  //in diesem container sind sind alle attribute nacheinander enthalten, beim hinzufügen
-                  // wird durch die infinity characteristik der container erweitert (scrollbar)
-                  height: double.infinity,
-                  width: double.infinity,
-                  // Hintergrundfarbe des Containers
+            return SafeArea(
+              child: WillPopScope(
+                onWillPop: () async {
+                  backClick();
+                  return false;
+                },
+                child: Scaffold(
+                  body: Container(
+                    //in diesem container sind sind alle attribute nacheinander enthalten, beim hinzufügen
+                    // wird durch die infinity characteristik der container erweitert (scrollbar)
+                    height: double.infinity,
+                    width: double.infinity,
+                    // Hintergrundfarbe des Containers
 
-                  child: Column(
-                    // alle elemente sind in der column angeordnet
-                    children: [
-                      Expanded(
-                        // the first item has the expanded characteristic, meaning that it fills the available space
-                        flex: 1,
-                        child: ListView(
-                          // make it all scrollable
-                          children: [
-                            // in the image widget, the event details (name, place, time are contained)
-                            ImageWidget(
-                              detailedEventOrActivity: detailedEventOrActivity,
-                              iCalElement: iCalElement,
+                    child: Column(
+                      // alle elemente sind in der column angeordnet
+                      children: [
+                        Expanded(
+                          // the first item has the expanded characteristic, meaning that it fills the available space
+                          flex: 1,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                // in the image widget, the event details (name, place, time are contained)
+                                ImageWidget(
+                                  detailedEventOrActivity:
+                                      detailedEventOrActivity,
+                                  iCalElement: iCalElement,
+                                ),
+                                // space between ImageWidget and ticket price
+                                getVerSpace(10.h),
+                                // TODO follower only if not Othia scraped
+                                getFollowWidget(context),
+                                getVerSpace(25.h),
+                                if (detailedEventOrActivity.description != null)
+                                  DescriptionWidget(
+                                      description:
+                                          detailedEventOrActivity.description!),
+                                if (!detailedEventOrActivity.isOnline)
+                                  SimpleMap(latLng.LatLng(
+                                      detailedEventOrActivity
+                                          .location.latitude!,
+                                      detailedEventOrActivity
+                                          .location.longitude!)),
+                                if (detailedEventOrActivity.time.openingTime !=
+                                    null)
+                                  OpeningTimesSection(
+                                      openingTime: detailedEventOrActivity
+                                          .time.openingTime!),
+
+                                // TODO include share url + decide where to integrate
+                                ButtonWidget(
+                                    iCalElement: iCalElement,
+                                    shareUrl: "temp",
+                                    websiteUrl:
+                                        detailedEventOrActivity.websiteUrl,
+                                    ticketUrl:
+                                        detailedEventOrActivity.ticketUrl),
+                                getVerSpace(25.h),
+                                if (detailedEventOrActivity.eventSeriesId !=
+                                    null) ExploreEventSeries(eventSeriesId: detailedEventOrActivity.eventSeriesId!),
+                                ExploreCategory(categoryId: detailedEventOrActivity.categoryId),
+                                if (detailedEventOrActivity.location.locationId !=
+                                    null) ExploreLocation(locationId: detailedEventOrActivity.location.locationId!),
+
+                              ],
                             ),
-                            // space between ImageWidget and ticket price
-                            getVerSpace(10.h),
-                            // TODO follower only if not Othia scraped
-                            getFollowWidget(context),
-                            getVerSpace(25.h),
-                            if (detailedEventOrActivity.description != null)
-                              DescriptionWidget(
-                                  description:
-                                      detailedEventOrActivity.description!),
-                            if (detailedEventOrActivity.description != null)
-                              getVerSpace(25.h),
-                            if (!detailedEventOrActivity.isOnline)
-                              SimpleMap(latLng.LatLng(
-                                  detailedEventOrActivity.location.latitude!,
-                                  detailedEventOrActivity.location.longitude!)),
-                            getVerSpace(25.h),
-                            if (detailedEventOrActivity.time.openingTime !=
-                                null)
-                              OpeningTimesSection(
-                                  openingTime: detailedEventOrActivity
-                                      .time.openingTime!),
-                            getVerSpace(25.h),
-                            // TODO include share url + decide where to integrate
-                            ButtonWidget(
-                                iCalElement: iCalElement,
-                                shareUrl: "temp",
-                                websiteUrl: detailedEventOrActivity.websiteUrl,
-                                ticketUrl: detailedEventOrActivity.ticketUrl),
-                            getVerSpace(25.5),
-                            HorizontalEADiscovery(functionParameter: detailedEventOrActivity.categoryId,)
-                          ],
-                        ),
-                      )
-                    ],
+
+                            // make it all scrollable
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

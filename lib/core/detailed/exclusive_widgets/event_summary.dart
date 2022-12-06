@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/detailed/exclusive_widgets/price_widget.dart';
 import 'package:othia/core/detailed/exclusive_widgets/time_widget.dart';
-import '../../../constants/colors.dart';
 import '../../../modules/models/shared_data_models.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'location_information_widget.dart';

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
+import 'package:othia/utils/services/exceptions.dart';
 
-class StillLoading implements Exception {}
 
 Map<String, dynamic> snapshotHandler(snapshot) {
   if (snapshot.connectionState != ConnectionState.done) {

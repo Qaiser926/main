@@ -94,5 +94,16 @@
         "septemberShort": "Sep",
         "octoberShort": "Oct",
         "novemberShort": "Nov",
-        "decemberShort": "Dec"
+        "decemberShort": "Dec",
+
+    "exploreLocation": "More at this location",
+        "exploreEventSeries": "Other dates",
+        "exploreCategory": "More from \"{categoryName}\"",
+          "@exploreCategory": {
+            "placeholders": {
+              "categoryName": {
+                "type": "String"
+              }
+            }
+          }
 }

@@ -24,7 +24,8 @@ class OpeningTimesSection extends StatelessWidget {
               style: Theme.of(context).textTheme.headline2,
             ),
             getVerSpace(25),
-            OpeningTimes(openingTime: openingTime)
+            OpeningTimes(openingTime: openingTime),
+            getVerSpace(25.h),
           ],
         ));
   }

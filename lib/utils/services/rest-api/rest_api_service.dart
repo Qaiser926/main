@@ -45,10 +45,28 @@ class RestService {
   }
 
   Future<Object> getEAIdsForCategory({required categoryId}) async {
-    print('requesting ids for: $categoryId');
+    print('requesting ids for category id: $categoryId');
 
     RestOptions restOptions =
     RestOptions(path: '/getEAIdsForCategory-dev/$categoryId', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> getEAIdsForEventSeries({required eventSeriesId}) async {
+    print('requesting ids for eventseries id: $eventSeriesId');
+
+    RestOptions restOptions =
+    RestOptions(path: '/getEAIdsForEventSeries-dev/$eventSeriesId', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> getEAIdsForLocation({required locationId}) async {
+    print('requesting ids for location id: $locationId');
+
+    RestOptions restOptions =
+    RestOptions(path: '/getEAIdsForLocation-dev/$locationId', headers: {'auth': ''});
     final result = await get(restOptions);
     return result;
   }
