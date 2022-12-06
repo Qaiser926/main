@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:othia/config/themes/dark_theme.dart';
 
-import '../../../config/themes/color_data.dart';
+import '../../../constants/colors.dart';
 import '../../../utils/ui/ui_utils.dart';
 
 Widget getHeader({required final String text}) {
   return Container(
-    color: lightGrey.withOpacity(0.8),
+    color: sliverListHeaderColor,
     child: Column(
       children: [
         getVerSpace(8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            getCustomFont(
-              text: text,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            )
-          ],
+        Text(
+          text,
+          style: getDarkThemeData().primaryTextTheme.headline3,
+          textAlign: TextAlign.center,
         ),
         getVerSpace(8),
       ],

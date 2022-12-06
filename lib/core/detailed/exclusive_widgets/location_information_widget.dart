@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:othia/config/themes/color_data.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 
@@ -30,7 +29,6 @@ class LocationWidget extends StatelessWidget {
         children: [
           Icon(
             Icons.location_on_outlined,
-            color: greyColor,
             size: 20.h,
 
           ),

@@ -14,6 +14,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'constants/supported_locales.dart';
 import 'core/favourites/exclusive_widgets/list_change_notifier.dart';
 
+
+
 void main() async {
   await ScreenUtil.ensureScreenSize();
   runApp(MyApp());
@@ -28,25 +30,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-          designSize: const Size(360, 690),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return GetMaterialApp(
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: supportedLocales,
-              debugShowCheckedModeBanner: false,
-              initialRoute: "/",
-              routes: Pages.routes,
-              theme: getDarkThemeData(),
-            );
-          },
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: supportedLocales,
+          debugShowCheckedModeBanner: false,
+          initialRoute: "/",
+          routes: Pages.routes,
+          theme: getDarkThemeData(),
         );
+      },
+    );
   }
 }
 
