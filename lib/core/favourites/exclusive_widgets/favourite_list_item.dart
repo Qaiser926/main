@@ -16,7 +16,7 @@ Widget getFavouriteListItem(
   return Container(
     margin: EdgeInsets.only(bottom: 12.h, left: 12.h, right: 12.h),
     decoration: BoxDecoration(
-        color: getCurrentDefaultTheme().colorScheme.tertiary,
+        color: Theme.of(context).colorScheme.tertiary,
         // boxShadow: [
         //   BoxShadow(
         //       color: Colors.white, blurRadius: 27, offset: const Offset(0, 8))
