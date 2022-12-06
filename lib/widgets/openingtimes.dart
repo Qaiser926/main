@@ -64,7 +64,7 @@ class OpeningTimes extends StatelessWidget {
           }
 
           return Container(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,

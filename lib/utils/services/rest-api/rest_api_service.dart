@@ -52,4 +52,13 @@ class RestService {
     final result = await get(restOptions);
     return result;
   }
+
+  Future<Object> getEASummary({required id}) async {
+    print('requesting summary for: $id');
+
+    RestOptions restOptions =
+    RestOptions(path: '/getEASummary-dev/$id', headers: {'auth': ''});
+    final result = await get(restOptions);
+    return result;
+  }
 }
