@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
-import 'package:palette_generator/palette_generator.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../constants/colors.dart';
