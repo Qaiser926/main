@@ -19,7 +19,7 @@ class DropDownAppBar extends AppBar {
       : super(
     title: Text(appBarTitle),
     elevation: 0,
-    bottom: PreferredSize(
+    bottom:PreferredSize (
       preferredSize: const Size(double.infinity, 50),
 
         child: buildDropdownBar(context: context),
