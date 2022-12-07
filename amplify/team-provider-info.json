@@ -37,7 +37,10 @@
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
           "s3Key": "amplify-builds/getEAIdsForLocation-596966573235592f6679-build.zip"
         },
-        "removeFavourite": {}
+        "removeFavourite": {
+          "deploymentBucketName": "amplify-othia-dev-141535-deployment",
+          "s3Key": "amplify-builds/removeFavourite-6d35567879426f4c6a32-build.zip"
+        }
       },
       "api": {
         "othiaApi": {}

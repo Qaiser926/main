@@ -6,7 +6,7 @@ import '../../constants/asset_constants.dart';
 import 'package:readmore/readmore.dart';
 import 'package:flutter_svg/svg.dart';
 
-Widget getAssetImage(String image,
+Image getAssetImage(String image,
     {double? width,
     double? height,
     Color? color,
@@ -43,8 +43,7 @@ AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
 
 Widget getRoundImage(Image image) {
   return ClipRRect(
-    borderRadius: BorderRadius.all(Radius.circular(20)),
-    clipBehavior: Clip.hardEdge,
+    borderRadius: BorderRadius.circular(31),
     child: Container(child: image),
   );
 }
@@ -73,8 +72,6 @@ Widget getMultilineCustomFontRestricted({
 }) {
   return ReadMoreText(
     text,
-
-
     trimLines: maxLines,
     trimMode: TrimMode.Line,
     trimCollapsedText: ' Read more',
@@ -90,6 +87,7 @@ Widget getCustomFont(
     {required String text,
     required double fontSize,
     int maxLine = 1,
+    Color color = Colors.white,
     TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
@@ -171,7 +169,6 @@ Widget getRichText(
 }
 
 double getFontSize({required String fontSizeType}) {
-  final Map fontSizeDict = { "headerFontSize": 18.0,
-                              "textFontSize": 12.0};
+  final Map fontSizeDict = {"headerFontSize": 18.0, "textFontSize": 12.0};
   return fontSizeDict[fontSizeType];
 }

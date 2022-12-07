@@ -8,12 +8,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavouriteAppBar extends AppBar {
   final TabController tabController;
-  final PageController pageController;
   final BuildContext context;
 
   FavouriteAppBar(
       {required this.tabController,
-      required this.pageController,
       required this.context,
       super.key})
       : super(
@@ -34,10 +32,11 @@ class FavouriteAppBar extends AppBar {
                         offset: const Offset(0, 8),
                         blurRadius: 27)
                   ]),
-              child: TabBar(padding: EdgeInsets.all(5.h),
+              child: TabBar(
+                  padding: EdgeInsets.all(5.h),
                   controller: tabController,
                   onTap: (index) {
-                    pageController.animateToPage(
+                    tabController.animateTo(
                       index,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.easeInOut,

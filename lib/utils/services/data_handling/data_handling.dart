@@ -17,7 +17,7 @@ Image getPhotoNullSave(
     String? photo}) {
   if (photo != null) {
     return Image.memory(
-      base64Decode(photo),
+      base64Decode(photo),fit: BoxFit.contain,
       width: width,
       height: height,
     );
