@@ -22,17 +22,21 @@ Widget getFavouriteListItem(
         //       color: Colors.white, blurRadius: 27, offset: const Offset(0, 8))
         // ],
         borderRadius: BorderRadius.circular(22.h)),
-    padding: EdgeInsets.only(top: 10.h, bottom: 10.h,left: 6.h,  right: 0.h),
+    padding: EdgeInsets.only(top: 6.h, bottom: 6.h, left: 6.h, right: 0.h),
     child: Row(
       children: [
         Flexible(
           child: Row(
             children: [
-              getRoundImage(getPhotoNullSave(
-                  categoryId: favouriteEventOrActivity.categoryId,
-                  photo: getAssetImage("select4.png",).toString(),
-                  width: 100.h,
-                  height: 80.h)),
+              getRoundImage(
+
+
+                getPhotoNullSave(
+                    categoryId: favouriteEventOrActivity.categoryId,
+                    photo: favouriteEventOrActivity.photo,
+                    width: 110.h,
+                    height: 80.h),
+              ),
               getHorSpace(10.h),
               Flexible(
                   child: Column(

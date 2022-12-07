@@ -19,7 +19,7 @@ Image getPhotoNullSave(
     return Image.memory(
       base64Decode(photo),
       width: width,
-      height: height,
+      height: height,fit: BoxFit.fill,
     );
   } else {
     return getAssetImage("$categoryId.jpg", width: width, height: height)

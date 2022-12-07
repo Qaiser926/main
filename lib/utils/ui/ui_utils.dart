@@ -43,7 +43,7 @@ AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
 
 Widget getRoundImage(Image image) {
   return ClipRRect(
-    borderRadius: BorderRadius.all(Radius.circular(13)),
+    borderRadius: BorderRadius.all(Radius.circular(16)),
     clipBehavior: Clip.antiAlias,
     child: Container(child: image),
   );
@@ -90,7 +90,7 @@ Widget getCustomFont(
     {required String text,
     required double fontSize,
     int maxLine = 1,
-    Color color = Colors.black,
+    Color color = Colors.white,
     TextOverflow overflow = TextOverflow.ellipsis,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = FontWeight.normal,
