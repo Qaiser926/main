@@ -104,7 +104,15 @@
             "type": "String"
           }
         }
-      }
+      },
+
+    "category": "Kategorie",
+    "location": "Ort",
+    "time": "Zeit",
+    "type": "Typ",
+    "price": "Preis",
+    "sort": "Sortieren",
+    "additionalFilters": "Weitere"
 
 
 

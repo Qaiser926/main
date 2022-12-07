@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:json_theme/json_theme.dart';
 import 'package:provider/provider.dart';
 import 'amplifyconfiguration.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +16,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'constants/supported_locales.dart';
 import 'core/favourites/exclusive_widgets/list_change_notifier.dart';
-import 'package:json_theme/json_theme_schemas.dart';
+
 
 
 

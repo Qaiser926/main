@@ -105,5 +105,13 @@
                 "type": "String"
               }
             }
-          }
+          },
+
+  "category": "Category",
+      "location": "Location",
+      "time": "Time",
+      "type": "Type",
+      "price": "Price",
+      "sort": "Sort",
+      "additionalFilters": "More"
 }

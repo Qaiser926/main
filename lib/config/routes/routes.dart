@@ -3,6 +3,7 @@ abstract class Routes {
   static const homeScreenRoute = Paths.homeScreenPath;
   static const detailedEventRoute = Paths.detailedEventPath;
   static const favouriteRoute = Paths.favouritePath;
+  static const searchRoute = Paths.searchPath;
 }
 
 abstract class Paths {
@@ -10,4 +11,6 @@ abstract class Paths {
   static const homeScreenPath = '/home';
   static const detailedEventPath = 'detailed-event';
   static const favouritePath = '/favourite';
+  static const searchPath = '/search';
+
 }

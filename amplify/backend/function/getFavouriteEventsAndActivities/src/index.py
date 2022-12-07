@@ -33,10 +33,87 @@ def handler(event, context):
                     "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
                     "id": "test_id_2",
                     "photo": photo_binary
+                },
+                "test_id_5": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_event",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_1",
+                    "photo": photo_binary
+                },
+                "test_id_6": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_event2",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_2",
+                    "photo": photo_binary
+                },
+                "test_id_8": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_event",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_1",
+                    "photo": photo_binary
+                },
+                "test_id_9": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
+                    "title": "test_event2",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_2",
+                    "photo": photo_binary
                 }
             },
             "pastEvents": {
                 "test_id_3": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_4": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_9": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_10": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_31": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_41": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_91": {
+                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
+                    "title": "test_event3",
+                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                    "id": "test_id_3",
+                    "photo": photo_binary
+                },
+                "test_id_11": {
                     "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
                     "title": "test_event3",
                     "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
