@@ -22,23 +22,19 @@ class FavouriteScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-              value: FavouriteNotifier(
-                  openActivities: favouriteEventAndActivity.openActivities,
-                  closedActivities: favouriteEventAndActivity.closedActivities,
-                  pastEvents: favouriteEventAndActivity.pastEvents,
-                  upcomingEvents: favouriteEventAndActivity.futureEvents))
-        ],
-        child: NestedScrollView(
-          controller: scrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[];
-          },
-          body: TabBarView(
-              controller: tabController,
-              children: [getFavouriteEventPart(), getFavouriteActivityPart()]),
-        ));
+      providers: [
+        ChangeNotifierProvider.value(
+          value: FavouriteNotifier(
+              openActivities: favouriteEventAndActivity.openActivities,
+              closedActivities: favouriteEventAndActivity.closedActivities,
+              pastEvents: favouriteEventAndActivity.pastEvents,
+              upcomingEvents: favouriteEventAndActivity.futureEvents),
+        )
+      ],
+      child: TabBarView(
+          controller: tabController,
+          children: [getFavouriteEventPart(), getFavouriteActivityPart()]),
+    );
   }
 
   Widget getFavouriteActivityPart() {

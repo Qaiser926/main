@@ -43,8 +43,8 @@ AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
 
 Widget getRoundImage(Image image) {
   return ClipRRect(
-    borderRadius: BorderRadius.all(Radius.circular(20)),
-    clipBehavior: Clip.hardEdge,
+    borderRadius: BorderRadius.all(Radius.circular(13)),
+    clipBehavior: Clip.antiAlias,
     child: Container(child: image),
   );
 }

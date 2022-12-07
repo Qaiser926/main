@@ -23,9 +23,6 @@ class _FavouritePageState extends State<FavouritePage>
   late final TabController _tabController;
   late final ScrollController _scrollController;
   late Future<Object> future;
-  PageController pageController = PageController(
-    initialPage: 0,
-  );
 
   get favouriteEventAndActivity => favouriteEventAndActivity;
 
@@ -62,17 +59,17 @@ class _FavouritePageState extends State<FavouritePage>
 
               return SafeArea(
                 child: Scaffold(
-                    primary: true,
-                    appBar: FavouriteAppBar(
-                      tabController: _tabController,
-                      pageController: pageController,
-                      context: context,
-                    ),
-                    body: FavouriteScrollView(
-                      scrollController: _scrollController,
-                      tabController: _tabController,
-                      favouriteEventAndActivity: favouriteEventAndActivity,
-                    )),
+                  primary: true,
+                  appBar: FavouriteAppBar(
+                    tabController: _tabController,
+                    context: context,
+                  ),
+                  body: FavouriteScrollView(
+                    scrollController: _scrollController,
+                    tabController: _tabController,
+                    favouriteEventAndActivity: favouriteEventAndActivity,
+                  ),
+                ),
               );
             }
           }

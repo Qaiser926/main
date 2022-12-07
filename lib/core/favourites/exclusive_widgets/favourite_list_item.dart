@@ -22,7 +22,7 @@ Widget getFavouriteListItem(
         //       color: Colors.white, blurRadius: 27, offset: const Offset(0, 8))
         // ],
         borderRadius: BorderRadius.circular(22.h)),
-    padding: EdgeInsets.only(top: 7.h, left: 7.h, bottom: 6.h, right: 10.h),
+    padding: EdgeInsets.only(top: 10.h, bottom: 10.h,left: 6.h,  right: 0.h),
     child: Row(
       children: [
         Flexible(
@@ -30,9 +30,9 @@ Widget getFavouriteListItem(
             children: [
               getRoundImage(getPhotoNullSave(
                   categoryId: favouriteEventOrActivity.categoryId,
-                  photo: favouriteEventOrActivity.photo,
+                  photo: getAssetImage("select4.png",).toString(),
                   width: 100.h,
-                  height: 82.h)),
+                  height: 80.h)),
               getHorSpace(10.h),
               Flexible(
                   child: Column(
@@ -59,40 +59,39 @@ Widget getFavouriteListItem(
             ],
           ),
         ),
-        Row(
-          children: [
-            IconButton(
-                icon: const Icon(
-                  Icons.favorite,
-                ),
-                onPressed: () {
-                  showDialog<bool>(
-                          context: context,
-                          builder: (context) => getDialog(
-                              objectTitle: favouriteEventOrActivity.title))
-                      .then((value) {
-                    if (value!) {
-                      try {
-                        RestService()
-                            .removeFavouriteEventOrActivity(
-                                id: favouriteEventOrActivity.id)
-                            .then((value) {
-                          print(value);
-                          Provider.of<FavouriteNotifier>(context, listen: false)
-                              .removeKey(key: favouriteEventOrActivity.id);
-                        });
-                      } on Exception catch (e) {
-                        //TODO
-                        throw e;
-                      } catch (e) {
-                        //TODO
-                        throw e;
-                      }
+        Row(children: [
+          IconButton(
+              constraints: BoxConstraints(maxWidth: 50.h),
+              icon: const Icon(
+                Icons.favorite,
+              ),
+              onPressed: () {
+                showDialog<bool>(
+                        context: context,
+                        builder: (context) => getDialog(
+                            objectTitle: favouriteEventOrActivity.title))
+                    .then((value) {
+                  if (value!) {
+                    try {
+                      RestService()
+                          .removeFavouriteEventOrActivity(
+                              id: favouriteEventOrActivity.id)
+                          .then((value) {
+                        print(value);
+                        Provider.of<FavouriteNotifier>(context, listen: false)
+                            .removeKey(key: favouriteEventOrActivity.id);
+                      });
+                    } on Exception catch (e) {
+                      //TODO
+                      throw e;
+                    } catch (e) {
+                      //TODO
+                      throw e;
                     }
-                  });
-                }),
-          ],
-        ),
+                  }
+                });
+              }),
+        ]),
       ],
     ),
   );
