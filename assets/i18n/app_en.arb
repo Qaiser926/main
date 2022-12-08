@@ -113,5 +113,13 @@
       "type": "Type",
       "price": "Price",
       "sort": "Sort",
-      "additionalFilters": "More"
+      "additionalFilters": "More",
+
+      "minimum": "Minimum",
+      "maximum": "Maximum",
+
+      "priceRangeDescription": "Price range",
+
+      "clearAll": "Clear all",
+          "showResults": "Show results"
 }

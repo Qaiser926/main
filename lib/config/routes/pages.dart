@@ -12,6 +12,6 @@ class Pages {
     Routes.homeScreenRoute: (context) => const EventDetail(),
     Routes.detailedEventRoute: (context) => const EventDetail(),
     Routes.favouriteRoute: (context) => const FavouritePage(),
-    Routes.searchRoute: (context) => const SearchPage(),
+    Routes.searchRoute: (context) => SearchPage(),
   };
 }

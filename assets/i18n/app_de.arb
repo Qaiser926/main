@@ -112,7 +112,14 @@
     "type": "Typ",
     "price": "Preis",
     "sort": "Sortieren",
-    "additionalFilters": "Weitere"
+    "additionalFilters": "Weitere",
+
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "priceRangeDescription": "Preisspanne",
+
+    "clearAll": "Zurücksetzen",
+    "showResults": "Zeige Ergebnisse"
 
 
 
