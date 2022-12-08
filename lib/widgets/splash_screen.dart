@@ -29,7 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    initializeScreenSize(context);
     return Scaffold(
       appBar: getColorStatusBar(),
       body: SafeArea(
