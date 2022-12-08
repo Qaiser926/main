@@ -27,11 +27,6 @@ class CategoryFilter extends StatelessWidget {
             delegate: SliverChildListDelegate(getList(model)),
           )
         ]);
-        //   children:
-        //   crossAxisCount: 2,
-        //   mainAxisSpacing: 10.h,
-        //   crossAxisSpacing: 10.h,
-        // );
       }),
     );
   }
@@ -43,51 +38,24 @@ List<Widget> getList(ExpandedCategoryNotifier expandedCategoryNotifier) {
     if (index != 0 && index % 2 == 1) {
       if (expandedCategoryNotifier.getExpandedIndex == index ||
           expandedCategoryNotifier.getExpandedIndex == index - 1) {
-        allMightyList.add(getAnimated(index, true));
+        allMightyList.add(getExpandedWidget(
+            expandedCategoryNotifier.getExpandedCategory!, true));
       } else {
-        allMightyList.add(getAnimated(index, false));
+        allMightyList.add(getExpandedWidget("", false));
       }
     } else {
-      int index2 = index + 1;
-
-      Image image = getAssetImage(categoryIds[index] + ".jpg");
-      Image image2 = getAssetImage(categoryIds[index2] + ".jpg");
-      Widget firstSingleCategoryWidget;
-      if (expandedCategoryNotifier.getExpandedIndex == index) {
-        firstSingleCategoryWidget = SingleWid(
-          image: image,
-          index: index,
-          categoryId: "ich bin eine ID",
-          isExpanded: true,
-        );
-      } else {
-        firstSingleCategoryWidget = SingleWid(
-          image: image,
-          index: index,
-          categoryId: "ich bin eine ID",
-          isExpanded: false,
-        );
-      }
-      Widget secondSingleCategoryWidget;
-      if(expandedCategoryNotifier.getExpandedIndex == index2){
-        secondSingleCategoryWidget= SingleWid(
-          image: image2,
-          index: index2,
-          categoryId: "ich bin eine ID",isExpanded: true,
-        );
-      } else {
-        secondSingleCategoryWidget= SingleWid(
-          image: image2,
-          index: index2,
-          categoryId: "ich bin eine ID",isExpanded: false,
-        );
-      }
-
-
       allMightyList.add(Row(
         children: [
-          Flexible(child: firstSingleCategoryWidget),
-          Flexible(child: secondSingleCategoryWidget)
+          Flexible(
+              child: getCategoryGridItem(
+                  index: index + 1,
+                  currentExpandedIndex:
+                      expandedCategoryNotifier.getExpandedIndex)),
+          Flexible(
+              child: getCategoryGridItem(
+                  index: index,
+                  currentExpandedIndex:
+                      expandedCategoryNotifier.getExpandedIndex))
         ],
       ));
     }
@@ -96,103 +64,30 @@ List<Widget> getList(ExpandedCategoryNotifier expandedCategoryNotifier) {
   return allMightyList;
 }
 
-Widget getAnimated(int index, bool expanded) {
+Widget getCategoryGridItem(
+    {required int index, required int? currentExpandedIndex}) {
+  final String categoryId = categoryIds[index];
+  Image image = getAssetImage(categoryId + ".jpg");
+
+  return CategoryGridItem(
+    image: image,
+    index: index,
+    categoryId: categoryId,
+    currentExpandedIndex: currentExpandedIndex,
+  );
+}
+
+Widget getExpandedWidget(String expandedCategoryId, bool expanded) {
   return AnimatedContainer(
     duration: Duration(milliseconds: 200),
     // margin: const EdgeInsets.all(20.0),
     width: !expanded ? 0 : 600,
     height: !expanded ? 0 : 100,
     color: Colors.red,
-    child: Text(categoryIds[index]),
-  );
-}
-// class CategoryFilter extends StatefulWidget {
-//   @override
-//   State<StatefulWidget> createState() {
-//     return CategoryFilterState();
-//   }
-// }
-//
-// class CategoryFilterState extends State<CategoryFilter> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(children: [
-//       Row(children: [
-//         Flexible(child: getExpansionPanel()),
-//         Spacer(),
-//         Flexible(child: getExpansionPanel())
-//       ]),
-//       Row(children: [
-//         Flexible(child: getExpansionPanel()),
-//         Spacer(),
-//         Flexible(child: getExpansionPanel())
-//       ]),
-//     ]);
-//
-//     // ExpandIcon
-//
-//     // return ExpansionPanelList(children: [],)
-//     // return Column(
-//     //   children: [
-//     //     getRow(),
-//     //     getRow(),
-//     //   ],
-//     // );
-//
-//     // TODO: implement build
-//     return GridView.count(
-//       children: getAllCategoryWidgets(),
-//       crossAxisCount: 2,
-//       mainAxisSpacing: 10.h,
-//       crossAxisSpacing: 10.h,
-//     );
-//   }
-// }
-
-Widget getRow() {
-  return Row(
-    children: [
-      SizedBox(height: 200.h, width: 150.h, child: getExpansionPanel()),
-      SizedBox(height: 200.h, width: 150.h, child: getExpansionPanel()),
-    ],
+    child: Text(expandedCategoryId),
   );
 }
 
-Widget getExpansionPanel() {
-  return SizedBox(
-      width: 60,
-      child: ExpansionTileTheme(
-          data: ExpansionTileThemeData(),
-          child: ExpansionTile(
-            onExpansionChanged: (value) {},
-            controlAffinity: ListTileControlAffinity.platform,
-            title: Text(""),
-            children: [Text("xddffffffffffffffff")],
-          )));
-}
-
-//number of childs used in the example
-
-// List<Widget> getAllCategoryWidgets(int? indexOfExpanded) {
-//   List<Widget> categoryWidgets = [];
-//   for (int i = 0; i < itemCount; i++) {
-//     if (i != 0 && i % 2 == 0) {
-//       categoryWidgets.add(
-//           Text("ZWischenstopppdddddddddddddddddddddddddddddddddddddddddp0"));
-//     }
-//     Image image = getAssetImage(categoryIds[i] + ".jpg");
-//
-//     Widget singleCategoryWidget = SingleWid(
-//       image: image,
-//       index: i,
-//       categoryId: "Ich bin eine ID",
-//     );
-//     // getSingleCategoryWidget(image: image, index: );
-//     categoryWidgets.add(singleCategoryWidget);
-//   }
-//   // for (int i = 0; i < itemCount; i++) {
-//   //   categoryWidgets.add(getAnimated(i));
-//   // }
 //
 //   return categoryWidgets;
 // }
@@ -200,30 +95,37 @@ Widget getExpansionPanel() {
 //list of each bloc expandable state, that is changed to trigger the animation of the AnimatedContainer
 List<bool> expandableState = List.generate(itemCount, (index) => false);
 
-class SingleWid extends StatelessWidget {
+class CategoryGridItem extends StatelessWidget {
   final int index;
   final Image image;
   final String categoryId;
-  final bool isExpanded;
+  final int? currentExpandedIndex;
 
   Icon expandIcon = Icon(Icons.expand_more_outlined);
 
-  SingleWid({
+  CategoryGridItem({
     super.key,
     required this.index,
     required this.image,
     required this.categoryId,
-    required this.isExpanded,
+    required this.currentExpandedIndex,
   });
 
   @override
   Widget build(BuildContext context) {
+    Image fittedImage = Image(
+      image: image.image,
+      fit: BoxFit.cover,
+      width: 610.h,
+      height: 800.h,
+    );
+
     return SizedBox(
-      height: 150,
-      width: 300,
+      height: 250,
+      width: 400,
       child: Stack(
         children: [
-          image,
+          fittedImage,
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -252,7 +154,7 @@ class SingleWid extends StatelessWidget {
                               index: index, categoryId: categoryId);
                         }
                       },
-                      icon: isExpanded
+                      icon: currentExpandedIndex == index
                           ? Icon(Icons.expand_more_outlined)
                           : Icon(Icons.expand_less_outlined),
                     ),
@@ -266,55 +168,3 @@ class SingleWid extends StatelessWidget {
     );
   }
 }
-
-// class SingleWidState extends State<SingleWid> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 150,
-//       width: 300,
-//       child: Stack(
-//         children: [
-//           widget.image,
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.end,
-//             children: [
-//               Spacer(),
-//               Row(
-//                 children: [
-//                   Text("Ich bin eine Kategorie"),
-//                   // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
-//                   SizedBox(
-//                     width: 40.h,
-//                     height: 40.h,
-//                     child: IconButton(
-//                       style: ButtonStyle(
-//                           animationDuration: Duration(seconds: 1),
-//                           splashFactory: NoSplash.splashFactory),
-//                       splashColor: Colors.transparent,
-//                       onPressed: () {
-//                         var categoryProvider =
-//                             Provider.of<ExpandedCategoryNotifier>(context,
-//                                 listen: false);
-//
-//                         categoryProvider.setExpanded(
-//                             index: widget.index, categoryId: widget.categoryId);
-//
-//                         setState(() {
-//                           widget.expanded = !widget.expanded;
-//                         });
-//                       },
-//                       icon: widget.expanded
-//                           ? Icon(Icons.expand_more_outlined)
-//                           : Icon(Icons.expand_less_outlined),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
