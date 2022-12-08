@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../utils/services/search_notifier.dart';
+import 'search_notifier.dart';
 
 Widget getShowResultsButton(
-    {required BuildContext context, required RangeValues values, required Function function, required Map<Symbol,dynamic> functionArguments}) {
+    {required BuildContext context, required Function function, required Map<Symbol,dynamic> functionArguments}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [

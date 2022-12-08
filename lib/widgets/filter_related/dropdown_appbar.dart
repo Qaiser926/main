@@ -8,7 +8,7 @@ import '../../../../constants/colors.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../utils/services/search_notifier.dart';
+import 'search_notifier.dart';
 
 class DropDownAppBar extends AppBar {
   final String appBarTitle;

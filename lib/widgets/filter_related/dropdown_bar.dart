@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
 import 'package:provider/provider.dart';
-import '../../utils/services/search_notifier.dart';
+import 'search_notifier.dart';
 import '../../utils/ui/ui_utils.dart';
 
 // TODO on selected items include counter and give Box colored border, make a class
@@ -31,7 +31,7 @@ SizedBox buildDropdownBar({required BuildContext context}) {
 Widget getFilter(
     {required BuildContext context,
     required int index,
-    required String heading,
+    required String caption,
     required Function onTapFunction,
     required bool coloredBorder}) {
   Color? borderColor = null;
@@ -55,7 +55,7 @@ Widget getFilter(
         child: Row(
           children: [
             getCustomFont(
-              text: heading,
+              text: caption,
               fontSize: 16.sp,
               maxLine: 1,
               fontWeight: FontWeight.w600,
@@ -77,7 +77,7 @@ List<Widget> getFilters({required BuildContext context}) {
     getFilter(
         context: context,
         index: 1,
-        heading: AppLocalizations.of(context)!.price,
+        caption: getPriceCaption(context: context),
         coloredBorder: Provider.of<SearchNotifier>(context, listen: false).priceFilterActivated,
         onTapFunction: () {
           return priceFilterDialog(context: context);
@@ -86,19 +86,19 @@ List<Widget> getFilters({required BuildContext context}) {
     getFilter(
         context: context,
         index: 1,
-        heading: AppLocalizations.of(context)!.sort,
+        caption: AppLocalizations.of(context)!.sort,
         coloredBorder: false,
         onTapFunction: () => print("sort")),
     getFilter(
         context: context,
         index: 1,
-        heading: AppLocalizations.of(context)!.type,
+        caption: AppLocalizations.of(context)!.type,
         coloredBorder: false,
         onTapFunction: () => print("type")),
     getFilter(
         context: context,
         index: 1,
-        heading: AppLocalizations.of(context)!.additionalFilters,
+        caption: AppLocalizations.of(context)!.additionalFilters,
         coloredBorder: false,
         onTapFunction: () => print("addFilter")),
   ];
@@ -107,7 +107,7 @@ List<Widget> getFilters({required BuildContext context}) {
     filter.insert(0, getFilter(
         context: context,
         index: 1,
-        heading: AppLocalizations.of(context)!.time,
+        caption: AppLocalizations.of(context)!.time,
         coloredBorder: false,
         onTapFunction: () {
           return TimeFilterDialog(context: context);
@@ -115,7 +115,7 @@ List<Widget> getFilters({required BuildContext context}) {
     filter.insert(0, getFilter(
         context: context,
         index: 0,
-        heading: AppLocalizations.of(context)!.category,
+        caption: AppLocalizations.of(context)!.category,
         coloredBorder: false,
         onTapFunction: () {
           return;
@@ -124,7 +124,7 @@ List<Widget> getFilters({required BuildContext context}) {
     filter.insert(0,getFilter(
         context: context,
         index: 0,
-        heading: AppLocalizations.of(context)!.time,
+        caption: AppLocalizations.of(context)!.time,
         coloredBorder: false,
         onTapFunction: () {
           return TimeFilterDialog(context: context);

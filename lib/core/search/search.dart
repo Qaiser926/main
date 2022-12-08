@@ -39,7 +39,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../utils/services/search_notifier.dart';
+import '../../widgets/filter_related/search_notifier.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 
 class SearchPage extends StatelessWidget {
@@ -66,7 +66,7 @@ class SearchPage extends StatelessWidget {
 
   Widget getSearchScreen() {
     return Consumer<SearchNotifier>(builder: (context, model, child) {
-      if (model.showSearchResults) {
+      if (model.isShowResults()) {
         // differentiate here between search results (show different screen if nothing was found)
         return Text("${model.getPriceRange.toString()}");
       } else {

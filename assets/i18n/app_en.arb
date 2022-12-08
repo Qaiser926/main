@@ -121,5 +121,7 @@
       "priceRangeDescription": "Price range",
 
       "clearAll": "Clear all",
-          "showResults": "Show results"
+          "showResults": "Show results",
+
+  "free": "Free"
 }

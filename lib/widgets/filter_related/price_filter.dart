@@ -3,7 +3,7 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../utils/services/search_notifier.dart';
+import 'search_notifier.dart';
 import 'get_reset_apply_filter.dart';
 
 Future<dynamic> priceFilterDialog({required BuildContext context}) {
@@ -103,7 +103,7 @@ class _PriceFilterState extends State<PriceFilter> {
         ),
         Padding(
           padding: EdgeInsets.all(20),
-          child: getShowResultsButton(context: context, values: _values, function: Provider.of<SearchNotifier>(context, listen: false)
+          child: getShowResultsButton(context: context, function: Provider.of<SearchNotifier>(context, listen: false)
               .changePriceRange, functionArguments: {
           #priceRange: RangeValues(_values.start.roundToDouble(),
           _values.end.roundToDouble())}),
@@ -134,3 +134,20 @@ Widget getPriceBox(
 }
 
 
+String getPriceCaption({required BuildContext context}) {
+  if (Provider.of<SearchNotifier>(context, listen: false)
+      .priceFilterActivated){
+    RangeValues range = Provider.of<SearchNotifier>(context, listen: false)
+        .getPriceRange;
+    if (range.start == range.end) {
+      if (range.start == 0){
+        return AppLocalizations.of(context)!.free;
+      } else {
+        return "€${range.start}";
+      }
+    }
+    return "€${range.start.round()} - €${range.end.round()}";
+  } else {
+    return AppLocalizations.of(context)!.price;
+  }
+}
