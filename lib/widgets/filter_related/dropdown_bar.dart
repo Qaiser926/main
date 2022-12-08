@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'search_notifier.dart';
 import '../../utils/ui/ui_utils.dart';
 
+
 // TODO on selected items include counter and give Box colored border, make a class
 SizedBox buildDropdownBar({required BuildContext context}) {
   // var test = Provider.of<SearchNotifier>(context, listen: false);
@@ -35,7 +36,7 @@ Widget getFilter(
     required Function onTapFunction,
     required bool coloredBorder}) {
   Color? borderColor = null;
-  if (coloredBorder){
+  if (coloredBorder) {
     borderColor = Theme.of(context).colorScheme.primary;
   } else {
     borderColor = Theme.of(context).colorScheme.tertiary;
@@ -78,10 +79,10 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 1,
         caption: getPriceCaption(context: context),
-        coloredBorder: Provider.of<SearchNotifier>(context, listen: false).priceFilterActivated,
+        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+            .priceFilterActivated,
         onTapFunction: () {
           return priceFilterDialog(context: context);
-
         }),
     getFilter(
         context: context,
@@ -104,36 +105,44 @@ List<Widget> getFilters({required BuildContext context}) {
   ];
   // only add category if not in start screen
   if (Provider.of<SearchNotifier>(context, listen: false).showCategoryFilter) {
-    filter.insert(0, getFilter(
-        context: context,
-        index: 1,
-        caption: AppLocalizations.of(context)!.time,
-        coloredBorder: false,
-        onTapFunction: () {
-          return TimeFilterDialog(context: context);
-        }),);
-    filter.insert(0, getFilter(
-        context: context,
-        index: 0,
-        caption: AppLocalizations.of(context)!.category,
-        coloredBorder: false,
-        onTapFunction: () {
-          return;
-        }),);
+    filter.insert(
+      0,
+      getFilter(
+          context: context,
+          index: 1,
+          caption: AppLocalizations.of(context)!.time,
+          coloredBorder: false,
+          onTapFunction: () {
+            return TimeFilterDialog(context: context);
+          }),
+    );
+    filter.insert(
+      0,
+      getFilter(
+          context: context,
+          index: 0,
+          caption: AppLocalizations.of(context)!.category,
+          coloredBorder: false,
+          onTapFunction: () {
+            return;
+          }),
+    );
   } else {
-    filter.insert(0,getFilter(
-        context: context,
-        index: 0,
-        caption: AppLocalizations.of(context)!.time,
-        coloredBorder: false,
-        onTapFunction: () {
-          return TimeFilterDialog(context: context);
-        }),);
+    filter.insert(
+      0,
+      getFilter(
+          context: context,
+          index: 0,
+          caption: AppLocalizations.of(context)!.time,
+          coloredBorder: false,
+          onTapFunction: () {
+            print("skf");
+            return TimeFilterDialog(context: context);
+          }),
+    );
   }
   return filter;
 }
-
-
 
 Future<dynamic> TimeFilterDialog({required BuildContext context}) {
   return showModalBottomSheet(
@@ -142,8 +151,8 @@ Future<dynamic> TimeFilterDialog({required BuildContext context}) {
       context: context,
       builder: (context) {
         return Container(
-          height: 380,
-          child: TimeFilter(),
-        );
+          height: 800,
+          child: TimeFilter());
       });
 }
+
