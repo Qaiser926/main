@@ -32,13 +32,21 @@ Widget getFilter(
     {required BuildContext context,
     required int index,
     required String heading,
-    required Function onTapFunction}) {
+    required Function onTapFunction,
+    required bool coloredBorder}) {
+  Color? borderColor = null;
+  if (coloredBorder){
+    borderColor = Theme.of(context).colorScheme.primary;
+  } else {
+    borderColor = Theme.of(context).colorScheme.tertiary;
+  }
   return GestureDetector(
     onTap: () => onTapFunction(),
     child: Container(
       margin: EdgeInsets.only(right: 12.h, left: index == 0 ? 20.h : 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.h),
+        border: Border.all(color: borderColor),
         color: Theme.of(context).colorScheme.tertiary,
       ),
       alignment: Alignment.center,
@@ -70,6 +78,7 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 1,
         heading: AppLocalizations.of(context)!.price,
+        coloredBorder: Provider.of<SearchNotifier>(context, listen: false).priceFilterActivated,
         onTapFunction: () {
           return priceFilterDialog(context: context);
 
@@ -78,16 +87,19 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 1,
         heading: AppLocalizations.of(context)!.sort,
+        coloredBorder: false,
         onTapFunction: () => print("sort")),
     getFilter(
         context: context,
         index: 1,
         heading: AppLocalizations.of(context)!.type,
+        coloredBorder: false,
         onTapFunction: () => print("type")),
     getFilter(
         context: context,
         index: 1,
         heading: AppLocalizations.of(context)!.additionalFilters,
+        coloredBorder: false,
         onTapFunction: () => print("addFilter")),
   ];
   // only add category if not in start screen
@@ -96,6 +108,7 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 1,
         heading: AppLocalizations.of(context)!.time,
+        coloredBorder: false,
         onTapFunction: () {
           return TimeFilterDialog(context: context);
         }),);
@@ -103,6 +116,7 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 0,
         heading: AppLocalizations.of(context)!.category,
+        coloredBorder: false,
         onTapFunction: () {
           return;
         }),);
@@ -111,6 +125,7 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 0,
         heading: AppLocalizations.of(context)!.time,
+        coloredBorder: false,
         onTapFunction: () {
           return TimeFilterDialog(context: context);
         }),);
