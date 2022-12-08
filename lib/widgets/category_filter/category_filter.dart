@@ -6,27 +6,106 @@ import 'package:provider/provider.dart';
 import '../../constants/catgories.dart';
 import 'exclusives/notifier.dart';
 
+const itemCount = 8;
+
 class CategoryFilter extends StatelessWidget {
+  Image image = getAssetImage(categoryIds[1] + ".jpg");
+  Image image2 = getAssetImage(categoryIds[2] + ".jpg");
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: ExpandedCategoryNotifier(),
+      providers: [
+        ChangeNotifierProvider.value(
+          value: ExpandedCategoryNotifier(),
+        )
+      ],
+      child:
+          Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
+        return CustomScrollView(slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(getList(model)),
           )
-        ],
-        child: Consumer<ExpandedCategoryNotifier>(
-            builder: (context, model, child) {
-          return GridView.count(
-            children: getAllCategoryWidgets(model.indexOfExpanded),
-            crossAxisCount: 2,
-            mainAxisSpacing: 10.h,
-            crossAxisSpacing: 10.h,
-          );
-        }));
+        ]);
+        //   children:
+        //   crossAxisCount: 2,
+        //   mainAxisSpacing: 10.h,
+        //   crossAxisSpacing: 10.h,
+        // );
+      }),
+    );
   }
 }
 
+List<Widget> getList(ExpandedCategoryNotifier expandedCategoryNotifier) {
+  List<Widget> allMightyList = [];
+  for (int index = 0; index < itemCount; index++) {
+    if (index != 0 && index % 2 == 1) {
+      if (expandedCategoryNotifier.getExpandedIndex == index ||
+          expandedCategoryNotifier.getExpandedIndex == index - 1) {
+        allMightyList.add(getAnimated(index, true));
+      } else {
+        allMightyList.add(getAnimated(index, false));
+      }
+    } else {
+      int index2 = index + 1;
+
+      Image image = getAssetImage(categoryIds[index] + ".jpg");
+      Image image2 = getAssetImage(categoryIds[index2] + ".jpg");
+      Widget firstSingleCategoryWidget;
+      if (expandedCategoryNotifier.getExpandedIndex == index) {
+        firstSingleCategoryWidget = SingleWid(
+          image: image,
+          index: index,
+          categoryId: "ich bin eine ID",
+          isExpanded: true,
+        );
+      } else {
+        firstSingleCategoryWidget = SingleWid(
+          image: image,
+          index: index,
+          categoryId: "ich bin eine ID",
+          isExpanded: false,
+        );
+      }
+      Widget secondSingleCategoryWidget;
+      if(expandedCategoryNotifier.getExpandedIndex == index2){
+        secondSingleCategoryWidget= SingleWid(
+          image: image2,
+          index: index2,
+          categoryId: "ich bin eine ID",isExpanded: true,
+        );
+      } else {
+        secondSingleCategoryWidget= SingleWid(
+          image: image2,
+          index: index2,
+          categoryId: "ich bin eine ID",isExpanded: false,
+        );
+      }
+
+
+      allMightyList.add(Row(
+        children: [
+          Flexible(child: firstSingleCategoryWidget),
+          Flexible(child: secondSingleCategoryWidget)
+        ],
+      ));
+    }
+  }
+
+  return allMightyList;
+}
+
+Widget getAnimated(int index, bool expanded) {
+  return AnimatedContainer(
+    duration: Duration(milliseconds: 200),
+    // margin: const EdgeInsets.all(20.0),
+    width: !expanded ? 0 : 600,
+    height: !expanded ? 0 : 100,
+    color: Colors.red,
+    child: Text(categoryIds[index]),
+  );
+}
 // class CategoryFilter extends StatefulWidget {
 //   @override
 //   State<StatefulWidget> createState() {
@@ -93,94 +172,149 @@ Widget getExpansionPanel() {
 }
 
 //number of childs used in the example
-const itemCount = 8;
 
-List<Widget> getAllCategoryWidgets(int? indexOfExpanded) {
-  List<Widget> categoryWidgets = [];
-  for (int i = 0; i < itemCount; i++) {
-    Image image = getAssetImage(categoryIds[i] + ".jpg");
-
-    Widget singleCategoryWidget = SingleWid(
-      image: image,
-      index: i,
-    );
-    // getSingleCategoryWidget(image: image, index: );
-    categoryWidgets.add(singleCategoryWidget);
-  }
-  // for (int i = 0; i < itemCount; i++) {
-  //   categoryWidgets.add(getAnimated(i));
-  // }
-
-  return categoryWidgets;
-}
+// List<Widget> getAllCategoryWidgets(int? indexOfExpanded) {
+//   List<Widget> categoryWidgets = [];
+//   for (int i = 0; i < itemCount; i++) {
+//     if (i != 0 && i % 2 == 0) {
+//       categoryWidgets.add(
+//           Text("ZWischenstopppdddddddddddddddddddddddddddddddddddddddddp0"));
+//     }
+//     Image image = getAssetImage(categoryIds[i] + ".jpg");
+//
+//     Widget singleCategoryWidget = SingleWid(
+//       image: image,
+//       index: i,
+//       categoryId: "Ich bin eine ID",
+//     );
+//     // getSingleCategoryWidget(image: image, index: );
+//     categoryWidgets.add(singleCategoryWidget);
+//   }
+//   // for (int i = 0; i < itemCount; i++) {
+//   //   categoryWidgets.add(getAnimated(i));
+//   // }
+//
+//   return categoryWidgets;
+// }
 
 //list of each bloc expandable state, that is changed to trigger the animation of the AnimatedContainer
 List<bool> expandableState = List.generate(itemCount, (index) => false);
 
-class SingleWid extends StatefulWidget {
+class SingleWid extends StatelessWidget {
   final int index;
-  bool expanded = false;
   final Image image;
+  final String categoryId;
+  final bool isExpanded;
 
-  SingleWid({super.key, required this.index, required this.image});
+  Icon expandIcon = Icon(Icons.expand_more_outlined);
 
-  @override
-  State<StatefulWidget> createState() {
-    return SingleWidState();
-  }
-}
+  SingleWid({
+    super.key,
+    required this.index,
+    required this.image,
+    required this.categoryId,
+    required this.isExpanded,
+  });
 
-class SingleWidState extends State<SingleWid> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        widget.image,
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              children: [
-                Text("Ich bin eine Kategorie"),
-                // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
-                SizedBox(
-                  width: 40.h,
-                  height: 40.h,
-                  child: IconButton(
-                    style: ButtonStyle(
-                        animationDuration: Duration(seconds: 1),
-                        splashFactory: NoSplash.splashFactory),
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      if (widget.expanded) {
-                        Provider.of<ExpandedCategoryNotifier>(context,
-                                listen: false)
-                            .indexOfExpanded = widget.index;
-                      }
-                      setState(() {
-                        widget.expanded = !widget.expanded;
-                      });
-                    },
-                    icon: Icon(Icons.expand_more_outlined),
+    return SizedBox(
+      height: 150,
+      width: 300,
+      child: Stack(
+        children: [
+          image,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Spacer(),
+              Row(
+                children: [
+                  Text("Ich bin eine Kategorie"),
+                  // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
+                  SizedBox(
+                    width: 40.h,
+                    height: 40.h,
+                    child: IconButton(
+                      style: ButtonStyle(
+                          animationDuration: Duration(seconds: 1),
+                          splashFactory: NoSplash.splashFactory),
+                      splashColor: Colors.transparent,
+                      onPressed: () {
+                        var categoryProvider =
+                            Provider.of<ExpandedCategoryNotifier>(context,
+                                listen: false);
+                        if (categoryProvider.getExpandedIndex == index) {
+                          categoryProvider.setExpanded(
+                              index: null, categoryId: null);
+                        } else {
+                          categoryProvider.setExpanded(
+                              index: index, categoryId: categoryId);
+                        }
+                      },
+                      icon: isExpanded
+                          ? Icon(Icons.expand_more_outlined)
+                          : Icon(Icons.expand_less_outlined),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            getAnimated(widget.index, widget.expanded)
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget getAnimated(int index, bool expanded) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 200),
-      // margin: const EdgeInsets.all(20.0),
-      width: !expanded ? 0: 600 * 1,
-      height: !expanded ? 0 : 100 *1,
-      color: Colors.red,
-      child: Text("edrere"),
+                ],
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
+
+// class SingleWidState extends State<SingleWid> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: 150,
+//       width: 300,
+//       child: Stack(
+//         children: [
+//           widget.image,
+//           Column(
+//             mainAxisAlignment: MainAxisAlignment.end,
+//             children: [
+//               Spacer(),
+//               Row(
+//                 children: [
+//                   Text("Ich bin eine Kategorie"),
+//                   // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
+//                   SizedBox(
+//                     width: 40.h,
+//                     height: 40.h,
+//                     child: IconButton(
+//                       style: ButtonStyle(
+//                           animationDuration: Duration(seconds: 1),
+//                           splashFactory: NoSplash.splashFactory),
+//                       splashColor: Colors.transparent,
+//                       onPressed: () {
+//                         var categoryProvider =
+//                             Provider.of<ExpandedCategoryNotifier>(context,
+//                                 listen: false);
+//
+//                         categoryProvider.setExpanded(
+//                             index: widget.index, categoryId: widget.categoryId);
+//
+//                         setState(() {
+//                           widget.expanded = !widget.expanded;
+//                         });
+//                       },
+//                       icon: widget.expanded
+//                           ? Icon(Icons.expand_more_outlined)
+//                           : Icon(Icons.expand_less_outlined),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

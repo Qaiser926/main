@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 class ExpandedCategoryNotifier extends ChangeNotifier {
+  int? _expandedIndex;
+  String? _expandedCategory;
 
-  int? indexOfExpanded = null;
+  ExpandedCategoryNotifier() {}
 
-  ExpandedCategoryNotifier({this.indexOfExpanded});
+  void setExpanded({required int? index, required String? categoryId}) {
+    _expandedIndex = index;
+    _expandedCategory = categoryId;
+    notifyListeners();
+  }
 
+  int? get getExpandedIndex => _expandedIndex;
+
+  String? get getExpandedCategory => _expandedCategory;
 }
