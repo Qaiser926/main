@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../../constants/catgories.dart';
 import '../../../constants/colors.dart';
-import '../../../constants/colors.dart';
 import '../../filter_related/get_reset_apply_filter.dart';
 import 'notifier.dart';
 
@@ -47,8 +46,8 @@ class ExpandedWidget extends StatelessWidget {
               )
             ],
             child: AnimatedContainer(
+              margin: expanded ? EdgeInsets.only(top: 10) : null,
               duration: Duration(milliseconds: animationTime),
-              // margin: const EdgeInsets.all(20.0),
               width: expanded ? 600 : 0,
               height: expanded ? secHei : 0,
               child: expanded
@@ -59,19 +58,19 @@ class ExpandedWidget extends StatelessWidget {
                       child: Consumer<SelectedSubcategoryNotifier>(
                           builder: (context, model, child) {
                         return Container(
-                          margin: EdgeInsets.only(
-                            bottom: containerMarginBottom,
-                            top: containerMarginTop,
-                            left: 10.h,
-                            right: 10.h,
-                          ),
-                          child: Column(
-                            children:
-                                getSubcategoryExpandableContent(context, model),
-                          ),
-                        );
-                      }),
-                    )
+                        margin: EdgeInsets.only(
+                          bottom: containerMarginBottom,
+                          top: containerMarginTop,
+                          left: 10.h,
+                          right: 10.h,
+                        ),
+                        child: Column(
+                          children:
+                          getSubcategoryExpandableContent(context, model),
+                        ),
+                      );
+                    }),
+              )
                   : SizedBox.shrink(),
             ));
       } else {
@@ -112,6 +111,7 @@ class ExpandedWidget extends StatelessWidget {
               },
               child: SizedBox(
                 height: singleExpandedHeight,
+                width: 300,
                 child: Container(
                   height: singleExpandedHeight - 8,
                   padding: EdgeInsets.all(4),
@@ -119,11 +119,12 @@ class ExpandedWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: model.isSelected(index)
                           ? Border.all(color: primaryColor, width: 2.5)
-                          : Border.all(color: Colors.transparent, width: 2.5),
+                          : Border.all(color: bgColor, width: 2.5),
                       borderRadius: BorderRadius.circular(23)),
                   transformAlignment: Alignment.center,
                   child: Center(
-                    child: Text(subcategoryIds[index]),
+                    child: Text(CategoryIdToI18nMapper.fckMethod(
+                        context, subcategoryIds[index])),
                   ),
                 ),
               ),

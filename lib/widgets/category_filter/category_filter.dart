@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
 import '../../constants/catgories.dart';
@@ -39,28 +38,13 @@ class CategoryFilter extends StatelessWidget {
 List<Widget> getList() {
   List<Widget> allMightyList = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
-    // if (index != 0 && index % 2 == 1) {
-
-    // if (expandedCategoryNotifier.getExpandedIndex == index ||
-    //     expandedCategoryNotifier.getExpandedIndex == index - 1) {
-    //   allMightyList.add(ExpandedWidget(
-    //     expanded: true,
-    //     categoryId: Categories.categoryIds[index],
-    //   ));
-    // } else {
-    //   allMightyList.add(ExpandedWidget(
-    //     expanded: false,
-    //     categoryId: Categories.categoryIds[index],
-    //   ));
-    // }
-    // } else {
     allMightyList.add(Row(
       children: [
         Flexible(
           child: getCategoryGridItem(index: index),
         ),
         SizedBox(
-          width: 20,
+          width: 15,
         ),
         Flexible(
           child: getCategoryGridItem(
@@ -71,16 +55,10 @@ List<Widget> getList() {
     ));
     allMightyList.add(ExpandedWidget(index: index));
     allMightyList.add(ExpandedWidget(index: index + 1));
-
-    // allMightyList.add(getExpandedWidget(index + 1));
+    allMightyList.add(SizedBox(
+      height: 15,
+    ));
   }
   // }
   return allMightyList;
 }
-
-// Widget getExpandedWidget(int index) {
-//   final String categoryId = Categories.categoryIds[index];
-//     return ExpandedWidget(
-//       categoryId: categoryId,
-//     );
-// }

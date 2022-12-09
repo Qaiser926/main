@@ -4,12 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../../../constants/catgories.dart';
 import '../../../constants/colors.dart';
-import '../../../utils/ui/ui_utils.dart';
 import 'notifier.dart';
 
 Widget getCategoryGridItem({required int index}) {
   final String categoryId = Categories.categoryIds[index];
-  // Image image = getAssetImage(categoryId + ".jpg");
 
   return CategoryGridItem(
     index: index,
@@ -23,6 +21,8 @@ class CategoryGridItem extends StatelessWidget {
 
   Icon expandIcon = const Icon(Icons.expand_more_outlined);
 
+  static const double bottomPartHeight = 55;
+
   CategoryGridItem({
     super.key,
     required this.index,
@@ -33,7 +33,6 @@ class CategoryGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 250,
-      margin: EdgeInsets.symmetric(vertical: 10),
       child: Stack(
         children: [
           Categories.categoryRoundedImagesMap[categoryId]!,
@@ -49,26 +48,39 @@ class CategoryGridItem extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Spacer(),
               Container(
-                height: 50,padding: EdgeInsets.symmetric(horizontal: 10),
-                // margin: EdgeInsets.symmetric(horizontal: 10),
+                height: 20,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        lessListItemColor.withOpacity(.7),
+                        lessListItemColor.withOpacity(0),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      tileMode: TileMode.mirror,
+                      end: Alignment.topCenter),
+                ),
+              ),
+              Container(
+                height: bottomPartHeight,
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.zero,
-                            topLeft: Radius.zero,
-                            bottomLeft: Radius.circular(30),
-                            bottomRight: Radius.circular(30))),
-                    color: lessListItemColor.withOpacity(.7)),
-                child: Row(
-                  children: [
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
-                    Flexible(
-                      child: Text(categoryId.substring(0, 28)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.zero,
+                      topLeft: Radius.zero,
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
                     ),
+                  ),
+                  color: lessListItemColor.withOpacity(.7),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                        child: Text(CategoryIdToI18nMapper.fckMethod(
+                            context, categoryId))),
                     // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
                     SizedBox(
                       width: 20.h,
@@ -80,8 +92,8 @@ class CategoryGridItem extends StatelessWidget {
                         splashColor: Colors.transparent,
                         onPressed: () {
                           var categoryProvider =
-                              Provider.of<ExpandedCategoryNotifier>(context,
-                                  listen: false);
+                          Provider.of<ExpandedCategoryNotifier>(context,
+                              listen: false);
                           if (categoryProvider.getExpandedIndex == index) {
                             categoryProvider.setExpanded(
                                 index: null, categoryId: null);
@@ -92,10 +104,10 @@ class CategoryGridItem extends StatelessWidget {
                         },
                         icon: Consumer<ExpandedCategoryNotifier>(
                             builder: (context, model, child) {
-                          return model.getExpandedIndex == index
-                              ? Icon(Icons.expand_more_outlined)
-                              : Icon(Icons.expand_less_outlined);
-                        }),
+                              return model.getExpandedIndex == index
+                                  ? Icon(Icons.expand_more_outlined)
+                                  : Icon(Icons.expand_less_outlined);
+                            }),
                       ),
                     ),
                   ],
