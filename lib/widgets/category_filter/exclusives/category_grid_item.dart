@@ -7,8 +7,7 @@ import '../../../constants/colors.dart';
 import '../../../utils/ui/ui_utils.dart';
 import 'notifier.dart';
 
-Widget getCategoryGridItem(
-    {required int index, required int? currentExpandedIndex}) {
+Widget getCategoryGridItem({required int index}) {
   final String categoryId = Categories.categoryIds[index];
   Image image = getAssetImage(categoryId + ".jpg");
 
@@ -16,7 +15,6 @@ Widget getCategoryGridItem(
     image: image,
     index: index,
     categoryId: categoryId,
-    currentExpandedIndex: currentExpandedIndex,
   );
 }
 
@@ -24,7 +22,6 @@ class CategoryGridItem extends StatelessWidget {
   final int index;
   final ClipRRect image;
   final String categoryId;
-  final bool isExpanded;
 
   Icon expandIcon = const Icon(Icons.expand_more_outlined);
 
@@ -33,8 +30,7 @@ class CategoryGridItem extends StatelessWidget {
     required this.index,
     required image,
     required this.categoryId,
-    required currentExpandedIndex,
-  })  : image = ClipRRect(
+  }) : image = ClipRRect(
           clipBehavior: Clip.antiAlias,
           borderRadius: BorderRadius.all(Radius.circular(30)),
           child: Image(
@@ -43,8 +39,7 @@ class CategoryGridItem extends StatelessWidget {
             width: 610.h,
             height: 800.h,
           ),
-        ),
-        isExpanded = currentExpandedIndex == index;
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -54,20 +49,22 @@ class CategoryGridItem extends StatelessWidget {
       child: Stack(
         children: [
           image,
-          isExpanded
-              ? Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: primaryColor, width: 3)),
-                )
-              : SizedBox.shrink(),
+          Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
+            return model.getExpandedIndex == index
+                ? Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(color: primaryColor, width: 3)),
+                  )
+                : SizedBox.shrink();
+          }),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Spacer(),
               Row(
                 children: [
-                  Text("Ich bin eine Kategorie"),
+                  Text(categoryId.substring(0, 20)),
                   // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
                   SizedBox(
                     width: 40.h,
@@ -89,9 +86,12 @@ class CategoryGridItem extends StatelessWidget {
                               index: index, categoryId: categoryId);
                         }
                       },
-                      icon: isExpanded
-                          ? Icon(Icons.expand_more_outlined)
-                          : Icon(Icons.expand_less_outlined),
+                      icon: Consumer<ExpandedCategoryNotifier>(
+                          builder: (context, model, child) {
+                        return model.getExpandedIndex == index
+                            ? Icon(Icons.expand_more_outlined)
+                            : Icon(Icons.expand_less_outlined);
+                      }),
                     ),
                   ),
                 ],

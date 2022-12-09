@@ -21,18 +21,18 @@ class ExpandedWidget extends StatelessWidget {
       return AnimatedContainer(
         duration: Duration(milliseconds: 200),
         // margin: const EdgeInsets.all(20.0),
-        width: expanded ? 0 : 600,
-        height: expanded ? 0 : 100,
+        width: expanded ? 600 : 0,
+        height: expanded ? 100 : 0,
         child: expanded
-            ? SizedBox.shrink()
-            : ListView(
-      children: List<Widget>.generate(
-        subcategoryIds.length,
-            (index) => Text(
-          subcategoryIds[index],
-        ),
-      ),
-    ),
+            ? ListView(
+                children: List<Widget>.generate(
+                  subcategoryIds.length,
+                  (index) => Text(
+                    subcategoryIds[index],
+                  ),
+                ),
+              )
+            : SizedBox.shrink(),
       );
     } else {
       return Text("Es ist ein unerwartet Fehler aufgetreten");
