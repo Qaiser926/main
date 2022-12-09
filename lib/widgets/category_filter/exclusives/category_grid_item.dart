@@ -9,10 +9,9 @@ import 'notifier.dart';
 
 Widget getCategoryGridItem({required int index}) {
   final String categoryId = Categories.categoryIds[index];
-  Image image = getAssetImage(categoryId + ".jpg");
+  // Image image = getAssetImage(categoryId + ".jpg");
 
   return CategoryGridItem(
-    image: image,
     index: index,
     categoryId: categoryId,
   );
@@ -20,7 +19,6 @@ Widget getCategoryGridItem({required int index}) {
 
 class CategoryGridItem extends StatelessWidget {
   final int index;
-  final ClipRRect image;
   final String categoryId;
 
   Icon expandIcon = const Icon(Icons.expand_more_outlined);
@@ -28,18 +26,8 @@ class CategoryGridItem extends StatelessWidget {
   CategoryGridItem({
     super.key,
     required this.index,
-    required image,
     required this.categoryId,
-  }) : image = ClipRRect(
-          clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          child: Image(
-            image: image.image,
-            fit: BoxFit.cover,
-            width: 610.h,
-            height: 800.h,
-          ),
-        );
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +36,7 @@ class CategoryGridItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Stack(
         children: [
-          image,
+          Categories.categoryRoundedImagesMap[categoryId]!,
           Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
             return model.getExpandedIndex == index
                 ? Container(

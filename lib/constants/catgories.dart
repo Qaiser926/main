@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../utils/ui/ui_utils.dart';
+
 final Map<String, List<String>> categoryIdToSubcategoryIds = {
   Categories.entertainment: Subcategories.entertainment,
   Categories.nightlife: Subcategories.nightlife,
@@ -12,6 +17,58 @@ final Map<String, List<String>> categoryIdToSubcategoryIds = {
 };
 
 class Categories {
+  static ClipRRect getRoundedImage(Image image) {
+    return ClipRRect(
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+      child: Image(
+        image: image.image,
+        fit: BoxFit.cover,
+        width: 610.h,
+        height: 800.h,
+      ),
+    );
+  }
+
+  static final Map<String, ClipRRect> categoryRoundedImagesMap = {
+    entertainment: entertainmentRoundedImage,
+    nightlife: nightlifeRoundedImage,
+    food: foodRoundedImage,
+    sport: sportRoundedImage,
+    wellness: wellnessRoundedImage,
+    attraction: attractionRoundedImage,
+    culture: cultureRoundedImage,
+    students: studentsRoundedImage,
+    exhibition: exhibitionRoundedImage,
+    diverse: diverseRoundedImage,
+  };
+
+  static final ClipRRect entertainmentRoundedImage =
+      getRoundedImage(entertainmentImage);
+  static final ClipRRect nightlifeRoundedImage =
+      getRoundedImage(nightlifeImage);
+  static final ClipRRect foodRoundedImage = getRoundedImage(foodImage);
+  static final ClipRRect sportRoundedImage = getRoundedImage(sportImage);
+  static final ClipRRect wellnessRoundedImage = getRoundedImage(wellnessImage);
+  static final ClipRRect attractionRoundedImage =
+      getRoundedImage(attractionImage);
+  static final ClipRRect cultureRoundedImage = getRoundedImage(cultureImage);
+  static final ClipRRect studentsRoundedImage = getRoundedImage(studentImage);
+  static final ClipRRect exhibitionRoundedImage =
+      getRoundedImage(exhibitionImage);
+  static final ClipRRect diverseRoundedImage = getRoundedImage(diverseImage);
+
+  static final Image entertainmentImage = getAssetImage("$entertainment.jpg");
+  static final Image nightlifeImage = getAssetImage("$nightlife.jpg");
+  static final Image foodImage = getAssetImage("$food.jpg");
+  static final Image sportImage = getAssetImage("$sport.jpg");
+  static final Image wellnessImage = getAssetImage("$wellness.jpg");
+  static final Image attractionImage = getAssetImage("$attraction.jpg");
+  static final Image cultureImage = getAssetImage("$culture.jpg");
+  static final Image studentImage = getAssetImage("$students.jpg");
+  static final Image exhibitionImage = getAssetImage("$exhibition.jpg");
+  static final Image diverseImage = getAssetImage("$diverse.jpg");
+
   static const String entertainment = "d8b2b112-90ff-4783-b562-bc41837c8153";
   static const String nightlife = "2bc36408-c831-4b4e-ab6d-eb608512862d";
   static const String food = "f5089e0d-8a79-45ea-9047-ce77924f40cf";

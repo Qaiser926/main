@@ -8,7 +8,8 @@ import 'exclusives/expanded_widget.dart';
 import 'exclusives/notifier.dart';
 
 class CategoryFilter extends StatelessWidget {
-  const CategoryFilter({super.key});
+  List<Widget> niceList = getList();
+  CategoryFilter({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CategoryFilter extends StatelessWidget {
       child: CustomScrollView(slivers: [
         SliverList(
           delegate: SliverChildListDelegate(
-            getList(),
+            niceList,
           ),
         )
       ]),
@@ -59,22 +60,22 @@ List<Widget> getList() {
         ),
       ],
     ));
-    allMightyList.add(getExpandedWidget(index));
-    allMightyList.add(getExpandedWidget(index + 1));
+    allMightyList.add(ExpandedWidget(
+      index:index
+    ));
+    allMightyList.add(ExpandedWidget(
+        index:index+1
+    ));
+
+    // allMightyList.add(getExpandedWidget(index + 1));
   }
   // }
   return allMightyList;
 }
 
-Widget getExpandedWidget(int index) {
-  final String categoryId = Categories.categoryIds[index];
-  bool expanded = false;
-
-  return Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
-    expanded = model.getExpandedIndex == index;
-    return ExpandedWidget(
-      expanded: expanded,
-      categoryId: categoryId,
-    );
-  });
-}
+// Widget getExpandedWidget(int index) {
+//   final String categoryId = Categories.categoryIds[index];
+//     return ExpandedWidget(
+//       categoryId: categoryId,
+//     );
+// }
