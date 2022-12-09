@@ -94,7 +94,7 @@ class ExpandedWidget extends StatelessWidget {
       SelectedSubcategoryNotifier model) {
     return List<Widget>.generate(
       subcategoryIds.length,
-          (index) =>
+              (index) =>
           SizedBox(
             height: singleExpandedHeight,
             child: Row(
