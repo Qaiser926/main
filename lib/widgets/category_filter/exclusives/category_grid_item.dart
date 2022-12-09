@@ -50,39 +50,56 @@ class CategoryGridItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Spacer(),
-              Row(
-                children: [
-                  Text(categoryId.substring(0, 18)),
-                  // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
-                  SizedBox(
-                    width: 40.h,
-                    height: 40.h,
-                    child: IconButton(
-                      style: ButtonStyle(
-                          animationDuration: Duration(seconds: 1),
-                          splashFactory: NoSplash.splashFactory),
-                      splashColor: Colors.transparent,
-                      onPressed: () {
-                        var categoryProvider =
-                            Provider.of<ExpandedCategoryNotifier>(context,
-                                listen: false);
-                        if (categoryProvider.getExpandedIndex == index) {
-                          categoryProvider.setExpanded(
-                              index: null, categoryId: null);
-                        } else {
-                          categoryProvider.setExpanded(
-                              index: index, categoryId: categoryId);
-                        }
-                      },
-                      icon: Consumer<ExpandedCategoryNotifier>(
-                          builder: (context, model, child) {
-                        return model.getExpandedIndex == index
-                            ? Icon(Icons.expand_more_outlined)
-                            : Icon(Icons.expand_less_outlined);
-                      }),
+              Container(
+                height: 50,padding: EdgeInsets.symmetric(horizontal: 10),
+                // margin: EdgeInsets.symmetric(horizontal: 10),
+                decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.zero,
+                            topLeft: Radius.zero,
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30))),
+                    color: lessListItemColor.withOpacity(.7)),
+                child: Row(
+                  children: [
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                    Flexible(
+                      child: Text(categoryId.substring(0, 28)),
                     ),
-                  ),
-                ],
+                    // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
+                    SizedBox(
+                      width: 20.h,
+                      // height: 35.h,
+                      child: IconButton(
+                        style: ButtonStyle(
+                            animationDuration: Duration(seconds: 1),
+                            splashFactory: NoSplash.splashFactory),
+                        splashColor: Colors.transparent,
+                        onPressed: () {
+                          var categoryProvider =
+                              Provider.of<ExpandedCategoryNotifier>(context,
+                                  listen: false);
+                          if (categoryProvider.getExpandedIndex == index) {
+                            categoryProvider.setExpanded(
+                                index: null, categoryId: null);
+                          } else {
+                            categoryProvider.setExpanded(
+                                index: index, categoryId: categoryId);
+                          }
+                        },
+                        icon: Consumer<ExpandedCategoryNotifier>(
+                            builder: (context, model, child) {
+                          return model.getExpandedIndex == index
+                              ? Icon(Icons.expand_more_outlined)
+                              : Icon(Icons.expand_less_outlined);
+                        }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           )

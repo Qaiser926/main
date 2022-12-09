@@ -17,14 +17,14 @@ class CategoryFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
             value: ExpandedCategoryNotifier(),
           )
         ],
-        child: CustomScrollView(slivers: [
+        child: CustomScrollView(cacheExtent: double.maxFinite,slivers: [
           SliverList(
             delegate: SliverChildListDelegate(
               niceList,

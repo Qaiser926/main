@@ -17,6 +17,14 @@ final Map<String, List<String>> categoryIdToSubcategoryIds = {
 };
 
 class Categories {
+  static final Categories _singleton = Categories._internal();
+
+  factory Categories() {
+    return _singleton;
+  }
+
+  Categories._internal();
+
   static ClipRRect getRoundedImage(Image image) {
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
@@ -24,7 +32,7 @@ class Categories {
       child: Image(
         image: image.image,
         fit: BoxFit.cover,
-        width: 610.h,
+        // width: 610.h,
         height: 800.h,
       ),
     );
@@ -95,6 +103,14 @@ class Categories {
 }
 
 class Subcategories {
+  static final Subcategories _singleton = Subcategories._internal();
+
+  factory Subcategories() {
+    return _singleton;
+  }
+
+  Subcategories._internal();
+
   static const List<String> diverse = [
     "8063ce0b-3645-4fcb-8445-f9ea23243e85",
     "8063ce0b-3645-4fcb-8445-f9ea23243e87",
