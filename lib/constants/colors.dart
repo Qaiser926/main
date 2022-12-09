@@ -18,6 +18,7 @@ Color lightShadow = "#00000000".toColor();
 Color primaryColor = "#dd855f".toColor();
 Color sliverListHeaderColor = bgColor.withOpacity(0.8);
 Color listItemColor = "#1d3344".toColor();
+Color lessListItemColor = listItemColor.withOpacity(0.8);
 
 
 extension ColorExtension on String {

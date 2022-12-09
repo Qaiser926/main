@@ -33,7 +33,7 @@ class CategoryGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 250,
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 10),
       child: Stack(
         children: [
           Categories.categoryRoundedImagesMap[categoryId]!,
@@ -52,7 +52,7 @@ class CategoryGridItem extends StatelessWidget {
               Spacer(),
               Row(
                 children: [
-                  Text(categoryId.substring(0, 20)),
+                  Text(categoryId.substring(0, 18)),
                   // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
                   SizedBox(
                     width: 40.h,

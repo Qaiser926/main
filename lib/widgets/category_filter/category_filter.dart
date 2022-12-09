@@ -9,23 +9,29 @@ import 'exclusives/notifier.dart';
 
 class CategoryFilter extends StatelessWidget {
   List<Widget> niceList = getList();
-  CategoryFilter({super.key,});
+
+  CategoryFilter({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: ExpandedCategoryNotifier(),
-        )
-      ],
-      child: CustomScrollView(slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate(
-            niceList,
-          ),
-        )
-      ]),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: ExpandedCategoryNotifier(),
+          )
+        ],
+        child: CustomScrollView(slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              niceList,
+            ),
+          )
+        ]),
+      ),
     );
   }
 }
@@ -53,6 +59,9 @@ List<Widget> getList() {
         Flexible(
           child: getCategoryGridItem(index: index),
         ),
+        SizedBox(
+          width: 20,
+        ),
         Flexible(
           child: getCategoryGridItem(
             index: index + 1,
@@ -60,12 +69,8 @@ List<Widget> getList() {
         ),
       ],
     ));
-    allMightyList.add(ExpandedWidget(
-      index:index
-    ));
-    allMightyList.add(ExpandedWidget(
-        index:index+1
-    ));
+    allMightyList.add(ExpandedWidget(index: index));
+    allMightyList.add(ExpandedWidget(index: index + 1));
 
     // allMightyList.add(getExpandedWidget(index + 1));
   }
