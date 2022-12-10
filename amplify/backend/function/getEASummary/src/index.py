@@ -1,14 +1,15 @@
-import json
 import datetime
+import json
+
 
 def handler(event, context):
-  print('received event:')
-  print(event)
-  openingTime = [{'weekday_id': 1, 'is_open': True, 'time': '1000'},
-                 {'weekday_id': 1, 'is_open': False, 'time': '1100'},
-                 {'weekday_id': 1, 'is_open': True, 'time': '0800'},
-                 {'weekday_id': 1, 'is_open': False, 'time': '0930'},
-                 {'weekday_id': 1, 'is_open': True, 'time': '1900'},
+    print('received event:')
+    print(event)
+    openingTime = [{'weekday_id': 1, 'is_open': True, 'time': '1000'},
+                   {'weekday_id': 1, 'is_open': False, 'time': '1100'},
+                   {'weekday_id': 1, 'is_open': True, 'time': '0800'},
+                   {'weekday_id': 1, 'is_open': False, 'time': '0930'},
+                   {'weekday_id': 1, 'is_open': True, 'time': '1900'},
                  {'weekday_id': 1, 'is_open': False, 'time': '2130'},
                  {'weekday_id': 4, 'is_open': True, 'time': '0800'},
                  {'weekday_id': 4, 'is_open': False, 'time': '0930'}]

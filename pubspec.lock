@@ -37,7 +37,7 @@ packages:
     source: hosted
     version: "0.6.10"
   amplify_auth_cognito:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: amplify_auth_cognito
       url: "https://pub.dartlang.org"

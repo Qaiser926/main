@@ -44,6 +44,10 @@
       },
       "api": {
         "othiaApi": {}
+      },
+      "auth": {
+        "othiae97ec06e": {},
+        "othia67631076": {}
       }
     }
   }

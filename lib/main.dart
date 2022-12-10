@@ -1,26 +1,17 @@
-import 'dart:convert';
-
 import 'package:amplify_api/amplify_api.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+
 import 'amplifyconfiguration.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'config/routes/pages.dart';
 import 'config/themes/dark_theme.dart';
-import 'config/themes/light_theme.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'constants/supported_locales.dart';
-import 'core/favourites/exclusive_widgets/list_change_notifier.dart';
-
-
-
-
-
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -35,7 +26,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -65,7 +55,8 @@ Future<void> _configureAmplify() async {
   // Auth plugin needed for IAM authorization mode, which is default for REST API.
   // final auth = AmplifyAuthCognito();
   final api = AmplifyAPI();
-  await Amplify.addPlugins([api]);
+  final auth = AmplifyAuthCognito();
+  await Amplify.addPlugins([api, auth]);
 
   // You can use addPlugins if you are going to be adding multiple plugins
   // await Amplify.addPlugins([authPlugin, analyticsPlugin]);

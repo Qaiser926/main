@@ -1,4 +1,15 @@
 export type AmplifyDependentResourcesAttributes = {
+    "auth": {
+        "othia67631076": {
+            "IdentityPoolId": "string",
+            "IdentityPoolName": "string",
+            "UserPoolId": "string",
+            "UserPoolArn": "string",
+            "UserPoolName": "string",
+            "AppClientIDWeb": "string",
+            "AppClientID": "string"
+        }
+    },
     "function": {
         "apiLambda": {
             "Name": "string",
@@ -31,12 +42,6 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string"
         },
         "getEAIdsForLocation": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "removeFavourite": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
