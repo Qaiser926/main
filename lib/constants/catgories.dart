@@ -261,367 +261,368 @@ class CategoryIdToI18nMapper {
           return AppLocalizations.of(context)!.diverse;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e85":
+
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e15":
         {
           return AppLocalizations.of(context)!.comedyCabaret;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e87":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e16":
         {
           return AppLocalizations.of(context)!.musicConcert;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e88":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e17":
         {
           return AppLocalizations.of(context)!.moviePlanetarium;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e89":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e18":
         {
           return AppLocalizations.of(context)!.musicFestival;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e15":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e19":
         {
           return AppLocalizations.of(context)!.musical;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e16":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e20":
         {
           return AppLocalizations.of(context)!.entertainmentShow;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e17":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e21":
         {
           return AppLocalizations.of(context)!.circus;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e18":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e22":
         {
           return AppLocalizations.of(context)!.fairAmusementPark;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e19":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e23":
         {
           return AppLocalizations.of(context)!.gaming;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e20":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e24":
         {
           return AppLocalizations.of(context)!.carnival;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e21":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e25":
         {
           return AppLocalizations.of(context)!.otherEntertainment;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e22":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e26":
         {
           return AppLocalizations.of(context)!.rave;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e23":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e27":
         {
           return AppLocalizations.of(context)!.chartsParty;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e24":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e28":
         {
           return AppLocalizations.of(context)!.hipHopParty;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e25":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e29":
         {
           return AppLocalizations.of(context)!.party;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e26":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e30":
         {
           return AppLocalizations.of(context)!.lgbtq;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e27":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e31":
         {
           return AppLocalizations.of(context)!.karaoke;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e28":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e32":
         {
           return AppLocalizations.of(context)!.cocktailsDrinks;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e29":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e33":
         {
           return AppLocalizations.of(context)!.otherNightlifeClubs;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e30":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e34":
         {
           return AppLocalizations.of(context)!.fitness;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e31":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e35":
         {
           return AppLocalizations.of(context)!.outdoor;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e32":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e36":
         {
           return AppLocalizations.of(context)!.sportEvent;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e33":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e37":
         {
           return AppLocalizations.of(context)!.funActivities;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e34":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e38":
         {
           return AppLocalizations.of(context)!.dancing;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e35":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e39":
         {
           return AppLocalizations.of(context)!.otherSportFun;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e36":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e40":
         {
           return AppLocalizations.of(context)!.tripSightseeing;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e37":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e42":
         {
           return AppLocalizations.of(context)!.aquariumZoo;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e38":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e43":
         {
           return AppLocalizations.of(context)!.attraction;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e39":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e44":
         {
           return AppLocalizations.of(context)!.otherAttractionToursTrips;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e40":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e45":
         {
           return AppLocalizations.of(context)!.health;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e42":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e46":
         {
           return AppLocalizations.of(context)!.spiruality;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e43":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e47":
         {
           return AppLocalizations.of(context)!.beauty;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e44":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e48":
         {
           return AppLocalizations.of(context)!.fashion;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e45":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e49":
         {
           return AppLocalizations.of(context)!.yoga;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e46":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e50":
         {
           return AppLocalizations.of(context)!.wellnessSpa;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e47":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e51":
         {
           return AppLocalizations.of(context)!.otherRetreatWellness;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e48":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e52":
         {
           return AppLocalizations.of(context)!.streetFood;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e49":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e53":
         {
           return AppLocalizations.of(context)!.popUpRestaurant;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e50":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e54":
         {
           return AppLocalizations.of(context)!.cafe;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e51":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e55":
         {
           return AppLocalizations.of(context)!.restaurant;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e52":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e56":
         {
           return AppLocalizations.of(context)!.tasting;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e53":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e57":
         {
           return AppLocalizations.of(context)!.foodFestival;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e54":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e58":
         {
           return AppLocalizations.of(context)!.otherFoodTasting;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e55":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e59":
         {
           return AppLocalizations.of(context)!.operaOperetta;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e56":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e60":
         {
           return AppLocalizations.of(context)!.classicConcert;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e57":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e61":
         {
           return AppLocalizations.of(context)!.theatre;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e58":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e62":
         {
           return AppLocalizations.of(context)!.reading;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e59":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e63":
         {
           return AppLocalizations.of(context)!.poetrySlam;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e60":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e78":
         {
           return AppLocalizations.of(context)!.artExhibitionGallery;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e61":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e79":
         {
           return AppLocalizations.of(context)!.museum;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e62":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e64":
         {
           return AppLocalizations.of(context)!.danceBallet;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e63":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e65":
         {
           return AppLocalizations.of(context)!.cultureFestival;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e78":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e66":
         {
           return AppLocalizations.of(context)!.otherCulturePerformingArt;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e79":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e67":
         {
           return AppLocalizations.of(context)!.students;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e64":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e68":
         {
           return AppLocalizations.of(context)!.family;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e65":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e69":
         {
           return AppLocalizations.of(context)!.kids;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e66":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e70":
         {
           return AppLocalizations.of(context)!.couples;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e67":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e71":
         {
           return AppLocalizations.of(context)!.otherStudentsFamilyCouples;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e68":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e72":
         {
           return AppLocalizations.of(context)!.massReligiousHappenings;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e69":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e73":
         {
           return AppLocalizations.of(context)!.politics;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e70":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e74":
         {
           return AppLocalizations.of(context)!.communityEvent;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e71":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e75":
         {
           return AppLocalizations.of(context)!.workshop;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e72":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e76":
         {
           return AppLocalizations.of(context)!.weeklyMarket;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e73":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e77":
         {
           return AppLocalizations.of(context)!.fleaMarket;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e74":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e80":
         {
           return AppLocalizations.of(context)!.talk;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e75":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e81":
         {
           return AppLocalizations.of(context)!.conferencesCareerEvents;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e76":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e82":
         {
           return AppLocalizations.of(context)!.charity;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e77":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e83":
         {
           return AppLocalizations.of(context)!.garden;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e80":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e84":
         {
           return AppLocalizations.of(context)!.otherExhibitonCommunityWorkshops;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e81":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e85":
         {
           return AppLocalizations.of(context)!.dating;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e82":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e87":
         {
           return AppLocalizations.of(context)!.shopping;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e83":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e88":
         {
           return AppLocalizations.of(context)!.home;
         }
         break;
-      case "8063ce0b-3645-4fcb-8445-f9ea23243e84":
+      case "8063ce0b-3645-4fcb-8445-f9ea23243e89":
         {
           return AppLocalizations.of(context)!.otherDiverse;
         }

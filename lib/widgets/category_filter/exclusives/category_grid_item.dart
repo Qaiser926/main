@@ -77,10 +77,12 @@ class CategoryGridItem extends StatelessWidget {
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
                         child: Text(CategoryIdToI18nMapper.fckMethod(
                             context, categoryId))),
+
                     // ExpansionPanel(headerBuilder: (context, isExpanded) => Text("yes yes"), body: Text("")),
                     SizedBox(
                       width: 20.h,
