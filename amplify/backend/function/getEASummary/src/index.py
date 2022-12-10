@@ -10,16 +10,16 @@ def handler(event, context):
                    {'weekday_id': 1, 'is_open': True, 'time': '0800'},
                    {'weekday_id': 1, 'is_open': False, 'time': '0930'},
                    {'weekday_id': 1, 'is_open': True, 'time': '1900'},
-                 {'weekday_id': 1, 'is_open': False, 'time': '2130'},
-                 {'weekday_id': 4, 'is_open': True, 'time': '0800'},
-                 {'weekday_id': 4, 'is_open': False, 'time': '0930'}]
-  openingTime = getOpeningTimesDict(openingTimes=openingTime)
-  prices = [1.0, 5.0, 10.0]
-  prices = getPrices(prices=prices)
-  
-  return {
-      'statusCode': 200,
-      'headers': {
+                   {'weekday_id': 1, 'is_open': False, 'time': '2130'},
+                   {'weekday_id': 4, 'is_open': True, 'time': '0800'},
+                   {'weekday_id': 4, 'is_open': False, 'time': '0930'}]
+    openingTime = getOpeningTimesDict(openingTimes=openingTime)
+    prices = [1.0, 5.0, 10.0]
+    prices = getPrices(prices=prices)
+
+    return {
+        'statusCode': 200,
+        'headers': {
           'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
