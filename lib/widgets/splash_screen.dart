@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:othia/widgets/status_bar.dart';
 
 import '../config/routes/routes.dart';
@@ -22,10 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _getIsFirst() async {
     await Future.delayed(const Duration(seconds: 1));
-    Get.toNamed(
-      Routes.searchRoute,
-      arguments: "as",
-    );
+    Navigator.pushNamed(context, Routes.mainScreenRoute);
   }
 
   @override

@@ -37,16 +37,15 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../widgets/category_filter/category_filter.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 import '../../widgets/filter_related/search_notifier.dart';
 
-
 class SearchPage extends StatelessWidget {
-  late Future<Object> future;
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +57,14 @@ class SearchPage extends StatelessWidget {
               value: SearchNotifier(priceRange: RangeValues(0, 100)),
             )
           ],
-          builder:(context,child){return  Scaffold(
-            primary: true,
-            appBar: DropDownAppBar(context: context, appBarTitle: "Search"),
-            // here the category pictures
-            body: getSearchScreen(),
-          );}),
+          builder: (context, child) {
+            return Scaffold(
+              primary: true,
+              appBar: DropDownAppBar(context: context, appBarTitle: "Search"),
+              // here the category pictures
+              body: getSearchScreen(),
+            );
+          }),
     );
   }
 
@@ -73,8 +74,8 @@ class SearchPage extends StatelessWidget {
       //   // differentiate here between search results (show different screen if nothing was found)
       //   return Text("${model.getPriceRange.toString()}");
       // } else {
-        // here the category screen in the beginning
-        return CategoryFilter();
+      // here the category screen in the beginning
+      return CategoryFilter();
       // }
     });
   }

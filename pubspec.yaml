@@ -52,7 +52,6 @@ dependencies:
   like_button: ^2.0.5
   share_plus: ^6.3.0
   add_2_calendar: ^2.2.3
-  path_provider: ^2.0.11
   #widgets
   readmore: ^2.1.0
   carousel_slider: ^4.1.1
@@ -62,14 +61,15 @@ dependencies:
   flutter_map: ^3.0.0
   maps_launcher: ^2.0.1
   #state and route management
-  get: ^4.6.5
+  path_provider: ^2.0.11
+  #  get: ^4.6.5
   #data modelling
   freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0
   uuid: ^3.0.6
   #amplify
   amplify_flutter: ^0.6.0
-#  amplify_datastore: ^0.6.0
+  #  amplify_datastore: ^0.6.0
   amplify_api: ^0.6.0
   amplify_auth_cognito: ^0.6.0
   amplify_authenticator: ^0.2.0

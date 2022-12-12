@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/utils/services/exceptions.dart';
+
 import '../../modules/models/detailed_event/detailed_event.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/services/data_handling/get_ical_element.dart';
@@ -8,15 +11,12 @@ import '../../utils/services/data_handling/keep_alive_future_builder.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/future_service.dart';
 import '../../utils/ui/ui_utils.dart';
+import '../../widgets/splash_screen.dart';
 import 'exclusive_widgets/button_widget.dart';
 import 'exclusive_widgets/description_widget.dart';
 import 'exclusive_widgets/horizontal_exploration.dart';
-import 'exclusive_widgets/map_widget.dart';
-import '../../widgets/splash_screen.dart';
-import 'package:get/get.dart';
-import 'package:latlong2/latlong.dart' as latLng;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'exclusive_widgets/image_widgets.dart';
+import 'exclusive_widgets/map_widget.dart';
 import 'exclusive_widgets/opening_times.dart';
 import 'exclusive_widgets/other.dart';
 
@@ -39,7 +39,8 @@ class _EventDetailState extends State<EventDetail> {
 
   @override
   void initState() {
-    String eventId = Get.arguments;
+    //TODO
+    String eventId = "1";
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
 

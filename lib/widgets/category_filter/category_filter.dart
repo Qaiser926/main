@@ -6,13 +6,19 @@ import 'exclusives/category_grid_item.dart';
 import 'exclusives/expanded_widget.dart';
 import 'exclusives/notifier.dart';
 
-class CategoryFilter extends StatelessWidget {
+class CategoryFilter extends StatefulWidget {
   List<Widget> niceList = getList();
 
   CategoryFilter({
     super.key,
   });
 
+  @override
+  State<CategoryFilter> createState() => CategoryFilterState();
+}
+
+class CategoryFilterState extends State<CategoryFilter>
+    with AutomaticKeepAliveClientMixin<CategoryFilter> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,16 +29,18 @@ class CategoryFilter extends StatelessWidget {
             value: ExpandedCategoryNotifier(),
           )
         ],
-        child: CustomScrollView(cacheExtent: double.maxFinite,slivers: [
+        child: CustomScrollView(cacheExtent: double.maxFinite, slivers: [
           SliverList(
-            delegate: SliverChildListDelegate(
-              niceList,
-            ),
+            delegate: SliverChildListDelegate(widget.niceList,
+                addAutomaticKeepAlives: true),
           )
         ]),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 List<Widget> getList() {

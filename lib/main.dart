@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import 'amplifyconfiguration.dart';
 import 'config/routes/pages.dart';
+import 'config/routes/routes.dart';
 import 'config/themes/dark_theme.dart';
 import 'constants/supported_locales.dart';
 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return Authenticator(
-          child: GetMaterialApp(
+          child: MaterialApp(
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -43,9 +43,15 @@ class MyApp extends StatelessWidget {
             supportedLocales: supportedLocales,
             builder: Authenticator.builder(),
             debugShowCheckedModeBanner: false,
-            initialRoute: "/",
+            initialRoute: Routes.homeRoute,
             routes: Pages.routes,
             theme: getDarkThemeData(),
+            onGenerateRoute: (settings) {
+              if (settings.name == Routes.homeRoute) {
+                return MaterialPageRoute(
+                    builder: Pages.routes[Routes.homeRoute]!);
+              }
+            },
           ),
         );
       },
