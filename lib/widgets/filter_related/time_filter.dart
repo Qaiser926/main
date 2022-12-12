@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
+import '../../utils/services/data_handling/data_handling.dart';
 import 'get_reset_apply_filter.dart';
 
 class TimeFilter extends StatefulWidget {
@@ -18,37 +19,39 @@ class TimeFilter extends StatefulWidget {
 }
 
 class _TimeFilterState extends State<TimeFilter> {
-  String? _dateCount;
-  String? _range;
   DateTime? startDate;
   DateTime? endDate;
+  bool todayButtonEnabled = false;
+  bool tomorrowButtonEnabled = false;
+  bool thisWeekendButtonEnabled = false;
+  bool thisWeekButtonEnabled = false;
+  bool nextWeekButtonEnabled = false;
+  bool nextWeekendButtonEnabled = false;
   DateRangePickerController _dateRangePickerController =
       DateRangePickerController();
 
   @override
   void initState() {
-    // Provider.of<SearchNotifier>(context, listen: false).getPriceRange
-    _dateCount = '';
-    _range = '';
+    startDate = Provider.of<SearchNotifier>(context, listen: false).startDate;
+    endDate = Provider.of<SearchNotifier>(context, listen: false).endDate;
     super.initState();
   }
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
       if (args.value is PickerDateRange) {
-        _range =
-            DateFormat('dd/MM/yyyy').format(args.value.startDate).toString() +
-                ' - ' +
-                DateFormat('dd/MM/yyyy')
-                    .format(args.value.endDate ?? args.value.startDate)
-                    .toString();
         startDate = args.value.startDate;
         endDate = args.value.endDate ?? args.value.startDate;
+        thisWeekendButtonEnabled = false;
+        todayButtonEnabled = false;
+        tomorrowButtonEnabled = false;
+        thisWeekButtonEnabled = false;
+        nextWeekButtonEnabled = false;
+        nextWeekendButtonEnabled = false;
+        Provider.of<SearchNotifier>(context, listen: false)
+            .setTimeCaption(caption: null);
       } else if (args.value is DateTime) {
         print(1);
-      } else if (args.value is List<DateTime>) {
-        print(2);
-        _dateCount = args.value.length.toString();
       }
     });
   }
@@ -67,16 +70,337 @@ class _TimeFilterState extends State<TimeFilter> {
     return true;
   }
 
+  Widget getTimeButton(
+      {required BuildContext context,
+      required String caption,
+      required Function onTapFunction,
+      required bool coloredBorder}) {
+    Color? borderColor = null;
+    if (coloredBorder) {
+      borderColor = Theme.of(context).colorScheme.primary;
+    } else {
+      borderColor = Theme.of(context).highlightColor;
+    }
+    return Padding(
+      padding: EdgeInsets.all(5),
+      child: GestureDetector(
+        onTap: () => onTapFunction(),
+        child: Container(
+          // margin: EdgeInsets.only(right: 12.h, left: 20.h ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.h),
+            border: Border.all(color: borderColor),
+          ),
+
+          child: Padding(
+            padding: EdgeInsets.all(7.h),
+            child: getCustomFont(
+              text: caption,
+              fontSize: 14.sp,
+              maxLine: 1,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> getTimeButtons({required BuildContext context}) {
+    List<Widget> timeButtons = [
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.today,
+          onTapFunction: getTodayFunction(),
+          coloredBorder: todayButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.tomorrow,
+          onTapFunction: getTomorrowFunction(),
+          coloredBorder: tomorrowButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeek,
+          onTapFunction: getThisWeekFunction(),
+          coloredBorder: thisWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeekend,
+          onTapFunction: getThisWeekendFunction(),
+          coloredBorder: thisWeekendButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeek,
+          onTapFunction: getNextWeekFunction(),
+          coloredBorder: nextWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeekend,
+          onTapFunction: getNextWeekendFunction(),
+          coloredBorder: nextWeekendButtonEnabled),
+    ];
+    return timeButtons;
+  }
+
+  Function getTodayFunction() {
+    if (todayButtonEnabled) {
+      return () => {
+            setState(() {
+              startDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultStartDate;
+              endDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              todayButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: null);
+            })
+          };
+    } else {
+      return () => {
+            setState(() {
+              startDate = DateTime.now();
+              endDate = DateTime.now();
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              todayButtonEnabled = true;
+              tomorrowButtonEnabled = false;
+              thisWeekendButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: AppLocalizations.of(context)!.today);
+            }),
+          };
+    }
+  }
+
+  Function getTomorrowFunction() {
+    if (tomorrowButtonEnabled) {
+      return () => {
+            setState(() {
+              startDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultStartDate;
+              endDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              tomorrowButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: null);
+            })
+          };
+    } else {
+      return () => {
+            setState(() {
+              startDate = DateTime.now().add(Duration(days: 1));
+              endDate = DateTime.now().add(Duration(days: 1));
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              tomorrowButtonEnabled = true;
+              todayButtonEnabled = false;
+              thisWeekendButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(
+                      caption: AppLocalizations.of(context)!.tomorrow);
+            }),
+          };
+    }
+  }
+
+  Function getThisWeekendFunction() {
+    DateTime now = DateTime.now();
+    int currentWeekday = now.weekday;
+    if (currentWeekday == 7) {
+      return () => {
+            setState(() {
+              startDate = now;
+              endDate = now;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekendButtonEnabled = true;
+              todayButtonEnabled = false;
+              tomorrowButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: AppLocalizations.of(context)!.today);
+            })
+          };
+    }
+    DateTime saturday =
+        now.subtract(Duration(days: currentWeekday)).add(Duration(days: 6));
+    if (thisWeekendButtonEnabled) {
+      return () => {
+            setState(() {
+              startDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultStartDate;
+              endDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: null);
+            })
+          };
+    } else {
+      return () => {
+            setState(() {
+              startDate = saturday;
+              endDate = saturday.add(Duration(days: 1));
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekendButtonEnabled = true;
+              todayButtonEnabled = false;
+              tomorrowButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(
+                      caption: AppLocalizations.of(context)!.thisWeekend);
+            }),
+          };
+    }
+  }
+
+  Function getThisWeekFunction() {
+    DateTime now = DateTime.now();
+    int currentWeekday = now.weekday;
+    DateTime sunday =
+        now.subtract(Duration(days: currentWeekday)).add(Duration(days: 7));
+    if (thisWeekButtonEnabled) {
+      return () => {
+            setState(() {
+              startDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultStartDate;
+              endDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: null);
+            })
+          };
+    } else {
+      return () => {
+            setState(() {
+              startDate = now;
+              endDate = sunday;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekendButtonEnabled = false;
+              todayButtonEnabled = false;
+              tomorrowButtonEnabled = false;
+              thisWeekButtonEnabled = true;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(
+                      caption: AppLocalizations.of(context)!.thisWeek);
+            }),
+          };
+    }
+  }
+
+  Function getNextWeekFunction() {
+    DateTime now = DateTime.now();
+    int currentWeekday = now.weekday;
+    DateTime nextMonday =
+        now.subtract(Duration(days: currentWeekday)).add(Duration(days: 8));
+    if (nextWeekButtonEnabled) {
+      return () => {
+            setState(() {
+              startDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultStartDate;
+              endDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              nextWeekButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: null);
+            })
+          };
+    } else {
+      return () => {
+            setState(() {
+              startDate = nextMonday;
+              endDate = nextMonday.add(Duration(days: 6));
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekendButtonEnabled = false;
+              todayButtonEnabled = false;
+              tomorrowButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = true;
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(
+                      caption: AppLocalizations.of(context)!.nextWeek);
+            }),
+          };
+    }
+  }
+
+  Function getNextWeekendFunction() {
+    DateTime now = DateTime.now();
+    int currentWeekday = now.weekday;
+    DateTime nextSaturday =
+        now.subtract(Duration(days: currentWeekday)).add(Duration(days: 13));
+    if (nextWeekendButtonEnabled) {
+      return () => {
+            setState(() {
+              startDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultStartDate;
+              endDate = Provider.of<SearchNotifier>(context, listen: false)
+                  .defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              nextWeekendButtonEnabled = false;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(caption: null);
+            })
+          };
+    } else {
+      return () => {
+            setState(() {
+              startDate = nextSaturday;
+              endDate = nextSaturday.add(Duration(days: 1));
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              thisWeekendButtonEnabled = false;
+              todayButtonEnabled = false;
+              tomorrowButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = true;
+              Provider.of<SearchNotifier>(context, listen: false)
+                  .setTimeCaption(
+                      caption: AppLocalizations.of(context)!.nextWeekend);
+            }),
+          };
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [CloseButton()])),
       Padding(
-        padding: EdgeInsets.fromLTRB(10, 0, 20, 0),
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: SfDateRangePicker(
           monthViewSettings: DateRangePickerMonthViewSettings(
             firstDayOfWeek: 1,
@@ -87,37 +411,23 @@ class _TimeFilterState extends State<TimeFilter> {
           selectionMode: DateRangePickerSelectionMode.range,
           selectableDayPredicate: predicateCallback,
           controller: _dateRangePickerController,
-          // TODO define differently
-          initialSelectedRange: PickerDateRange(startDate ?? DateTime.now(),
-              endDate ?? DateTime.now().add(const Duration(days: 1))),
+          initialSelectedRange: PickerDateRange(startDate!, endDate!),
         ),
       ),
-      SizedBox(
-        height: 35.h,
-        // disable color scheme
-        child: ListView.builder(
-          primary: false,
-          shrinkWrap: true,
-          itemCount: filters.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return filters[index];
-          },
-        ),
-      ),
-      TextButton(
-          onPressed: () => {
-                setState(() {
-                  startDate = DateTime.now().add(const Duration(days: 1));
-                  endDate = DateTime.now().add(const Duration(days: 5));
-                  _dateRangePickerController.selectedRange =
-                      PickerDateRange(startDate, endDate);
-                }),
-                print("test button pressed")
-              },
-          child: Text("test")),
       Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.start,
+          alignment: WrapAlignment.start,
+          children: getTimeButtons(context: context),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+        child: Divider(thickness: 3),
+      ),
+      Padding(
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -173,97 +483,25 @@ Widget getTimeBox(
 
 // TODO
 String getTimeCaption({required BuildContext context}) {
-  if (Provider.of<SearchNotifier>(context, listen: false)
-      .priceFilterActivated) {
-    RangeValues range =
-        Provider.of<SearchNotifier>(context, listen: false).getPriceRange;
-    if (range.start == range.end) {
-      if (range.start == 0) {
-        return AppLocalizations.of(context)!.free;
-      } else {
-        return "€${range.start}";
-      }
+  if (Provider.of<SearchNotifier>(context, listen: false).timeFilterActivated) {
+    DateTime startDate =
+        Provider.of<SearchNotifier>(context, listen: false).getStartDate;
+    DateTime endDate =
+        Provider.of<SearchNotifier>(context, listen: false).getEndDate;
+    String? caption =
+        Provider.of<SearchNotifier>(context, listen: false).getTimeCaption;
+    if (caption != null) {
+      return caption;
+    } else {
+      return startDate.day.toString() +
+          "." +
+          getMonthName(context: context, month: startDate.month) +
+          " - " +
+          startDate.day.toString() +
+          "." +
+          getMonthName(context: context, month: endDate.month);
     }
-    return "€${range.start.round()} - €${range.end.round()}";
   } else {
-    return AppLocalizations.of(context)!.price;
+    return AppLocalizations.of(context)!.time;
   }
-}
-
-Widget getFilter(
-    {required BuildContext context,
-    required int index,
-    required String caption,
-    required Function onTapFunction,
-    required bool coloredBorder}) {
-  Color? borderColor = null;
-  if (coloredBorder) {
-    borderColor = Theme.of(context).colorScheme.primary;
-  } else {
-    borderColor = Theme.of(context).colorScheme.tertiary;
-  }
-  return GestureDetector(
-    onTap: () => onTapFunction(),
-    child: Container(
-      margin: EdgeInsets.only(right: 12.h, left: index == 0 ? 20.h : 0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.h),
-        border: Border.all(color: borderColor),
-        color: Theme.of(context).colorScheme.tertiary,
-      ),
-      alignment: Alignment.center,
-      child: Padding(
-        padding: EdgeInsets.all(7.h),
-        child: Row(
-          children: [
-            getCustomFont(
-              text: caption,
-              fontSize: 16.sp,
-              maxLine: 1,
-              fontWeight: FontWeight.w600,
-            ),
-            Icon(
-              Icons.arrow_drop_down,
-              size: 20.h,
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-List<Widget> getFilters({required BuildContext context}) {
-  List<Widget> filter = [
-    // index has only effect if it is zero --> all others just 1
-    getFilter(
-        context: context,
-        index: 1,
-        caption: getPriceCaption(context: context),
-        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-            .priceFilterActivated,
-        onTapFunction: () {
-          return priceFilterDialog(context: context);
-        }),
-    getFilter(
-        context: context,
-        index: 1,
-        caption: AppLocalizations.of(context)!.sort,
-        coloredBorder: false,
-        onTapFunction: () => print("sort")),
-    getFilter(
-        context: context,
-        index: 1,
-        caption: AppLocalizations.of(context)!.type,
-        coloredBorder: false,
-        onTapFunction: () => print("type")),
-    getFilter(
-        context: context,
-        index: 1,
-        caption: AppLocalizations.of(context)!.additionalFilters,
-        coloredBorder: false,
-        onTapFunction: () => print("addFilter")),
-  ];
-
-  return filter;
 }

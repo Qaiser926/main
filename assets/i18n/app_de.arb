@@ -124,8 +124,13 @@
     "free": "Gratis",
 
      "from": "Von",
-      "to": "Bis"
+      "to": "Bis",
 
-
+    "nextWeekend": "Nächstes Wochenende",
+    "thisWeekend": "Dieses Wochenende",
+    "thisWeek": "Diese Woche",
+    "nextWeek": "Nächste Woche",
+    "today": "Heute",
+    "tomorrow": "Morgen"
 
 }

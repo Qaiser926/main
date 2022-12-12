@@ -109,8 +109,9 @@ List<Widget> getFilters({required BuildContext context}) {
       getFilter(
           context: context,
           index: 1,
-          caption: AppLocalizations.of(context)!.time,
-          coloredBorder: false,
+          caption: getTimeCaption(context: context),
+          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+              .timeFilterActivated,
           onTapFunction: () {
             return TimeFilterDialog(context: context);
           }),
@@ -132,10 +133,10 @@ List<Widget> getFilters({required BuildContext context}) {
       getFilter(
           context: context,
           index: 0,
-          caption: AppLocalizations.of(context)!.time,
-          coloredBorder: false,
+          caption: getTimeCaption(context: context),
+          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+              .timeFilterActivated,
           onTapFunction: () {
-            print("skf");
             return TimeFilterDialog(context: context);
           }),
     );

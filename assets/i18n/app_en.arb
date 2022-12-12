@@ -125,5 +125,14 @@
 
   "free": "Free",
   "from": "From",
-  "to": "To"
+  "to": "To",
+
+  "nextWeekend": "Next Weekend",
+      "thisWeekend": "This Weekend",
+      "thisWeek": "This Week",
+      "nextWeek": "Next Week",
+      "today": "Today",
+      "tomorrow": "Tomorrow"
+
+
 }

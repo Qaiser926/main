@@ -9,6 +9,8 @@ class SearchNotifier extends ChangeNotifier {
   bool showCategoryFilter = false;
   bool timeFilterActivated = false;
 
+  late String? timeCaption;
+
   late DateTime startDate;
   late DateTime defaultStartDate;
   late DateTime endDate;
@@ -26,6 +28,8 @@ class SearchNotifier extends ChangeNotifier {
 
   DateTime get getEndDate => endDate;
 
+  String? get getTimeCaption => timeCaption;
+
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
@@ -35,11 +39,21 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   void changeStartEndDate(
-      {required DateTime startDate, required DateTime endDate}) {
+      {required DateTime startDate,
+      required DateTime endDate,
+      String? caption}) {
     this.startDate = startDate;
     this.endDate = endDate;
     timeFilterActivated = true;
     showCategoryFilter = true;
+    if (caption != null) {
+      this.timeCaption = caption;
+    }
+    notifyListeners();
+  }
+
+  void setTimeCaption({required String? caption}) {
+    this.timeCaption = caption;
     notifyListeners();
   }
 
