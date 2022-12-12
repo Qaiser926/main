@@ -123,5 +123,7 @@
       "clearAll": "Clear all",
           "showResults": "Show results",
 
-  "free": "Free"
+  "free": "Free",
+  "from": "From",
+  "to": "To"
 }

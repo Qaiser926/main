@@ -39,8 +39,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/filter_related/search_notifier.dart';
+
 import '../../widgets/filter_related/dropdown_appbar.dart';
+import '../../widgets/filter_related/search_notifier.dart';
 
 class SearchPage extends StatelessWidget {
   late Future<Object> future;
@@ -52,7 +53,9 @@ class SearchPage extends StatelessWidget {
           providers: [
             // TODO initialize price range with max price
             ChangeNotifierProvider.value(
-              value: SearchNotifier(priceRange: RangeValues(0, 100)),
+              value: SearchNotifier(
+                  priceRange: RangeValues(0, 100),
+                  endDate: DateTime(DateTime.now().year + 2)),
             )
           ],
           builder:(context,child){return  Scaffold(

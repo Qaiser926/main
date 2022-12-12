@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
 import 'package:provider/provider.dart';
-import 'search_notifier.dart';
-import '../../utils/ui/ui_utils.dart';
 
+import '../../utils/ui/ui_utils.dart';
+import 'search_notifier.dart';
 
 // TODO on selected items include counter and give Box colored border, make a class
 SizedBox buildDropdownBar({required BuildContext context}) {
@@ -145,14 +145,20 @@ List<Widget> getFilters({required BuildContext context}) {
 }
 
 Future<dynamic> TimeFilterDialog({required BuildContext context}) {
+  var test = Provider.of<SearchNotifier>(context, listen: false);
   return showModalBottomSheet(
+      isScrollControlled: true,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       context: context,
-      builder: (context) {
-        return Container(
-          height: 800,
-          child: TimeFilter());
+      builder: (_) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(
+              value: test,
+            )
+          ],
+          child: Wrap(children: [TimeFilter()]),
+        );
       });
 }
-

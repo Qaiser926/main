@@ -121,7 +121,10 @@
     "clearAll": "Zurücksetzen",
     "showResults": "Zeige Ergebnisse",
 
-    "free": "Gratis"
+    "free": "Gratis",
+
+     "from": "Von",
+      "to": "Bis"
 
 
 
