@@ -84,7 +84,7 @@ class ExpandedWidget extends StatelessWidget {
   List<Widget> getSubcategoryExpandableContent(
       BuildContext context, SelectedSubcategoryNotifier model) {
     List<Widget> result = [];
-    result.addAll(getSubcategoryTextButtons(context, model));
+    result.add(getSubcategoryTextButtons(context, model));
 
     result.add(
       SizedBox(
@@ -97,25 +97,23 @@ class ExpandedWidget extends StatelessWidget {
     return result;
   }
 
-  List<Widget> getSubcategoryTextButtons(
+  Widget getSubcategoryTextButtons(
       BuildContext context, SelectedSubcategoryNotifier model) {
-    return List<Widget>.generate(
-      subcategoryIds.length,
-      (index) => SizedBox(
-        height: singleExpandedHeight,
-        child: Row(
+    return Wrap(
+      children: List<Widget>.generate(
+        subcategoryIds.length,
+        (index) => Row(
           children: [
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                var categoryProvider = Provider.of<SelectedSubcategoryNotifier>(
-                    context,
-                    listen: false);
-                categoryProvider.switchSelectedSubcategory(index);
-              },
-              child: SizedBox(
-                height: singleExpandedHeight,
-                width: 300,
+            SizedBox(
+              height: singleExpandedHeight,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  var categoryProvider =
+                      Provider.of<SelectedSubcategoryNotifier>(context,
+                          listen: false);
+                  categoryProvider.switchSelectedSubcategory(index);
+                },
                 child: Container(
                   height: singleExpandedHeight - 8,
                   padding: const EdgeInsets.all(4),
