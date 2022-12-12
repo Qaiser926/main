@@ -20,16 +20,18 @@ def handler(event, context):
     return {
         'statusCode': 200,
         'headers': {
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-      },
-      'body': json.dumps({'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'i am id',
-                            'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
-                            "isOnline": False,
-                             "prices": prices,
-                            "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
-                                         "locationTitle": 'Die Pumpe', "street": "abc street", 'locationId': "loc_id",
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'body': json.dumps(
+            {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'i am id',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
                                          'latitude': 54.324486, 'longitude': 10.1383, }, "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
                             "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)), 'openingTime': None}})
   }

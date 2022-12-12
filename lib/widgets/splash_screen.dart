@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:othia/widgets/status_bar.dart';
-import 'package:get/get.dart';
-import '../utils/ui/ui_utils.dart';
-import '../config/routes/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:othia/widgets/status_bar.dart';
+
+import '../config/routes/routes.dart';
+import '../utils/ui/ui_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _getIsFirst() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     Get.toNamed(
       Routes.searchRoute,
       arguments: "as",

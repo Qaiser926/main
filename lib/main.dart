@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: supportedLocales,
+            builder: Authenticator.builder(),
             debugShowCheckedModeBanner: false,
             initialRoute: "/",
             routes: Pages.routes,

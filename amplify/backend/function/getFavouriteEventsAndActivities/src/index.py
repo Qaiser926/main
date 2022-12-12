@@ -39,7 +39,7 @@ def handler(event, context):
                     "title": "test_event",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_1",
+                    "id": "test_id_5",
                     "photo": photo_binary
                 },
                 "test_id_6": {
@@ -47,7 +47,7 @@ def handler(event, context):
                     "title": "test_event2",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_2",
+                    "id": "test_id_6",
                     "photo": photo_binary
                 },
                 "test_id_8": {
@@ -55,7 +55,7 @@ def handler(event, context):
                     "title": "test_event",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_1",
+                    "id": "test_id_8",
                     "photo": photo_binary
                 },
                 "test_id_9": {
@@ -63,7 +63,7 @@ def handler(event, context):
                     "title": "test_event2",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_2",
+                    "id": "test_id_9",
                     "photo": photo_binary
                 }
             },
@@ -80,7 +80,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_4",
                     "photo": photo_binary
                 },
                 "test_id_9": {
@@ -88,7 +88,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_9",
                     "photo": photo_binary
                 },
                 "test_id_10": {
@@ -96,7 +96,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_10",
                     "photo": photo_binary
                 },
                 "test_id_31": {
@@ -104,7 +104,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_31",
                     "photo": photo_binary
                 },
                 "test_id_41": {
@@ -112,7 +112,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_41",
                     "photo": photo_binary
                 },
                 "test_id_91": {
@@ -120,7 +120,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_91",
                     "photo": photo_binary
                 },
                 "test_id_11": {
@@ -128,7 +128,7 @@ def handler(event, context):
                     "title": "test_event3",
                     "startTimeUtc": str(
                         datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
+                    "id": "test_id_11",
                     "photo": photo_binary
                 }
             },

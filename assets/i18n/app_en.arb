@@ -134,11 +134,11 @@
   "@attraction": {
     "description": "attraction"
   },
-  "culture": "Kultur & Performing Art",
+  "culture": "Culture & Performing Art",
   "@culture": {
     "description": "culture"
   },
-  "studentsFamily": "Studenen, Familie & Paare",
+  "studentsFamily": "Students, Familie & Paare",
   "@students": {
     "description": "students"
   },
