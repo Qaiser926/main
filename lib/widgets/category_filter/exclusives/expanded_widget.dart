@@ -36,7 +36,7 @@ class ExpandedWidget extends StatelessWidget {
 
     return Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
       bool expanded = model.getExpandedIndex == index;
-      if (!subcategoryIds.isEmpty) {
+      if (subcategoryIds.isNotEmpty) {
         return MultiProvider(
             providers: [
               ChangeNotifierProvider.value(
@@ -46,36 +46,37 @@ class ExpandedWidget extends StatelessWidget {
               )
             ],
             child: AnimatedContainer(
-              margin: expanded ? EdgeInsets.only(top: 10) : null,
-              duration: Duration(milliseconds: animationTime),
+              margin: expanded ? const EdgeInsets.only(top: 10) : null,
+              duration: const Duration(milliseconds: animationTime),
               width: expanded ? 600 : 0,
               height: expanded ? secHei : 0,
               child: expanded
                   ? Container(
                       decoration: BoxDecoration(
-                          color: listItemColor,
-                          borderRadius: BorderRadius.circular(borderRadius)),
+                        color: listItemColor,
+                        borderRadius: BorderRadius.circular(borderRadius),
+                      ),
                       child: Consumer<SelectedSubcategoryNotifier>(
                           builder: (context, model, child) {
                         return Container(
-                        margin: EdgeInsets.only(
-                          bottom: containerMarginBottom,
-                          top: containerMarginTop,
-                          left: 10.h,
-                          right: 10.h,
-                        ),
-                        child: Column(
-                          children:
-                          getSubcategoryExpandableContent(context, model),
-                        ),
-                      );
-                    }),
-              )
-                  : SizedBox.shrink(),
+                          margin: EdgeInsets.only(
+                            bottom: containerMarginBottom,
+                            top: containerMarginTop,
+                            left: 10.h,
+                            right: 10.h,
+                          ),
+                          child: Column(
+                            children:
+                                getSubcategoryExpandableContent(context, model),
+                          ),
+                        );
+                      }),
+                    )
+                  : const SizedBox.shrink(),
             ));
       } else {
         //TODO
-        return Text("Es ist ein unerwartet Fehler aufgetreten");
+        return const Text("Es ist ein unerwartet Fehler aufgetreten");
       }
     });
   }
@@ -85,10 +86,13 @@ class ExpandedWidget extends StatelessWidget {
     List<Widget> result = [];
     result.addAll(getSubcategoryTextButtons(context, model));
 
-    result.add(Container(
+    result.add(
+      SizedBox(
         height: bottomRowHeight,
         child: getShowResultsButton(
-            context: context, function: test, functionArguments: {})));
+            context: context, function: test, functionArguments: {}),
+      ),
+    );
 
     return result;
   }
@@ -114,17 +118,20 @@ class ExpandedWidget extends StatelessWidget {
                 width: 300,
                 child: Container(
                   height: singleExpandedHeight - 8,
-                  padding: EdgeInsets.all(4),
-                  margin: EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(4),
+                  margin: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                      border: model.isSelected(index)
-                          ? Border.all(color: primaryColor, width: 2.5)
-                          : Border.all(color: bgColor, width: 2.5),
-                      borderRadius: BorderRadius.circular(23)),
+                    border: model.isSelected(index)
+                        ? Border.all(color: primaryColor, width: 2.5)
+                        : Border.all(color: bgColor, width: 2.5),
+                    borderRadius: BorderRadius.circular(23),
+                  ),
                   transformAlignment: Alignment.center,
                   child: Center(
-                    child: Text(CategoryIdToI18nMapper.fckMethod(
-                        context, subcategoryIds[index])),
+                    child: Text(
+                      CategoryIdToI18nMapper.fckMethod(
+                          context, subcategoryIds[index]),
+                    ),
                   ),
                 ),
               ),
