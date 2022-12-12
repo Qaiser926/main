@@ -35,18 +35,10 @@ class CategoryGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: WidgetConstants.categoryGridItemHeight,
+      width: WidgetConstants.categoryGridItemWidth,
       child: Stack(
         children: [
           Categories.categoryRoundedImagesMap[categoryId]!,
-          Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
-            return model.getExpandedIndex == index
-                ? Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border: Border.all(color: primaryColor, width: 3)),
-                  )
-                : const SizedBox.shrink();
-          }),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -85,7 +77,7 @@ class CategoryGridItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: WidgetConstants.categoryGridItemWidth,
+                        width: WidgetConstants.categoryGridItemTextWidth,
                         child: Flexible(
                             child: Text(CategoryIdToI18nMapper.fckMethod(
                                 context, categoryId))),
@@ -102,7 +94,19 @@ class CategoryGridItem extends StatelessWidget {
                 ),
               ),
             ],
-          )
+          ),
+          IgnorePointer(
+            child: Consumer<ExpandedCategoryNotifier>(
+                builder: (context, model, child) {
+              return model.getExpandedIndex == index
+                  ? Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: primaryColor, width: 3)),
+                    )
+                  : const SizedBox.shrink();
+            }),
+          ),
         ],
       ),
     );
