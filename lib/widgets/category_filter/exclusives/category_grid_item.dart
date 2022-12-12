@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constants/app_constants.dart';
 import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import 'notifier.dart';
@@ -20,7 +21,9 @@ class CategoryGridItem extends StatelessWidget {
 
   Icon expandIcon = const Icon(Icons.expand_more_outlined);
 
+  //cannot be shorter. Category names that need two lines will be cut out if shorter.
   static const double bottomPartHeight = 55;
+  static const double gradientHeight = 10;
 
   CategoryGridItem({
     super.key,
@@ -31,7 +34,7 @@ class CategoryGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250,
+      height: WidgetConstants.categoryGridItemHeight,
       child: Stack(
         children: [
           Categories.categoryRoundedImagesMap[categoryId]!,
@@ -47,19 +50,19 @@ class CategoryGridItem extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Container(
-              //   height: 20,
-              //   decoration: BoxDecoration(
-              //     gradient: LinearGradient(
-              //         colors: [
-              //           lessListItemColor.withOpacity(.7),
-              //           lessListItemColor.withOpacity(0),
-              //         ],
-              //         begin: Alignment.bottomCenter,
-              //         tileMode: TileMode.mirror,
-              //         end: Alignment.topCenter),
-              //   ),
-              // ),
+              Container(
+                height: gradientHeight,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        lessListItemColor.withOpacity(.7),
+                        lessListItemColor.withOpacity(0),
+                      ],
+                      begin: Alignment.bottomCenter,
+                      tileMode: TileMode.mirror,
+                      end: Alignment.topCenter),
+                ),
+              ),
               GestureDetector(
                 onTap: () => onLowerAreaTapped(context),
                 child: Container(
@@ -79,11 +82,15 @@ class CategoryGridItem extends StatelessWidget {
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Flexible(
-                          child: Text(CategoryIdToI18nMapper.fckMethod(
-                              context, categoryId))),
+                      SizedBox(
+                        width: WidgetConstants.categoryGridItemWidth,
+                        child: Flexible(
+                            child: Text(CategoryIdToI18nMapper.fckMethod(
+                                context, categoryId))),
+                      ),
+                      const Spacer(),
                       Consumer<ExpandedCategoryNotifier>(
                           builder: (context, model, child) {
                         return model.getExpandedIndex == index

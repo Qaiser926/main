@@ -9,6 +9,8 @@ import 'exclusives/notifier.dart';
 class CategoryFilter extends StatefulWidget {
   List<Widget> niceList = getCategoryGrid();
   static const double gridItemDistance = 15;
+  static const EdgeInsets gridItemPadding =
+      EdgeInsets.symmetric(horizontal: 10);
 
   CategoryFilter({
     super.key,
@@ -50,7 +52,7 @@ class CategoryFilterState extends State<CategoryFilter>
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: CategoryFilter.gridItemPadding,
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
