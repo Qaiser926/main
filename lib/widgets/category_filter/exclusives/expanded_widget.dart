@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/category_filter/exclusives/selectedSubcategoryNotifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../constants/catgories.dart';
+import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import '../../filter_related/get_reset_apply_filter.dart';
 import 'notifier.dart';

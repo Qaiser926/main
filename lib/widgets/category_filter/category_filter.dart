@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/catgories.dart';
+import '../../constants/categories.dart';
 import 'exclusives/category_grid_item.dart';
 import 'exclusives/expanded_widget.dart';
 import 'exclusives/notifier.dart';
 
 class CategoryFilter extends StatefulWidget {
-  List<Widget> niceList = getList();
+  List<Widget> niceList = getCategoryGrid();
+  static const double gridItemDistance = 15;
 
   CategoryFilter({
     super.key,
@@ -15,6 +16,33 @@ class CategoryFilter extends StatefulWidget {
 
   @override
   State<CategoryFilter> createState() => CategoryFilterState();
+
+  static List<Widget> getCategoryGrid() {
+    List<Widget> categoryGrid = [];
+    for (int index = 0; index < Categories.categoryIds.length; index += 2) {
+      categoryGrid.add(Row(
+        children: [
+          Flexible(
+            child: getCategoryGridItem(index: index),
+          ),
+          const SizedBox(
+            width: gridItemDistance,
+          ),
+          Flexible(
+            child: getCategoryGridItem(
+              index: index + 1,
+            ),
+          ),
+        ],
+      ));
+      categoryGrid.add(ExpandedWidget(index: index));
+      categoryGrid.add(ExpandedWidget(index: index + 1));
+      categoryGrid.add(const SizedBox(
+        height: gridItemDistance,
+      ));
+    }
+    return categoryGrid;
+  }
 }
 
 class CategoryFilterState extends State<CategoryFilter>
@@ -43,30 +71,3 @@ class CategoryFilterState extends State<CategoryFilter>
   bool get wantKeepAlive => true;
 }
 
-List<Widget> getList() {
-  List<Widget> allMightyList = [];
-  for (int index = 0; index < Categories.categoryIds.length; index += 2) {
-    allMightyList.add(Row(
-      children: [
-        Flexible(
-          child: getCategoryGridItem(index: index),
-        ),
-        SizedBox(
-          width: 15,
-        ),
-        Flexible(
-          child: getCategoryGridItem(
-            index: index + 1,
-          ),
-        ),
-      ],
-    ));
-    allMightyList.add(ExpandedWidget(index: index));
-    allMightyList.add(ExpandedWidget(index: index + 1));
-    allMightyList.add(SizedBox(
-      height: 15,
-    ));
-  }
-  // }
-  return allMightyList;
-}
