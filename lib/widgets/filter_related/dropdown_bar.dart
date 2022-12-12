@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import '../../utils/ui/ui_utils.dart';
 import 'search_notifier.dart';
 
-// TODO on selected items include counter and give Box colored border, make a class
 SizedBox buildDropdownBar({required BuildContext context}) {
   // var test = Provider.of<SearchNotifier>(context, listen: false);
   // test.activateShowSearchResults();
