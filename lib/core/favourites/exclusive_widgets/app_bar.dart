@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../config/themes/theme_config.dart';
 import '../../../constants/colors.dart';
-import '../../../utils/ui/ui_utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavouriteAppBar extends AppBar {
   final TabController tabController;
@@ -24,14 +22,15 @@ class FavouriteAppBar extends AppBar {
               height: 50,
               margin: EdgeInsets.symmetric(horizontal: 12.h, vertical: 15.h),
               decoration: BoxDecoration(
-                  color: bgColor,
-                  borderRadius: BorderRadius.circular(41.h),
-                  boxShadow: [
-                    BoxShadow(
-                        color: shadowColor,
-                        offset: const Offset(0, 8),
-                        blurRadius: 27)
-                  ]),
+                color: listItemColor,
+                borderRadius: BorderRadius.circular(41.h),
+                // boxShadow: [
+                //   BoxShadow(
+                //       color: shadowColor,
+                //       offset: const Offset(0, 8),
+                //       blurRadius: 27)
+                // ]
+              ),
               child: TabBar(
                   padding: EdgeInsets.all(5.h),
                   controller: tabController,
