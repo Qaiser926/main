@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/widgets/category_filter/exclusives/selectedSubcategoryNotifier.dart';
+import 'package:othia/widgets/category_filter/exclusives/selected_subcategory_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/categories.dart';
@@ -41,9 +41,8 @@ class ExpandedWidget extends StatelessWidget {
             // key: key,
             providers: [
               ChangeNotifierProvider.value(
-                value: SelectedSubcategoryNotifier(
-                  numberOfCategories: subcategoryIds.length,
-                ),
+                value:
+                    SelectedSubcategoryNotifier(subcategoryIds: subcategoryIds),
               )
             ],
             child: AnimatedContainer(
@@ -89,8 +88,10 @@ class ExpandedWidget extends StatelessWidget {
     result.add(const SizedBox(
       height: 12,
     ));
-    //TODO set selected Category ids dynamically
+    var searchNotifier = Provider.of<SearchNotifier>(context, listen: false);
+    searchNotifier.setSelectedSubcategories = model.selectedSubcategoryIds;
 
+    //TODO size of show results button
     result.add(
       // SizedBox(
       //   height: bottomRowHeight,

@@ -53,6 +53,8 @@ class SearchNotifier extends ChangeNotifier {
 
   EAType? get getEAType => eAType;
 
+  List<String> get selectedSubcategories => _selectedSubcategories;
+
   List<String> get getSelectedCategoryIds => selectedCategoryIds;
 
   void changeCategoryIdList({required List<String> selectedCategoryIds}) {

@@ -31,7 +31,7 @@ class MainPage extends StatelessWidget {
         )
       ],
       child: Scaffold(
-          bottomNavigationBar: CustomNavigationBar(),
+          bottomNavigationBar: const CustomNavigationBar(),
           body: PageView(
             controller: _pageController,
             physics: const NeverScrollableScrollPhysics(),
