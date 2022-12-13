@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../utils/ui/ui_utils.dart';
 
 class SimpleMap extends StatefulWidget {
@@ -37,8 +38,8 @@ class _SimpleMapState extends State<SimpleMap> {
 
             height: 210,
 
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20))),
+            decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
             child: FlutterMap(
                 options: MapOptions(
                   center: latlong,
@@ -49,8 +50,9 @@ class _SimpleMapState extends State<SimpleMap> {
                 nonRotatedChildren: [
                   Container(
                     alignment: Alignment.bottomRight,
-                    padding: EdgeInsetsDirectional.only(end: 8, bottom: 2),
-                    child: Text('© OpenStreetMap'),
+                    padding: const EdgeInsetsDirectional.only(
+                        end: 8, bottom: 2),
+                    child: const Text('© OpenStreetMap'),
                   )
                 ],
                 children: [
@@ -66,14 +68,13 @@ class _SimpleMapState extends State<SimpleMap> {
                         rotate: true,
                         point: latlong,
                         builder: (ctx) => GestureDetector(
-                              onTap: () => MapsLauncher.launchCoordinates(
+                          onTap: () =>
+                              MapsLauncher.launchCoordinates(
                                   latlong.latitude, latlong.longitude),
-                              child: Container(
-                                child: Icon(
-                                  Icons.location_on,
-                                  size: 50,
-                                ),
-                              ),
+                          child: const Icon(
+                            Icons.location_on,
+                            size: 50,
+                          ),
                             ))
                   ])
                 ]))),

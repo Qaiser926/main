@@ -40,14 +40,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../widgets/category_filter/category_filter.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 import '../../widgets/filter_related/search_notifier.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
-  late Future<Object> future;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +55,7 @@ class SearchPage extends StatelessWidget {
             // TODO initialize price range with max price
             ChangeNotifierProvider.value(
               value: SearchNotifier(
-                  priceRange: RangeValues(0, 100),
+                  priceRange: const RangeValues(0, 100),
                   endDate: DateTime(DateTime.now().year + 2),
                   sortCriteria: null,
                   eAType: null),
@@ -76,13 +74,13 @@ class SearchPage extends StatelessWidget {
 
   Widget getSearchScreen() {
     return Consumer<SearchNotifier>(builder: (context, model, child) {
-      // if (model.isShowResults()) {
-      //   // differentiate here between search results (show different screen if nothing was found)
-      //   return Text("${model.getPriceRange.toString()}");
-      // } else {
-      // here the category screen in the beginning
-      return CategoryFilter();
-      // }
+      if (model.isShowResults()) {
+        // differentiate here between search results (show different screen if nothing was found)
+        return Text("${model.getPriceRange.toString()}");
+      } else {
+        return CategoryFilter();
+        // }
+      }
     });
   }
 }

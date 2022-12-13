@@ -112,14 +112,13 @@
   "free": "Free",
   "from": "From",
   "to": "To",
-
+  "location": "Location",
   "nextWeekend": "Next Weekend",
   "thisWeekend": "This Weekend",
   "thisWeek": "This Week",
   "nextWeek": "Next Week",
   "today": "Today",
   "tomorrow": "Tomorrow",
-
   "priceRising": "Price ↑",
   "dateRising": "Date ↑",
   "popularity": "Popularity",
