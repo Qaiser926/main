@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/widgets/category_filter/exclusives/selectedSubcategoryNotifier.dart';
+import 'package:othia/widgets/category_filter/exclusives/selected_subcategory_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import '../../filter_related/get_reset_apply_filter.dart';
+import '../../filter_related/search_notifier.dart';
 import 'notifier.dart';
 
 class ExpandedWidget extends StatelessWidget {
@@ -40,9 +41,8 @@ class ExpandedWidget extends StatelessWidget {
             // key: key,
             providers: [
               ChangeNotifierProvider.value(
-                value: SelectedSubcategoryNotifier(
-                  numberOfCategories: subcategoryIds.length,
-                ),
+                value:
+                    SelectedSubcategoryNotifier(subcategoryIds: subcategoryIds),
               )
             ],
             child: AnimatedContainer(
@@ -88,7 +88,10 @@ class ExpandedWidget extends StatelessWidget {
     result.add(const SizedBox(
       height: 12,
     ));
-    //TODO sized boxes and show results button
+    var searchNotifier = Provider.of<SearchNotifier>(context, listen: false);
+    searchNotifier.setSelectedSubcategories = model.selectedSubcategoryIds;
+
+    //TODO size of show results button
     result.add(
       SizedBox(
         height: bottomRowHeight,
@@ -96,14 +99,8 @@ class ExpandedWidget extends StatelessWidget {
             context: context, function: test, functionArguments: {}),
       ),
     );
-
     return result;
   }
-
-  // child: Wrap(
-  //
-  // children: getTimeButtons(context: context), required WrapCrossAlignment crossAxisAlignment,
-  // ),
 
   Widget getSubcategoryTextButtons(
       BuildContext context, SelectedSubcategoryNotifier model) {

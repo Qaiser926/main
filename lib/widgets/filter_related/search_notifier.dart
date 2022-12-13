@@ -23,6 +23,8 @@ class SearchNotifier extends ChangeNotifier {
   late SortCriteria? sortCriteria;
   late EAType? eAType;
 
+  List<String> _selectedSubcategories = [];
+
   SearchNotifier(
       {required priceRange,
       startDate,
@@ -45,6 +47,8 @@ class SearchNotifier extends ChangeNotifier {
   SortCriteria? get getSortCriteria => sortCriteria;
 
   EAType? get getEAType => eAType;
+
+  List<String> get selectedSubcategories => _selectedSubcategories;
 
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
@@ -115,5 +119,9 @@ class SearchNotifier extends ChangeNotifier {
       showCategoryFilter = false;
     }
     notifyListeners();
+  }
+
+  set setSelectedSubcategories(List<String> selectedSubcategories) {
+    _selectedSubcategories = selectedSubcategories;
   }
 }
