@@ -21,10 +21,10 @@ class ExpandedWidget extends StatelessWidget {
   final int index;
   final ScrollController scrollController;
 
-  var key;
+  @override
+  GlobalKey key = GlobalKey();
 
   ExpandedWidget({
-    required this.key,
     required this.index,
     required this.scrollController,
   }) : subcategoryIds = categoryIdToSubcategoryIds
@@ -41,9 +41,10 @@ class ExpandedWidget extends StatelessWidget {
 
     return Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
       bool expanded = model.getExpandedIndex == index;
+      model.addKey(index, key);
       if (subcategoryIds.isNotEmpty) {
         return MultiProvider(
-          // key: key,
+            // key: key,
             providers: [
               ChangeNotifierProvider.value(
                 value: SelectedSubcategoryNotifier(

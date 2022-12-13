@@ -9,7 +9,6 @@ import 'exclusives/notifier.dart';
 class CategoryFilter extends StatefulWidget {
   final ScrollController _scrollController = ScrollController();
   late final List<Widget> niceList;
-  GlobalKey keyExpanded = GlobalKey();
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
@@ -27,8 +26,8 @@ class CategoryFilterState extends State<CategoryFilter>
     with AutomaticKeepAliveClientMixin<CategoryFilter> {
   @override
   Widget build(BuildContext context) {
-    widget.niceList = getCategoryGrid(
-        scrollController: widget._scrollController, key: widget.keyExpanded);
+    widget.niceList =
+        getCategoryGrid(scrollController: widget._scrollController);
 
     super.build(context);
     return Container(
@@ -40,7 +39,8 @@ class CategoryFilterState extends State<CategoryFilter>
           )
         ],
         child: CustomScrollView(
-            // controller: widget._scrollController,
+            controller: widget._scrollController,
+            scrollDirection: Axis.vertical,
             cacheExtent: double.maxFinite,
             slivers: [
               SliverList(
@@ -56,8 +56,7 @@ class CategoryFilterState extends State<CategoryFilter>
   bool get wantKeepAlive => true;
 }
 
-List<Widget> getCategoryGrid(
-    {required ScrollController scrollController, required Key key}) {
+List<Widget> getCategoryGrid({required ScrollController scrollController}) {
   List<Widget> categoryGrid = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
     categoryGrid.add(Row(
@@ -66,7 +65,6 @@ List<Widget> getCategoryGrid(
           child: getCategoryGridItem(
             index: index,
             scrollController: scrollController,
-            key: key,
           ),
         ),
         const SizedBox(
@@ -76,7 +74,6 @@ List<Widget> getCategoryGrid(
           child: getCategoryGridItem(
             index: index + 1,
             scrollController: scrollController,
-            key: key,
           ),
         ),
       ],
@@ -84,12 +81,10 @@ List<Widget> getCategoryGrid(
     categoryGrid.add(ExpandedWidget(
       index: index,
       scrollController: scrollController,
-      key: key,
     ));
     categoryGrid.add(ExpandedWidget(
       index: index + 1,
       scrollController: scrollController,
-      key: key,
     ));
     categoryGrid.add(const SizedBox(
       height: CategoryFilter.gridItemDistance,
