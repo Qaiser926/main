@@ -6,17 +6,17 @@ import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import 'notifier.dart';
 
-Widget getCategoryGridItem({
-  required int index,
-  required ScrollController scrollController,
-}) {
+Widget getCategoryGridItem(
+    {required int index,
+    required ScrollController scrollController,
+    required Key key}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
     index: index,
     categoryId: categoryId,
     scrollController: scrollController,
-    // keys: key,
+    key: key,
   );
 }
 
@@ -32,10 +32,10 @@ class CategoryGridItem extends StatelessWidget {
 
   final ScrollController scrollController;
 
-  // var keys;
+  var key;
 
   CategoryGridItem({
-    // required this.keys,
+    required this.key,
     required this.index,
     required this.categoryId,
     required this.scrollController,
@@ -92,11 +92,9 @@ class CategoryGridItem extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: WidgetConstants.categoryGridItemTextWidth,
-                          child: Text(
-                            CategoryIdToI18nMapper.fckMethod(
-                                context, categoryId),
-                            maxLines: 2,
-                          ),
+                          child: Flexible(
+                              child: Text(CategoryIdToI18nMapper.fckMethod(
+                                  context, categoryId))),
                         ),
                         const Spacer(),
                         Consumer<ExpandedCategoryNotifier>(
@@ -136,25 +134,7 @@ class CategoryGridItem extends StatelessWidget {
       categoryProvider.setExpanded(index: null, categoryId: null);
     } else {
       categoryProvider.setExpanded(index: index, categoryId: categoryId);
-      // final RenderBox box = categoryProvider
-      //     .getKey(index)
-      //     .currentContext!
-      //     .findRenderObject() as RenderBox;
-      //
-      // Offset offs = box.localToGlobal(Offset.zero);
-      //
-      // double height = box.size.height;
-      //
-      // scrollController.animateTo(
-      //   offs.dy-height,
-      //   duration: Duration(milliseconds: 400),
-      //   curve: Curves.decelerate,
-      // );
-      //
-      // //    Scrollable.ensureVisible(categoryProvider.getKey(index).currentContext!,
-      // // alignmentPolicy: ScrollPositionAlignmentPolicy.explicit,
-      // //        curve: Curves.decelerate,
-      // //        duration: const Duration(milliseconds: 400));
     }
+    // scrollController.animateTo(offset, duration: duration, curve: curve)
   }
 }
