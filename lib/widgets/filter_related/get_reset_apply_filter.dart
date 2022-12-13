@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
 import 'search_notifier.dart';
 
 Widget getShowResultsButton(
-    {required BuildContext context, required Function function, required Map<Symbol,dynamic> functionArguments}) {
+    {required BuildContext context,
+    required Function function,
+    required Map<Symbol, dynamic> functionArguments,
+    bool closeDialog = true}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -30,9 +34,10 @@ Widget getShowResultsButton(
                           borderRadius: BorderRadius.circular(12.0)))),
               child: Text(AppLocalizations.of(context)!.showResults),
               onPressed: () {
-                Function.apply(
-                    function, [], functionArguments);
-                Navigator.of(context, rootNavigator: true).pop();
+                Function.apply(function, [], functionArguments);
+                if (closeDialog) {
+                  Navigator.of(context, rootNavigator: true).pop();
+                }
               })),
     ],
   );

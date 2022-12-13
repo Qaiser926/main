@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
@@ -12,21 +11,24 @@ import '../../utils/ui/ui_utils.dart';
 import '../category_filter/category_filter.dart';
 import 'search_notifier.dart';
 
-SizedBox buildDropdownBar({required BuildContext context}) {
+Container buildDropdownBar({required BuildContext context}) {
   // var test = Provider.of<SearchNotifier>(context, listen: false);
   // test.activateShowSearchResults();
   final List<Widget> filters = getFilters(context: context);
-  return SizedBox(
-    height: 35.h,
-    // disable color scheme
-    child: ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      itemCount: filters.length,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        return filters[index];
-      },
+  return Container(
+    alignment: Alignment.centerLeft,
+    child: SizedBox(
+      height: 35.h,
+      // disable color scheme
+      child: ListView.builder(
+        primary: false,
+        shrinkWrap: true,
+        itemCount: filters.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return filters[index];
+        },
+      ),
     ),
   );
 }
@@ -46,7 +48,7 @@ Widget getFilter(
   return GestureDetector(
     onTap: () => onTapFunction(),
     child: Container(
-      margin: EdgeInsets.only(right: 12.h, left: index == 0 ? 20.h : 0),
+      margin: EdgeInsets.only(right: 12.h, left: index == 0 ? 10.h : 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.h),
         border: Border.all(color: borderColor),
@@ -89,13 +91,6 @@ List<Widget> getFilters({required BuildContext context}) {
     getFilter(
         context: context,
         index: 1,
-        caption: getSortCaption(context: context),
-        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-            .sortFilterActivated,
-        onTapFunction: () => sortFilterDialog(context: context)),
-    getFilter(
-        context: context,
-        index: 1,
         caption: getTypeCaption(context: context),
         coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
             .typeFilterActivated,
@@ -127,11 +122,21 @@ List<Widget> getFilters({required BuildContext context}) {
           context: context,
           // TODO implement caption and colored Border
           index: 0,
-          caption: AppLocalizations.of(context)!.category,
-          coloredBorder: false,
+          caption: getCategoryCaption(context: context),
+          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+              .categoryFilterActivated,
           onTapFunction: () {
             return CategoryFilterDialog(context: context);
           }),
+    );
+    filter.add(
+      getFilter(
+          context: context,
+          index: 1,
+          caption: getSortCaption(context: context),
+          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+              .sortFilterActivated,
+          onTapFunction: () => sortFilterDialog(context: context)),
     );
   } else {
     filter.insert(

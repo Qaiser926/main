@@ -17,29 +17,35 @@ Future<dynamic> CategoryFilterDialog({required BuildContext context}) {
       context: context,
       builder: (_) {
         return MultiProvider(
-          providers: [
-            ChangeNotifierProvider.value(
-              value: test,
-            )
-          ],
-          child: Wrap(children: [
-            CategoryFilter(
-              context: context,
-            )
-          ]),
-        );
+            providers: [
+              ChangeNotifierProvider.value(
+                value: test,
+              )
+            ],
+            child:
+                // TODO make container height dynamic
+                Container(
+              height: 675,
+              child: CategoryFilter(
+                context: context,
+                isModalBottomSheetMode: true,
+              ),
+            ));
       });
 }
 
 class CategoryFilter extends StatefulWidget {
-  late final List<Widget> niceList = getCategoryGrid();
+  late final List<Widget> niceList =
+      getCategoryGrid(isModalBottomSheetMode: isModalBottomSheetMode);
   BuildContext context;
+  bool isModalBottomSheetMode;
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
       EdgeInsets.symmetric(horizontal: 10);
 
-  CategoryFilter({super.key, required this.context});
+  CategoryFilter(
+      {super.key, required this.context, required this.isModalBottomSheetMode});
 
   @override
   State<CategoryFilter> createState() => CategoryFilterState(context: context);
@@ -54,26 +60,41 @@ class CategoryFilterState extends State<CategoryFilter>
         .getSelectedCategoryIds;
   }
 
+  // TODO make the loading of the pictures faster, e.g. by compressing their size (keep in mind that those picures are also used in the default view as default pictures)
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    List<Widget> sliverList = [
+      SliverList(
+        delegate: SliverChildListDelegate(widget.niceList,
+            addAutomaticKeepAlives: true),
+      )
+    ];
+    if (widget.isModalBottomSheetMode) {
+      sliverList.insert(
+        0,
+        SliverPadding(
+            padding: EdgeInsets.all(10),
+            sliver: SliverToBoxAdapter(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [CloseButton()]),
+            )),
+      );
+    }
     return Container(
       padding: CategoryFilter.gridItemPadding,
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
-            value: ExpandedCategoryNotifier(),
+            value: ExpandedCategoryNotifier(
+                isModalBottomMode: widget.isModalBottomSheetMode),
           )
         ],
         child: CustomScrollView(
-          // controller: widget._scrollController,
+            // controller: widget._scrollController,
             cacheExtent: double.maxFinite,
-            slivers: [
-              SliverList(
-                delegate: SliverChildListDelegate(widget.niceList,
-                    addAutomaticKeepAlives: true),
-              )
-            ]),
+            slivers: sliverList),
       ),
     );
   }
@@ -82,7 +103,7 @@ class CategoryFilterState extends State<CategoryFilter>
   bool get wantKeepAlive => true;
 }
 
-List<Widget> getCategoryGrid() {
+List<Widget> getCategoryGrid({required bool isModalBottomSheetMode}) {
   List<Widget> categoryGrid = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
     categoryGrid.add(Row(
@@ -90,6 +111,7 @@ List<Widget> getCategoryGrid() {
         Flexible(
           child: getCategoryGridItem(
             index: index,
+            isModalBottomSheetMode: isModalBottomSheetMode,
           ),
         ),
         const SizedBox(
@@ -98,6 +120,7 @@ List<Widget> getCategoryGrid() {
         Flexible(
           child: getCategoryGridItem(
             index: index + 1,
+            isModalBottomSheetMode: isModalBottomSheetMode,
           ),
         ),
       ],
@@ -116,16 +139,34 @@ List<Widget> getCategoryGrid() {
 }
 
 String getCategoryCaption({required BuildContext context}) {
-  List<String> sortCriteria =
-      Provider.of<SearchNotifier>(context, listen: false)
-          .getSelectedCategoryIds;
-  if (sortCriteria.length == 0) {
+  List<String> categoryIds = Provider.of<SearchNotifier>(context, listen: false)
+      .getSelectedCategoryIds;
+  if (categoryIds.length == 0) {
     return AppLocalizations.of(context)!.category;
-  } else if (sortCriteria.length == 1) {
-    // TODO translate to actual name instead of id + limit to characters-
-    return CategoryIdToI18nMapper.fckMethod(context, sortCriteria[0]);
+  } else if (categoryIds.length == 1) {
+    String tempCategory =
+        CategoryIdToI18nMapper.fckMethod(context, categoryIds[0]);
+    return getShortCaption(caption: tempCategory, cutOff: 20);
   } else {
-    // TODO either state that several subcategories or find main category
+    Map<String, List<String>> categorySubcategoryMap =
+        categoryIdToSubcategoryIds;
+    String caption = "";
+    for (MapEntry<String, List<String>> item
+        in categorySubcategoryMap.entries) {
+      if (item.value.contains(categoryIds[0])) {
+        String tempCategory =
+            CategoryIdToI18nMapper.fckMethod(context, item.key);
+        return getShortCaption(cutOff: 20, caption: tempCategory);
+      }
+    }
     return AppLocalizations.of(context)!.category;
+  }
+}
+
+String getShortCaption({required int cutOff, required String caption}) {
+  if (caption.length > cutOff) {
+    return "${caption.substring(0, cutOff - 3)}...";
+  } else {
+    return caption;
   }
 }

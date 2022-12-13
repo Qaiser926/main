@@ -14,7 +14,8 @@ class SearchNotifier extends ChangeNotifier {
   bool typeFilterActivated = false;
   bool categoryFilterActivated = false;
 
-  late String? timeCaption;
+  // keep below like it!
+  late String? timeCaption = null;
 
   late DateTime startDate;
   late DateTime defaultStartDate;
@@ -53,7 +54,6 @@ class SearchNotifier extends ChangeNotifier {
 
   EAType? get getEAType => eAType;
 
-  List<String> get selectedSubcategories => _selectedSubcategories;
 
   List<String> get getSelectedCategoryIds => selectedCategoryIds;
 

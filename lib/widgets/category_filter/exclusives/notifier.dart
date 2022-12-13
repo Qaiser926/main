@@ -5,8 +5,14 @@ class ExpandedCategoryNotifier extends ChangeNotifier {
   int? _expandedListItemIndex;
   String? _expandedCategory;
   int? _expandedExpandableIndex;
+  bool isModalBottomMode;
 
-  void setExpanded({required int? index, required String? categoryId}) {
+  ExpandedCategoryNotifier({required this.isModalBottomMode});
+
+  void setExpanded({
+    required int? index,
+    required String? categoryId,
+  }) {
     _expandedListItemIndex = index;
 
     _expandedExpandableIndex =
@@ -15,7 +21,12 @@ class ExpandedCategoryNotifier extends ChangeNotifier {
     _expandedCategory = categoryId;
     notifyListeners();
   }
+
   int? get getExpandedExpandableIndex => _expandedExpandableIndex;
+
   int? get getExpandedIndex => _expandedListItemIndex;
+
   String? get getExpandedCategory => _expandedCategory;
+
+  bool get getIsModalBottomMode => isModalBottomMode;
 }

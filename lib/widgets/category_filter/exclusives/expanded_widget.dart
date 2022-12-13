@@ -36,6 +36,7 @@ class ExpandedWidget extends StatelessWidget {
 
     return Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
       bool expanded = model.getExpandedIndex == index;
+      bool isModalBottomMode = model.isModalBottomMode;
       if (subcategoryIds.isNotEmpty) {
         return MultiProvider(
             // key: key,
@@ -66,8 +67,8 @@ class ExpandedWidget extends StatelessWidget {
                             right: 10.h,
                           ),
                           child: Column(
-                            children:
-                                getSubcategoryExpandableContent(context, model),
+                            children: getSubcategoryExpandableContent(
+                                context, model, isModalBottomMode),
                           ),
                         );
                       }),
@@ -81,30 +82,23 @@ class ExpandedWidget extends StatelessWidget {
     });
   }
 
-  List<Widget> getSubcategoryExpandableContent(
-      BuildContext context, SelectedSubcategoryNotifier model) {
+  List<Widget> getSubcategoryExpandableContent(BuildContext context,
+      SelectedSubcategoryNotifier model, bool isModalBottomMode) {
     List<Widget> result = [];
     result.add(getSubcategoryTextButtons(context, model));
     result.add(const SizedBox(
       height: 12,
     ));
-    var searchNotifier = Provider.of<SearchNotifier>(context, listen: false);
-    searchNotifier.setSelectedSubcategories = model.selectedSubcategoryIds;
-
-    //TODO size of show results button
+    var list = model.selectedSubcategoryIds;
     result.add(
-      // SizedBox(
-      //   height: bottomRowHeight,
-      //   child:
       Padding(
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: getShowResultsButton(
             context: context,
             function: Provider.of<SearchNotifier>(context, listen: false)
                 .changeCategoryIdList,
-            functionArguments: {
-              #selectedCategoryIds: ["8063ce0b-3645-4fcb-8445-f9ea23243e78"]
-            }),
+            functionArguments: {#selectedCategoryIds: list},
+            closeDialog: isModalBottomMode),
       ),
       // ),
     );

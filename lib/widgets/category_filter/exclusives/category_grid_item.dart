@@ -9,18 +9,20 @@ import 'notifier.dart';
 
 Widget getCategoryGridItem({
   required int index,
-}) {
+  required bool isModalBottomSheetMode}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
     index: index,
     categoryId: categoryId,
+    isModalBottomSheetMode: isModalBottomSheetMode,
   );
 }
 
 class CategoryGridItem extends StatelessWidget {
   final int index;
   final String categoryId;
+  final bool isModalBottomSheetMode;
 
   Icon expandIcon = const Icon(Icons.expand_more_outlined);
 
@@ -32,6 +34,7 @@ class CategoryGridItem extends StatelessWidget {
     super.key,
     required this.index,
     required this.categoryId,
+    required this.isModalBottomSheetMode,
   });
 
   @override
@@ -40,6 +43,9 @@ class CategoryGridItem extends StatelessWidget {
       onTap: () {
         Provider.of<SearchNotifier>(context, listen: false)
             .changeCategoryIdList(selectedCategoryIds: [categoryId]);
+        if (isModalBottomSheetMode) {
+          Navigator.of(context, rootNavigator: true).pop();
+        }
       },
       child: SizedBox(
         height: WidgetConstants.categoryGridItemHeight,

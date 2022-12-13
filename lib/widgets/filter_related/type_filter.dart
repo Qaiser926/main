@@ -168,10 +168,14 @@ class _TypeFilterState extends State<TypeFilter> {
 }
 
 String getTypeCaption({required BuildContext context}) {
-  EAType? eAType =
-      Provider.of<SearchNotifier>(context, listen: false).getEAType;
-  if (eAType != null) {
-    return getCaptionForType(eAType: eAType, context: context);
+  if (Provider.of<SearchNotifier>(context, listen: false).typeFilterActivated) {
+    EAType? eAType =
+        Provider.of<SearchNotifier>(context, listen: false).getEAType;
+    if (eAType != null) {
+      return getCaptionForType(eAType: eAType, context: context);
+    } else {
+      return AppLocalizations.of(context)!.type;
+    }
   } else {
     return AppLocalizations.of(context)!.type;
   }

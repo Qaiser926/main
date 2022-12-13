@@ -38,6 +38,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/category_filter/category_filter.dart';
@@ -58,7 +59,7 @@ class SearchPage extends StatelessWidget {
                   priceRange: const RangeValues(0, 100),
                   endDate: DateTime(DateTime.now().year + 2),
                   sortCriteria: null,
-                  eAType: null,
+                  eAType: EAType.eventsActivites,
                   selectedCategoryIds: ["sf"]),
             )
           ],
@@ -81,6 +82,7 @@ class SearchPage extends StatelessWidget {
       } else {
         return CategoryFilter(
           context: context,
+          isModalBottomSheetMode: false,
         );
         // }
       }
