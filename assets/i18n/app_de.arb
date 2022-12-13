@@ -10,6 +10,7 @@
   "event": "Event",
   "activities": "Aktivitäten",
   "events": "Events",
+  "eventsActivities": "Events & Aktivitäten",
   "removeFavoriteDialog": "Möchtest du \"{objectTitle}\" von deinen Favoriten entfernen?",
   "@removeFavoriteDialog": {
     "placeholders": {
@@ -107,6 +108,21 @@
   "clearAll": "Zurücksetzen",
   "showResults": "Zeige Ergebnisse",
   "free": "Gratis",
+
+  "from": "Von",
+  "to": "Bis",
+
+  "nextWeekend": "Nächstes Wochenende",
+  "thisWeekend": "Dieses Wochenende",
+  "thisWeek": "Diese Woche",
+  "nextWeek": "Nächste Woche",
+  "today": "Heute",
+  "tomorrow": "Morgen",
+
+  "priceRising": "Preis ↑",
+  "dateRising": "Datum ↑",
+  "popularity": "Popularität",
+
   "entertainment": "Entertainment",
   "@entertainment": {
     "description": "entertainment"

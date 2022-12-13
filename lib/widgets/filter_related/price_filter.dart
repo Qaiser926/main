@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'search_notifier.dart';
+
 import 'get_reset_apply_filter.dart';
+import 'search_notifier.dart';
 
 Future<dynamic> priceFilterDialog({required BuildContext context}) {
   var test = Provider.of<SearchNotifier>(context, listen: false);
   return showModalBottomSheet(
+      isScrollControlled: true,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       context: context,
@@ -19,9 +21,8 @@ Future<dynamic> priceFilterDialog({required BuildContext context}) {
               value: test,
             )
           ],
-          child: Container(
-            height: 380,
-            child: PriceFilter(context: context,endValue: 100),
+          child: Wrap(
+            children: [PriceFilter(context: context, endValue: 100)],
           ),
         );
       });
@@ -52,18 +53,18 @@ class _PriceFilterState extends State<PriceFilter> {
     return Column(
       children: [
         Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(10),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [CloseButton()])),
-        Padding(
-            padding: EdgeInsets.fromLTRB(10, 0, 20, 20),
-            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Text(
-                AppLocalizations.of(context)!.priceRangeDescription,
-                style: Theme.of(context).textTheme.headline2,
-              )
-            ])),
+        // Padding(
+        //     padding: EdgeInsets.fromLTRB(10, 0, 20, 20),
+        //     child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        //       Text(
+        //         AppLocalizations.of(context)!.priceRangeDescription,
+        //         style: Theme.of(context).textTheme.headline2,
+        //       )
+        //     ])),
         RangeSlider(
             values: _values,
             min: 0,

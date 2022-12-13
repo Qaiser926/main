@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
+import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
+import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
-import 'search_notifier.dart';
+
 import '../../utils/ui/ui_utils.dart';
+import 'search_notifier.dart';
 
-
-// TODO on selected items include counter and give Box colored border, make a class
 SizedBox buildDropdownBar({required BuildContext context}) {
   // var test = Provider.of<SearchNotifier>(context, listen: false);
   // test.activateShowSearchResults();
@@ -87,21 +88,23 @@ List<Widget> getFilters({required BuildContext context}) {
     getFilter(
         context: context,
         index: 1,
-        caption: AppLocalizations.of(context)!.sort,
-        coloredBorder: false,
-        onTapFunction: () => print("sort")),
+        caption: getSortCaption(context: context),
+        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+            .sortFilterActivated,
+        onTapFunction: () => sortFilterDialog(context: context)),
     getFilter(
         context: context,
         index: 1,
-        caption: AppLocalizations.of(context)!.type,
-        coloredBorder: false,
-        onTapFunction: () => print("type")),
-    getFilter(
-        context: context,
-        index: 1,
-        caption: AppLocalizations.of(context)!.additionalFilters,
-        coloredBorder: false,
-        onTapFunction: () => print("addFilter")),
+        caption: getTypeCaption(context: context),
+        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+            .typeFilterActivated,
+        onTapFunction: () => typeFilterDialog(context: context)),
+    // getFilter(
+    //     context: context,
+    //     index: 1,
+    //     caption: AppLocalizations.of(context)!.additionalFilters,
+    //     coloredBorder: false,
+    //     onTapFunction: () => print("addFilter")),
   ];
   // only add category if not in start screen
   if (Provider.of<SearchNotifier>(context, listen: false).showCategoryFilter) {
@@ -110,8 +113,9 @@ List<Widget> getFilters({required BuildContext context}) {
       getFilter(
           context: context,
           index: 1,
-          caption: AppLocalizations.of(context)!.time,
-          coloredBorder: false,
+          caption: getTimeCaption(context: context),
+          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+              .timeFilterActivated,
           onTapFunction: () {
             return TimeFilterDialog(context: context);
           }),
@@ -133,26 +137,13 @@ List<Widget> getFilters({required BuildContext context}) {
       getFilter(
           context: context,
           index: 0,
-          caption: AppLocalizations.of(context)!.time,
-          coloredBorder: false,
+          caption: getTimeCaption(context: context),
+          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+              .timeFilterActivated,
           onTapFunction: () {
-            print("skf");
             return TimeFilterDialog(context: context);
           }),
     );
   }
   return filter;
 }
-
-Future<dynamic> TimeFilterDialog({required BuildContext context}) {
-  return showModalBottomSheet(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      context: context,
-      builder: (context) {
-        return Container(
-          height: 800,
-          child: TimeFilter());
-      });
-}
-

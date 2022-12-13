@@ -13,6 +13,7 @@
   "event": "Event",
   "activities": "Activities",
   "events": "Events",
+  "eventsActivities": "Events & Activities",
   "removeFavoriteDialog": "Do you want to remove \"{objectTitle}\" from your favourites?",
   "@removeFavoriteDialog": {
     "placeholders": {
@@ -71,7 +72,6 @@
   "cancelled": "CANCELLED",
   "soldOut": "SOLD OUT",
   "description": "About",
-  "location": "Location",
   "ticket": "Ticket",
   "website": "More information",
   "calendar": "Calendar",
@@ -110,6 +110,20 @@
   "clearAll": "Clear all",
   "showResults": "Show results",
   "free": "Free",
+  "from": "From",
+  "to": "To",
+
+  "nextWeekend": "Next Weekend",
+  "thisWeekend": "This Weekend",
+  "thisWeek": "This Week",
+  "nextWeek": "Next Week",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+
+  "priceRising": "Price ↑",
+  "dateRising": "Date ↑",
+  "popularity": "Popularity",
+
   "entertainment": "Unterhaltung",
   "@entertainment": {
     "description": "entertainment"
