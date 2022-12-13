@@ -7,9 +7,7 @@ import 'exclusives/expanded_widget.dart';
 import 'exclusives/notifier.dart';
 
 class CategoryFilter extends StatefulWidget {
-  final ScrollController _scrollController = ScrollController();
-  late final List<Widget> niceList;
-  GlobalKey keyExpanded = GlobalKey();
+  late final List<Widget> niceList = getCategoryGrid();
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
@@ -27,9 +25,6 @@ class CategoryFilterState extends State<CategoryFilter>
     with AutomaticKeepAliveClientMixin<CategoryFilter> {
   @override
   Widget build(BuildContext context) {
-    widget.niceList = getCategoryGrid(
-        scrollController: widget._scrollController, key: widget.keyExpanded);
-
     super.build(context);
     return Container(
       padding: CategoryFilter.gridItemPadding,
@@ -56,8 +51,7 @@ class CategoryFilterState extends State<CategoryFilter>
   bool get wantKeepAlive => true;
 }
 
-List<Widget> getCategoryGrid(
-    {required ScrollController scrollController, required Key key}) {
+List<Widget> getCategoryGrid() {
   List<Widget> categoryGrid = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
     categoryGrid.add(Row(
@@ -65,8 +59,6 @@ List<Widget> getCategoryGrid(
         Flexible(
           child: getCategoryGridItem(
             index: index,
-            scrollController: scrollController,
-            key: key,
           ),
         ),
         const SizedBox(
@@ -75,21 +67,15 @@ List<Widget> getCategoryGrid(
         Flexible(
           child: getCategoryGridItem(
             index: index + 1,
-            scrollController: scrollController,
-            key: key,
           ),
         ),
       ],
     ));
     categoryGrid.add(ExpandedWidget(
       index: index,
-      scrollController: scrollController,
-      key: key,
     ));
     categoryGrid.add(ExpandedWidget(
       index: index + 1,
-      scrollController: scrollController,
-      key: key,
     ));
     categoryGrid.add(const SizedBox(
       height: CategoryFilter.gridItemDistance,

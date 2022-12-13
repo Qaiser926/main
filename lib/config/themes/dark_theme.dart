@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants/colors.dart';
@@ -18,18 +17,19 @@ class NoAnimationColor extends MaterialStateColor {
 ThemeData getDarkThemeData() {
   return ThemeData(
     colorScheme: ColorScheme(
-      brightness: Brightness.dark,
-      primary: primaryColor,
-      onPrimary: Colors.white,
-      secondary: bgColor,
-      onSecondary: Colors.green,
-      error: Colors.red,
-      onError: Colors.white,
-      background: bgColor,
-      onBackground: Colors.yellow,
-      surface: bgColor,
-      onSurface: Colors.white,tertiary:listItemColor
-    ),iconTheme: IconThemeData(color: primaryColor),
+        brightness: Brightness.dark,
+        primary: primaryColor,
+        onPrimary: Colors.white,
+        secondary: bgColor,
+        onSecondary: Colors.green,
+        error: Colors.red,
+        onError: Colors.white,
+        background: bgColor,
+        onBackground: Colors.yellow,
+        surface: bgColor,
+        onSurface: Colors.white,
+        tertiary: listItemColor),
+    iconTheme: IconThemeData(color: primaryColor),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700),
