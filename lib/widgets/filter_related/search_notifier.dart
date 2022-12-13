@@ -12,6 +12,7 @@ class SearchNotifier extends ChangeNotifier {
   bool timeFilterActivated = false;
   bool sortFilterActivated = false;
   bool typeFilterActivated = false;
+  bool categoryFilterActivated = false;
 
   late String? timeCaption;
 
@@ -23,15 +24,21 @@ class SearchNotifier extends ChangeNotifier {
   late SortCriteria? sortCriteria;
   late EAType? eAType;
 
+  late List<String> selectedCategoryIds;
+  late List<String> defalutSelectedCategoryIds;
+
   SearchNotifier(
       {required priceRange,
       startDate,
       required endDate,
       required this.sortCriteria,
-      required this.eAType}) {
+      required this.eAType,
+      required selectedCategoryIds}) {
     this.priceRange = this.defaultPriceRange = priceRange;
     this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
     this.endDate = this.defaultEndDate = endDate;
+    this.selectedCategoryIds =
+        this.defalutSelectedCategoryIds = selectedCategoryIds;
   }
 
   RangeValues get getPriceRange => priceRange;
@@ -46,11 +53,19 @@ class SearchNotifier extends ChangeNotifier {
 
   EAType? get getEAType => eAType;
 
+  List<String> get getSelectedCategoryIds => selectedCategoryIds;
+
+  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
+    showCategoryFilter = true;
+    categoryFilterActivated = true;
+    this.selectedCategoryIds = selectedCategoryIds;
+    notifyListeners();
+  }
+
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
     showCategoryFilter = true;
-
     notifyListeners();
   }
 
@@ -99,7 +114,8 @@ class SearchNotifier extends ChangeNotifier {
     return priceFilterActivated |
         timeFilterActivated |
         sortFilterActivated |
-        typeFilterActivated;
+        typeFilterActivated |
+        categoryFilterActivated;
   }
 
   void backToDefault({showCategoryFilterReset = true}) {
@@ -109,8 +125,11 @@ class SearchNotifier extends ChangeNotifier {
     endDate = defaultEndDate;
     timeFilterActivated = false;
     sortCriteria = null;
+    eAType = null;
     sortFilterActivated = false;
     typeFilterActivated = false;
+    categoryFilterActivated = false;
+    selectedCategoryIds = defalutSelectedCategoryIds;
     if (showCategoryFilterReset) {
       showCategoryFilter = false;
     }

@@ -52,13 +52,14 @@ class SearchPage extends StatelessWidget {
     return SafeArea(
       child: MultiProvider(
           providers: [
-            // TODO initialize price range with max price
+            // TODO initialize price range with max price & write function that returns category ids
             ChangeNotifierProvider.value(
               value: SearchNotifier(
                   priceRange: const RangeValues(0, 100),
                   endDate: DateTime(DateTime.now().year + 2),
                   sortCriteria: null,
-                  eAType: null),
+                  eAType: null,
+                  selectedCategoryIds: ["sf"]),
             )
           ],
           builder: (context, child) {
@@ -78,7 +79,9 @@ class SearchPage extends StatelessWidget {
         // differentiate here between search results (show different screen if nothing was found)
         return Text("${model.getPriceRange.toString()}");
       } else {
-        return CategoryFilter();
+        return CategoryFilter(
+          context: context,
+        );
         // }
       }
     });

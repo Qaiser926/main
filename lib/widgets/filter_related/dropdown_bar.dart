@@ -9,6 +9,7 @@ import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/ui/ui_utils.dart';
+import '../category_filter/category_filter.dart';
 import 'search_notifier.dart';
 
 SizedBox buildDropdownBar({required BuildContext context}) {
@@ -124,11 +125,12 @@ List<Widget> getFilters({required BuildContext context}) {
       0,
       getFilter(
           context: context,
+          // TODO implement caption and colored Border
           index: 0,
           caption: AppLocalizations.of(context)!.category,
           coloredBorder: false,
           onTapFunction: () {
-            return;
+            return CategoryFilterDialog(context: context);
           }),
     );
   } else {

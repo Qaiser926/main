@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import '../../filter_related/get_reset_apply_filter.dart';
+import '../../filter_related/search_notifier.dart';
 import 'notifier.dart';
 
 class ExpandedWidget extends StatelessWidget {
@@ -88,13 +89,23 @@ class ExpandedWidget extends StatelessWidget {
     result.add(const SizedBox(
       height: 12,
     ));
-    //TODO sized boxes and show results button
+    //TODO set selected Category ids dynamically
+
     result.add(
-      SizedBox(
-        height: bottomRowHeight,
+      // SizedBox(
+      //   height: bottomRowHeight,
+      //   child:
+      Padding(
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: getShowResultsButton(
-            context: context, function: test, functionArguments: {}),
+            context: context,
+            function: Provider.of<SearchNotifier>(context, listen: false)
+                .changeCategoryIdList,
+            functionArguments: {
+              #selectedCategoryIds: ["8063ce0b-3645-4fcb-8445-f9ea23243e78"]
+            }),
       ),
+      // ),
     );
 
     return result;

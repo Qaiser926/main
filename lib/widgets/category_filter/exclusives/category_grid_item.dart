@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../constants/app_constants.dart';
 import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
+import '../../filter_related/search_notifier.dart';
 import 'notifier.dart';
 
 Widget getCategoryGridItem({
@@ -37,7 +38,8 @@ class CategoryGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        //TODO forward to result for category
+        Provider.of<SearchNotifier>(context, listen: false)
+            .changeCategoryIdList(selectedCategoryIds: [categoryId]);
       },
       child: SizedBox(
         height: WidgetConstants.categoryGridItemHeight,

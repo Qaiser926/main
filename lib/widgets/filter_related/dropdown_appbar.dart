@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/filter_related/dropdown_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -14,9 +15,14 @@ class DropDownAppBar extends AppBar {
           elevation: 0,
           bottom: PreferredSize(
             preferredSize: const Size(double.infinity, 50),
-            child: Consumer<SearchNotifier>(builder: (context, model, child) {
-              return buildDropdownBar(context: context);
-            }),
+            child: Column(
+              children: [
+                Consumer<SearchNotifier>(builder: (context, model, child) {
+                  return buildDropdownBar(context: context);
+                }),
+                getVerSpace(15)
+              ],
+            ),
           ),
         );
 }
