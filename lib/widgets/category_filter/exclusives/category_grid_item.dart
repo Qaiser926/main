@@ -6,12 +6,17 @@ import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import 'notifier.dart';
 
-Widget getCategoryGridItem({required int index}) {
+Widget getCategoryGridItem(
+    {required int index,
+    required ScrollController scrollController,
+    required Key key}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
     index: index,
     categoryId: categoryId,
+    scrollController: scrollController,
+    key: key,
   );
 }
 
@@ -25,10 +30,15 @@ class CategoryGridItem extends StatelessWidget {
   static const double bottomPartHeight = 55;
   static const double gradientHeight = 10;
 
+  final ScrollController scrollController;
+
+  var key;
+
   CategoryGridItem({
-    super.key,
+    required this.key,
     required this.index,
     required this.categoryId,
+    required this.scrollController,
   });
 
   @override
@@ -125,5 +135,6 @@ class CategoryGridItem extends StatelessWidget {
     } else {
       categoryProvider.setExpanded(index: index, categoryId: categoryId);
     }
+    // scrollController.animateTo(offset, duration: duration, curve: curve)
   }
 }
