@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
+import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
+import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/ui/ui_utils.dart';
@@ -86,21 +88,23 @@ List<Widget> getFilters({required BuildContext context}) {
     getFilter(
         context: context,
         index: 1,
-        caption: AppLocalizations.of(context)!.sort,
-        coloredBorder: false,
-        onTapFunction: () => print("sort")),
+        caption: getSortCaption(context: context),
+        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+            .sortFilterActivated,
+        onTapFunction: () => sortFilterDialog(context: context)),
     getFilter(
         context: context,
         index: 1,
-        caption: AppLocalizations.of(context)!.type,
-        coloredBorder: false,
-        onTapFunction: () => print("type")),
-    getFilter(
-        context: context,
-        index: 1,
-        caption: AppLocalizations.of(context)!.additionalFilters,
-        coloredBorder: false,
-        onTapFunction: () => print("addFilter")),
+        caption: getTypeCaption(context: context),
+        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
+            .typeFilterActivated,
+        onTapFunction: () => typeFilterDialog(context: context)),
+    // getFilter(
+    //     context: context,
+    //     index: 1,
+    //     caption: AppLocalizations.of(context)!.additionalFilters,
+    //     coloredBorder: false,
+    //     onTapFunction: () => print("addFilter")),
   ];
   // only add category if not in start screen
   if (Provider.of<SearchNotifier>(context, listen: false).showCategoryFilter) {
@@ -142,23 +146,4 @@ List<Widget> getFilters({required BuildContext context}) {
     );
   }
   return filter;
-}
-
-Future<dynamic> TimeFilterDialog({required BuildContext context}) {
-  var test = Provider.of<SearchNotifier>(context, listen: false);
-  return showModalBottomSheet(
-      isScrollControlled: true,
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      context: context,
-      builder: (_) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider.value(
-              value: test,
-            )
-          ],
-          child: Wrap(children: [TimeFilter()]),
-        );
-      });
 }

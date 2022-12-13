@@ -10,6 +10,7 @@
   "event": "Event",
   "activities": "Aktivitäten",
   "events": "Events",
+  "eventsActivities": "Events & Aktivitäten",
   "removeFavoriteDialog": "Möchtest du \"{objectTitle}\" von deinen Favoriten entfernen?",
   "@removeFavoriteDialog": {
     "placeholders": {
@@ -131,6 +132,10 @@
     "thisWeek": "Diese Woche",
     "nextWeek": "Nächste Woche",
     "today": "Heute",
-    "tomorrow": "Morgen"
+    "tomorrow": "Morgen",
+
+    "priceRising": "Preis ↑",
+    "dateRising": "Datum ↑",
+    "popularity": "Popularität"
 
 }

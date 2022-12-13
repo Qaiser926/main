@@ -55,7 +55,9 @@ class SearchPage extends StatelessWidget {
             ChangeNotifierProvider.value(
               value: SearchNotifier(
                   priceRange: RangeValues(0, 100),
-                  endDate: DateTime(DateTime.now().year + 2)),
+                  endDate: DateTime(DateTime.now().year + 2),
+                  sortCriteria: null,
+                  eAType: null),
             )
           ],
           builder:(context,child){return  Scaffold(

@@ -11,6 +11,25 @@ import 'package:typicons_flutter/typicons_flutter.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import 'get_reset_apply_filter.dart';
 
+Future<dynamic> TimeFilterDialog({required BuildContext context}) {
+  var test = Provider.of<SearchNotifier>(context, listen: false);
+  return showModalBottomSheet(
+      isScrollControlled: true,
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      context: context,
+      builder: (_) {
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(
+              value: test,
+            )
+          ],
+          child: Wrap(children: [TimeFilter()]),
+        );
+      });
+}
+
 class TimeFilter extends StatefulWidget {
   TimeFilter({super.key});
 
@@ -481,7 +500,6 @@ Widget getTimeBox(
   );
 }
 
-// TODO
 String getTimeCaption({required BuildContext context}) {
   if (Provider.of<SearchNotifier>(context, listen: false).timeFilterActivated) {
     DateTime startDate =
@@ -493,13 +511,19 @@ String getTimeCaption({required BuildContext context}) {
     if (caption != null) {
       return caption;
     } else {
-      return startDate.day.toString() +
-          "." +
-          getMonthName(context: context, month: startDate.month) +
-          " - " +
-          startDate.day.toString() +
-          "." +
-          getMonthName(context: context, month: endDate.month);
+      if (endDate == startDate) {
+        return startDate.day.toString() +
+            ". " +
+            getMonthName(context: context, month: startDate.month);
+      } else {
+        return startDate.day.toString() +
+            ". " +
+            getMonthName(context: context, month: startDate.month) +
+            " - " +
+            endDate.day.toString() +
+            ". " +
+            getMonthName(context: context, month: endDate.month);
+      }
     }
   } else {
     return AppLocalizations.of(context)!.time;

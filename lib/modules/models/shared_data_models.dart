@@ -1,6 +1,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'shared_data_models.g.dart';
 
 enum OpeningTimeCode {
@@ -21,6 +22,10 @@ enum Status {
   COMPLETED,
   CANCELED,
   SOLDOUT,
+}
+
+enum Attribution {
+  google,
 }
 
 @JsonSerializable()

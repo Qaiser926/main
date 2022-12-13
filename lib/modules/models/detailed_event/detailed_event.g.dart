@@ -26,6 +26,8 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       websiteUrl: json['websiteUrl'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
       isOnline: json['isOnline'] as bool,
+      attribution:
+          $enumDecodeNullable(_$AttributionEnumMap, json['attribution']),
     );
 
 Map<String, dynamic> _$DetailedEventOrActivityToJson(
@@ -45,6 +47,7 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'isOnline': instance.isOnline,
       'time': instance.time,
       'location': instance.location,
+      'attribution': _$AttributionEnumMap[instance.attribution],
     };
 
 const _$StatusEnumMap = {
@@ -58,4 +61,8 @@ const _$StatusEnumMap = {
   Status.COMPLETED: 'COMPLETED',
   Status.CANCELED: 'CANCELED',
   Status.SOLDOUT: 'SOLDOUT',
+};
+
+const _$AttributionEnumMap = {
+  Attribution.google: 'google',
 };

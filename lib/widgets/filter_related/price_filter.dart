@@ -10,6 +10,7 @@ import 'search_notifier.dart';
 Future<dynamic> priceFilterDialog({required BuildContext context}) {
   var test = Provider.of<SearchNotifier>(context, listen: false);
   return showModalBottomSheet(
+      isScrollControlled: true,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       context: context,
@@ -20,9 +21,8 @@ Future<dynamic> priceFilterDialog({required BuildContext context}) {
               value: test,
             )
           ],
-          child: Container(
-            height: 380,
-            child: PriceFilter(context: context,endValue: 100),
+          child: Wrap(
+            children: [PriceFilter(context: context, endValue: 100)],
           ),
         );
       });
