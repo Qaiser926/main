@@ -16,35 +16,36 @@
         "othia67631076": {},
         "othiae97ec06e": {}
       },
-
       "function": {
         "apiLambda": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/apiLambda-38772b5056445151395a-build.zip"
+          "s3Key": "amplify-builds/apiLambda-582f7055765577535536-build.zip"
         },
         "getFavouriteEventsAndActivities": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getFavouriteEventsAndActivities-4f724577342f2b61552b-build.zip"
+          "s3Key": "amplify-builds/getFavouriteEventsAndActivities-4d546247344d7338526f-build.zip"
         },
         "getEAIdsForCategory": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getEAIdsForCategory-6d435963316e42764739-build.zip"
+          "s3Key": "amplify-builds/getEAIdsForCategory-6b617373344842583430-build.zip"
         },
         "getEASummary": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getEASummary-6143564b374947414a2b-build.zip"
+          "s3Key": "amplify-builds/getEASummary-4a516b7a6c6475785330-build.zip"
         },
         "getEAIdsForEventSeries": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getEAIdsForEventSeries-4c784253693376714e75-build.zip"
+          "s3Key": "amplify-builds/getEAIdsForEventSeries-6f742f64392b30507453-build.zip"
         },
         "getEAIdsForLocation": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getEAIdsForLocation-596966573235592f6679-build.zip"
+          "s3Key": "amplify-builds/getEAIdsForLocation-5a512f2f706e616e3261-build.zip"
         },
         "removeFavourite": {}
       },
-
+      "api": {
+        "othiaApi": {}
+      }
     }
   }
 }

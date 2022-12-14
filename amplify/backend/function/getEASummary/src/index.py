@@ -32,13 +32,17 @@ def handler(event, context):
              "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
                           "locationTitle": 'Die Pumpe', "street": "abc street",
                           'locationId': "loc_id",
-                                         'latitude': 54.324486, 'longitude': 10.1383, }, "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                            "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)), 'openingTime': None}})
-  }
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}})
+    }
+
 
 def getPrices(prices: list):
     if len(prices) > 2:
         return [min(prices), max(prices)]
+
 
 def getOpeningTimesDict(openingTimes: list):
     openingTimesDict = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []}

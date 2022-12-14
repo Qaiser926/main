@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/colors.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
+
 import '../modules/models/eA_summary/eA_summary.dart';
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';
@@ -113,14 +114,12 @@ Widget getSummaryInformation(
         children: [
           Icon(Typicons.tag, size: 20.h,),
           getHorSpace(5.h),
-// TODO change icon
           getCustomFont(text: getPriceText(
               context: context, isShort: true, prices: eASummary.prices),
               fontSize: 15.sp,
               maxLine: 1,
               fontWeight: FontWeight.w500,
               txtHeight: 1.5.h)
-// include here price information
         ],
       ),
 

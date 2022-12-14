@@ -1,23 +1,21 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
-
 import 'package:provider/provider.dart';
+import 'package:typicons_flutter/typicons_flutter.dart';
 
-import '../../../constants/colors.dart';
-import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
+import '../../../modules/models/eA_summary/eA_summary.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../../utils/ui/app_dialogs.dart';
 import '../../../utils/ui/ui_utils.dart';
 
 Widget getFavouriteListItem(
-    BuildContext context, FavouriteEventOrActivity favouriteEventOrActivity) {
+    BuildContext context, SummaryEventOrActivity eASummary) {
   return Container(
-    margin: EdgeInsets.only(bottom: 12.h, left: 12.h, right: 12.h),
+    margin: EdgeInsets.only(bottom: 12.h, left: 10.h, right: 10.h),
     decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.tertiary,
         borderRadius: BorderRadius.circular(22.h)),
@@ -28,34 +26,70 @@ Widget getFavouriteListItem(
           child: Row(
             children: [
               SizedBox(
-                width: 110.h,
-                height: 80.h,
+                width: 85.h,
+                height: 60.h,
                 child: getImageWithBackground(
-                    categoryId: favouriteEventOrActivity.categoryId,
-                    photo: favouriteEventOrActivity.photo),
+                    categoryId: eASummary.categoryId, photo: eASummary.photo),
               ),
               getHorSpace(10.h),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getCustomFont(
-                        text: favouriteEventOrActivity.title,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w600,
-                        txtHeight: 1.5.h),
-                    getVerSpace(4.h),
-                    getCustomFont(
-                        text: getTimeInformation(
+                    Text(
+                      eASummary.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    Row(children: [
+                      Icon(
+                        Icons.access_time_outlined,
+                        size: 12.h,
+                      ),
+                      getHorSpace(5.h),
+                      Text(
+                        getTimeInformation(
                             context: context,
-                            openingTimeCode:
-                                favouriteEventOrActivity.openingTimeCode,
-                            startTimeUtc:
-                                favouriteEventOrActivity.startTimeUtc),
-                        fontSize: 15.sp,
-                        color: greyColor,
-                        fontWeight: FontWeight.w500,
-                        txtHeight: 1.46.h)
+                            openingTimeCode: eASummary.time.openingTimeCode,
+                            startTimeUtc: eASummary.time.startTimeUtc),
+                        style: Theme.of(context).textTheme.bodyText2,
+                        maxLines: 1,
+                      ),
+                    ]),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          size: 12.h,
+                        ),
+                        getHorSpace(5.h),
+                        Expanded(
+                            child: Text(
+                          getLocationString(
+                              location: eASummary.location, isShort: true),
+                          style: Theme.of(context).textTheme.bodyText2,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ))
+// include here price information
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Typicons.tag,
+                          size: 12.h,
+                        ),
+                        getHorSpace(5.h),
+                        Text(
+                          getPriceText(
+                              context: context,
+                              isShort: true,
+                              prices: eASummary.prices),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               )
@@ -70,19 +104,17 @@ Widget getFavouriteListItem(
               ),
               onPressed: () {
                 showDialog<bool>(
-                        context: context,
-                        builder: (context) => getDialog(
-                            objectTitle: favouriteEventOrActivity.title))
-                    .then((value) {
+                    context: context,
+                    builder: (context) =>
+                        getDialog(objectTitle: eASummary.title)).then((value) {
                   if (value!) {
                     try {
                       RestService()
-                          .removeFavouriteEventOrActivity(
-                              id: favouriteEventOrActivity.id)
+                          .removeFavouriteEventOrActivity(id: eASummary.id)
                           .then((value) {
                         print(value);
                         Provider.of<FavouriteNotifier>(context, listen: false)
-                            .removeKey(key: favouriteEventOrActivity.id);
+                            .removeKey(key: eASummary.id);
                       });
                     } on Exception catch (e) {
                       //TODO

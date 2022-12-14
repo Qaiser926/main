@@ -1,13 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'favourite_single_event_or_activity/favourite_event_or_activity.dart';
+
+import '../eA_summary/eA_summary.dart';
+
 part 'favourite_events_and_activities.g.dart';
 
 @JsonSerializable()
 class FavouriteEventsAndActivities {
-  Map<String, FavouriteEventOrActivity> futureEvents;
-  Map<String, FavouriteEventOrActivity> pastEvents;
-  Map<String, FavouriteEventOrActivity> openActivities;
-  Map<String, FavouriteEventOrActivity> closedActivities;
+  Map<String, SummaryEventOrActivity> futureEvents;
+  Map<String, SummaryEventOrActivity> pastEvents;
+  Map<String, SummaryEventOrActivity> openActivities;
+  Map<String, SummaryEventOrActivity> closedActivities;
 
   FavouriteEventsAndActivities({
     required final this.futureEvents,

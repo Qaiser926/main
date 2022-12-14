@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/services/exceptions.dart';
+
+import '../../../constants/categories.dart';
 import '../../../utils/ui/ui_utils.dart';
 import '../../../widgets/disccover_events_horizontally.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// TODO map from categoryId to category name
 class ExploreCategory extends StatelessWidget {
   final String categoryId;
-  final String categoryName = "Party";
+  late String categoryName;
 
-  const ExploreCategory({super.key, required this.categoryId});
+  ExploreCategory({super.key, required this.categoryId});
+
   @override
   Widget build(BuildContext context) {
-      return BaseDiscoveryClass(
-        listFunction: ListFunction.getEAIdsForCategory,
-        heading: AppLocalizations.of(context)!.exploreCategory(categoryName), id: categoryId,);
+    categoryName = CategoryIdToI18nMapper.fckMethod(context, categoryId);
+    return BaseDiscoveryClass(
+      listFunction: ListFunction.getEAIdsForCategory,
+      heading: AppLocalizations.of(context)!.exploreCategory(categoryName),
+      id: categoryId,
+    );
   }
 }
 
@@ -46,6 +51,8 @@ class ExploreLocation extends StatelessWidget {
 class BaseDiscoveryClass extends StatelessWidget {
   final String id;
   final String heading;
+
+  // states the type of discovery as Enum
   final ListFunction listFunction;
 
   const BaseDiscoveryClass(

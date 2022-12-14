@@ -19,7 +19,7 @@ class FavouriteAppBar extends AppBar {
             preferredSize: const Size(double.infinity, 70),
             child: Container(
               // space between blue and and white
-              height: 50,
+              height: 40,
               margin: EdgeInsets.symmetric(horizontal: 12.h, vertical: 15.h),
               decoration: BoxDecoration(
                 color: listItemColor,
@@ -32,6 +32,9 @@ class FavouriteAppBar extends AppBar {
                 // ]
               ),
               child: TabBar(
+                  // labelStyle: TextStyle(fontSize: 8),
+                  //TODO align optical appearance of tabbar, e.g. color and fontsize preferrably via style
+
                   padding: EdgeInsets.all(5.h),
                   controller: tabController,
                   onTap: (index) {

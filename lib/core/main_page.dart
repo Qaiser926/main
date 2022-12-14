@@ -7,12 +7,13 @@ import 'package:provider/provider.dart';
 import '../widgets/nav_bar/nav_bar.dart';
 import '../widgets/nav_bar/nav_bar_notifier.dart';
 import 'add/add.dart';
+import 'detailed/detailed_event.dart';
 import 'favourites/favourite_screen.dart';
-import 'home/home_page.dart';
 
 class MainPage extends StatelessWidget {
   static const List<Widget> _pages = [
-    Home(),
+    // TODO insert HOME instead of EventDetail
+    EventDetail(),
     SearchPage(),
     Add(),
     FavouritePage(),

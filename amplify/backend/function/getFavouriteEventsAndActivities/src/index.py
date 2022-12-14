@@ -9,6 +9,17 @@ photo_binary = b'/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh
 def handler(event, context):
     print('received event:')
     print(event)
+    openingTime = [{'weekday_id': 1, 'is_open': True, 'time': '1000'},
+                   {'weekday_id': 1, 'is_open': False, 'time': '1100'},
+                   {'weekday_id': 1, 'is_open': True, 'time': '0800'},
+                   {'weekday_id': 1, 'is_open': False, 'time': '0930'},
+                   {'weekday_id': 1, 'is_open': True, 'time': '1900'},
+                   {'weekday_id': 1, 'is_open': False, 'time': '2130'},
+                   {'weekday_id': 4, 'is_open': True, 'time': '0800'},
+                   {'weekday_id': 4, 'is_open': False, 'time': '0930'}]
+    openingTime = getOpeningTimesDict(openingTimes=openingTime)
+    prices = [1.0, 5.0, 10.0]
+    prices = getPrices(prices=prices)
 
     return {
         'statusCode': 200,
@@ -20,135 +31,246 @@ def handler(event, context):
         # TODO: send request witch user_id and local time
         'body': json.dumps({
             "futureEvents": {
-                "test_id_1": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_event",
-                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_1",
+                "test_id_1": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_1',
+                              'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+                              "isOnline": False,
+                              "prices": prices,
+                              "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                                           "locationTitle": 'Die Pumpe', "street": "abc street",
+                                           'locationId': "loc_id",
+                                           'latitude': 54.324486, 'longitude': 10.1383, },
+                              "time": {"startTimeUtc": str(
+                                  datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                                       "endTimeUtc": str(
+                                           datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                                       'openingTime': None}},
+                "test_id_2": {'title': 'Hello from your ', 'id': 'test_id_2',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None},
                     "photo": photo_binary
                 },
-                "test_id_2": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_event2",
-                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_2",
+                "test_id_5": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_5',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None},
                     "photo": photo_binary
                 },
-                "test_id_5": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_event",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_5",
-                    "photo": photo_binary
-                },
-                "test_id_6": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_event2",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_6",
-                    "photo": photo_binary
-                },
-                "test_id_8": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_event",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_8",
-                    "photo": photo_binary
-                },
-                "test_id_9": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_event2",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_9",
-                    "photo": photo_binary
-                }
+                "test_id_6": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_6',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+
+                "test_id_8": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_8',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+
+                "test_id_9": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_9',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}}
             },
             "pastEvents": {
-                "test_id_3": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_3",
-                    "photo": photo_binary
-                },
-                "test_id_4": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_4",
-                    "photo": photo_binary
-                },
-                "test_id_9": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_9",
-                    "photo": photo_binary
-                },
-                "test_id_10": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_10",
-                    "photo": photo_binary
-                },
-                "test_id_31": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_31",
-                    "photo": photo_binary
-                },
-                "test_id_41": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_41",
-                    "photo": photo_binary
-                },
-                "test_id_91": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_91",
-                    "photo": photo_binary
-                },
-                "test_id_11": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e16",
-                    "title": "test_event3",
-                    "startTimeUtc": str(
-                        datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                    "id": "test_id_11",
-                    "photo": photo_binary
-                }
+                "test_id_3": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_3',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_4": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_4',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_9": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_9',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_10": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_10',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_31": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_31',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_41": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_41',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_91": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_91',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}},
+
+                "test_id_11": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_11',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": True},
+             "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
+                      "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)),
+                      'openingTime': None}}
             },
             "openActivities": {
-                "test_id_4": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_activity",
-                    "openingTimeCode": "open",
-                    "id": "test_id_4",
-                    "photo": photo_binary
-                }
+                "test_id_4": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_4',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": True},
+             "time": {
+                      'openingTimeCode': "open"}}
             },
             "closedActivities": {
-                "test_id_5": {
-                    "categoryId": "8063ce0b-3645-4fcb-8445-f9ea23243e15",
-                    "title": "test_activity1",
-                    "openingTimeCode": "closedSoon",
-                    "id": "test_id_5",
-                    "photo": photo_binary
-                }
+                "test_id_5": {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'test_id_5',
+             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
+             "isOnline": False,
+             "prices": prices,
+             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
+                          "locationTitle": 'Die Pumpe', "street": "abc street long naaaaame lelelelele",
+                          'locationId': "loc_id",
+                          'latitude': 54.324486, 'longitude': 10.1383, },
+                              "photo": photo_binary,
+             "time": {
+                       "openingTimeCode": "closedSoon"}}
+
+
             }
         })
     }
+
+
+# TODO: might be beneficial to define functions below that are shared in common model that is shared over all api functions
+
+def getPrices(prices: list):
+    if len(prices) > 2:
+        return [min(prices), max(prices)]
+
+
+def getOpeningTimesDict(openingTimes: list):
+    openingTimesDict = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []}
+    alwaysOpen = True
+    for openingHourElement in openingTimes:
+        notInserted = True
+        for i in range(len(openingTimesDict[openingHourElement['weekday_id']])):
+            if (not openingHourElement['is_open']):
+                alwaysOpen = False
+            if float(openingHourElement['time']) < float(
+                    openingTimesDict[openingHourElement['weekday_id']][i]['time']):
+                # might need to add up hours and minutes to a minute sum for comparison
+                openingTimesDict[openingHourElement['weekday_id']].insert(i, openingHourElement)
+                notInserted = False
+                break
+
+        if (notInserted):
+            openingTimesDict[openingHourElement['weekday_id']].append(openingHourElement)
+
+    if (alwaysOpen):
+        for key, value in openingTimesDict.items():
+            openingTimesDict[key] = [[0, 0]]
+    else:
+        for key, value in openingTimesDict.items():
+            global_temp_list = []
+            temp_list = []
+            for j in range(len(value)):
+                if len(temp_list) == 2:
+                    global_temp_list.append(temp_list)
+                    temp_list = []
+                temp_list.append(float(value[j]['time']))
+            if len(temp_list):
+                global_temp_list.append(temp_list)
+            if len(global_temp_list):
+                openingTimesDict[key] = global_temp_list
+            else:
+                openingTimesDict[key] = None
+    return openingTimesDict

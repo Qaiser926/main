@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../modules/models/favourite_event_and_activity/favourite_single_event_or_activity/favourite_event_or_activity.dart';
+import '../../../modules/models/eA_summary/eA_summary.dart';
 
 class FavouriteNotifier extends ChangeNotifier {
-  final Map<String, FavouriteEventOrActivity> upcomingEvents;
-  final Map<String, FavouriteEventOrActivity> pastEvents;
-  final Map<String, FavouriteEventOrActivity> closedActivities;
-  final Map<String, FavouriteEventOrActivity> openActivities;
+  final Map<String, SummaryEventOrActivity> upcomingEvents;
+  final Map<String, SummaryEventOrActivity> pastEvents;
+  final Map<String, SummaryEventOrActivity> closedActivities;
+  final Map<String, SummaryEventOrActivity> openActivities;
 
   FavouriteNotifier(
       {required this.pastEvents,
@@ -14,14 +14,14 @@ class FavouriteNotifier extends ChangeNotifier {
       required this.openActivities,
       required this.upcomingEvents});
 
-  Map<String, FavouriteEventOrActivity> get getUpcomingEvents => upcomingEvents;
+  Map<String, SummaryEventOrActivity> get getUpcomingEvents => upcomingEvents;
 
-  Map<String, FavouriteEventOrActivity> get getPastEvents => pastEvents;
+  Map<String, SummaryEventOrActivity> get getPastEvents => pastEvents;
 
-  Map<String, FavouriteEventOrActivity> get getClosedActivities =>
+  Map<String, SummaryEventOrActivity> get getClosedActivities =>
       closedActivities;
 
-  Map<String, FavouriteEventOrActivity> get getOpenActivities => openActivities;
+  Map<String, SummaryEventOrActivity> get getOpenActivities => openActivities;
 
   void removeKey({required final key}) {
     if (upcomingEvents.containsKey(key)) {

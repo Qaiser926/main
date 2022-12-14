@@ -26,6 +26,7 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
+        #TOdO include attributions and html "attribution": "google"
         'body': json.dumps({'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'i am id',
                             'description': 'i am description', "photos" : [photo_binary],
 
@@ -36,7 +37,7 @@ def handler(event, context):
                             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
                                          "locationTitle": 'Die Pumpe', "street": "abc street", 'locationId': "loc_id",
                                          'latitude': 54.324486, 'longitude': 10.1383, }, "time": {"startTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=00)),
-                            "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)), 'openingTime': openingTime}, "attribution": "google"})
+                            "endTimeUtc": str(datetime.datetime(year=2022, month=12, day=12, hour=12, minute=30)), 'openingTime': openingTime}, })
     }
 
 

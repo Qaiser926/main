@@ -11,19 +11,19 @@ FavouriteEventsAndActivities _$FavouriteEventsAndActivitiesFromJson(
     FavouriteEventsAndActivities(
       futureEvents: (json['futureEvents'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
-            k, FavouriteEventOrActivity.fromJson(e as Map<String, dynamic>)),
+            k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       pastEvents: (json['pastEvents'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(
-            k, FavouriteEventOrActivity.fromJson(e as Map<String, dynamic>)),
+            (k, e) => MapEntry(
+            k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       openActivities: (json['openActivities'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(
-            k, FavouriteEventOrActivity.fromJson(e as Map<String, dynamic>)),
+            (k, e) => MapEntry(
+            k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       closedActivities: (json['closedActivities'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(
-            k, FavouriteEventOrActivity.fromJson(e as Map<String, dynamic>)),
+            (k, e) => MapEntry(
+            k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
     );
 
