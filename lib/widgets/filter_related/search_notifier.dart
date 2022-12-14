@@ -4,9 +4,6 @@ import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
 class SearchNotifier extends ChangeNotifier {
-  late RangeValues defaultPriceRange;
-  late RangeValues priceRange;
-
   bool priceFilterActivated = false;
   bool showCategoryFilter = false;
   bool timeFilterActivated = false;
@@ -16,6 +13,8 @@ class SearchNotifier extends ChangeNotifier {
 
   // keep below like it!
   late String? timeCaption = null;
+  late RangeValues defaultPriceRange;
+  late RangeValues priceRange;
 
   late DateTime startDate;
   late DateTime defaultStartDate;
@@ -53,7 +52,6 @@ class SearchNotifier extends ChangeNotifier {
   SortCriteria? get getSortCriteria => sortCriteria;
 
   EAType? get getEAType => eAType;
-
 
   List<String> get getSelectedCategoryIds => selectedCategoryIds;
 
@@ -137,4 +135,34 @@ class SearchNotifier extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  SearchQuery getSearchQuery() {
+    return SearchQuery(
+        startDate: startDate,
+        endDate: endDate,
+        minPrice: priceRange.start,
+        maxPrice: priceRange.end,
+        sortCriteria: sortCriteria,
+        selectedCategoryIds: selectedCategoryIds,
+        eAType: eAType);
+  }
+}
+
+class SearchQuery {
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final double? minPrice;
+  final double? maxPrice;
+  final SortCriteria? sortCriteria;
+  final EAType? eAType;
+  final List<String>? selectedCategoryIds;
+
+  SearchQuery(
+      {required this.startDate,
+      required this.endDate,
+      required this.minPrice,
+      required this.maxPrice,
+      required this.sortCriteria,
+      required this.selectedCategoryIds,
+      required this.eAType});
 }

@@ -14,7 +14,7 @@ FavouriteEventsAndActivities _$FavouriteEventsAndActivitiesFromJson(
             k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       pastEvents: (json['pastEvents'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(
+        (k, e) => MapEntry(
             k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       openActivities: (json['openActivities'] as Map<String, dynamic>).map(
