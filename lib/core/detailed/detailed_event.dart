@@ -32,6 +32,7 @@ class _EventDetailState extends State<EventDetail> {
 
   void backClick() {
     print('backclick');
+    Navigator.pop(context);
     // Constant.backToPrev(context);
   }
 

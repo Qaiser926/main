@@ -21,7 +21,6 @@ class _FavouritePageState extends State<FavouritePage>
         SingleTickerProviderStateMixin,
         AutomaticKeepAliveClientMixin<FavouritePage> {
   late final TabController _tabController;
-  late final ScrollController _scrollController;
   late Future<Object> future;
 
   @override
@@ -37,11 +36,11 @@ class _FavouritePageState extends State<FavouritePage>
       length: 2,
       vsync: this,
     );
-    _scrollController = ScrollController();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return
         // KeepAlive(
         //   keepAlive: true,
@@ -53,36 +52,35 @@ class _FavouritePageState extends State<FavouritePage>
           tabController: _tabController,
           context: context,
         ),
-        body: FutureBuilder(
-            future: future,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const SplashScreen();
-              } else {
-                if (snapshot.hasError) {
-                  throw Exception(snapshot.error);
+          body: FutureBuilder(
+              future: future,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) {
+                  return const SplashScreen();
                 } else {
-                  RestResponse data = snapshot.data as RestResponse;
+                  if (snapshot.hasError) {
+                    throw Exception(snapshot.error);
+                  } else {
+                    RestResponse data = snapshot.data as RestResponse;
 
-                  String body = """{
+                    String body = """{
               "futureEvents": {},
               "pastEvents":{},
               "openActivities":{},
               "closedActivities":{}
               }""";
-                  Map<String, dynamic> json = jsonDecode(data.body);
-                  FavouriteEventsAndActivities favouriteEventAndActivity =
-                      FavouriteEventsAndActivities.fromJson(json);
-                  return FavouriteScrollView(
-                    scrollController: _scrollController,
-                    tabController: _tabController,
-                    favouriteEventAndActivity: favouriteEventAndActivity,
-                  );
+                    Map<String, dynamic> json = jsonDecode(data.body);
+                    FavouriteEventsAndActivities favouriteEventAndActivity =
+                    FavouriteEventsAndActivities.fromJson(json);
+                    return FavouriteScrollView(
+                      tabController: _tabController,
+                      favouriteEventAndActivity: favouriteEventAndActivity,
+                    );
+                  }
                 }
-              }
-            }),
-      ),
-      // ),
-    );
+              }),
+        ),
+        // ),
+      );
   }
 }
