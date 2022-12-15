@@ -35,6 +35,7 @@ class _SearchResultsState extends State<SearchResults>
 
   @override
   Widget build(BuildContext context) {
+    // here maybe not future builder if forwareded via showMore
     return FutureBuilder(
         future: future,
         builder: (context, snapshot) {
@@ -47,8 +48,7 @@ class _SearchResultsState extends State<SearchResults>
               RestResponse data = snapshot.data as RestResponse;
 
               Map<String, dynamic> json = jsonDecode(data.body);
-              SearchResultsIds searchResultIds =
-                  SearchResultsIds.fromJson(json);
+              SearchResultIds searchResultIds = SearchResultIds.fromJson(json);
               return SearchScrollView(
                 searchResultIds: searchResultIds,
               );

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
+import '../../config/routes/routes.dart';
+import '../../constants/app_constants.dart';
+
 class SearchNotifier extends ChangeNotifier {
   bool priceFilterActivated = false;
   bool showCategoryFilter = false;
@@ -27,13 +30,16 @@ class SearchNotifier extends ChangeNotifier {
   late List<String> selectedCategoryIds;
   late List<String> defalutSelectedCategoryIds;
 
+  late PageState pageState;
+
   SearchNotifier(
       {required priceRange,
       startDate,
       required endDate,
       required this.sortCriteria,
       required this.eAType,
-      required selectedCategoryIds}) {
+      required selectedCategoryIds,
+      this.pageState = PageState.searchScreen}) {
     this.priceRange = this.defaultPriceRange = priceRange;
     this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
     this.endDate = this.defaultEndDate = endDate;
@@ -60,6 +66,9 @@ class SearchNotifier extends ChangeNotifier {
     categoryFilterActivated = true;
     this.selectedCategoryIds = selectedCategoryIds;
     notifyListeners();
+
+    NavigatorConstants.sendToNext(Routes.searchResults,
+        arguments: [getSearchQuery(), getFilterState()]);
   }
 
   void changePriceRange({required RangeValues priceRange}) {
@@ -67,6 +76,8 @@ class SearchNotifier extends ChangeNotifier {
     priceFilterActivated = true;
     showCategoryFilter = true;
     notifyListeners();
+    NavigatorConstants.sendToNext(Routes.searchResults,
+        arguments: [getSearchQuery(), getFilterState()]);
   }
 
   void changeStartEndDate(
@@ -81,6 +92,8 @@ class SearchNotifier extends ChangeNotifier {
       this.timeCaption = caption;
     }
     notifyListeners();
+    NavigatorConstants.sendToNext(Routes.searchResults,
+        arguments: [getSearchQuery(), getFilterState()]);
   }
 
   void changeSortCriteria({required SortCriteria? sortCriteria}) {
@@ -92,6 +105,10 @@ class SearchNotifier extends ChangeNotifier {
     }
     this.sortCriteria = sortCriteria;
     notifyListeners();
+    NavigatorConstants.sendToNext(Routes.searchResults, arguments: [
+      getSearchQuery(),
+      getFilterState(),
+    ]);
   }
 
   void changeEAType({required EAType? eAType}) {
@@ -103,6 +120,8 @@ class SearchNotifier extends ChangeNotifier {
     }
     this.eAType = eAType;
     notifyListeners();
+    NavigatorConstants.sendToNext(Routes.searchResults,
+        arguments: [getSearchQuery(), getFilterState()]);
   }
 
   void setTimeCaption({required String? caption}) {
@@ -110,30 +129,32 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isShowResults() {
-    return priceFilterActivated |
-        timeFilterActivated |
-        sortFilterActivated |
-        typeFilterActivated |
-        categoryFilterActivated;
+  bool getIsCloseDialog() {
+    if (pageState == PageState.resultScreen) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void backToDefault({showCategoryFilterReset = true}) {
-    priceRange = defaultPriceRange;
-    priceFilterActivated = false;
-    startDate = defaultStartDate;
-    endDate = defaultEndDate;
-    timeFilterActivated = false;
-    sortCriteria = null;
-    eAType = null;
-    sortFilterActivated = false;
-    typeFilterActivated = false;
-    categoryFilterActivated = false;
-    selectedCategoryIds = defalutSelectedCategoryIds;
-    if (showCategoryFilterReset) {
-      showCategoryFilter = false;
-    }
-    notifyListeners();
+    // priceRange = defaultPriceRange;
+    // priceFilterActivated = false;
+    // startDate = defaultStartDate;
+    // endDate = defaultEndDate;
+    // timeFilterActivated = false;
+    // sortCriteria = null;
+    // eAType = null;
+    // sortFilterActivated = false;
+    // typeFilterActivated = false;
+    // categoryFilterActivated = false;
+    // selectedCategoryIds = defalutSelectedCategoryIds;
+    // if (showCategoryFilterReset) {
+    //   showCategoryFilter = false;
+    // }
+    // notifyListeners();
+    // if(pageState != PageState.searchScreen)
+    NavigatorConstants.sendToNext(Routes.searchRoute);
   }
 
   SearchQuery getSearchQuery() {
@@ -146,16 +167,35 @@ class SearchNotifier extends ChangeNotifier {
         selectedCategoryIds: selectedCategoryIds,
         eAType: eAType);
   }
+
+  FilterState getFilterState() {
+    return FilterState(
+        categoryFilterActivated: categoryFilterActivated,
+        priceFilterActivated: priceFilterActivated,
+        showCategoryFilter: showCategoryFilter,
+        sortFilterActivated: sortFilterActivated,
+        timeFilterActivated: timeFilterActivated,
+        typeFilterActivated: typeFilterActivated);
+  }
+
+  void setFilterState(FilterState filterState) {
+    categoryFilterActivated = filterState.categoryFilterActivated;
+    priceFilterActivated = filterState.priceFilterActivated;
+    showCategoryFilter = filterState.showCategoryFilter;
+    sortFilterActivated = filterState.sortFilterActivated;
+    timeFilterActivated = filterState.timeFilterActivated;
+    typeFilterActivated = filterState.typeFilterActivated;
+  }
 }
 
 class SearchQuery {
-  final DateTime? startDate;
-  final DateTime? endDate;
-  final double? minPrice;
-  final double? maxPrice;
+  final DateTime startDate;
+  final DateTime endDate;
+  final double minPrice;
+  final double maxPrice;
   final SortCriteria? sortCriteria;
   final EAType? eAType;
-  final List<String>? selectedCategoryIds;
+  final List<String> selectedCategoryIds;
 
   SearchQuery(
       {required this.startDate,
@@ -166,3 +206,27 @@ class SearchQuery {
       required this.selectedCategoryIds,
       required this.eAType});
 }
+
+class FilterState {
+  final bool priceFilterActivated;
+  final bool showCategoryFilter;
+
+  final bool timeFilterActivated;
+
+  final bool sortFilterActivated;
+
+  final bool typeFilterActivated;
+
+  final bool categoryFilterActivated;
+
+  FilterState({
+    required this.priceFilterActivated,
+    required this.showCategoryFilter,
+    required this.timeFilterActivated,
+    required this.sortFilterActivated,
+    required this.typeFilterActivated,
+    required this.categoryFilterActivated,
+  });
+}
+
+enum PageState { searchScreen, resultScreen }

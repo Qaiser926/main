@@ -9,6 +9,8 @@ class WidgetConstants {
 }
 
 class NavigatorConstants {
+  static const SearchPageIndex = 1;
+
   static backToPrev() {
     Get.back();
   }

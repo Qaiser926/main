@@ -19,16 +19,22 @@ class MainPage extends StatelessWidget {
     FavouritePage(),
     SettingsPage()
   ];
-  final PageController _pageController = PageController(initialPage: 0);
+  late final PageController _pageController;
 
-  MainPage({Key? key}) : super(key: key);
+  late NavigationBarNotifier navBarNotifier;
+
+  MainPage({Key? key = Get})
+      : navBarNotifier = NavigationBarNotifier(),
+        _pageController = PageController(initialPage: 0),
+        super(key: key) {}
 
   @override
   Widget build(BuildContext context) {
+    navBarNotifier.setPageController(_pageController);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: NavigationBarNotifier(pageController: _pageController),
+          value: NavigationBarNotifier(),
         )
       ],
       child: Scaffold(

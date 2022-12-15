@@ -6,6 +6,7 @@ abstract class Routes {
   static const searchRoute = Paths.searchPath;
   static const homeScreenRoute = Paths.homeScreenPath;
   static const addScreenRoute = Paths.addPath;
+  static const searchResults = Paths.searchResultsPath;
 }
 
 abstract class Paths {
@@ -16,4 +17,5 @@ abstract class Paths {
   static const favouritePath = '/favourite';
   static const searchPath = '/search';
   static const addPath = '/add';
+  static const searchResultsPath = '/search_results';
 }

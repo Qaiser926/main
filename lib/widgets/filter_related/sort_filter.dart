@@ -142,6 +142,8 @@ class _SortFilterState extends State<SortFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool closeDialog =
+        Provider.of<SearchNotifier>(context, listen: false).getIsCloseDialog();
     return Column(
       children: [
         Padding(
@@ -162,7 +164,8 @@ class _SortFilterState extends State<SortFilter> {
               context: context,
               function: Provider.of<SearchNotifier>(context, listen: false)
                   .changeSortCriteria,
-              functionArguments: {#sortCriteria: sortCriteria}),
+              functionArguments: {#sortCriteria: sortCriteria},
+              closeDialog: closeDialog),
         )
       ],
     );

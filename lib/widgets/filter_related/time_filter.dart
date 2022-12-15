@@ -412,6 +412,8 @@ class _TimeFilterState extends State<TimeFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool closeDialog =
+        Provider.of<SearchNotifier>(context, listen: false).getIsCloseDialog();
     return Column(children: [
       Padding(
           padding: EdgeInsets.all(10),
@@ -471,7 +473,8 @@ class _TimeFilterState extends State<TimeFilter> {
             context: context,
             function: Provider.of<SearchNotifier>(context, listen: false)
                 .changeStartEndDate,
-            functionArguments: {#startDate: startDate, #endDate: endDate}),
+            functionArguments: {#startDate: startDate, #endDate: endDate},
+            closeDialog: closeDialog),
       )
     ]);
   }

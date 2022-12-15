@@ -50,6 +50,8 @@ class _PriceFilterState extends State<PriceFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool closeDialog =
+        Provider.of<SearchNotifier>(context, listen: false).getIsCloseDialog();
     return Column(
       children: [
         Padding(
@@ -104,10 +106,15 @@ class _PriceFilterState extends State<PriceFilter> {
         ),
         Padding(
           padding: EdgeInsets.all(20),
-          child: getShowResultsButton(context: context, function: Provider.of<SearchNotifier>(context, listen: false)
-              .changePriceRange, functionArguments: {
-          #priceRange: RangeValues(_values.start.roundToDouble(),
-          _values.end.roundToDouble())}),
+          child: getShowResultsButton(
+              context: context,
+              function: Provider.of<SearchNotifier>(context, listen: false)
+                  .changePriceRange,
+              functionArguments: {
+                #priceRange: RangeValues(
+                    _values.start.roundToDouble(), _values.end.roundToDouble())
+              },
+              closeDialog: closeDialog),
         )
       ],
     );

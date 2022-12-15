@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-import 'search_notifier.dart';
+import '../../core/search/search.dart';
 
 Widget getShowResultsButton(
     {required BuildContext context,
     required Function function,
     required Map<Symbol, dynamic> functionArguments,
-    bool closeDialog = true}) {
+    bool closeDialog = false}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -17,9 +18,18 @@ Widget getShowResultsButton(
           flex: 1,
           child: GestureDetector(
               onTap: () {
-                Provider.of<SearchNotifier>(context, listen: false)
-                    .backToDefault();
-                Navigator.of(context, rootNavigator: true).pop();
+                Get.back();
+                // Navigator.popUntil(context, (route) {
+
+                //   if (route == Routes.mainScreenRoute) {
+                //     return true;
+                //   } else {
+                //     return false;
+                //   }
+                // });
+                Get.offAll(
+                  SearchPage(),
+                );
               },
               child: Container(
                 padding: EdgeInsets.all(12),
@@ -35,9 +45,7 @@ Widget getShowResultsButton(
               child: Text(AppLocalizations.of(context)!.showResults),
               onPressed: () {
                 Function.apply(function, [], functionArguments);
-                if (closeDialog) {
-                  Navigator.of(context, rootNavigator: true).pop();
-                }
+                if (closeDialog) Get.back();
               })),
     ],
   );

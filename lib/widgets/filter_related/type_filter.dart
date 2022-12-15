@@ -140,6 +140,8 @@ class _TypeFilterState extends State<TypeFilter> {
 
   @override
   Widget build(BuildContext context) {
+    bool closeDialog =
+        Provider.of<SearchNotifier>(context, listen: false).getIsCloseDialog();
     return Column(
       children: [
         Padding(
@@ -160,7 +162,8 @@ class _TypeFilterState extends State<TypeFilter> {
               context: context,
               function: Provider.of<SearchNotifier>(context, listen: false)
                   .changeEAType,
-              functionArguments: {#eAType: eAType}),
+              functionArguments: {#eAType: eAType},
+              closeDialog: closeDialog),
         )
       ],
     );

@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 class NavigationBarNotifier extends ChangeNotifier {
+  static final NavigationBarNotifier _navigationBarNotifier =
+      NavigationBarNotifier._internal();
   int index = 0;
-
-  final PageController pageController;
-
-  NavigationBarNotifier({required this.pageController});
+  late final PageController pageController;
 
   int get getIndex => index;
+
+  factory NavigationBarNotifier() {
+    return _navigationBarNotifier;
+  }
+
+  NavigationBarNotifier._internal();
+
+  void setPageController(PageController pageController) {
+    this.pageController = pageController;
+  }
 
   void setIndex({required int index, required BuildContext context}) {
     this.index = index;

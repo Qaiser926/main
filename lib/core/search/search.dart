@@ -38,68 +38,51 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:othia/core/search/search_results.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
+import '../../constants/categories.dart';
 import '../../widgets/category_filter/category_filter.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 import '../../widgets/filter_related/search_notifier.dart';
+import '../../widgets/nav_bar/nav_bar.dart';
+import '../../widgets/nav_bar/nav_bar_notifier.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<String> defaultSelectedCategoryIds =
+        categoryIdToSubcategoryIds.keys.toList();
     return SafeArea(
       child: MultiProvider(
           providers: [
-            // TODO initialize price range with max price & write function that returns category ids
+            // TODO initialize price range with max price
             ChangeNotifierProvider.value(
               value: SearchNotifier(
                   priceRange: const RangeValues(0, 100),
                   endDate: DateTime(DateTime.now().year + 2),
                   sortCriteria: null,
                   eAType: EAType.eventsActivites,
-                  selectedCategoryIds: ["sf"]),
-            )
+                  selectedCategoryIds: defaultSelectedCategoryIds),
+            ),
+            ChangeNotifierProvider.value(value: NavigationBarNotifier()),
           ],
           builder: (context, child) {
             return Consumer<SearchNotifier>(builder: (context, model, child) {
-              // if (model.isShowResults()) {
-              //   Navigator.pushNamed(context, Routes.detailedEventRoute);
-              // }
               return Scaffold(
                   primary: true,
+                  bottomNavigationBar: const CustomNavigationBar(),
                   appBar:
                       DropDownAppBar(context: context, appBarTitle: "Search"),
                   // here the category pictures
-                  body: getSearchScreen()
-
-                  // CategoryFilter(
-                  //   context: context,
-                  //   isModalBottomSheetMode: false,
-                  // ),
-                  );
+                  body: CategoryFilter(
+                    context: context,
+                    isModalBottomSheetMode: false,
+                  ));
             });
           }),
     );
-  }
-
-  Widget getSearchScreen() {
-    return Consumer<SearchNotifier>(builder: (context, model, child) {
-      if (model.isShowResults()) {
-        // differentiate here between search results (show different screen if nothing was found)
-        return SearchResults(
-          searchQuery: model.getSearchQuery(),
-        );
-      } else {
-        return CategoryFilter(
-          context: context,
-          isModalBottomSheetMode: false,
-        );
-        // }
-      }
-    });
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:othia/core/favourites/exclusive_widgets/pinned_header.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../constants/categories.dart';
@@ -13,22 +12,32 @@ import '../../../widgets/disccover_horizontally.dart';
 import '../../favourites/exclusive_widgets/favourite_list_item.dart';
 
 class SearchScrollView extends StatelessWidget {
-  final SearchResultsIds searchResultIds;
+  final SearchResultIds searchResultIds;
+  late Widget child;
 
-  const SearchScrollView({super.key, required this.searchResultIds});
-
-  //TODO implement logic what kind of screen is shown here
+  SearchScrollView({super.key, required this.searchResultIds});
 
   @override
   Widget build(BuildContext context) {
-    // criteria here, probably also empty screen
-    // Widget child = getFavouriteEventPart(searchResultIds, context);
-    Widget child = getHorizontalDiscovery(searchResultIds, context);
+    bool showHorizontal = getShowHorizontal(searchResultIds: searchResultIds);
+    if (showHorizontal) {
+      child = getHorizontalDiscovery(searchResultIds, context);
+    } else {
+      child = getVerticalDiscovery(searchResultIds, context);
+    }
     return child;
   }
 
+  bool getShowHorizontal({required SearchResultIds searchResultIds}) {
+    if (searchResultIds.searchResultIds.length > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Widget getHorizontalDiscovery(
-      SearchResultsIds searchResultIds, BuildContext context) {
+      SearchResultIds searchResultIds, BuildContext context) {
     return ListView.builder(
         itemCount: searchResultIds.searchResultIds.length,
         itemBuilder: (BuildContext context, int index) {
@@ -43,8 +52,8 @@ class SearchScrollView extends StatelessWidget {
         });
   }
 
-  Widget getFavouriteEventPart(
-      SearchResultsIds searchResultIds, BuildContext context) {
+  Widget getVerticalDiscovery(
+      SearchResultIds searchResultIds, BuildContext context) {
     List<Widget> slivers = [];
     for (MapEntry<String, List> item
         in searchResultIds.searchResultIds.entries) {
@@ -64,9 +73,9 @@ class SearchScrollView extends StatelessWidget {
       return MultiSliver(
         pushPinnedChildren: true,
         children: [
-          SliverPinnedHeader(
-            child: getHeader(text: headerText),
-          ),
+          // SliverPinnedHeader(
+          //   child: getHeader(text: headerText),
+          // ),
           SliverList(delegate: SliverChildBuilderDelegate((context, index) {
             if (index < Ids.length) {
               Future<Object> eASummary =
