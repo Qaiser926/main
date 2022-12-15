@@ -26,19 +26,20 @@ Widget getShowResultsButton(
                 child: Text(AppLocalizations.of(context)!.clearAll),
               ))),
       Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0)))),
-              child: Text(AppLocalizations.of(context)!.showResults),
-              onPressed: () {
-                Function.apply(function, [], functionArguments);
-                if (closeDialog) {
-                  Navigator.of(context, rootNavigator: true).pop();
-                }
-              })),
+        flex: 1,
+        child: ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0)))),
+            child: Text(AppLocalizations.of(context)!.showResults),
+            onPressed: () {
+              Function.apply(function, [], functionArguments);
+              if (closeDialog) {
+                Navigator.of(context, rootNavigator: true).pop();
+              }
+            }),
+      ),
     ],
   );
 }
