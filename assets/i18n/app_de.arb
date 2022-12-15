@@ -123,6 +123,10 @@
   "dateRising": "Datum ↑",
   "popularity": "Popularität",
 
+  "noResultsFound": "Keine Ergebnisse gefunden für Suchkriterien",
+
+
+
   "entertainment": "Entertainment",
   "@entertainment": {
     "description": "entertainment"
