@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'amplifyconfiguration.dart';
 import 'config/routes/pages.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         // return Authenticator(
         child:
-        return MaterialApp(
+        return GetMaterialApp(
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           // builder: Authenticator.builder(),
           debugShowCheckedModeBanner: false,
           initialRoute: Routes.homeRoute,
+          // getPages: ,
           routes: Pages.routes,
           theme: getDarkThemeData(),
           onGenerateRoute: (settings) {
