@@ -4,8 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../constants/app_constants.dart';
-
 Widget getShowResultsButton(
     {required BuildContext context,
     required Function function,
@@ -18,7 +16,7 @@ Widget getShowResultsButton(
         flex: 1,
         child: GestureDetector(
           onTap: () {
-            NavigatorConstants.doubleBackToPrev();
+            // NavigatorConstants.doubleBackToPrev();
             // Get.back(id: 1,canPop: true);
             // navigator.popUntil(context, (route) {
             //

@@ -38,7 +38,6 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -46,14 +45,9 @@ import '../../constants/categories.dart';
 import '../../widgets/category_filter/category_filter.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 import '../../widgets/filter_related/search_notifier.dart';
-import '../../widgets/nav_bar/nav_bar_notifier.dart';
 
 class SearchPage extends StatelessWidget {
-  late final bool showNavBar;
-
-  SearchPage({Key? key})
-      : showNavBar = Get.arguments ?? false,
-        super(key: key);
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +65,6 @@ class SearchPage extends StatelessWidget {
                   eAType: EAType.eventsActivites,
                   selectedCategoryIds: defaultSelectedCategoryIds),
             ),
-            ChangeNotifierProvider.value(value: NavigationBarNotifier()),
           ],
           builder: (context, child) {
             return Consumer<SearchNotifier>(builder: (context, model, child) {
