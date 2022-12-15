@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/colors.dart';
-import 'package:typicons_flutter/typicons_flutter.dart';
 
 import '../modules/models/eA_summary/eA_summary.dart';
 import '../utils/services/data_handling/data_handling.dart';
@@ -19,6 +18,7 @@ class EASummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 185.w,
       margin: EdgeInsets.only(right: 20.h, left: index == 0 ? 20.h : 0),
       child: Stack(
         alignment: Alignment.topCenter,
@@ -27,27 +27,26 @@ class EASummaryCard extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22.h),
                 image: DecorationImage(
-                    image:
-                    getPhotoNullSave(categoryId: eASummary.categoryId,
-                        photo: eASummary.photo).image,
+                    image: getPhotoNullSave(
+                            categoryId: eASummary.categoryId,
+                            photo: eASummary.photo)
+                        .image,
                     fit: BoxFit.fill)),
-            height: 170.h,
+            height: 140.h,
             width: 248.h,
             padding: EdgeInsets.only(left: 12.h, top: 12.h),
-            child: getTimeWrapper(context: context, eASummary: eASummary),
+            child: getPriceWrapper(context: context, eASummary: eASummary),
           ),
           Positioned(
-            width: 230.h,
-            top: 112.h,
+            width: 152.h,
+            top: 100.h,
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme
-                      .of(context)
-                      .colorScheme
-                      .tertiary,
+                  color: Theme.of(context).colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(22.h)),
               padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              child:getSummaryInformation(eASummary: eASummary, context: context),
+              child:
+                  getSummaryInformation(eASummary: eASummary, context: context),
               // height: 133.h,
             ),
           )
@@ -57,25 +56,21 @@ class EASummaryCard extends StatelessWidget {
   }
 }
 
-Widget getTimeWrapper(
-    {required BuildContext context, required SummaryEventOrActivity eASummary}) {
+Widget getPriceWrapper(
+    {required BuildContext context,
+    required SummaryEventOrActivity eASummary}) {
   return Wrap(
     children: [
       Container(
         decoration: BoxDecoration(
-            color: "#B2000000".toColor(),
-            borderRadius: BorderRadius.circular(12.h)),
-        padding:
-        EdgeInsets.symmetric(vertical: 4.h, horizontal: 10.h),
-        child: getCustomFont(
-            text: getTimeInformation(
-                context: context,
-                startTimeUtc: eASummary.time.startTimeUtc,
-                openingTimeCode: eASummary.time.openingTimeCode),
-            fontSize: 13.sp,
-            maxLine: 1,
-            fontWeight: FontWeight.w600,
-            txtHeight: 1.69.h),
+            color: "#12212E".toColor().withOpacity(0.5),
+            borderRadius: BorderRadius.circular(8.h)),
+        padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 10.h),
+        child: Text(
+          getPriceText(
+              context: context, isShort: true, prices: eASummary.prices),
+          maxLines: 1,
+        ),
       ),
     ],
   );
@@ -86,40 +81,43 @@ Widget getSummaryInformation(
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      getCustomFont(
-          text: eASummary.title,
-          fontSize: 18.sp,
-          maxLine: 1,
-          fontWeight: FontWeight.w600,
-          txtHeight: 1.5.h),
+      Text(
+        eASummary.title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
       getVerSpace(5.h),
       Row(
         children: [
           Icon(
             Icons.location_on_outlined,
-            size: 20.h,
+            size: 14.h,
           ),
-          getHorSpace(5.h),
-          getCustomFont(text: getLocationString(
-              location: eASummary.location, isShort: true),
-              fontSize: 15.sp,
-              maxLine: 1,
-              fontWeight: FontWeight.w500,
-              txtHeight: 1.5.h)
+          getHorSpace(3.h),
+          Text(
+            getLocationString(location: eASummary.location, isShort: true),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+
 // include here price information
         ],
       ),
-      getVerSpace(5.h),
+      getVerSpace(3.h),
       Row(
         children: [
-          Icon(Typicons.tag, size: 20.h,),
-          getHorSpace(5.h),
-          getCustomFont(text: getPriceText(
-              context: context, isShort: true, prices: eASummary.prices),
-              fontSize: 15.sp,
-              maxLine: 1,
-              fontWeight: FontWeight.w500,
-              txtHeight: 1.5.h)
+          Icon(
+            Icons.access_time_outlined,
+            size: 14.h,
+          ),
+          getHorSpace(3.h),
+          Text(
+            getTimeInformation(
+                context: context,
+                startTimeUtc: eASummary.time.startTimeUtc,
+                openingTimeCode: eASummary.time.openingTimeCode),
+            maxLines: 1,
+          )
         ],
       ),
 

@@ -25,6 +25,10 @@ class SearchScrollView extends StatelessWidget {
     return child;
   }
 
+  // Widget getHorizontalDiscovery(){
+  //
+  // }
+
   Widget getFavouriteEventPart(
       SearchResultsIds searchResultIds, BuildContext context) {
     List<Widget> slivers = [];
