@@ -18,11 +18,11 @@ FavouriteEventsAndActivities _$FavouriteEventsAndActivitiesFromJson(
             k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       openActivities: (json['openActivities'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(
+        (k, e) => MapEntry(
             k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
       closedActivities: (json['closedActivities'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(
+                (k, e) => MapEntry(
             k, SummaryEventOrActivity.fromJson(e as Map<String, dynamic>)),
       ),
     );

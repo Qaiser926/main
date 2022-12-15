@@ -52,35 +52,35 @@ class _FavouritePageState extends State<FavouritePage>
           tabController: _tabController,
           context: context,
         ),
-          body: FutureBuilder(
-              future: future,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const SplashScreen();
+        body: FutureBuilder(
+            future: future,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const SplashScreen();
+              } else {
+                if (snapshot.hasError) {
+                  throw Exception(snapshot.error);
                 } else {
-                  if (snapshot.hasError) {
-                    throw Exception(snapshot.error);
-                  } else {
-                    RestResponse data = snapshot.data as RestResponse;
+                  RestResponse data = snapshot.data as RestResponse;
 
-                    String body = """{
+                  String body = """{
               "futureEvents": {},
               "pastEvents":{},
               "openActivities":{},
               "closedActivities":{}
               }""";
-                    Map<String, dynamic> json = jsonDecode(data.body);
-                    FavouriteEventsAndActivities favouriteEventAndActivity =
-                    FavouriteEventsAndActivities.fromJson(json);
-                    return FavouriteScrollView(
-                      tabController: _tabController,
-                      favouriteEventAndActivity: favouriteEventAndActivity,
-                    );
-                  }
+                  Map<String, dynamic> json = jsonDecode(data.body);
+                  FavouriteEventsAndActivities favouriteEventAndActivity =
+                      FavouriteEventsAndActivities.fromJson(json);
+                  return FavouriteScrollView(
+                    tabController: _tabController,
+                    favouriteEventAndActivity: favouriteEventAndActivity,
+                  );
                 }
-              }),
-        ),
-        // ),
-      );
+              }
+            }),
+      ),
+      // ),
+    );
   }
 }
