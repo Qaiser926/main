@@ -62,7 +62,7 @@ dependencies:
   maps_launcher: ^2.0.1
   #state and route management
   path_provider: ^2.0.11
-  #  get: ^4.6.5
+  get: ^4.6.5
   #data modelling
   freezed_annotation: ^2.2.0
   json_annotation: ^4.7.0

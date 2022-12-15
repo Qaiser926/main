@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/utils/services/exceptions.dart';
 
+import '../../constants/app_constants.dart';
 import '../../modules/models/detailed_event/detailed_event.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/services/data_handling/get_ical_element.dart';
@@ -31,9 +33,7 @@ class _EventDetailState extends State<EventDetail> {
   late Future<Object> detailedEventOrActivity;
 
   void backClick() {
-    print('backclick');
-    Navigator.pop(context);
-    // Constant.backToPrev(context);
+    NavigatorConstants.backToPrev();
   }
 
   // TODO: link to organizer id
@@ -41,6 +41,7 @@ class _EventDetailState extends State<EventDetail> {
   @override
   void initState() {
     //TODO
+    print(Get.arguments);
     String eventId = "1";
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
@@ -124,16 +125,24 @@ class _EventDetailState extends State<EventDetail> {
                                     iCalElement: iCalElement,
                                     shareUrl: "temp",
                                     websiteUrl:
-                                        detailedEventOrActivity.websiteUrl,
+                                    detailedEventOrActivity.websiteUrl,
                                     ticketUrl:
-                                        detailedEventOrActivity.ticketUrl),
+                                    detailedEventOrActivity.ticketUrl),
                                 getVerSpace(25.h),
                                 if (detailedEventOrActivity.eventSeriesId !=
-                                    null) ExploreEventSeries(eventSeriesId: detailedEventOrActivity.eventSeriesId!),
-                                ExploreCategory(categoryId: detailedEventOrActivity.categoryId),
-                                if (detailedEventOrActivity.location.locationId !=
-                                    null) ExploreLocation(locationId: detailedEventOrActivity.location.locationId!),
-
+                                    null)
+                                  ExploreEventSeries(
+                                      eventSeriesId: detailedEventOrActivity
+                                          .eventSeriesId!),
+                                ExploreCategory(
+                                    categoryId:
+                                    detailedEventOrActivity.categoryId),
+                                if (detailedEventOrActivity
+                                    .location.locationId !=
+                                    null)
+                                  ExploreLocation(
+                                      locationId: detailedEventOrActivity
+                                          .location.locationId!),
                               ],
                             ),
 

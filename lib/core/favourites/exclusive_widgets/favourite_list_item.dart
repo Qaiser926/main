@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
 import '../../../config/routes/routes.dart';
+import '../../../constants/app_constants.dart';
 import '../../../modules/models/eA_summary/eA_summary.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
@@ -17,7 +18,8 @@ Widget getFavouriteListItem(
     BuildContext context, SummaryEventOrActivity eASummary) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushNamed(context, Routes.detailedEventRoute);
+      NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+          arguments: eASummary.id);
     },
     child: Container(
       margin: EdgeInsets.only(bottom: 12.h, left: 10.h, right: 10.h),
