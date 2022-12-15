@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/services/exceptions.dart';
 import 'package:othia/utils/ui/future_service.dart';
+
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../modules/models/eA_summary/eA_summary.dart';
 import '../modules/models/id_list/id_list.dart';
@@ -50,19 +51,18 @@ class HorizontalEADiscovery extends StatelessWidget {
           throw EmptyList;
         }
         return SizedBox(
-            height: 250.h,
-            child: ListView.builder(
-                primary: false,
-                shrinkWrap: true,
-                itemCount: eAIds.eaIdList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
+            height: 183.h,
+                child: ListView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount: eAIds.eaIdList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      late Future<Object> response = RestService()
+                          .fetchEventOrActivityDetails(
+                              eventOrActivityId: eAIds.eaIdList[index]);
 
-                  late Future<Object> response = RestService()
-                      .fetchEventOrActivityDetails(
-                      eventOrActivityId: eAIds.eaIdList[index]);
-
-                  return KeepAliveFutureBuilder(
+                      return KeepAliveFutureBuilder(
                       future: response,
                       builder: (context, snapshot) {
                         Map<String, dynamic> decodedJson = snapshotHandler(snapshot);

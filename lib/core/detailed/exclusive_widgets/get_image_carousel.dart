@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../widgets/carousel_widget.dart';
 import '../../../widgets/filtered_image_stack.dart';
@@ -22,7 +23,7 @@ class getImageCarousel extends StatelessWidget {
     }
     return Container(
       // height of picture
-      height: 327.h,
+      height: 245.h,
       width: double.infinity,
       //decoration: BoxDecoration(
       //borderRadius:

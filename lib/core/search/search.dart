@@ -38,6 +38,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:othia/core/search/search_results.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -64,12 +65,23 @@ class SearchPage extends StatelessWidget {
             )
           ],
           builder: (context, child) {
-            return Scaffold(
-              primary: true,
-              appBar: DropDownAppBar(context: context, appBarTitle: "Search"),
-              // here the category pictures
-              body: getSearchScreen(),
-            );
+            return Consumer<SearchNotifier>(builder: (context, model, child) {
+              // if (model.isShowResults()) {
+              //   Navigator.pushNamed(context, Routes.detailedEventRoute);
+              // }
+              return Scaffold(
+                  primary: true,
+                  appBar:
+                      DropDownAppBar(context: context, appBarTitle: "Search"),
+                  // here the category pictures
+                  body: getSearchScreen()
+
+                  // CategoryFilter(
+                  //   context: context,
+                  //   isModalBottomSheetMode: false,
+                  // ),
+                  );
+            });
           }),
     );
   }
@@ -78,7 +90,9 @@ class SearchPage extends StatelessWidget {
     return Consumer<SearchNotifier>(builder: (context, model, child) {
       if (model.isShowResults()) {
         // differentiate here between search results (show different screen if nothing was found)
-        return Text("${model.getPriceRange.toString()}");
+        return SearchResults(
+          searchQuery: model.getSearchQuery(),
+        );
       } else {
         return CategoryFilter(
           context: context,

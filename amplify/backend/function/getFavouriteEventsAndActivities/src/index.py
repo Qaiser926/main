@@ -28,6 +28,7 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
+
         # TODO: send request witch user_id and local time
         'body': json.dumps({
             "futureEvents": {

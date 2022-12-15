@@ -20,53 +20,60 @@ class EventSummary extends StatelessWidget {
   String? ticketUrl;
   Status? status;
 
-  EventSummary({super.key,
-    required this.location,
-    required this.title,
-    required this.timeText,
-    this.iCalElement,
-    this.prices,
-    this.websiteUrl,
-    this.ticketUrl,
-    this.status
-  }){
-  }
+  EventSummary(
+      {super.key,
+      required this.location,
+      required this.title,
+      required this.timeText,
+      this.iCalElement,
+      this.prices,
+      this.websiteUrl,
+      this.ticketUrl,
+      this.status}) {}
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22.h),
         color: Theme.of(context).colorScheme.tertiary,
 
         // boxShadow: [BoxShadow(blurRadius: 27, offset: Offset(0, 8))]
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16.h),
+      // padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getVerSpace(10.h),
-          getMultilineCustomFontRestricted(
-              text: title, maxLines: 2, textTheme: Theme.of(context).textTheme.headline2),
-          getVerSpace(10.h),
+          Padding(
+            padding: EdgeInsets.fromLTRB(12, 10, 10, 10),
+            child: Text(
+              title,
+              maxLines: 2,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ),
 
-          Column(crossAxisAlignment: CrossAxisAlignment.start,
-              // TODO: solve that title can flow into price information
-              children: [
-                LocationWidget(location: location),
-                getVerSpace(10.h),
-                // no logic implemented regarding times-> wait for actual data
-                TimeWidget(time: timeText, iCalElement: iCalElement),
-                getVerSpace(10.h),
-                // no logic implemented regarding times-> wait for actual data
-                PriceWidget(
-                  prices: prices,
-                  ticketUrl: ticketUrl,
-                  websiteUrl: websiteUrl,
-                  status: status,
-                ),
-              ]),
+          // TODO: solve that title can flow into price information
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+            child: LocationWidget(location: location),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+            child: TimeWidget(time: timeText, iCalElement: iCalElement),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: PriceWidget(
+              prices: prices,
+              ticketUrl: ticketUrl,
+              websiteUrl: websiteUrl,
+              status: status,
+            ),
+          ),
+
+          // no logic implemented regarding times-> wait for actual data
+
           getVerSpace(13.h),
         ],
       ),

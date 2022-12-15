@@ -77,6 +77,15 @@ class RestService {
     return result;
   }
 
+  Future<Object> getSearchResultIds({required searchQuery}) async {
+    print('requesting ids for: ');
+    //
+    //TODO define API call for several query parameters
+    RestOptions restOptions = RestOptions(path: '/getSearchResultIds-dev/');
+    final result = await get(restOptions);
+    return result;
+  }
+
   void logout() async {
     await signOutCurrentUser();
     return;

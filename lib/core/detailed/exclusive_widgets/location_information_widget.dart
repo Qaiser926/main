@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
+
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/ui/ui_utils.dart';
-import 'package:latlong2/latlong.dart' as latLng;
-import 'package:othia/modules/models/shared_data_models.dart';
 
 class FunctionWrapper {
   Function()? function;
@@ -37,13 +38,14 @@ class LocationWidget extends StatelessWidget {
         children: [
           Icon(
             Icons.location_on_outlined,
-            size: 20.h,
+            size: 18.h,
           ),
           getHorSpace(5.h),
           Text(
             getLocationString(location: location),
-            style: Theme.of(context).textTheme.headline4,
+            style: Theme.of(context).textTheme.bodyText2,
             maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           )
         ],
       ),

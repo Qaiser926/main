@@ -11,18 +11,24 @@ class DropDownAppBar extends AppBar {
 
   DropDownAppBar({required this.appBarTitle, required this.context, super.key})
       : super(
-          title: Text(appBarTitle),
-          elevation: 0,
-          bottom: PreferredSize(
-            preferredSize: const Size(double.infinity, 50),
-            child: Column(
-              children: [
-                Consumer<SearchNotifier>(builder: (context, model, child) {
-                  return buildDropdownBar(context: context);
-                }),
-                getVerSpace(15)
-              ],
-            ),
-          ),
-        );
+            title: Text(appBarTitle),
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back, ),
+            //   onPressed: () {
+            //     print(1);
+            //     Navigator.of(context).pop();} ,
+            // ),
+            elevation: 0,
+            bottom: PreferredSize(
+              preferredSize: const Size(double.infinity, 50),
+              child: Column(
+                children: [
+                  Consumer<SearchNotifier>(builder: (context, model, child) {
+                    return buildDropdownBar(context: context);
+                  }),
+                  getVerSpace(15)
+                ],
+              ),
+            ));
 }
+
