@@ -7,7 +7,8 @@ part of 'id_list.dart';
 // **************************************************************************
 
 IdList _$IdListFromJson(Map<String, dynamic> json) => IdList(
-      eaIdList: json['eaIdList'] as List<dynamic>,
+      eaIdList:
+          (json['eaIdList'] as List<dynamic>).map((e) => e as String?).toList(),
     );
 
 Map<String, dynamic> _$IdListToJson(IdList instance) => <String, dynamic>{

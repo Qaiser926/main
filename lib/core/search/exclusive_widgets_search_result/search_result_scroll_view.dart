@@ -9,6 +9,7 @@ import '../../../utils/services/data_handling/keep_alive_future_builder.dart';
 import '../../../utils/services/exceptions.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../../utils/ui/future_service.dart';
+import '../../../widgets/disccover_horizontally.dart';
 import '../../favourites/exclusive_widgets/favourite_list_item.dart';
 
 class SearchScrollView extends StatelessWidget {
@@ -20,14 +21,27 @@ class SearchScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // criteria here, probably also empty sceen
-    Widget child = getFavouriteEventPart(searchResultIds, context);
+    // criteria here, probably also empty screen
+    // Widget child = getFavouriteEventPart(searchResultIds, context);
+    Widget child = getHorizontalDiscovery(searchResultIds, context);
     return child;
   }
 
-  // Widget getHorizontalDiscovery(){
-  //
-  // }
+  Widget getHorizontalDiscovery(
+      SearchResultsIds searchResultIds, BuildContext context) {
+    return ListView.builder(
+        itemCount: searchResultIds.searchResultIds.length,
+        itemBuilder: (BuildContext context, int index) {
+          String key = searchResultIds.searchResultIds.keys.elementAt(index);
+          bool showDivider = true;
+          if (index == 0) showDivider = false;
+          return BaseDiscoveryClass(
+            Ids: searchResultIds.searchResultIds[key]!,
+            heading: CategoryIdToI18nMapper.fckMethod(context, key),
+            showDivider: showDivider,
+          );
+        });
+  }
 
   Widget getFavouriteEventPart(
       SearchResultsIds searchResultIds, BuildContext context) {

@@ -16,7 +16,7 @@ import '../../utils/ui/ui_utils.dart';
 import '../../widgets/splash_screen.dart';
 import 'exclusive_widgets/button_widget.dart';
 import 'exclusive_widgets/description_widget.dart';
-import 'exclusive_widgets/horizontal_exploration.dart';
+import 'exclusive_widgets/horizontal_exploration_detail.dart';
 import 'exclusive_widgets/image_widgets.dart';
 import 'exclusive_widgets/map_widget.dart';
 import 'exclusive_widgets/opening_times.dart';
