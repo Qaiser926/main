@@ -38,6 +38,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,11 @@ import '../../widgets/nav_bar/nav_bar.dart';
 import '../../widgets/nav_bar/nav_bar_notifier.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  late final bool showNavBar;
+
+  SearchPage({Key? key})
+      : showNavBar = Get.arguments ?? false,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,8 @@ class SearchPage extends StatelessWidget {
             return Consumer<SearchNotifier>(builder: (context, model, child) {
               return Scaffold(
                   primary: true,
-                  bottomNavigationBar: const CustomNavigationBar(),
+                  bottomNavigationBar:
+                      showNavBar ? const CustomNavigationBar() : null,
                   appBar:
                       DropDownAppBar(context: context, appBarTitle: "Search"),
                   // here the category pictures

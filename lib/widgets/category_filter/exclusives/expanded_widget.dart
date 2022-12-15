@@ -147,7 +147,7 @@ class ExpandedWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         textAlign: TextAlign.center,
-                        CategoryIdToI18nMapper.fckMethod(
+                        CategoryIdToI18nMapper.getCategoryName(
                             context, subcategoryIds[index]),
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/core/search/search.dart';
 import 'package:othia/core/settings/settings.dart';
 import 'package:provider/provider.dart';
@@ -11,22 +12,22 @@ import 'detailed/detailed_event.dart';
 import 'favourites/favourite_screen.dart';
 
 class MainPage extends StatelessWidget {
-  static const List<Widget> _pages = [
+  static final List<Widget> _pages = [
     // TODO insert HOME instead of EventDetail
-    EventDetail(),
+    const EventDetail(),
     SearchPage(),
-    Add(),
-    FavouritePage(),
-    SettingsPage()
+    const Add(),
+    const FavouritePage(),
+    const SettingsPage()
   ];
   late final PageController _pageController;
 
   late NavigationBarNotifier navBarNotifier;
 
-  MainPage({Key? key = Get})
+  MainPage()
       : navBarNotifier = NavigationBarNotifier(),
         _pageController = PageController(initialPage: 0),
-        super(key: key) {}
+        super(key: Get.nestedKey(1));
 
   @override
   Widget build(BuildContext context) {
