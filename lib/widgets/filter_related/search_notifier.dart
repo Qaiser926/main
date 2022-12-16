@@ -132,9 +132,10 @@ class SearchNotifier extends ChangeNotifier {
     eAType = EAType.eventsActivites;
   }
 
-  void changeStartEndDate({required DateTime startDate,
-    required DateTime endDate,
-    String? caption}) {
+  void changeStartEndDate(
+      {required DateTime startDate,
+      required DateTime endDate,
+      String? caption}) {
     this.startDate = startDate;
     this.endDate = endDate;
     timeFilterActivated = true;
@@ -192,10 +193,10 @@ class SearchNotifier extends ChangeNotifier {
 
   bool anyFilterActivated() {
     return priceFilterActivated |
-    timeFilterActivated |
-    sortFilterActivated |
-    typeFilterActivated |
-    categoryFilterActivated;
+        timeFilterActivated |
+        sortFilterActivated |
+        typeFilterActivated |
+        categoryFilterActivated;
   }
 
   SearchQuery getSearchQuery() {
