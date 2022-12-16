@@ -6,28 +6,27 @@ import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
 import 'package:othia/widgets/filter_related/search_notifier.dart';
 import 'package:provider/provider.dart';
 
-
 class InitialSearchPage extends StatelessWidget {
   const InitialSearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     List<String> defaultSelectedCategoryIds =
-    categoryIdToSubcategoryIds.keys.toList();
+        categoryIdToSubcategoryIds.keys.toList();
     return SafeArea(
-        child: Consumer<SearchNotifier>(builder: (context, model, child) {
-      return Scaffold(
+      child: Consumer<SearchNotifier>(builder: (context, model, child) {
+        return Scaffold(
           primary: true,
           appBar: DropDownAppBar(
               context: context,
               appBarTitle: AppLocalizations.of(context)!.search,
               automaticallyImplyLeading: false),
-
-
           body: CategoryFilter(
             context: context,
             isModalBottomSheetMode: false,
-          ));
-    }));
+          ),
+        );
+      }),
+    );
   }
 }
