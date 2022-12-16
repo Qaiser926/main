@@ -61,6 +61,7 @@ Future<bool> closeAppDialog(
       notifier.getSearchNotifier.backToDefault();
     }
     notifier.getSearchNotifier.setIndex = currentSearchIndex - 1;
+    shouldPop = false;
   } else {
     shouldPop = await showDialog<bool>(
         context: context,

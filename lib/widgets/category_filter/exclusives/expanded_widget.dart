@@ -6,7 +6,6 @@ import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import '../../filter_related/get_reset_apply_filter.dart';
 import '../../filter_related/search_notifier.dart';
-import 'notifier.dart';
 
 class ExpandedWidget extends StatelessWidget {
   final List<String> subcategoryIds;
@@ -33,7 +32,7 @@ class ExpandedWidget extends StatelessWidget {
         containerMarginTop +
         bottomRowHeight;
 
-    return Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
+    return Consumer<SearchNotifier>(builder: (context, model, child) {
       bool expanded = model.getExpandedIndex == categoryIndex;
       bool isModalBottomMode = model.isModalBottomMode;
       if (subcategoryIds.isNotEmpty) {

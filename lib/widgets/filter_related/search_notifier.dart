@@ -4,7 +4,6 @@ import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
 import '../../constants/app_constants.dart';
-import '../../constants/categories.dart';
 
 class SearchNotifier extends ChangeNotifier {
   // Pagecontroller related
@@ -21,12 +20,10 @@ class SearchNotifier extends ChangeNotifier {
       selectedCategoryIds,
       required PageController pageController})
       : _pageController = pageController {
-    this.priceRange = this.defaultPriceRange = priceRange;
-    this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
+    this.priceRange = defaultPriceRange = priceRange;
+    this.startDate = defaultStartDate = startDate ?? DateTime.now();
     this.endDate =
-        this.defaultEndDate = endDate ?? DateTime(DateTime.now().year + 2);
-    this.selectedSubcategoryIds = this.defaultSelectedCategoryIds =
-        selectedCategoryIds ?? categoryIdToSubcategoryIds.keys.toList();
+        defaultEndDate = endDate ?? DateTime(DateTime.now().year + 2);
   }
 
   ////////////////
@@ -41,6 +38,24 @@ class SearchNotifier extends ChangeNotifier {
   bool isSubcategorySelected(String subcategoryId) {
     return selectedSubcategoryIds.contains(subcategoryId);
   }
+
+  static const int numberOfCategoriesPerRow = 2;
+  int? _expandedListItemIndex;
+
+  //TODO seems to be unused
+  bool isModalBottomMode = false;
+
+  void setExpanded({
+    required int? index,
+    required String? categoryId,
+  }) {
+    _expandedListItemIndex = index;
+    notifyListeners();
+  }
+
+  int? get getExpandedIndex => _expandedListItemIndex;
+
+  bool get getIsModalBottomMode => isModalBottomMode;
 
   ////////////
 
@@ -66,8 +81,8 @@ class SearchNotifier extends ChangeNotifier {
   late SortCriteria? sortCriteria;
   late EAType? eAType;
 
-  late List<String> selectedSubcategoryIds;
-  late List<String> defaultSelectedCategoryIds;
+  late List<String> selectedSubcategoryIds = [];
+  late List<String> defaultSelectedCategoryIds = [];
 
   // show more page related
   late String showMoreCaption;

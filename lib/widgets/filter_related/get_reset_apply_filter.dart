@@ -40,17 +40,18 @@ Widget getShowResultsButton(
         ),
       ),
       Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0)))),
-              child: Text(AppLocalizations.of(context)!.showResults),
-              onPressed: () {
-                Function.apply(functionAccept, [], functionArgumentsAccept);
-                if (closeDialog) Get.back();
-              })),
+        flex: 1,
+        child: ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0)))),
+            child: Text(AppLocalizations.of(context)!.showResults),
+            onPressed: () {
+              Function.apply(functionAccept, [], functionArgumentsAccept);
+              if (closeDialog) Get.back();
+            }),
+      ),
     ],
   );
 }

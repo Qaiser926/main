@@ -7,7 +7,6 @@ import '../../constants/categories.dart';
 import '../filter_related/search_notifier.dart';
 import 'exclusives/category_grid_item.dart';
 import 'exclusives/expanded_widget.dart';
-import 'exclusives/notifier.dart';
 
 Future<dynamic> CategoryFilterDialog({required BuildContext context}) {
   var test = Provider.of<SearchNotifier>(context, listen: false);
@@ -84,18 +83,10 @@ class CategoryFilterState extends State<CategoryFilter>
     }
     return Container(
       padding: CategoryFilter.gridItemPadding,
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: ExpandedCategoryNotifier(
-                isModalBottomMode: widget.isModalBottomSheetMode),
-          )
-        ],
-        child: CustomScrollView(
-            // controller: widget._scrollController,
-            cacheExtent: double.maxFinite,
-            slivers: sliverList),
-      ),
+      child: CustomScrollView(
+          // controller: widget._scrollController,
+          cacheExtent: double.maxFinite,
+          slivers: sliverList),
     );
   }
 

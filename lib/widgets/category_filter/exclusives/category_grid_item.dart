@@ -5,7 +5,6 @@ import '../../../constants/app_constants.dart';
 import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
 import '../../filter_related/search_notifier.dart';
-import 'notifier.dart';
 
 Widget getCategoryGridItem(
     {required int index, required bool isModalBottomSheetMode}) {
@@ -100,7 +99,7 @@ class CategoryGridItem extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Consumer<ExpandedCategoryNotifier>(
+                        Consumer<SearchNotifier>(
                             builder: (context, model, child) {
                           return model.getExpandedIndex == index
                               ? const Icon(Icons.expand_less_outlined)
@@ -113,8 +112,7 @@ class CategoryGridItem extends StatelessWidget {
               ],
             ),
             IgnorePointer(
-              child: Consumer<ExpandedCategoryNotifier>(
-                  builder: (context, model, child) {
+              child: Consumer<SearchNotifier>(builder: (context, model, child) {
                 return model.getExpandedIndex == index
                     ? Container(
                         decoration: BoxDecoration(
@@ -131,8 +129,8 @@ class CategoryGridItem extends StatelessWidget {
   }
 
   void onLowerAreaTapped(BuildContext context) {
-    ExpandedCategoryNotifier categoryProvider =
-        Provider.of<ExpandedCategoryNotifier>(context, listen: false);
+    SearchNotifier categoryProvider =
+        Provider.of<SearchNotifier>(context, listen: false);
     if (categoryProvider.getExpandedIndex == index) {
       categoryProvider.setExpanded(index: null, categoryId: null);
     } else {
