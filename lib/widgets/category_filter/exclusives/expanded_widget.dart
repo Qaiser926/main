@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/widgets/category_filter/exclusives/selected_subcategory_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/categories.dart';
@@ -18,13 +17,13 @@ class ExpandedWidget extends StatelessWidget {
   static const double bottomRowHeight = 20;
   static const int animationTime = 200;
   static const double borderRadius = 23;
-  final int index;
+  final int categoryIndex;
 
   ExpandedWidget({
-    required this.index,
+    required this.categoryIndex,
   }) : subcategoryIds = categoryIdToSubcategoryIds
-                .containsKey(Categories.categoryIds[index])
-            ? categoryIdToSubcategoryIds[Categories.categoryIds[index]]!
+                .containsKey(Categories.categoryIds[categoryIndex])
+            ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
             : [];
 
   @override
@@ -35,61 +34,53 @@ class ExpandedWidget extends StatelessWidget {
         bottomRowHeight;
 
     return Consumer<ExpandedCategoryNotifier>(builder: (context, model, child) {
-      bool expanded = model.getExpandedIndex == index;
+      bool expanded = model.getExpandedIndex == categoryIndex;
       bool isModalBottomMode = model.isModalBottomMode;
       if (subcategoryIds.isNotEmpty) {
-        return MultiProvider(
-            // key: key,
-            providers: [
-              ChangeNotifierProvider.value(
-                value:
-                    SelectedSubcategoryNotifier(subcategoryIds: subcategoryIds),
-              )
-            ],
-            child: AnimatedContainer(
-              margin: expanded ? const EdgeInsets.only(top: 10) : null,
-              duration: const Duration(milliseconds: animationTime),
-              width: expanded ? 600 : 0,
-              // height: expanded ? secHei : 0,
-              child: expanded
-                  ? Container(
-                      decoration: BoxDecoration(
-                        color: listItemColor,
-                        borderRadius: BorderRadius.circular(borderRadius),
+        return AnimatedContainer(
+          margin: expanded ? const EdgeInsets.only(top: 10) : null,
+          duration: const Duration(milliseconds: animationTime),
+          width: expanded ? 600 : 0,
+          // height: expanded ? secHei : 0,
+          child: expanded
+              ? Container(
+                  decoration: BoxDecoration(
+                    color: listItemColor,
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                  child: Consumer<SearchNotifier>(
+                      builder: (context, model, child) {
+                    return Container(
+                      margin: EdgeInsets.only(
+                        bottom: containerMarginBottom,
+                        top: containerMarginTop,
+                        left: 10.h,
+                        right: 10.h,
                       ),
-                      child: Consumer<SelectedSubcategoryNotifier>(
-                          builder: (context, model, child) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                            bottom: containerMarginBottom,
-                            top: containerMarginTop,
-                            left: 10.h,
-                            right: 10.h,
-                          ),
-                          child: Column(
-                            children: getSubcategoryExpandableContent(
-                                context, model, isModalBottomMode),
-                          ),
-                        );
-                      }),
-                    )
-                  : const SizedBox.shrink(),
-            ));
+                      child: Column(
+                        children: getSubcategoryExpandableContent(
+                            context, model, isModalBottomMode),
+                      ),
+                    );
+                  }),
+                )
+              : const SizedBox.shrink(),
+        );
       } else {
         //TODO
-        return const Text("Es ist ein unerwartet Fehler aufgetreten");
+        return const Text("Es ist ein unerwarteter Fehler aufgetreten");
       }
     });
   }
 
   List<Widget> getSubcategoryExpandableContent(BuildContext context,
-      SelectedSubcategoryNotifier model, bool isModalBottomMode) {
+      SearchNotifier searchNotifier, bool isModalBottomMode) {
     List<Widget> result = [];
-    result.add(getSubcategoryTextButtons(context, model));
+    result.add(getSubcategoryTextButtons(context));
     result.add(const SizedBox(
       height: 12,
     ));
-    var list = model.selectedSubcategoryIds;
+    var selectedSubcategoryIds = searchNotifier.getSelectedSubcategoryIds;
     result.add(
       Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -97,10 +88,12 @@ class ExpandedWidget extends StatelessWidget {
             context: context,
             functionAccept: Provider.of<SearchNotifier>(context, listen: false)
                 .changeCategoryIdList,
-            functionArgumentsAccept: {#selectedCategoryIds: list},
+            functionArgumentsAccept: {
+              #selectedCategoryIds: selectedSubcategoryIds
+            },
             closeDialog: isModalBottomMode,
             functionReset: Provider.of<SearchNotifier>(context, listen: false)
-                .resetCategoryList,
+                .resetSubcategoryList,
             functionArgumentsReset: {#context: context}),
       ),
       // ),
@@ -109,63 +102,52 @@ class ExpandedWidget extends StatelessWidget {
     return result;
   }
 
-  Widget getSubcategoryTextButtons(
-      BuildContext context, SelectedSubcategoryNotifier model) {
-    return Consumer<SelectedSubcategoryNotifier>(
-        builder: (context, selectedSubcategoryNotifier, child) {
-      Provider.of<SearchNotifier>(context, listen: false)
-          .setCategoryIdList(selectedCategoryIds: model.selectedSubcategoryIds);
-      return Consumer<SearchNotifier>(
-          builder: (context, searchNotifier, child) {
-        Provider.of<SelectedSubcategoryNotifier>(context, listen: false)
-            .alignNotifierStati(
-                selectedCategoryIds: searchNotifier.selectedCategoryIds);
-
-        return Wrap(
-          crossAxisAlignment: WrapCrossAlignment.start,
-          alignment: WrapAlignment.start,
-          children: List<Widget>.generate(
-            subcategoryIds.length,
-            (index) => SizedBox(
-              height: singleExpandedHeight,
-              // width: singleExpandedWidth,
-              child: GestureDetector(
-                // behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  var categoryProvider =
-                      Provider.of<SelectedSubcategoryNotifier>(context,
-                          listen: false);
-                  categoryProvider.switchSelectedSubcategory(index);
-                },
-                child: Container(
-                  height: singleExpandedHeight - 8,
-                  padding: const EdgeInsets.all(4),
-                  margin: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    border: selectedSubcategoryNotifier.isSelected(index)
-                        ? Border.all(color: primaryColor, width: 2.5)
-                        : Border.all(color: bgColor, width: 2.5),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  transformAlignment: Alignment.center,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            CategoryIdToI18nMapper.getCategoryName(
-                                context, subcategoryIds[index]),
-                          ),
-                        ),
-                      ]),
+  Widget getSubcategoryTextButtons(BuildContext context) {
+    return Consumer<SearchNotifier>(builder: (context, model, child) {
+      return Wrap(
+        crossAxisAlignment: WrapCrossAlignment.start,
+        alignment: WrapAlignment.start,
+        children: List<Widget>.generate(
+          subcategoryIds.length,
+          (subcategoryIndex) => SizedBox(
+            height: singleExpandedHeight,
+            // width: singleExpandedWidth,
+            child: GestureDetector(
+              // behavior: HitTestBehavior.translucent,
+              onTap: () {
+                Provider.of<SearchNotifier>(context, listen: false)
+                    .switchSelectedSubcategory(
+                        subcategoryIds[subcategoryIndex]);
+              },
+              child: Container(
+                height: singleExpandedHeight - 8,
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  border: model.isSubcategorySelected(
+                          subcategoryIds[subcategoryIndex])
+                      ? Border.all(color: primaryColor, width: 2.5)
+                      : Border.all(color: bgColor, width: 2.5),
+                  borderRadius: BorderRadius.circular(18),
                 ),
+                transformAlignment: Alignment.center,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          CategoryIdToI18nMapper.getCategorySubcategoryName(
+                              context, subcategoryIds[subcategoryIndex]),
+                        ),
+                      ),
+                    ]),
               ),
             ),
           ),
-        );
-      });
+        ),
+      );
     });
   }
 }

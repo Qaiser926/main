@@ -44,7 +44,8 @@ class SearchScrollView extends StatelessWidget {
           if (index == 0) showDivider = false;
           return BaseDiscoveryClass(
             Ids: searchResultIds.searchResultIds[key]!,
-            caption: CategoryIdToI18nMapper.getCategoryName(context, key),
+            caption:
+                CategoryIdToI18nMapper.getCategorySubcategoryName(context, key),
             showDivider: showDivider,
           );
         });
@@ -56,7 +57,8 @@ class SearchScrollView extends StatelessWidget {
     for (MapEntry<String, List> item
         in searchResultIds.searchResultIds.entries) {
       slivers.add(getSearchResultSliverSection(
-          headerText: CategoryIdToI18nMapper.getCategoryName(context, item.key),
+          headerText: CategoryIdToI18nMapper.getCategorySubcategoryName(
+              context, item.key),
           Ids: item.value));
     }
 

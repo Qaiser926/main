@@ -58,7 +58,7 @@ class CategoryFilterState extends State<CategoryFilter>
 
   CategoryFilterState({required BuildContext context}) {
     selectedCategoryIds = Provider.of<SearchNotifier>(context, listen: false)
-        .getSelectedCategoryIds;
+        .getSelectedSubcategoryIds;
   }
 
   @override
@@ -126,10 +126,10 @@ List<Widget> getCategoryGrid({required bool isModalBottomSheetMode}) {
       ],
     ));
     categoryGrid.add(ExpandedWidget(
-      index: index,
+      categoryIndex: index,
     ));
     categoryGrid.add(ExpandedWidget(
-      index: index + 1,
+      categoryIndex: index + 1,
     ));
     categoryGrid.add(const SizedBox(
       height: CategoryFilter.gridItemDistance,
@@ -146,12 +146,12 @@ String getCategoryCaption(
         caption: searchNotifier.showMoreCategoryTitle,
         cutOff: NavigatorConstants.CategoryNameCutOff);
   }
-  List<String> categoryIds = searchNotifier.getSelectedCategoryIds;
-  if (categoryIds.length == 0) {
+  List<String> subcategoryIds = searchNotifier.getSelectedSubcategoryIds;
+  if (subcategoryIds.length == 0) {
     return AppLocalizations.of(context)!.category;
-  } else if (categoryIds.length == 1) {
-    String tempCategory =
-        CategoryIdToI18nMapper.getCategoryName(context, categoryIds[0]);
+  } else if (subcategoryIds.length == 1) {
+    String tempCategory = CategoryIdToI18nMapper.getCategorySubcategoryName(
+        context, subcategoryIds[0]);
     return getShortCaption(
         caption: tempCategory, cutOff: NavigatorConstants.CategoryNameCutOff);
   } else {
@@ -160,9 +160,9 @@ String getCategoryCaption(
     String caption = "";
     for (MapEntry<String, List<String>> item
         in categorySubcategoryMap.entries) {
-      if (item.value.contains(categoryIds[0])) {
-        String tempCategory =
-            CategoryIdToI18nMapper.getCategoryName(context, item.key);
+      if (item.value.contains(subcategoryIds[0])) {
+        String tempCategory = CategoryIdToI18nMapper.getCategorySubcategoryName(
+            context, item.key);
         return getShortCaption(
             cutOff: NavigatorConstants.CategoryNameCutOff,
             caption: tempCategory);

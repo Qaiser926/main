@@ -7,9 +7,8 @@ import '../../../constants/colors.dart';
 import '../../filter_related/search_notifier.dart';
 import 'notifier.dart';
 
-Widget getCategoryGridItem({
-  required int index,
-  required bool isModalBottomSheetMode}) {
+Widget getCategoryGridItem(
+    {required int index, required bool isModalBottomSheetMode}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
@@ -42,7 +41,8 @@ class CategoryGridItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Provider.of<SearchNotifier>(context, listen: false)
-            .changeCategoryIdList(selectedCategoryIds: [categoryId]);
+            .changeCategoryIdList(
+                selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
         if (isModalBottomSheetMode) {
           Navigator.of(context, rootNavigator: true).pop();
         }
@@ -93,7 +93,7 @@ class CategoryGridItem extends StatelessWidget {
                         SizedBox(
                           width: WidgetConstants.categoryGridItemTextWidth,
                           child: Text(
-                            CategoryIdToI18nMapper.getCategoryName(
+                            CategoryIdToI18nMapper.getCategorySubcategoryName(
                                 context, categoryId),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

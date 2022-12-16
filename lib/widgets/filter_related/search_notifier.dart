@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:othia/widgets/category_filter/exclusives/selected_subcategory_notifier.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
 import '../../constants/categories.dart';
@@ -13,11 +11,74 @@ class SearchNotifier extends ChangeNotifier {
   bool isControllerSet = false;
   final PageController _pageController;
 
+  SearchNotifier(
+      {priceRange = const RangeValues(
+          NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
+      startDate,
+      endDate,
+      this.sortCriteria = null,
+      this.eAType = EAType.eventsActivites,
+      selectedCategoryIds,
+      required PageController pageController})
+      : _pageController = pageController {
+    this.priceRange = this.defaultPriceRange = priceRange;
+    this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
+    this.endDate =
+        this.defaultEndDate = endDate ?? DateTime(DateTime.now().year + 2);
+    this.selectedSubcategoryIds = this.defaultSelectedCategoryIds =
+        selectedCategoryIds ?? categoryIdToSubcategoryIds.keys.toList();
+  }
+
+  ////////////////
+
+  void switchSelectedSubcategory(String subcategoryId) {
+    isSubcategorySelected(subcategoryId)
+        ? selectedSubcategoryIds.remove(subcategoryId)
+        : selectedSubcategoryIds.add(subcategoryId);
+    notifyListeners();
+  }
+
+  bool isSubcategorySelected(String subcategoryId) {
+    return selectedSubcategoryIds.contains(subcategoryId);
+  }
+
+  ////////////
+
+  int currentIndex = 0;
+
+  // Search query related
+  bool priceFilterActivated = false;
+  bool timeFilterActivated = false;
+  bool sortFilterActivated = false;
+  bool typeFilterActivated = false;
+  bool categoryFilterActivated = false;
+
+  // keep below like it is!
+  late String? timeCaption = null;
+  late RangeValues defaultPriceRange;
+  late RangeValues priceRange;
+
+  late DateTime startDate;
+  late DateTime defaultStartDate;
+  late DateTime endDate;
+  late DateTime defaultEndDate;
+
+  late SortCriteria? sortCriteria;
+  late EAType? eAType;
+
+  late List<String> selectedSubcategoryIds;
+  late List<String> defaultSelectedCategoryIds;
+
+  // show more page related
+  late String showMoreCaption;
+  late List<String?> showMoreIds;
+  late String showMoreCategoryTitle;
+  bool priceReset = false;
+  bool dateReset = false;
+
   PageController getPageController() {
     return _pageController;
   }
-
-  int currentIndex = 0;
 
   set setIndex(int newPage) {
     currentIndex = newPage;
@@ -47,29 +108,6 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Search query related
-  bool priceFilterActivated = false;
-  bool timeFilterActivated = false;
-  bool sortFilterActivated = false;
-  bool typeFilterActivated = false;
-  bool categoryFilterActivated = false;
-
-  // keep below like it is!
-  late String? timeCaption = null;
-  late RangeValues defaultPriceRange;
-  late RangeValues priceRange;
-
-  late DateTime startDate;
-  late DateTime defaultStartDate;
-  late DateTime endDate;
-  late DateTime defaultEndDate;
-
-  late SortCriteria? sortCriteria;
-  late EAType? eAType;
-
-  late List<String> selectedCategoryIds;
-  late List<String> defalutSelectedCategoryIds;
-
   void backToDefault() {
     priceRange = defaultPriceRange;
     eAType = EAType.eventsActivites;
@@ -77,7 +115,7 @@ class SearchNotifier extends ChangeNotifier {
     endDate = defaultEndDate;
     priceRange = defaultPriceRange;
     sortCriteria = null;
-    selectedCategoryIds = defalutSelectedCategoryIds;
+    selectedSubcategoryIds = defaultSelectedCategoryIds;
     timeCaption = null;
     priceFilterActivated = false;
     timeFilterActivated = false;
@@ -85,24 +123,6 @@ class SearchNotifier extends ChangeNotifier {
     typeFilterActivated = false;
     categoryFilterActivated = false;
     notifyListeners();
-  }
-
-  SearchNotifier(
-      {priceRange = const RangeValues(
-          NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
-      startDate,
-      endDate,
-      this.sortCriteria = null,
-      this.eAType = EAType.eventsActivites,
-      selectedCategoryIds,
-      required PageController pageController})
-      : _pageController = pageController {
-    this.priceRange = this.defaultPriceRange = priceRange;
-    this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
-    this.endDate =
-        this.defaultEndDate = endDate ?? DateTime(DateTime.now().year + 2);
-    this.selectedCategoryIds = this.defalutSelectedCategoryIds =
-        selectedCategoryIds ?? categoryIdToSubcategoryIds.keys.toList();
   }
 
   RangeValues get getPriceRange => priceRange;
@@ -117,12 +137,7 @@ class SearchNotifier extends ChangeNotifier {
 
   EAType? get getEAType => eAType;
 
-  List<String> get getSelectedCategoryIds => selectedCategoryIds;
-
-  // show more page related
-  late String showMoreCaption;
-  late List<String?> showMoreIds;
-  late String showMoreCategoryTitle;
+  List<String> get getSelectedSubcategoryIds => selectedSubcategoryIds;
 
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
@@ -130,8 +145,6 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
     goToResultPage();
   }
-
-  bool priceReset = false;
 
   void setPriceResetFalse() {
     priceReset = false;
@@ -144,8 +157,6 @@ class SearchNotifier extends ChangeNotifier {
 
     notifyListeners();
   }
-
-  bool dateReset = false;
 
   void setDateResetFalse() {
     dateReset = false;
@@ -215,23 +226,15 @@ class SearchNotifier extends ChangeNotifier {
     goToResultPage();
   }
 
-  void resetCategoryList({required BuildContext context}) {
+  void resetSubcategoryList({required BuildContext context}) {
     categoryFilterActivated = false;
-    this.selectedCategoryIds = [];
-    Provider.of<SelectedSubcategoryNotifier>(context, listen: false)
-        .resetSelectedSubcategories();
-    notifyListeners();
-  }
-
-  void setCategoryIdList({required List<String> selectedCategoryIds}) {
-    categoryFilterActivated = true;
-    this.selectedCategoryIds = selectedCategoryIds;
+    this.selectedSubcategoryIds = [];
     notifyListeners();
   }
 
   void changeCategoryIdList({required List<String> selectedCategoryIds}) {
     categoryFilterActivated = true;
-    this.selectedCategoryIds = selectedCategoryIds;
+    this.selectedSubcategoryIds = selectedCategoryIds;
     notifyListeners();
     goToResultPage();
   }
@@ -251,7 +254,7 @@ class SearchNotifier extends ChangeNotifier {
         minPrice: priceRange.start,
         maxPrice: priceRange.end,
         sortCriteria: sortCriteria,
-        selectedCategoryIds: selectedCategoryIds,
+        selectedCategoryIds: selectedSubcategoryIds,
         eAType: eAType);
   }
 }
