@@ -1,11 +1,8 @@
-import 'dart:convert';
-
-import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
-import '../../widgets/splash_screen.dart';
+import '../../utils/ui/future_service.dart';
 import 'exclusive_widgets/app_bar.dart';
 import 'exclusive_widgets/favourite_scroll_view.dart';
 
@@ -55,32 +52,25 @@ class _FavouritePageState extends State<FavouritePage>
         body: FutureBuilder(
             future: future,
             builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const SplashScreen();
-              } else {
-                if (snapshot.hasError) {
-                  throw Exception(snapshot.error);
-                } else {
-                  RestResponse data = snapshot.data as RestResponse;
+              return snapshotHandler(snapshot, futureFulfilledWidget, []);
+            }),
+      ),
+      // ),
+    );
+  }
 
-                  String body = """{
+  Widget futureFulfilledWidget(Map<String, dynamic> json) {
+    String body = """{
               "futureEvents": {},
               "pastEvents":{},
               "openActivities":{},
               "closedActivities":{}
               }""";
-                  Map<String, dynamic> json = jsonDecode(data.body);
-                  FavouriteEventsAndActivities favouriteEventAndActivity =
-                      FavouriteEventsAndActivities.fromJson(json);
-                  return FavouriteScrollView(
-                    tabController: _tabController,
-                    favouriteEventAndActivity: favouriteEventAndActivity,
-                  );
-                }
-              }
-            }),
-      ),
-      // ),
+    FavouriteEventsAndActivities favouriteEventAndActivity =
+        FavouriteEventsAndActivities.fromJson(json);
+    return FavouriteScrollView(
+      tabController: _tabController,
+      favouriteEventAndActivity: favouriteEventAndActivity,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:add_2_calendar/src/model/event.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +59,7 @@ class _EventDetailState extends State<EventDetail> {
   Widget getContent(Map<String, dynamic> decodedJson) {
     DetailedEventOrActivity detailedEventOrActivity =
         DetailedEventOrActivity.fromJson(decodedJson);
-    var iCalElement = null;
+    Event? iCalElement;
     if (detailedEventOrActivity.time.startTimeUtc != null) {
       iCalElement = getIcalElement(
         startTimeUtc: detailedEventOrActivity.time.startTimeUtc!,
@@ -106,7 +107,7 @@ class _EventDetailState extends State<EventDetail> {
                         if (detailedEventOrActivity.description != null)
                           DescriptionWidget(
                               description:
-                                  detailedEventOrActivity.description!),
+                              detailedEventOrActivity.description!),
                         if (!detailedEventOrActivity.isOnline)
                           SimpleMap(latLng.LatLng(
                               detailedEventOrActivity.location.latitude!,
@@ -114,7 +115,7 @@ class _EventDetailState extends State<EventDetail> {
                         if (detailedEventOrActivity.time.openingTime != null)
                           OpeningTimesSection(
                               openingTime:
-                                  detailedEventOrActivity.time.openingTime!),
+                              detailedEventOrActivity.time.openingTime!),
 
                         // TODO include share url + decide where to integrate
                         ButtonWidget(
@@ -126,13 +127,13 @@ class _EventDetailState extends State<EventDetail> {
                         if (detailedEventOrActivity.eventSeriesId != null)
                           ExploreEventSeries(
                               eventSeriesId:
-                                  detailedEventOrActivity.eventSeriesId!),
+                              detailedEventOrActivity.eventSeriesId!),
                         ExploreCategory(
                             categoryId: detailedEventOrActivity.categoryId),
                         if (detailedEventOrActivity.location.locationId != null)
                           ExploreLocation(
                               locationId:
-                                  detailedEventOrActivity.location.locationId!),
+                              detailedEventOrActivity.location.locationId!),
                       ],
                     ),
 

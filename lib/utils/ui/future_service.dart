@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/splash_screen.dart';
-
-const Widget defaultStillLoadingWidget = SplashScreen();
+const Widget defaultStillLoadingWidget = Center(
+  child: CircularProgressIndicator(),
+);
 const Widget defaultErrorWidget = Text("An error accured");
 const Widget defaultDefaultWidget = Text("default");
 
