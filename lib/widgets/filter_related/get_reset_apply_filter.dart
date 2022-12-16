@@ -14,24 +14,28 @@ Widget getShowResultsButton(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Expanded(
-          flex: 1,
-          child: GestureDetector(
-              onTap: () {
-                Provider.of<SearchNotifier>(context, listen: false)
-                    .backToDefault();
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-              child: Container(
-                padding: EdgeInsets.all(12),
-                child: Text(AppLocalizations.of(context)!.clearAll),
-              ))),
+        flex: 1,
+        child: GestureDetector(
+          onTap: () {
+            Provider.of<SearchNotifier>(context, listen: false).backToDefault();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          child: Container(
+            padding: EdgeInsets.all(12),
+            child: Text(AppLocalizations.of(context)!.clearAll),
+          ),
+        ),
+      ),
       Expanded(
         flex: 1,
         child: ElevatedButton(
             style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0)))),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+              ),
+            ),
             child: Text(AppLocalizations.of(context)!.showResults),
             onPressed: () {
               Function.apply(function, [], functionArguments);

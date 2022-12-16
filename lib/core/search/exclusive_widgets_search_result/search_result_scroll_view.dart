@@ -74,7 +74,7 @@ class SearchScrollView extends StatelessWidget {
                   future: eASummary,
                   builder: (context, snapshot) {
                     return snapshotHandler(
-                        snapshot, getFutureFulfilledContet, [context]);
+                        snapshot, getFutureFulfilledContent, [context]);
                   });
             } else {
               return null;
@@ -85,7 +85,7 @@ class SearchScrollView extends StatelessWidget {
     }
   }
 
-  Widget getFutureFulfilledContet(
+  Widget getFutureFulfilledContent(
       Map<String, dynamic> decodedJson, BuildContext context) {
     SummaryEventOrActivity eASummary =
         SummaryEventOrActivity.fromJson(decodedJson);

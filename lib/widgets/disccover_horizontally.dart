@@ -4,8 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
+import '../modules/models/eA_summary/eA_summary.dart';
 import '../utils/services/data_handling/keep_alive_future_builder.dart';
+import '../utils/ui/future_service.dart';
 import '../utils/ui/ui_utils.dart';
+import 'discovery_card.dart';
 
 class BaseDiscoveryClass extends StatelessWidget {
   final List<String?> Ids;
@@ -101,17 +104,19 @@ class HorizontalEADiscovery extends StatelessWidget {
               return KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                    return Text("dfdf");
-
-                    // Map<String, dynamic> decodedJson =
-                    //     snapshotHandler(snapshot);
-                    // SummaryEventOrActivity eASummary =
-                    //     SummaryEventOrActivity.fromJson(decodedJson);
-                    // return EASummaryCard(
-                    //   eASummary: eASummary,
-                    //   index: index,
-                    // );
+                    return snapshotHandler(
+                        snapshot, getFutureFulfilledContent, [index]);
                   });
             }));
+  }
+
+  Widget getFutureFulfilledContent(
+      int index, Map<String, dynamic> decodedJson) {
+    SummaryEventOrActivity eASummary =
+        SummaryEventOrActivity.fromJson(decodedJson);
+    return EASummaryCard(
+      eASummary: eASummary,
+      index: index,
+    );
   }
 }
