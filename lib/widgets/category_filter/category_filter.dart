@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/categories.dart';
@@ -137,15 +138,22 @@ List<Widget> getCategoryGrid({required bool isModalBottomSheetMode}) {
   return categoryGrid;
 }
 
-String getCategoryCaption({required BuildContext context}) {
-  List<String> categoryIds = Provider.of<SearchNotifier>(context, listen: false)
-      .getSelectedCategoryIds;
+String getCategoryCaption(
+    {required BuildContext context, required SearchNotifier searchNotifier}) {
+  // special case if one page "Show More"
+  if (searchNotifier.currentIndex == NavigatorConstants.ShowMorePageIndex) {
+    return getShortCaption(
+        caption: searchNotifier.showMoreCategoryTitle,
+        cutOff: NavigatorConstants.CategoryNameCutOff);
+  }
+  List<String> categoryIds = searchNotifier.getSelectedCategoryIds;
   if (categoryIds.length == 0) {
     return AppLocalizations.of(context)!.category;
   } else if (categoryIds.length == 1) {
     String tempCategory =
-    CategoryIdToI18nMapper.getCategoryName(context, categoryIds[0]);
-    return getShortCaption(caption: tempCategory, cutOff: 20);
+        CategoryIdToI18nMapper.getCategoryName(context, categoryIds[0]);
+    return getShortCaption(
+        caption: tempCategory, cutOff: NavigatorConstants.CategoryNameCutOff);
   } else {
     Map<String, List<String>> categorySubcategoryMap =
         categoryIdToSubcategoryIds;
@@ -154,8 +162,10 @@ String getCategoryCaption({required BuildContext context}) {
         in categorySubcategoryMap.entries) {
       if (item.value.contains(categoryIds[0])) {
         String tempCategory =
-        CategoryIdToI18nMapper.getCategoryName(context, item.key);
-        return getShortCaption(cutOff: 20, caption: tempCategory);
+            CategoryIdToI18nMapper.getCategoryName(context, item.key);
+        return getShortCaption(
+            cutOff: NavigatorConstants.CategoryNameCutOff,
+            caption: tempCategory);
       }
     }
     return AppLocalizations.of(context)!.category;

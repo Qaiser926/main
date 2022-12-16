@@ -17,21 +17,9 @@ class SearchNotifier extends ChangeNotifier {
 
   int currentIndex = 0;
 
-  int int1 = 1;
-  int int2 = 2;
-
   set setIndex(int newPage) {
     currentIndex = newPage;
     _pageController.jumpToPage(currentIndex);
-  }
-
-  set setInt1(int foo) {
-    int1 = foo;
-    notifyListeners();
-  }
-
-  set setInt2(int bar) {
-    int2 = bar;
     notifyListeners();
   }
 
@@ -96,6 +84,23 @@ class SearchNotifier extends ChangeNotifier {
   void goToResultPage() {
     currentIndex = NavigatorConstants.ResultPageIndex;
     _pageController.jumpToPage(currentIndex);
+  }
+
+  late String showMoreCaption;
+  late List<String?> showMoreIds;
+
+  late String showMoreCategoryTitle;
+
+  void goToShowMorePage(
+      {required String showMoreCaption,
+      required List<String?> showMoreIds,
+      required String showMoreCategoryTitle}) {
+    currentIndex = NavigatorConstants.ShowMorePageIndex;
+    _pageController.jumpToPage(currentIndex);
+    this.showMoreCaption = showMoreCaption;
+    this.showMoreIds = showMoreIds;
+    this.showMoreCategoryTitle = showMoreCategoryTitle;
+    notifyListeners();
   }
 
   void changeCategoryIdList({required List<String> selectedCategoryIds}) {

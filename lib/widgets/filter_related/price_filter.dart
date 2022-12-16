@@ -160,11 +160,10 @@ Widget getPriceBox(
 }
 
 
-String getPriceCaption({required BuildContext context}) {
-  if (Provider.of<SearchNotifier>(context, listen: false)
-      .priceFilterActivated){
-    RangeValues range =
-        Provider.of<SearchNotifier>(context, listen: false).getPriceRange;
+String getPriceCaption(
+    {required BuildContext context, required SearchNotifier searchNotifier}) {
+  if (searchNotifier.priceFilterActivated) {
+    RangeValues range = searchNotifier.getPriceRange;
     if (range.start == range.end) {
       if (range.start == 0) {
         return AppLocalizations.of(context)!.free;

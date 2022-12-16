@@ -15,28 +15,31 @@ import '../../utils/ui/ui_utils.dart';
 import '../category_filter/category_filter.dart';
 import 'search_notifier.dart';
 
-Container buildDropdownBar({required BuildContext context}) {
+Consumer<dynamic> buildDropdownBar({required BuildContext context}) {
   // var test = Provider.of<SearchNotifier>(context, listen: false);
   // test.activateShowSearchResults();
-  final List<Widget> filters = getFilters(context: context);
-  return Container(
-    alignment: Alignment.centerLeft,
-    child: SizedBox(
-      height: 35.h,
-      // disable color scheme
-      child: Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-          child: ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: filters.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return filters[index];
-            },
-          ),
-        )),
-  );
+
+  return Consumer<SearchNotifier>(builder: (context, model, child) {
+    final List<Widget> filters =
+        getFilters(context: context, searchNotifier: model);
+    return Container(
+        alignment: Alignment.centerLeft,
+        child: SizedBox(
+            height: 35.h,
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                itemCount: filters.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return filters[index];
+                },
+              ),
+            )));
+  });
 }
 
 Widget getFilter(
@@ -82,15 +85,16 @@ Widget getFilter(
   );
 }
 
-List<Widget> getFilters({required BuildContext context}) {
+List<Widget> getFilters(
+    {required BuildContext context, required SearchNotifier searchNotifier}) {
   List<Widget> filter = [
     // index has only effect if it is zero --> all others just 1
     getFilter(
         context: context,
         index: 1,
-        caption: getPriceCaption(context: context),
-        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-            .priceFilterActivated,
+        caption:
+            getPriceCaption(context: context, searchNotifier: searchNotifier),
+        coloredBorder: searchNotifier.priceFilterActivated,
         onTapFunction: () {
           return priceFilterDialog(context: context);
         }),
@@ -98,8 +102,7 @@ List<Widget> getFilters({required BuildContext context}) {
         context: context,
         index: 1,
         caption: getTypeCaption(context: context),
-        coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-            .typeFilterActivated,
+        coloredBorder: searchNotifier.typeFilterActivated,
         onTapFunction: () => typeFilterDialog(context: context)),
     // getFilter(
     //     context: context,
@@ -109,15 +112,14 @@ List<Widget> getFilters({required BuildContext context}) {
     //     onTapFunction: () => print("addFilter")),
   ];
   // only add category if not in start screen
-  if (Provider.of<SearchNotifier>(context, listen: false).showCategoryFilter) {
+  if (searchNotifier.showCategoryFilter) {
     filter.insert(
       0,
       getFilter(
           context: context,
           index: 1,
           caption: getTimeCaption(context: context),
-          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-              .timeFilterActivated,
+          coloredBorder: searchNotifier.timeFilterActivated,
           onTapFunction: () {
             return TimeFilterDialog(context: context);
           }),
@@ -128,9 +130,9 @@ List<Widget> getFilters({required BuildContext context}) {
           context: context,
           // TODO implement caption and colored Border
           index: 1,
-          caption: getCategoryCaption(context: context),
-          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-              .categoryFilterActivated,
+          caption: getCategoryCaption(
+              context: context, searchNotifier: searchNotifier),
+          coloredBorder: searchNotifier.categoryFilterActivated,
           onTapFunction: () {
             return CategoryFilterDialog(context: context);
           }),
@@ -140,8 +142,7 @@ List<Widget> getFilters({required BuildContext context}) {
           context: context,
           index: 1,
           caption: getSortCaption(context: context),
-          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-              .sortFilterActivated,
+          coloredBorder: searchNotifier.sortFilterActivated,
           onTapFunction: () => sortFilterDialog(context: context)),
     );
   } else {
@@ -151,15 +152,13 @@ List<Widget> getFilters({required BuildContext context}) {
           context: context,
           index: 1,
           caption: getTimeCaption(context: context),
-          coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
-              .timeFilterActivated,
+          coloredBorder: searchNotifier.timeFilterActivated,
           onTapFunction: () {
             return TimeFilterDialog(context: context);
           }),
     );
   }
-  if (Provider.of<SearchNotifier>(context, listen: false)
-      .anyFilterActivated()) {
+  if (searchNotifier.anyFilterActivated()) {
     filter.insert(
       0,
       getFilter(

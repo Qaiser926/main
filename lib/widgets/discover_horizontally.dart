@@ -7,8 +7,6 @@ import 'package:othia/widgets/filter_related/search_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
-import '../config/routes/routes.dart';
-import '../constants/app_constants.dart';
 import '../modules/models/eA_summary/eA_summary.dart';
 import '../utils/services/data_handling/keep_alive_future_builder.dart';
 import '../utils/ui/ui_utils.dart';
@@ -17,6 +15,7 @@ import 'discovery_card.dart';
 class BaseDiscoveryClass extends StatelessWidget {
   final List<String?> Ids;
   final String caption;
+
   bool showDivider;
   bool showMore;
 
@@ -56,15 +55,14 @@ class BaseDiscoveryClass extends StatelessWidget {
                 ),
                 if (showMore & Ids.isNotEmpty)
                   TextButton(
-                      onPressed: () => NavigatorConstants
-                              .sendToNext(Routes.searchResults, arguments: [
-                            Provider.of<SearchNotifier>(context, listen: false)
-                                .getSearchQuery(),
-                            Provider.of<SearchNotifier>(context, listen: false)
-                                .getFilterState(),
-                            Ids,
-                            caption
-                          ]),
+                      onPressed: () {
+                        Provider.of<SearchNotifier>(context, listen: false)
+                            .goToShowMorePage(
+                          showMoreCaption: caption,
+                          showMoreIds: Ids,
+                          showMoreCategoryTitle: caption,
+                        );
+                      },
                       child: Text(AppLocalizations.of(context)!.showMore))
               ],
             )),

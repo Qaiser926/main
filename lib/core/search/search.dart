@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:othia/core/search/search_pages/initial_search_page.dart';
-import 'package:othia/core/test.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/filter_related/search_notifier.dart';
+import 'search_pages/search_results/search_result_show_more.dart';
+import 'search_pages/search_results/search_results_page.dart';
 
 class SearchPage extends StatefulWidget {
   static final List<Widget> _pages = [
     // TODO insert HOME instead of EventDetail
     InitialSearchPage(),
-    TestPage2()
+    SearchResultsPage(),
+    SearchResultShowMore(),
   ];
 
   SearchPage({super.key});

@@ -7,7 +7,7 @@ import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dar
 import 'package:othia/utils/services/exceptions.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
-import 'package:othia/widgets/disccover_horizontally.dart';
+import 'package:othia/widgets/discover_horizontally.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 class SearchScrollView extends StatelessWidget {
