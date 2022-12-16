@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/search/search.dart';
 import 'package:othia/core/settings/settings.dart';
-import 'package:othia/core/test.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';
@@ -14,8 +13,8 @@ import 'favourites/favourite_screen.dart';
 class MainPage extends StatelessWidget {
   static final List<Widget> _pages = [
     // TODO insert HOME instead of EventDetail
-    TestPageBabo(),
-    const SearchPage(),
+
+    SearchPage(),
     const Add(),
     const FavouritePage(),
     const SettingsPage(),

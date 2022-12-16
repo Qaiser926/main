@@ -9,11 +9,16 @@ class WidgetConstants {
 }
 
 class NavigatorConstants {
+  //TODO might delete
   static const SearchPageIndex = 1;
   static const SearchQueryIndex = 0;
   static const FilterStateIndex = 1;
   static const ResultIdsIndex = 2;
   static const CaptionIndex = 3;
+
+  static const PriceRangeStart = 0.0;
+  static const PriceRangeEnd = 200.0;
+  static const ResultPageIndex = 1;
 
   static backToPrev() {
     Get.back();

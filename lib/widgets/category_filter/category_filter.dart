@@ -60,7 +60,6 @@ class CategoryFilterState extends State<CategoryFilter>
         .getSelectedCategoryIds;
   }
 
-  // TODO make the loading of the pictures faster, e.g. by compressing their size (keep in mind that those picures are also used in the default view as default pictures)
   @override
   Widget build(BuildContext context) {
     super.build(context);

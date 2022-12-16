@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:othia/constants/categories.dart';
+import 'package:othia/core/favourites/exclusive_widgets/favourite_list_item.dart';
+import 'package:othia/modules/models/eA_summary/eA_summary.dart';
+import 'package:othia/modules/models/get_search_results_ids/get_search_result_ids.dart';
+import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/utils/services/exceptions.dart';
+import 'package:othia/utils/services/rest-api/rest_api_service.dart';
+import 'package:othia/utils/ui/future_service.dart';
+import 'package:othia/widgets/disccover_horizontally.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-
-import '../../../constants/categories.dart';
-import '../../../modules/models/eA_summary/eA_summary.dart';
-import '../../../modules/models/get_search_results_ids/get_search_result_ids.dart';
-import '../../../utils/services/data_handling/keep_alive_future_builder.dart';
-import '../../../utils/services/exceptions.dart';
-import '../../../utils/services/rest-api/rest_api_service.dart';
-import '../../../utils/ui/future_service.dart';
-import '../../../widgets/disccover_horizontally.dart';
-import '../../favourites/exclusive_widgets/favourite_list_item.dart';
 
 class SearchScrollView extends StatelessWidget {
   final SearchResultIds searchResultIds;

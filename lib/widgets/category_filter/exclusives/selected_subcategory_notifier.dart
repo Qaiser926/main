@@ -19,7 +19,9 @@ class SelectedSubcategoryNotifier extends ChangeNotifier {
   }
 
   void resetSelectedSubcategories() {
-    _selectedSubcategories = [];
+    _selectedSubcategories =
+        List.filled(_selectedSubcategories.length, false, growable: true);
+    notifyListeners();
   }
 
   List<String> get selectedSubcategoryIds {

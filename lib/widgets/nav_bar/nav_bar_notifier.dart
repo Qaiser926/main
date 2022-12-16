@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-
-import '../../core/test.dart';
+import 'package:othia/widgets/filter_related/search_notifier.dart';
 
 class NavigationBarNotifier extends ChangeNotifier {
   int index = 0;
   final PageController pageController;
 
-  final TestNotifier _testNotifier;
+  final SearchNotifier _searchNotifier;
+
+  //TODO decide if SearchNotifier is initialized here or the fields are non-required
 
   NavigationBarNotifier({required this.pageController})
-      : _testNotifier =
-            TestNotifier(pageController: PageController(initialPage: 0));
+      : _searchNotifier = SearchNotifier(
+          pageController: PageController(initialPage: 0),
+        );
 
   int get getIndex => index;
 
-  TestNotifier get getTestNotifier => _testNotifier;
+  SearchNotifier get getSearchNotifier => _searchNotifier;
 
   void setIndex({required int index, required BuildContext context}) {
     this.index = index;

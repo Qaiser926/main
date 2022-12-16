@@ -5,8 +5,37 @@ import 'package:othia/widgets/filter_related/type_filter.dart';
 
 import '../../config/routes/routes.dart';
 import '../../constants/app_constants.dart';
+import '../../constants/categories.dart';
 
 class SearchNotifier extends ChangeNotifier {
+  bool isControllerSet = false;
+
+  final PageController _pageController;
+
+  PageController getPageController() {
+    return _pageController;
+  }
+
+  int currentIndex = 0;
+
+  int int1 = 1;
+  int int2 = 2;
+
+  set setIndex(int newPage) {
+    currentIndex = newPage;
+    _pageController.jumpToPage(currentIndex);
+  }
+
+  set setInt1(int foo) {
+    int1 = foo;
+    notifyListeners();
+  }
+
+  set setInt2(int bar) {
+    int2 = bar;
+    notifyListeners();
+  }
+
   bool priceFilterActivated = false;
   bool showCategoryFilter = false;
   bool timeFilterActivated = false;
@@ -33,18 +62,21 @@ class SearchNotifier extends ChangeNotifier {
   late PageState pageState;
 
   SearchNotifier(
-      {required priceRange,
+      {priceRange = const RangeValues(0, 200),
       startDate,
-      required endDate,
-      required this.sortCriteria,
-      required this.eAType,
-      required selectedCategoryIds,
-      this.pageState = PageState.searchScreen}) {
+      endDate,
+      this.sortCriteria = null,
+      this.eAType = EAType.eventsActivites,
+      selectedCategoryIds,
+      this.pageState = PageState.searchScreen,
+      required PageController pageController})
+      : _pageController = pageController {
     this.priceRange = this.defaultPriceRange = priceRange;
     this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
-    this.endDate = this.defaultEndDate = endDate;
-    this.selectedCategoryIds =
-        this.defalutSelectedCategoryIds = selectedCategoryIds;
+    this.endDate =
+        this.defaultEndDate = endDate ?? DateTime(DateTime.now().year + 2);
+    this.selectedCategoryIds = this.defalutSelectedCategoryIds =
+        selectedCategoryIds ?? categoryIdToSubcategoryIds.keys.toList();
   }
 
   RangeValues get getPriceRange => priceRange;
@@ -61,14 +93,17 @@ class SearchNotifier extends ChangeNotifier {
 
   List<String> get getSelectedCategoryIds => selectedCategoryIds;
 
+  void goToResultPage() {
+    currentIndex = NavigatorConstants.ResultPageIndex;
+    _pageController.jumpToPage(currentIndex);
+  }
+
   void changeCategoryIdList({required List<String> selectedCategoryIds}) {
     showCategoryFilter = true;
     categoryFilterActivated = true;
     this.selectedCategoryIds = selectedCategoryIds;
     notifyListeners();
-
-    NavigatorConstants.sendToNext(Routes.searchResults,
-        arguments: [getSearchQuery(), getFilterState()]);
+    goToResultPage();
   }
 
   void changePriceRange({required RangeValues priceRange}) {
@@ -76,12 +111,12 @@ class SearchNotifier extends ChangeNotifier {
     priceFilterActivated = true;
     showCategoryFilter = true;
     notifyListeners();
-    NavigatorConstants.sendToNext(Routes.searchResults,
-        arguments: [getSearchQuery(), getFilterState()]);
+    goToResultPage();
   }
 
   void resetPriceRange() {
     priceRange = defaultPriceRange;
+    notifyListeners();
   }
 
   void resetStartEndDate() {
@@ -97,10 +132,9 @@ class SearchNotifier extends ChangeNotifier {
     eAType = EAType.eventsActivites;
   }
 
-  void changeStartEndDate(
-      {required DateTime startDate,
-      required DateTime endDate,
-      String? caption}) {
+  void changeStartEndDate({required DateTime startDate,
+    required DateTime endDate,
+    String? caption}) {
     this.startDate = startDate;
     this.endDate = endDate;
     timeFilterActivated = true;
@@ -146,6 +180,8 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  // TODO might delete
+
   bool getIsCloseDialog() {
     if (pageState == PageState.resultScreen) {
       return true;
@@ -156,10 +192,10 @@ class SearchNotifier extends ChangeNotifier {
 
   bool anyFilterActivated() {
     return priceFilterActivated |
-        timeFilterActivated |
-        sortFilterActivated |
-        typeFilterActivated |
-        categoryFilterActivated;
+    timeFilterActivated |
+    sortFilterActivated |
+    typeFilterActivated |
+    categoryFilterActivated;
   }
 
   SearchQuery getSearchQuery() {

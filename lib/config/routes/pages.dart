@@ -7,7 +7,6 @@ import '../../core/detailed/detailed_event.dart';
 import '../../core/home/home_page.dart';
 import '../../core/main_page.dart';
 import '../../core/search/search.dart';
-import '../../core/search_results/search_results_page.dart';
 import '../../widgets/splash_screen.dart';
 
 class Pages {
@@ -20,6 +19,6 @@ class Pages {
     Routes.favouriteRoute: (context) => const FavouritePage(),
     Routes.searchRoute: (context) => SearchPage(),
     Routes.addScreenRoute: (context) => const Add(),
-    Routes.searchResults: (context) => SearchResultsPage(),
+    // Routes.searchResults: (context) => SearchResultsPage(),
   };
 }

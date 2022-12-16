@@ -18,6 +18,7 @@ Widget getShowResultsButton(
         flex: 1,
         child: GestureDetector(
           onTap: () {
+            Function.apply(functionReset, [], functionArgumentsReset);
             // NavigatorConstants.doubleBackToPrev();
             // Get.back(id: 1,canPop: true);
             // navigator.popUntil(context, (route) {
@@ -47,7 +48,7 @@ Widget getShowResultsButton(
                           borderRadius: BorderRadius.circular(12.0)))),
               child: Text(AppLocalizations.of(context)!.showResults),
               onPressed: () {
-                Function.apply(functionReset, [], functionArgumentsReset);
+                Function.apply(functionAccept, [], functionArgumentsAccept);
                 if (closeDialog) Get.back();
               })),
     ],
