@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
-import '../../config/routes/routes.dart';
 import '../../constants/app_constants.dart';
 import '../../constants/categories.dart';
 
@@ -62,7 +61,8 @@ class SearchNotifier extends ChangeNotifier {
   late PageState pageState;
 
   SearchNotifier(
-      {priceRange = const RangeValues(0, 200),
+      {priceRange = const RangeValues(
+          NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
       startDate,
       endDate,
       this.sortCriteria = null,
@@ -114,22 +114,43 @@ class SearchNotifier extends ChangeNotifier {
     goToResultPage();
   }
 
+  bool priceReset = false;
+
+  void setPriceResetFalse() {
+    priceReset = false;
+  }
+
   void resetPriceRange() {
     priceRange = defaultPriceRange;
+    priceReset = true;
+    priceFilterActivated = false;
+
     notifyListeners();
+  }
+
+  bool dateReset = false;
+
+  void setDateResetFalse() {
+    dateReset = false;
   }
 
   void resetStartEndDate() {
     startDate = defaultStartDate;
     endDate = defaultEndDate;
+    dateReset = true;
+    timeFilterActivated = false;
+    timeCaption = null;
+    notifyListeners();
   }
 
   void resetSort() {
     sortCriteria = null;
+    notifyListeners();
   }
 
   void resetEAType() {
     eAType = EAType.eventsActivites;
+    notifyListeners();
   }
 
   void changeStartEndDate(
@@ -144,8 +165,11 @@ class SearchNotifier extends ChangeNotifier {
       this.timeCaption = caption;
     }
     notifyListeners();
-    NavigatorConstants.sendToNext(Routes.searchResults,
-        arguments: [getSearchQuery(), getFilterState()]);
+    goToResultPage();
+  }
+
+  void setSortCriteria({required SortCriteria? sortCriteria}) {
+    this.sortCriteria = sortCriteria;
   }
 
   void changeSortCriteria({required SortCriteria? sortCriteria}) {
@@ -157,10 +181,11 @@ class SearchNotifier extends ChangeNotifier {
     }
     this.sortCriteria = sortCriteria;
     notifyListeners();
-    NavigatorConstants.sendToNext(Routes.searchResults, arguments: [
-      getSearchQuery(),
-      getFilterState(),
-    ]);
+    goToResultPage();
+  }
+
+  void setEAType({required EAType? eAType}) {
+    this.eAType = eAType;
   }
 
   void changeEAType({required EAType? eAType}) {
@@ -172,8 +197,7 @@ class SearchNotifier extends ChangeNotifier {
     }
     this.eAType = eAType;
     notifyListeners();
-    NavigatorConstants.sendToNext(Routes.searchResults,
-        arguments: [getSearchQuery(), getFilterState()]);
+    goToResultPage();
   }
 
   void setTimeCaption({required String? caption}) {

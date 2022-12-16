@@ -24,16 +24,18 @@ Container buildDropdownBar({required BuildContext context}) {
     child: SizedBox(
       height: 35.h,
       // disable color scheme
-      child: ListView.builder(
-        primary: false,
-        shrinkWrap: true,
-        itemCount: filters.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return filters[index];
-        },
-      ),
-    ),
+      child: Padding(
+          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: filters.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return filters[index];
+            },
+          ),
+        )),
   );
 }
 

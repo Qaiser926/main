@@ -37,20 +37,30 @@ class PriceFilter extends StatefulWidget {
   PriceFilter({super.key, required BuildContext this.context});
 
   @override
-  State<PriceFilter> createState() =>
-      _PriceFilterState(endValue: endValue, context: this.context);
+  State<PriceFilter> createState() => _PriceFilterState(context: this.context);
 }
 
 class _PriceFilterState extends State<PriceFilter> {
   late RangeValues _values;
 
-  _PriceFilterState({required endValue, required BuildContext context}) {
+  _PriceFilterState({required BuildContext context}) {
     _values = Provider.of<SearchNotifier>(context, listen: false).getPriceRange;
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<SearchNotifier>(builder: (context, model, child) {
+      if (model.priceReset) {
+        _values = model.getPriceRange;
+        Provider.of<SearchNotifier>(context, listen: false)
+            .setPriceResetFalse();
+      }
+      ;
+
+      String endValue = _values.end.round().toString();
+      if (_values.end.round() == NavigatorConstants.PriceRangeEnd) {
+        endValue = AppLocalizations.of(context)!.unlimited;
+      }
       return Column(
         children: [
           Padding(
@@ -95,12 +105,12 @@ class _PriceFilterState extends State<PriceFilter> {
                 getPriceBox(
                     context: context,
                     header: AppLocalizations.of(context)!.minimum,
-                    price: _values.start.round()),
+                    price: _values.start.round().toString()),
                 Icon(Typicons.minus, color: Theme.of(context).highlightColor),
                 getPriceBox(
                     context: context,
                     header: AppLocalizations.of(context)!.maximum,
-                    price: _values.end.round()),
+                    price: endValue),
               ],
             ),
           ),
@@ -109,8 +119,8 @@ class _PriceFilterState extends State<PriceFilter> {
             child: getShowResultsButton(
                 context: context,
                 functionAccept:
-                    Provider.of<SearchNotifier>(context, listen: false)
-                        .changePriceRange,
+                Provider.of<SearchNotifier>(context, listen: false)
+                    .changePriceRange,
                 functionArgumentsAccept: {
                   #priceRange: RangeValues(_values.start.roundToDouble(),
                       _values.end.roundToDouble())
@@ -130,7 +140,9 @@ class _PriceFilterState extends State<PriceFilter> {
 Widget getPriceBox(
     {required BuildContext context,
     required String header,
-    required int price}) {
+    required String price}) {
+  String priceText = "€${price}";
+  if (price == AppLocalizations.of(context)!.unlimited) priceText = price;
   return Container(
     width: 110,
     decoration: BoxDecoration(
@@ -142,7 +154,7 @@ Widget getPriceBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Text(header), getVerSpace(5), Text("€${price}")],
+      children: [Text(header), getVerSpace(5), Text(priceText)],
     ),
   );
 }
@@ -151,14 +163,17 @@ Widget getPriceBox(
 String getPriceCaption({required BuildContext context}) {
   if (Provider.of<SearchNotifier>(context, listen: false)
       .priceFilterActivated){
-    RangeValues range = Provider.of<SearchNotifier>(context, listen: false)
-        .getPriceRange;
+    RangeValues range =
+        Provider.of<SearchNotifier>(context, listen: false).getPriceRange;
     if (range.start == range.end) {
-      if (range.start == 0){
+      if (range.start == 0) {
         return AppLocalizations.of(context)!.free;
       } else {
         return "€${range.start}";
       }
+    }
+    if (range.end.round() == NavigatorConstants.PriceRangeEnd) {
+      return "€${range.start.round()} - Max.";
     }
     return "€${range.start.round()} - €${range.end.round()}";
   } else {

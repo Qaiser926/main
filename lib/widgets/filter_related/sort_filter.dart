@@ -88,9 +88,9 @@ class _SortFilterState extends State<SortFilter> {
     );
   }
 
-  bool determineEnabled({required SortCriteria sortCriteria}) {
-    if (sortCriteria ==
-        Provider.of<SearchNotifier>(context, listen: false).getSortCriteria) {
+  bool determineEnabled(
+      {required SortCriteria sortCriteria, required SearchNotifier model}) {
+    if (sortCriteria == model.sortCriteria) {
       return true;
     } else {
       return false;
@@ -104,7 +104,7 @@ class _SortFilterState extends State<SortFilter> {
             setState(() {
               this.sortCriteria = null;
               Provider.of<SearchNotifier>(context, listen: false)
-                  .changeSortCriteria(sortCriteria: null);
+                  .setSortCriteria(sortCriteria: null);
             })
           };
     } else {
@@ -112,67 +112,71 @@ class _SortFilterState extends State<SortFilter> {
             setState(() {
               this.sortCriteria = sortCriteria;
               Provider.of<SearchNotifier>(context, listen: false)
-                  .changeSortCriteria(sortCriteria: sortCriteria);
+                  .setSortCriteria(sortCriteria: sortCriteria);
             })
           };
     }
   }
 
-  List<Widget> getTimeButtons({required BuildContext context}) {
+  List<Widget> getTimeButtons(
+      {required BuildContext context, required SearchNotifier model}) {
     List<Widget> sortButtons = [
       getSortButton(
           context: context,
           caption: AppLocalizations.of(context)!.priceRising,
           onTapFunction: getSortFunction(sortCriteria: SortCriteria.price),
-          coloredBorder: determineEnabled(sortCriteria: SortCriteria.price)),
+          coloredBorder:
+              determineEnabled(sortCriteria: SortCriteria.price, model: model)),
       getSortButton(
           context: context,
           caption: AppLocalizations.of(context)!.dateRising,
           onTapFunction: getSortFunction(sortCriteria: SortCriteria.date),
-          coloredBorder: determineEnabled(sortCriteria: SortCriteria.date)),
+          coloredBorder:
+              determineEnabled(sortCriteria: SortCriteria.date, model: model)),
       getSortButton(
           context: context,
           caption: AppLocalizations.of(context)!.popularity,
           onTapFunction: getSortFunction(sortCriteria: SortCriteria.popularity),
-          coloredBorder:
-              determineEnabled(sortCriteria: SortCriteria.popularity)),
+          coloredBorder: determineEnabled(
+              sortCriteria: SortCriteria.popularity, model: model)),
     ];
     return sortButtons;
   }
 
   @override
   Widget build(BuildContext context) {
-    bool closeDialog =
-        Provider.of<SearchNotifier>(context, listen: false).getIsCloseDialog();
-    return Column(
-      children: [
-        Padding(
-            padding: EdgeInsets.all(10),
+    return Consumer<SearchNotifier>(builder: (context, model, child) {
+      return Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [CloseButton()])),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [CloseButton()])),
-        Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: getTimeButtons(context: context),
-          ),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: getTimeButtons(context: context, model: model),
+            ),
         ),
         Padding(
           padding: EdgeInsets.all(20),
-          child: getShowResultsButton(
-              context: context,
-              functionAccept:
-                  Provider.of<SearchNotifier>(context, listen: false)
-                      .changeSortCriteria,
-              functionArgumentsAccept: {#sortCriteria: sortCriteria},
-              functionReset:
-                  Provider.of<SearchNotifier>(context, listen: false).resetSort,
-              functionArgumentsReset: {},
-              closeDialog: closeDialog),
-        )
-      ],
-    );
+            child: getShowResultsButton(
+                context: context,
+                functionAccept:
+                    Provider.of<SearchNotifier>(context, listen: false)
+                        .changeSortCriteria,
+                functionArgumentsAccept: {#sortCriteria: sortCriteria},
+                functionReset:
+                    Provider.of<SearchNotifier>(context, listen: false)
+                        .resetSort,
+                functionArgumentsReset: {},
+                closeDialog: true),
+          )
+        ],
+      );
+    });
   }
 }
 

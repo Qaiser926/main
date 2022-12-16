@@ -107,10 +107,12 @@
   "minimum": "Minimum",
   "maximum": "Maximum",
   "priceRangeDescription": "Price range",
-  "clearAll": "Clear all",
+  "clear": "Clear",
   "showResults": "Show results",
   "clearFilters": "Reset filters",
   "free": "Free",
+  "unlimited": "Unlimited",
+
   "from": "From",
   "to": "To",
   "location": "Location",

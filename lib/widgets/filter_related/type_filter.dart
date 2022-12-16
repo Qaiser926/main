@@ -87,9 +87,9 @@ class _TypeFilterState extends State<TypeFilter> {
     );
   }
 
-  bool determineEnabled({required EAType eAType}) {
-    if (eAType ==
-        Provider.of<SearchNotifier>(context, listen: false).getEAType) {
+  bool determineEnabled(
+      {required EAType eAType, required SearchNotifier model}) {
+    if (eAType == model.eAType) {
       return true;
     } else {
       return false;
@@ -103,7 +103,7 @@ class _TypeFilterState extends State<TypeFilter> {
             setState(() {
               this.eAType = null;
               Provider.of<SearchNotifier>(context, listen: false)
-                  .changeEAType(eAType: null);
+                  .setEAType(eAType: null);
             })
           };
     } else {
@@ -111,66 +111,70 @@ class _TypeFilterState extends State<TypeFilter> {
             setState(() {
               this.eAType = eAType;
               Provider.of<SearchNotifier>(context, listen: false)
-                  .changeEAType(eAType: eAType);
+                  .setEAType(eAType: eAType);
             })
           };
     }
   }
 
-  List<Widget> getTypeButtons({required BuildContext context}) {
+  List<Widget> getTypeButtons(
+      {required BuildContext context, required SearchNotifier model}) {
     List<Widget> sortButtons = [
       getTypeButton(
           context: context,
           caption: AppLocalizations.of(context)!.eventsActivities,
           onTapFunction: getTypeFunction(eAType: EAType.eventsActivites),
-          coloredBorder: determineEnabled(eAType: EAType.eventsActivites)),
+          coloredBorder:
+              determineEnabled(eAType: EAType.eventsActivites, model: model)),
       getTypeButton(
           context: context,
           caption: AppLocalizations.of(context)!.events,
           onTapFunction: getTypeFunction(eAType: EAType.events),
-          coloredBorder: determineEnabled(eAType: EAType.events)),
+          coloredBorder: determineEnabled(eAType: EAType.events, model: model)),
       getTypeButton(
           context: context,
           caption: AppLocalizations.of(context)!.activities,
           onTapFunction: getTypeFunction(eAType: EAType.activities),
-          coloredBorder: determineEnabled(eAType: EAType.activities)),
+          coloredBorder:
+              determineEnabled(eAType: EAType.activities, model: model)),
     ];
     return sortButtons;
   }
 
   @override
   Widget build(BuildContext context) {
-    bool closeDialog =
-        Provider.of<SearchNotifier>(context, listen: false).getIsCloseDialog();
-    return Column(
-      children: [
-        Padding(
-            padding: EdgeInsets.all(10),
+    return Consumer<SearchNotifier>(builder: (context, model, child) {
+      return Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [CloseButton()])),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [CloseButton()])),
-        Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: getTypeButtons(context: context),
-          ),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: getTypeButtons(context: context, model: model),
+            ),
         ),
         Padding(
           padding: EdgeInsets.all(20),
-          child: getShowResultsButton(
-              context: context,
-              functionAccept:
-                  Provider.of<SearchNotifier>(context, listen: false)
-                      .changeEAType,
-              functionArgumentsAccept: {#eAType: eAType},
-              functionReset: Provider.of<SearchNotifier>(context, listen: false)
-                  .resetEAType,
-              functionArgumentsReset: {},
-              closeDialog: closeDialog),
-        )
-      ],
-    );
+            child: getShowResultsButton(
+                context: context,
+                functionAccept:
+                    Provider.of<SearchNotifier>(context, listen: false)
+                        .changeEAType,
+                functionArgumentsAccept: {#eAType: eAType},
+                functionReset:
+                    Provider.of<SearchNotifier>(context, listen: false)
+                        .resetEAType,
+                functionArgumentsReset: {},
+                closeDialog: true),
+          )
+        ],
+      );
+    });
   }
 }
 

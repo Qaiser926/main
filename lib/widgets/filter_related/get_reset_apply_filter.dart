@@ -35,7 +35,7 @@ Widget getShowResultsButton(
           },
           child: Container(
             padding: EdgeInsets.all(12),
-            child: Text(AppLocalizations.of(context)!.clearAll),
+            child: Text(AppLocalizations.of(context)!.clear),
           ),
         ),
       ),

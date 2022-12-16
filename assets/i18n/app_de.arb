@@ -105,10 +105,11 @@
   "minimum": "Minimum",
   "maximum": "Maximum",
   "priceRangeDescription": "Preisspanne",
-  "clearAll": "Zurücksetzen",
+  "clear": "Zurücksetzen",
   "showResults": "Ergebnisse",
   "clearFilters": "Filter zurücksetzen",
   "free": "Gratis",
+  "unlimited": "Unlimitiert",
 
   "from": "Von",
   "to": "Bis",
