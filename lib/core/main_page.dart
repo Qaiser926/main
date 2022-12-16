@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/search/search.dart';
-import 'package:othia/core/settings/settings.dart';
+// import 'package:othia/core/settings/settings.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';
@@ -17,7 +17,7 @@ class MainPage extends StatelessWidget {
     SearchPage(),
     const Add(),
     const FavouritePage(),
-    const SettingsPage(),
+    // const ProfilePage(),
   ];
   final PageController _pageController = PageController(initialPage: 0);
 
