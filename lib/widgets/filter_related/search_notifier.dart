@@ -7,8 +7,8 @@ import '../../constants/app_constants.dart';
 import '../../constants/categories.dart';
 
 class SearchNotifier extends ChangeNotifier {
+  // Pagecontroller related
   bool isControllerSet = false;
-
   final PageController _pageController;
 
   PageController getPageController() {
@@ -23,14 +23,36 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void goToResultPage() {
+    currentIndex = NavigatorConstants.ResultPageIndex;
+    _pageController.jumpToPage(currentIndex);
+  }
+
+  void goToSearchPage() {
+    currentIndex = NavigatorConstants.SearchPageIndex;
+    _pageController.jumpToPage(currentIndex);
+  }
+
+  void goToShowMorePage(
+      {required String showMoreCaption,
+      required List<String?> showMoreIds,
+      required String showMoreCategoryTitle}) {
+    currentIndex = NavigatorConstants.ShowMorePageIndex;
+    _pageController.jumpToPage(currentIndex);
+    this.showMoreCaption = showMoreCaption;
+    this.showMoreIds = showMoreIds;
+    this.showMoreCategoryTitle = showMoreCategoryTitle;
+    notifyListeners();
+  }
+
+  // Search query related
   bool priceFilterActivated = false;
-  bool showCategoryFilter = false;
   bool timeFilterActivated = false;
   bool sortFilterActivated = false;
   bool typeFilterActivated = false;
   bool categoryFilterActivated = false;
 
-  // keep below like it!
+  // keep below like it is!
   late String? timeCaption = null;
   late RangeValues defaultPriceRange;
   late RangeValues priceRange;
@@ -46,7 +68,22 @@ class SearchNotifier extends ChangeNotifier {
   late List<String> selectedCategoryIds;
   late List<String> defalutSelectedCategoryIds;
 
-  late PageState pageState;
+  void backToDefault() {
+    priceRange = defaultPriceRange;
+    eAType = EAType.eventsActivites;
+    startDate = defaultStartDate;
+    endDate = defaultEndDate;
+    priceRange = defaultPriceRange;
+    sortCriteria = null;
+    selectedCategoryIds = defalutSelectedCategoryIds;
+    timeCaption = null;
+    priceFilterActivated = false;
+    timeFilterActivated = false;
+    sortFilterActivated = false;
+    typeFilterActivated = false;
+    categoryFilterActivated = false;
+    notifyListeners();
+  }
 
   SearchNotifier(
       {priceRange = const RangeValues(
@@ -56,7 +93,6 @@ class SearchNotifier extends ChangeNotifier {
       this.sortCriteria = null,
       this.eAType = EAType.eventsActivites,
       selectedCategoryIds,
-      this.pageState = PageState.searchScreen,
       required PageController pageController})
       : _pageController = pageController {
     this.priceRange = this.defaultPriceRange = priceRange;
@@ -81,40 +117,14 @@ class SearchNotifier extends ChangeNotifier {
 
   List<String> get getSelectedCategoryIds => selectedCategoryIds;
 
-  void goToResultPage() {
-    currentIndex = NavigatorConstants.ResultPageIndex;
-    _pageController.jumpToPage(currentIndex);
-  }
-
+  // show more page related
   late String showMoreCaption;
   late List<String?> showMoreIds;
-
   late String showMoreCategoryTitle;
-
-  void goToShowMorePage(
-      {required String showMoreCaption,
-      required List<String?> showMoreIds,
-      required String showMoreCategoryTitle}) {
-    currentIndex = NavigatorConstants.ShowMorePageIndex;
-    _pageController.jumpToPage(currentIndex);
-    this.showMoreCaption = showMoreCaption;
-    this.showMoreIds = showMoreIds;
-    this.showMoreCategoryTitle = showMoreCategoryTitle;
-    notifyListeners();
-  }
-
-  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
-    showCategoryFilter = true;
-    categoryFilterActivated = true;
-    this.selectedCategoryIds = selectedCategoryIds;
-    notifyListeners();
-    goToResultPage();
-  }
 
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
-    showCategoryFilter = true;
     notifyListeners();
     goToResultPage();
   }
@@ -148,13 +158,8 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetSort() {
-    sortCriteria = null;
-    notifyListeners();
-  }
-
-  void resetEAType() {
-    eAType = EAType.eventsActivites;
+  void setTimeCaption({required String? caption}) {
+    this.timeCaption = caption;
     notifyListeners();
   }
 
@@ -165,7 +170,6 @@ class SearchNotifier extends ChangeNotifier {
     this.startDate = startDate;
     this.endDate = endDate;
     timeFilterActivated = true;
-    showCategoryFilter = true;
     if (caption != null) {
       this.timeCaption = caption;
     }
@@ -180,13 +184,20 @@ class SearchNotifier extends ChangeNotifier {
   void changeSortCriteria({required SortCriteria? sortCriteria}) {
     if (sortCriteria != null) {
       this.sortFilterActivated = true;
-      showCategoryFilter = true;
-    } else {
-      showCategoryFilter = false;
     }
     this.sortCriteria = sortCriteria;
     notifyListeners();
     goToResultPage();
+  }
+
+  void resetSort() {
+    sortCriteria = null;
+    notifyListeners();
+  }
+
+  void resetEAType() {
+    eAType = EAType.eventsActivites;
+    notifyListeners();
   }
 
   void setEAType({required EAType? eAType}) {
@@ -196,28 +207,17 @@ class SearchNotifier extends ChangeNotifier {
   void changeEAType({required EAType? eAType}) {
     if (eAType != null) {
       this.typeFilterActivated = true;
-      showCategoryFilter = true;
-    } else {
-      showCategoryFilter = false;
     }
     this.eAType = eAType;
     notifyListeners();
     goToResultPage();
   }
 
-  void setTimeCaption({required String? caption}) {
-    this.timeCaption = caption;
+  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
+    categoryFilterActivated = true;
+    this.selectedCategoryIds = selectedCategoryIds;
     notifyListeners();
-  }
-
-  // TODO might delete
-
-  bool getIsCloseDialog() {
-    if (pageState == PageState.resultScreen) {
-      return true;
-    } else {
-      return false;
-    }
+    goToResultPage();
   }
 
   bool anyFilterActivated() {
@@ -237,25 +237,6 @@ class SearchNotifier extends ChangeNotifier {
         sortCriteria: sortCriteria,
         selectedCategoryIds: selectedCategoryIds,
         eAType: eAType);
-  }
-
-  FilterState getFilterState() {
-    return FilterState(
-        categoryFilterActivated: categoryFilterActivated,
-        priceFilterActivated: priceFilterActivated,
-        showCategoryFilter: showCategoryFilter,
-        sortFilterActivated: sortFilterActivated,
-        timeFilterActivated: timeFilterActivated,
-        typeFilterActivated: typeFilterActivated);
-  }
-
-  void setFilterState(FilterState filterState) {
-    categoryFilterActivated = filterState.categoryFilterActivated;
-    priceFilterActivated = filterState.priceFilterActivated;
-    showCategoryFilter = filterState.showCategoryFilter;
-    sortFilterActivated = filterState.sortFilterActivated;
-    timeFilterActivated = filterState.timeFilterActivated;
-    typeFilterActivated = filterState.typeFilterActivated;
   }
 }
 
@@ -277,27 +258,3 @@ class SearchQuery {
       required this.selectedCategoryIds,
       required this.eAType});
 }
-
-class FilterState {
-  final bool priceFilterActivated;
-  final bool showCategoryFilter;
-
-  final bool timeFilterActivated;
-
-  final bool sortFilterActivated;
-
-  final bool typeFilterActivated;
-
-  final bool categoryFilterActivated;
-
-  FilterState({
-    required this.priceFilterActivated,
-    required this.showCategoryFilter,
-    required this.timeFilterActivated,
-    required this.sortFilterActivated,
-    required this.typeFilterActivated,
-    required this.categoryFilterActivated,
-  });
-}
-
-enum PageState { searchScreen, resultScreen }

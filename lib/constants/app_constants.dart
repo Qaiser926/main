@@ -11,10 +11,14 @@ class WidgetConstants {
 class NavigatorConstants {
   static const PriceRangeStart = 0.0;
   static const PriceRangeEnd = 200.0;
+
+  static const SearchPageIndex = 0;
   static const ResultPageIndex = 1;
   static const ShowMorePageIndex = 2;
 
   static const CategoryNameCutOff = 20;
+
+  static const EventActivityId = 'eAId';
 
   static backToPrev() {
     Get.back();

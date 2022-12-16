@@ -2,16 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/search/search.dart';
-import '../../utils/ui/ui_utils.dart';
 import '../category_filter/category_filter.dart';
 import 'search_notifier.dart';
 
@@ -42,6 +39,40 @@ Consumer<dynamic> buildDropdownBar({required BuildContext context}) {
   });
 }
 
+Widget getResetFilter(BuildContext context) {
+  return GestureDetector(
+    onTap: () => {
+      Provider.of<SearchNotifier>(context, listen: false).backToDefault(),
+      Provider.of<SearchNotifier>(context, listen: false).goToSearchPage(),
+    },
+    child: Container(
+      margin: EdgeInsets.only(right: 12.h, left: 0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.h),
+        border: Border.all(color: Theme.of(context).colorScheme.primary),
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      alignment: Alignment.center,
+      child: Padding(
+        padding: EdgeInsets.all(7.h),
+        child: Row(
+          children: [
+            Text(
+              AppLocalizations.of(context)!.clearFilter,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            Icon(
+              Icons.close,
+              size: 20.h,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget getFilter(
     {required BuildContext context,
     required int index,
@@ -68,11 +99,9 @@ Widget getFilter(
         padding: EdgeInsets.all(7.h),
         child: Row(
           children: [
-            getCustomFont(
-              text: caption,
-              fontSize: 16.sp,
-              maxLine: 1,
-              fontWeight: FontWeight.w600,
+            Text(
+              caption,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
             Icon(
               Icons.arrow_drop_down,
@@ -112,7 +141,7 @@ List<Widget> getFilters(
     //     onTapFunction: () => print("addFilter")),
   ];
   // only add category if not in start screen
-  if (searchNotifier.showCategoryFilter) {
+  if (searchNotifier.currentIndex != NavigatorConstants.SearchPageIndex) {
     filter.insert(
       0,
       getFilter(
@@ -161,17 +190,7 @@ List<Widget> getFilters(
   if (searchNotifier.anyFilterActivated()) {
     filter.insert(
       0,
-      getFilter(
-          caption: AppLocalizations.of(context)!.clearFilters,
-          context: context,
-          index: 0,
-          coloredBorder: true,
-          // TODO check if best approach
-          onTapFunction: () {
-            Get.offAll(
-              SearchPage(),
-            );
-          }),
+      getResetFilter(context),
     );
   }
   return filter;

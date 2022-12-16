@@ -107,9 +107,12 @@
   "priceRangeDescription": "Preisspanne",
   "clear": "Zurücksetzen",
   "showResults": "Ergebnisse",
-  "clearFilters": "Filter zurücksetzen",
+  "clearFilter": "Filter Zurücksetzen",
   "free": "Gratis",
   "unlimited": "Unlimitiert",
+
+  "search": "Suche",
+  "results": "Suchergebnisse",
 
   "from": "Von",
   "to": "Bis",

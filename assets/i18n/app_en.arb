@@ -109,9 +109,12 @@
   "priceRangeDescription": "Price range",
   "clear": "Clear",
   "showResults": "Show results",
-  "clearFilters": "Reset filters",
+  "clearFilter": "Reset Filter",
   "free": "Free",
   "unlimited": "Unlimited",
+
+  "search": "Search",
+  "results": "Search Results",
 
   "from": "From",
   "to": "To",
