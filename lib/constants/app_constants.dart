@@ -10,6 +10,10 @@ class WidgetConstants {
 
 class NavigatorConstants {
   static const SearchPageIndex = 1;
+  static const SearchQueryIndex = 0;
+  static const FilterStateIndex = 1;
+  static const ResultIdsIndex = 2;
+  static const CaptionIndex = 3;
 
   static backToPrev() {
     Get.back();

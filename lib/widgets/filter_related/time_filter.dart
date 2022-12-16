@@ -471,9 +471,12 @@ class _TimeFilterState extends State<TimeFilter> {
         padding: EdgeInsets.all(20),
         child: getShowResultsButton(
             context: context,
-            function: Provider.of<SearchNotifier>(context, listen: false)
+            functionAccept: Provider.of<SearchNotifier>(context, listen: false)
                 .changeStartEndDate,
-            functionArguments: {#startDate: startDate, #endDate: endDate},
+            functionArgumentsAccept: {#startDate: startDate, #endDate: endDate},
+            functionReset: Provider.of<SearchNotifier>(context, listen: false)
+                .resetStartEndDate,
+            functionArgumentsReset: {},
             closeDialog: closeDialog),
       )
     ]);

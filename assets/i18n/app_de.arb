@@ -107,6 +107,7 @@
   "priceRangeDescription": "Preisspanne",
   "clearAll": "Zurücksetzen",
   "showResults": "Ergebnisse",
+  "clearFilters": "Filter zurücksetzen",
   "free": "Gratis",
 
   "from": "Von",
@@ -125,6 +126,11 @@
 
   "noResultsFound": "Keine Ergebnisse gefunden für Suchkriterien",
 
+  "closeAppDialog": "Möchtest du die App schließen?",
+    "confirm": "Bestätigen",
+     "cancel": "Abbrechen",
+
+    "showAll": "Mehr Zeigen",
 
 
   "entertainment": "Entertainment",

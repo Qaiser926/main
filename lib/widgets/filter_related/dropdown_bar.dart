@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/search/search.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../category_filter/category_filter.dart';
 import 'search_notifier.dart';
@@ -121,7 +125,7 @@ List<Widget> getFilters({required BuildContext context}) {
       getFilter(
           context: context,
           // TODO implement caption and colored Border
-          index: 0,
+          index: 1,
           caption: getCategoryCaption(context: context),
           coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
               .categoryFilterActivated,
@@ -143,12 +147,29 @@ List<Widget> getFilters({required BuildContext context}) {
       0,
       getFilter(
           context: context,
-          index: 0,
+          index: 1,
           caption: getTimeCaption(context: context),
           coloredBorder: Provider.of<SearchNotifier>(context, listen: false)
               .timeFilterActivated,
           onTapFunction: () {
             return TimeFilterDialog(context: context);
+          }),
+    );
+  }
+  if (Provider.of<SearchNotifier>(context, listen: false)
+      .anyFilterActivated()) {
+    filter.insert(
+      0,
+      getFilter(
+          caption: AppLocalizations.of(context)!.clearFilters,
+          context: context,
+          index: 0,
+          coloredBorder: true,
+          // TODO check if best approach
+          onTapFunction: () {
+            Get.offAll(
+              SearchPage(),
+            );
           }),
     );
   }

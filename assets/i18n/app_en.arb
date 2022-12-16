@@ -109,6 +109,7 @@
   "priceRangeDescription": "Price range",
   "clearAll": "Clear all",
   "showResults": "Show results",
+  "clearFilters": "Reset filters",
   "free": "Free",
   "from": "From",
   "to": "To",
@@ -124,6 +125,12 @@
   "popularity": "Popularity",
 
   "noResultsFound": "No results found for search criteria",
+
+  "closeAppDialog": "Do you want to exit the App?",
+   "confirm": "Confirm",
+   "cancel": "Cancel",
+
+   "showMore": "Show More",
 
   "entertainment": "Unterhaltung",
   "@entertainment": {

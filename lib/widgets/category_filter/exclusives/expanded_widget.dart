@@ -39,7 +39,7 @@ class ExpandedWidget extends StatelessWidget {
       bool isModalBottomMode = model.isModalBottomMode;
       if (subcategoryIds.isNotEmpty) {
         return MultiProvider(
-            // key: key,
+          // key: key,
             providers: [
               ChangeNotifierProvider.value(
                 value:
@@ -95,10 +95,14 @@ class ExpandedWidget extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: getShowResultsButton(
             context: context,
-            function: Provider.of<SearchNotifier>(context, listen: false)
+            functionAccept: Provider.of<SearchNotifier>(context, listen: false)
                 .changeCategoryIdList,
-            functionArguments: {#selectedCategoryIds: list},
-            closeDialog: isModalBottomMode),
+            functionArgumentsAccept: {#selectedCategoryIds: list},
+            closeDialog: isModalBottomMode,
+            functionReset:
+                Provider.of<SelectedSubcategoryNotifier>(context, listen: false)
+                    .resetSelectedSubcategories,
+            functionArgumentsReset: {}),
       ),
       // ),
     );

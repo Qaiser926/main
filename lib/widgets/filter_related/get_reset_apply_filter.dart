@@ -8,8 +8,10 @@ import '../../core/search/search.dart';
 
 Widget getShowResultsButton(
     {required BuildContext context,
-    required Function function,
-    required Map<Symbol, dynamic> functionArguments,
+    required Function functionAccept,
+    required Map<Symbol, dynamic> functionArgumentsAccept,
+    required Function functionReset,
+    required Map<Symbol, dynamic> functionArgumentsReset,
     bool closeDialog = false}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +46,7 @@ Widget getShowResultsButton(
                           borderRadius: BorderRadius.circular(12.0)))),
               child: Text(AppLocalizations.of(context)!.showResults),
               onPressed: () {
-                Function.apply(function, [], functionArguments);
+                Function.apply(functionReset, [], functionArgumentsReset);
                 if (closeDialog) Get.back();
               })),
     ],

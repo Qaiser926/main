@@ -108,12 +108,16 @@ class _PriceFilterState extends State<PriceFilter> {
           padding: EdgeInsets.all(20),
           child: getShowResultsButton(
               context: context,
-              function: Provider.of<SearchNotifier>(context, listen: false)
-                  .changePriceRange,
-              functionArguments: {
+              functionAccept:
+                  Provider.of<SearchNotifier>(context, listen: false)
+                      .changePriceRange,
+              functionArgumentsAccept: {
                 #priceRange: RangeValues(
                     _values.start.roundToDouble(), _values.end.roundToDouble())
               },
+              functionArgumentsReset: {},
+              functionReset: Provider.of<SearchNotifier>(context, listen: false)
+                  .resetPriceRange,
               closeDialog: closeDialog),
         )
       ],

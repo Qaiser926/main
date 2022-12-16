@@ -46,7 +46,7 @@ class SearchScrollView extends StatelessWidget {
           if (index == 0) showDivider = false;
           return BaseDiscoveryClass(
             Ids: searchResultIds.searchResultIds[key]!,
-            heading: CategoryIdToI18nMapper.fckMethod(context, key),
+            caption: CategoryIdToI18nMapper.fckMethod(context, key),
             showDivider: showDivider,
           );
         });
@@ -64,42 +64,42 @@ class SearchScrollView extends StatelessWidget {
 
     return CustomScrollView(slivers: slivers);
   }
+}
 
-  Widget getSearchResultSliverSection(
-      {required final String headerText, required List Ids}) {
-    if (Ids.isEmpty) {
-      return const SliverToBoxAdapter();
-    } else {
-      return MultiSliver(
-        pushPinnedChildren: true,
-        children: [
-          // SliverPinnedHeader(
-          //   child: getHeader(text: headerText),
-          // ),
-          SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-            if (index < Ids.length) {
-              Future<Object> eASummary =
-                  RestService().getEASummary(id: Ids[index]);
-              return KeepAliveFutureBuilder(
-                  future: eASummary,
-                  builder: (context, snapshot) {
-                    try {
-                      Map<String, dynamic> decodedJson =
-                          snapshotHandler(snapshot);
-                      SummaryEventOrActivity eASummary =
-                          SummaryEventOrActivity.fromJson(decodedJson);
-                      return getFavouriteListItem(context, eASummary);
-                    } on StillLoading {
-                      //TODO better widget while future still loading
-                      return CircularProgressIndicator();
-                    }
-                  });
-            } else {
-              return null;
-            }
-          }))
-        ],
-      );
-    }
+Widget getSearchResultSliverSection(
+    {required final String headerText, required List Ids}) {
+  if (Ids.isEmpty) {
+    return const SliverToBoxAdapter();
+  } else {
+    return MultiSliver(
+      pushPinnedChildren: true,
+      children: [
+        // SliverPinnedHeader(
+        //   child: getHeader(text: headerText),
+        // ),
+        SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+          if (index < Ids.length) {
+            Future<Object> eASummary =
+                RestService().getEASummary(id: Ids[index]);
+            return KeepAliveFutureBuilder(
+                future: eASummary,
+                builder: (context, snapshot) {
+                  try {
+                    Map<String, dynamic> decodedJson =
+                        snapshotHandler(snapshot);
+                    SummaryEventOrActivity eASummary =
+                        SummaryEventOrActivity.fromJson(decodedJson);
+                    return getFavouriteListItem(context, eASummary);
+                  } on StillLoading {
+                    //TODO better widget while future still loading
+                    return CircularProgressIndicator();
+                  }
+                });
+          } else {
+            return null;
+          }
+        }))
+      ],
+    );
   }
 }

@@ -160,9 +160,13 @@ class _TypeFilterState extends State<TypeFilter> {
           padding: EdgeInsets.all(20),
           child: getShowResultsButton(
               context: context,
-              function: Provider.of<SearchNotifier>(context, listen: false)
-                  .changeEAType,
-              functionArguments: {#eAType: eAType},
+              functionAccept:
+                  Provider.of<SearchNotifier>(context, listen: false)
+                      .changeEAType,
+              functionArgumentsAccept: {#eAType: eAType},
+              functionReset: Provider.of<SearchNotifier>(context, listen: false)
+                  .resetEAType,
+              functionArgumentsReset: {},
               closeDialog: closeDialog),
         )
       ],

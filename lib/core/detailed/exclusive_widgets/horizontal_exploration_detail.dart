@@ -89,7 +89,7 @@ Widget getHorizontalDiscovery(
             throw EmptyList;
           }
           return BaseDiscoveryClass(
-            heading: heading,
+            caption: heading,
             Ids: eAIds.eaIdList,
             showMore: false,
           );

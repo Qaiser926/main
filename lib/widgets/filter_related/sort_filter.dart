@@ -162,9 +162,13 @@ class _SortFilterState extends State<SortFilter> {
           padding: EdgeInsets.all(20),
           child: getShowResultsButton(
               context: context,
-              function: Provider.of<SearchNotifier>(context, listen: false)
-                  .changeSortCriteria,
-              functionArguments: {#sortCriteria: sortCriteria},
+              functionAccept:
+                  Provider.of<SearchNotifier>(context, listen: false)
+                      .changeSortCriteria,
+              functionArgumentsAccept: {#sortCriteria: sortCriteria},
+              functionReset:
+                  Provider.of<SearchNotifier>(context, listen: false).resetSort,
+              functionArgumentsReset: {},
               closeDialog: closeDialog),
         )
       ],

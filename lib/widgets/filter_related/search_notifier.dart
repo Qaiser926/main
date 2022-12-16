@@ -80,6 +80,23 @@ class SearchNotifier extends ChangeNotifier {
         arguments: [getSearchQuery(), getFilterState()]);
   }
 
+  void resetPriceRange() {
+    priceRange = defaultPriceRange;
+  }
+
+  void resetStartEndDate() {
+    startDate = defaultStartDate;
+    endDate = defaultEndDate;
+  }
+
+  void resetSort() {
+    sortCriteria = null;
+  }
+
+  void resetEAType() {
+    eAType = EAType.eventsActivites;
+  }
+
   void changeStartEndDate(
       {required DateTime startDate,
       required DateTime endDate,
@@ -137,24 +154,12 @@ class SearchNotifier extends ChangeNotifier {
     }
   }
 
-  void backToDefault({showCategoryFilterReset = true}) {
-    // priceRange = defaultPriceRange;
-    // priceFilterActivated = false;
-    // startDate = defaultStartDate;
-    // endDate = defaultEndDate;
-    // timeFilterActivated = false;
-    // sortCriteria = null;
-    // eAType = null;
-    // sortFilterActivated = false;
-    // typeFilterActivated = false;
-    // categoryFilterActivated = false;
-    // selectedCategoryIds = defalutSelectedCategoryIds;
-    // if (showCategoryFilterReset) {
-    //   showCategoryFilter = false;
-    // }
-    // notifyListeners();
-    // if(pageState != PageState.searchScreen)
-    NavigatorConstants.sendToNext(Routes.searchRoute);
+  bool anyFilterActivated() {
+    return priceFilterActivated |
+        timeFilterActivated |
+        sortFilterActivated |
+        typeFilterActivated |
+        categoryFilterActivated;
   }
 
   SearchQuery getSearchQuery() {
