@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/home/home_page.dart';
 import 'package:othia/core/search/search.dart';
-// import 'package:othia/core/settings/settings.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';

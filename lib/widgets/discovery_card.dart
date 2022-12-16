@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/colors.dart';
-import 'package:othia/core/detailed/detailed_event.dart';
 
+import '../config/routes/routes.dart';
 import '../modules/models/eA_summary/eA_summary.dart';
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';
@@ -20,7 +19,7 @@ class EASummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        Get.to(EventDetail(),
+        NavigatorConstants.sendToNext(Routes.detailedEventRoute,
             arguments: {NavigatorConstants.EventActivityId: eASummary.id})
       },
       child: Container(

@@ -82,21 +82,24 @@ Widget getHorizontalDiscovery(
   return KeepAliveFutureBuilder(
       future: eAIds,
       builder: (context, snapshot) {
-        try {
-          Map<String, dynamic> jsonData = snapshotHandler(snapshot);
-          IdList eAIds = IdList.fromJson(jsonData);
-          if (eAIds.eaIdList.length == 0) {
-            throw EmptyList;
-          }
-          return BaseDiscoveryClass(
-            caption: heading,
-            Ids: eAIds.eaIdList,
-            showMore: false,
-          );
-        } on StillLoading {
-          return SizedBox();
-        } on EmptyList {
-          return SizedBox();
-        }
+        return snapshotHandler(snapshot, getContent, [heading]);
       });
+}
+
+Widget getContent(String heading, Map<String, dynamic> jsonData) {
+  try {
+    IdList eAIds = IdList.fromJson(jsonData);
+    if (eAIds.eaIdList.length == 0) {
+      throw EmptyList;
+    }
+    return BaseDiscoveryClass(
+      caption: heading,
+      Ids: eAIds.eaIdList,
+      showMore: false,
+    );
+  } on StillLoading {
+    return SizedBox();
+  } on EmptyList {
+    return SizedBox();
+  }
 }
