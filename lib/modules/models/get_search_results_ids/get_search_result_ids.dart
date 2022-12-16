@@ -3,13 +3,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'get_search_result_ids.g.dart';
 
 @JsonSerializable()
-class SearchResultsIds {
+class SearchResultIds {
   Map<String, List<String?>> searchResultIds;
 
-  SearchResultsIds({
+  SearchResultIds({
     required this.searchResultIds,
   });
 
-  factory SearchResultsIds.fromJson(Map<String, dynamic> json) =>
+  factory SearchResultIds.fromJson(Map<String, dynamic> json) =>
       _$SearchResultsIdsFromJson(json);
 }

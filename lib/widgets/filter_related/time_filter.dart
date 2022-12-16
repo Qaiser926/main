@@ -410,19 +410,46 @@ class _TimeFilterState extends State<TimeFilter> {
     }
   }
 
+  void setToDefault() {
+    setState(() {
+      startDate =
+          Provider.of<SearchNotifier>(context, listen: false).getStartDate;
+      endDate = Provider.of<SearchNotifier>(context, listen: false).getEndDate;
+      _dateRangePickerController.selectedRange =
+          PickerDateRange(startDate, endDate);
+      thisWeekendButtonEnabled = false;
+      todayButtonEnabled = false;
+      tomorrowButtonEnabled = false;
+      thisWeekButtonEnabled = false;
+      nextWeekButtonEnabled = false;
+      nextWeekendButtonEnabled = false;
+      Provider.of<SearchNotifier>(context, listen: false)
+          .setTimeCaption(caption: null);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Padding(
-          padding: EdgeInsets.all(10),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [CloseButton()])),
-      Padding(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: SfDateRangePicker(
-          monthViewSettings: DateRangePickerMonthViewSettings(
-            firstDayOfWeek: 1,
+    return Consumer<SearchNotifier>(builder: (context, model, child) {
+      if (model.dateReset) {
+        Future.delayed(Duration.zero, () async {
+          setToDefault();
+        });
+
+        Provider.of<SearchNotifier>(context, listen: false).setDateResetFalse();
+      }
+      ;
+      return Column(children: [
+        Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [CloseButton()])),
+        Padding(
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: SfDateRangePicker(
+            monthViewSettings: DateRangePickerMonthViewSettings(
+              firstDayOfWeek: 1,
           ),
           // marking weekend dates not enabled right now
           // monthCellStyle: DateRangePickerMonthCellStyle(weekendDatesDecoration: BoxDecoration(border: Border(bottom: BorderSide(color: Theme.of(context).highlightColor)) ),),
@@ -467,13 +494,22 @@ class _TimeFilterState extends State<TimeFilter> {
       ),
       Padding(
         padding: EdgeInsets.all(20),
-        child: getShowResultsButton(
-            context: context,
-            function: Provider.of<SearchNotifier>(context, listen: false)
-                .changeStartEndDate,
-            functionArguments: {#startDate: startDate, #endDate: endDate}),
-      )
-    ]);
+          child: getShowResultsButton(
+              context: context,
+              functionAccept:
+                  Provider.of<SearchNotifier>(context, listen: false)
+                      .changeStartEndDate,
+              functionArgumentsAccept: {
+                #startDate: startDate,
+                #endDate: endDate
+              },
+              functionReset: Provider.of<SearchNotifier>(context, listen: false)
+                  .resetStartEndDate,
+              functionArgumentsReset: {},
+              closeDialog: true),
+        )
+      ]);
+    });
   }
 }
 

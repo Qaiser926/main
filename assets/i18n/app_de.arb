@@ -105,9 +105,14 @@
   "minimum": "Minimum",
   "maximum": "Maximum",
   "priceRangeDescription": "Preisspanne",
-  "clearAll": "Zurücksetzen",
+  "clear": "Zurücksetzen",
   "showResults": "Ergebnisse",
+  "clearFilter": "Filter Zurücksetzen",
   "free": "Gratis",
+  "unlimited": "Unlimitiert",
+
+  "search": "Suche",
+  "results": "Suchergebnisse",
 
   "from": "Von",
   "to": "Bis",
@@ -125,6 +130,11 @@
 
   "noResultsFound": "Keine Ergebnisse gefunden für Suchkriterien",
 
+  "closeAppDialog": "Möchtest du die App schließen?",
+    "confirm": "Bestätigen",
+     "cancel": "Abbrechen",
+
+    "showAll": "Mehr Zeigen",
 
 
   "entertainment": "Entertainment",

@@ -7,7 +7,7 @@ import '../../../modules/models/id_list/id_list.dart';
 import '../../../utils/services/data_handling/keep_alive_future_builder.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../../utils/ui/future_service.dart';
-import '../../../widgets/disccover_horizontally.dart';
+import '../../../widgets/discover_horizontally.dart';
 
 enum ListFunction {
   getEAIdsForCategory,
@@ -51,7 +51,7 @@ class ExploreCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    categoryName = CategoryIdToI18nMapper.fckMethod(context, categoryId);
+    categoryName = CategoryIdToI18nMapper.getCategoryName(context, categoryId);
     late Future<Object> eAIds = getFutureList(
         functionParameter: categoryId,
         listFunction: ListFunction.getEAIdsForCategory);
@@ -93,7 +93,7 @@ Widget getContent(String heading, Map<String, dynamic> jsonData) {
       throw EmptyList;
     }
     return BaseDiscoveryClass(
-      heading: heading,
+      caption: heading,
       Ids: eAIds.eaIdList,
       showMore: false,
     );

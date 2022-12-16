@@ -107,9 +107,15 @@
   "minimum": "Minimum",
   "maximum": "Maximum",
   "priceRangeDescription": "Price range",
-  "clearAll": "Clear all",
+  "clear": "Clear",
   "showResults": "Show results",
+  "clearFilter": "Reset Filter",
   "free": "Free",
+  "unlimited": "Unlimited",
+
+  "search": "Search",
+  "results": "Search Results",
+
   "from": "From",
   "to": "To",
   "location": "Location",
@@ -124,6 +130,12 @@
   "popularity": "Popularity",
 
   "noResultsFound": "No results found for search criteria",
+
+  "closeAppDialog": "Do you want to exit the App?",
+   "confirm": "Confirm",
+   "cancel": "Cancel",
+
+   "showMore": "Show More",
 
   "entertainment": "Unterhaltung",
   "@entertainment": {

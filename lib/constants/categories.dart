@@ -208,7 +208,7 @@ class Subcategories {
 }
 
 class CategoryIdToI18nMapper {
-  static String fckMethod(BuildContext context, String id) {
+  static String getCategoryName(BuildContext context, String id) {
     switch (id) {
       case "d8b2b112-90ff-4783-b562-bc41837c8153":
         {

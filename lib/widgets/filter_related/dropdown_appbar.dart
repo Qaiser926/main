@@ -9,16 +9,15 @@ class DropDownAppBar extends AppBar {
   final String appBarTitle;
   final BuildContext context;
 
-  DropDownAppBar({required this.appBarTitle, required this.context, super.key})
+  DropDownAppBar(
+      {required this.appBarTitle,
+      required this.context,
+      super.key,
+      bool automaticallyImplyLeading = true})
       : super(
             title: Text(appBarTitle),
-            // leading: IconButton(
-            //   icon: Icon(Icons.arrow_back, ),
-            //   onPressed: () {
-            //     print(1);
-            //     Navigator.of(context).pop();} ,
-            // ),
             elevation: 0,
+            automaticallyImplyLeading: automaticallyImplyLeading,
             bottom: PreferredSize(
               preferredSize: const Size(double.infinity, 50),
               child: Column(

@@ -3,15 +3,56 @@ import 'package:flutter/material.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
+import '../../constants/app_constants.dart';
+import '../../constants/categories.dart';
+
 class SearchNotifier extends ChangeNotifier {
+  // Pagecontroller related
+  bool isControllerSet = false;
+  final PageController _pageController;
+
+  PageController getPageController() {
+    return _pageController;
+  }
+
+  int currentIndex = 0;
+
+  set setIndex(int newPage) {
+    currentIndex = newPage;
+    _pageController.jumpToPage(currentIndex);
+    notifyListeners();
+  }
+
+  void goToResultPage() {
+    currentIndex = NavigatorConstants.ResultPageIndex;
+    _pageController.jumpToPage(currentIndex);
+  }
+
+  void goToSearchPage() {
+    currentIndex = NavigatorConstants.SearchPageIndex;
+    _pageController.jumpToPage(currentIndex);
+  }
+
+  void goToShowMorePage(
+      {required String showMoreCaption,
+      required List<String?> showMoreIds,
+      required String showMoreCategoryTitle}) {
+    currentIndex = NavigatorConstants.ShowMorePageIndex;
+    _pageController.jumpToPage(currentIndex);
+    this.showMoreCaption = showMoreCaption;
+    this.showMoreIds = showMoreIds;
+    this.showMoreCategoryTitle = showMoreCategoryTitle;
+    notifyListeners();
+  }
+
+  // Search query related
   bool priceFilterActivated = false;
-  bool showCategoryFilter = false;
   bool timeFilterActivated = false;
   bool sortFilterActivated = false;
   bool typeFilterActivated = false;
   bool categoryFilterActivated = false;
 
-  // keep below like it!
+  // keep below like it is!
   late String? timeCaption = null;
   late RangeValues defaultPriceRange;
   late RangeValues priceRange;
@@ -27,18 +68,39 @@ class SearchNotifier extends ChangeNotifier {
   late List<String> selectedCategoryIds;
   late List<String> defalutSelectedCategoryIds;
 
+  void backToDefault() {
+    priceRange = defaultPriceRange;
+    eAType = EAType.eventsActivites;
+    startDate = defaultStartDate;
+    endDate = defaultEndDate;
+    priceRange = defaultPriceRange;
+    sortCriteria = null;
+    selectedCategoryIds = defalutSelectedCategoryIds;
+    timeCaption = null;
+    priceFilterActivated = false;
+    timeFilterActivated = false;
+    sortFilterActivated = false;
+    typeFilterActivated = false;
+    categoryFilterActivated = false;
+    notifyListeners();
+  }
+
   SearchNotifier(
-      {required priceRange,
+      {priceRange = const RangeValues(
+          NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
       startDate,
-      required endDate,
-      required this.sortCriteria,
-      required this.eAType,
-      required selectedCategoryIds}) {
+      endDate,
+      this.sortCriteria = null,
+      this.eAType = EAType.eventsActivites,
+      selectedCategoryIds,
+      required PageController pageController})
+      : _pageController = pageController {
     this.priceRange = this.defaultPriceRange = priceRange;
     this.startDate = this.defaultStartDate = startDate ?? DateTime.now();
-    this.endDate = this.defaultEndDate = endDate;
-    this.selectedCategoryIds =
-        this.defalutSelectedCategoryIds = selectedCategoryIds;
+    this.endDate =
+        this.defaultEndDate = endDate ?? DateTime(DateTime.now().year + 2);
+    this.selectedCategoryIds = this.defalutSelectedCategoryIds =
+        selectedCategoryIds ?? categoryIdToSubcategoryIds.keys.toList();
   }
 
   RangeValues get getPriceRange => priceRange;
@@ -55,17 +117,49 @@ class SearchNotifier extends ChangeNotifier {
 
   List<String> get getSelectedCategoryIds => selectedCategoryIds;
 
-  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
-    showCategoryFilter = true;
-    categoryFilterActivated = true;
-    this.selectedCategoryIds = selectedCategoryIds;
-    notifyListeners();
-  }
+  // show more page related
+  late String showMoreCaption;
+  late List<String?> showMoreIds;
+  late String showMoreCategoryTitle;
 
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
-    showCategoryFilter = true;
+    notifyListeners();
+    goToResultPage();
+  }
+
+  bool priceReset = false;
+
+  void setPriceResetFalse() {
+    priceReset = false;
+  }
+
+  void resetPriceRange() {
+    priceRange = defaultPriceRange;
+    priceReset = true;
+    priceFilterActivated = false;
+
+    notifyListeners();
+  }
+
+  bool dateReset = false;
+
+  void setDateResetFalse() {
+    dateReset = false;
+  }
+
+  void resetStartEndDate() {
+    startDate = defaultStartDate;
+    endDate = defaultEndDate;
+    dateReset = true;
+    timeFilterActivated = false;
+    timeCaption = null;
+    notifyListeners();
+  }
+
+  void setTimeCaption({required String? caption}) {
+    this.timeCaption = caption;
     notifyListeners();
   }
 
@@ -76,64 +170,62 @@ class SearchNotifier extends ChangeNotifier {
     this.startDate = startDate;
     this.endDate = endDate;
     timeFilterActivated = true;
-    showCategoryFilter = true;
     if (caption != null) {
       this.timeCaption = caption;
     }
     notifyListeners();
+    goToResultPage();
+  }
+
+  void setSortCriteria({required SortCriteria? sortCriteria}) {
+    this.sortCriteria = sortCriteria;
   }
 
   void changeSortCriteria({required SortCriteria? sortCriteria}) {
     if (sortCriteria != null) {
       this.sortFilterActivated = true;
-      showCategoryFilter = true;
-    } else {
-      showCategoryFilter = false;
     }
     this.sortCriteria = sortCriteria;
     notifyListeners();
+    goToResultPage();
+  }
+
+  void resetSort() {
+    sortCriteria = null;
+    notifyListeners();
+  }
+
+  void resetEAType() {
+    eAType = EAType.eventsActivites;
+    notifyListeners();
+  }
+
+  void setEAType({required EAType? eAType}) {
+    this.eAType = eAType;
   }
 
   void changeEAType({required EAType? eAType}) {
     if (eAType != null) {
       this.typeFilterActivated = true;
-      showCategoryFilter = true;
-    } else {
-      showCategoryFilter = false;
     }
     this.eAType = eAType;
     notifyListeners();
+    goToResultPage();
   }
 
-  void setTimeCaption({required String? caption}) {
-    this.timeCaption = caption;
+  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
+    categoryFilterActivated = true;
+    this.selectedCategoryIds = selectedCategoryIds;
     notifyListeners();
+    goToResultPage();
   }
 
-  bool isShowResults() {
+  bool anyFilterActivated() {
     return priceFilterActivated |
         timeFilterActivated |
         sortFilterActivated |
         typeFilterActivated |
         categoryFilterActivated;
-  }
-
-  void backToDefault({showCategoryFilterReset = true}) {
-    priceRange = defaultPriceRange;
-    priceFilterActivated = false;
-    startDate = defaultStartDate;
-    endDate = defaultEndDate;
-    timeFilterActivated = false;
-    sortCriteria = null;
-    eAType = null;
-    sortFilterActivated = false;
-    typeFilterActivated = false;
-    categoryFilterActivated = false;
-    selectedCategoryIds = defalutSelectedCategoryIds;
-    if (showCategoryFilterReset) {
-      showCategoryFilter = false;
-    }
-    notifyListeners();
   }
 
   SearchQuery getSearchQuery() {
@@ -149,13 +241,13 @@ class SearchNotifier extends ChangeNotifier {
 }
 
 class SearchQuery {
-  final DateTime? startDate;
-  final DateTime? endDate;
-  final double? minPrice;
-  final double? maxPrice;
+  final DateTime startDate;
+  final DateTime endDate;
+  final double minPrice;
+  final double maxPrice;
   final SortCriteria? sortCriteria;
   final EAType? eAType;
-  final List<String>? selectedCategoryIds;
+  final List<String> selectedCategoryIds;
 
   SearchQuery(
       {required this.startDate,

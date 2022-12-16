@@ -92,9 +92,12 @@ class CategoryGridItem extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: WidgetConstants.categoryGridItemTextWidth,
-                          child: Flexible(
-                              child: Text(CategoryIdToI18nMapper.fckMethod(
-                                  context, categoryId))),
+                          child: Text(
+                            CategoryIdToI18nMapper.getCategoryName(
+                                context, categoryId),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                         const Spacer(),
                         Consumer<ExpandedCategoryNotifier>(

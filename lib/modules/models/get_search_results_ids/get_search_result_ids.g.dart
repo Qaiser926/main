@@ -6,15 +6,15 @@ part of 'get_search_result_ids.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchResultsIds _$SearchResultsIdsFromJson(Map<String, dynamic> json) =>
-    SearchResultsIds(
+SearchResultIds _$SearchResultsIdsFromJson(Map<String, dynamic> json) =>
+    SearchResultIds(
       searchResultIds: (json['searchResultIds'] as Map<String, dynamic>).map(
         (k, e) =>
             MapEntry(k, (e as List<dynamic>).map((e) => e as String?).toList()),
       ),
     );
 
-Map<String, dynamic> _$SearchResultsIdsToJson(SearchResultsIds instance) =>
+Map<String, dynamic> _$SearchResultsIdsToJson(SearchResultIds instance) =>
     <String, dynamic>{
       'searchResultIds': instance.searchResultIds,
     };
