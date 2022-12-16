@@ -36,16 +36,17 @@ class _SearchPageState extends State<SearchPage>
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: notifier,
-          )
-        ],
-        child: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: SearchPage._pages,
-        ));
+      providers: [
+        ChangeNotifierProvider.value(
+          value: notifier,
+        )
+      ],
+      child: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: SearchPage._pages,
+      ),
+    );
   }
 
   @override
