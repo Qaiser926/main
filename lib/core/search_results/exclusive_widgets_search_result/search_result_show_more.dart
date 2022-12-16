@@ -44,7 +44,6 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/search_results/exclusive_widgets_search_result/search_result_scroll_view.dart';
 import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
 import 'package:othia/widgets/filter_related/search_notifier.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../widgets/nav_bar/nav_bar.dart';
@@ -89,9 +88,9 @@ class _HorizontalResultPage extends State<SearchResultsAll> {
                 selectedCategoryIds: searchQuery.selectedCategoryIds,
                 pageState: PageState.resultScreen),
           ),
-          ChangeNotifierProvider.value(
-            value: NavigationBarNotifier(),
-          ),
+          // ChangeNotifierProvider.value(
+          //   value: NavigationBarNotifier(),
+          // ),
         ],
             builder: (context, child) {
               Provider.of<SearchNotifier>(context, listen: false)

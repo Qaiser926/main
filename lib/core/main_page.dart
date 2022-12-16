@@ -28,18 +28,18 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // navBarNotifier.setPageController(_pageController);
     return WillPopScope(
-      child: return MultiProvider(
-    providers: [
-    ChangeNotifierProvider.value(
-    value: NavigationBarNotifier(pageController: _pageController),
-    ),
-    ],
-    child: Scaffold(
-    bottomNavigationBar: const CustomNavigationBar(),
-    body: PageView(
-    controller: _pageController,
-    physics: const NeverScrollableScrollPhysics(),
-    children: _pages,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: NavigationBarNotifier(pageController: _pageController),
+          ),
+        ],
+        child: Scaffold(
+            bottomNavigationBar: const CustomNavigationBar(),
+            body: PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: _pages,
     )),
     ),
       onWillPop: () => closeAppDialog(context),

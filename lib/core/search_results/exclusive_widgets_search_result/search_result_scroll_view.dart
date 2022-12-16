@@ -46,7 +46,7 @@ class SearchScrollView extends StatelessWidget {
           if (index == 0) showDivider = false;
           return BaseDiscoveryClass(
             Ids: searchResultIds.searchResultIds[key]!,
-            caption: CategoryIdToI18nMapper.fckMethod(context, key),
+            caption: CategoryIdToI18nMapper.getCategoryName(context, key),
             showDivider: showDivider,
           );
         });
