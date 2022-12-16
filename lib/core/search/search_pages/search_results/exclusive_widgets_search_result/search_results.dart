@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/widgets/filter_related/search_notifier.dart';
 
-import '../../modules/models/get_search_results_ids/get_search_result_ids.dart';
-import '../../utils/services/rest-api/rest_api_service.dart';
-import '../../utils/ui/future_service.dart';
-import '../../widgets/filter_related/search_notifier.dart';
-import 'exclusive_widgets_search_result/search_result_scroll_view.dart';
 import '../../../../../modules/models/get_search_results_ids/get_search_result_ids.dart';
-import '../../../../../widgets/splash_screen.dart';
+import '../../../../../utils/ui/future_service.dart';
 import 'search_result_scroll_view.dart';
 
 class SearchResults extends StatefulWidget {

@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/home/home_page.dart';
 import 'package:othia/core/search/search.dart';
 import 'package:provider/provider.dart';
 
-import '../config/routes/routes.dart';
 import '../widgets/nav_bar/nav_bar.dart';
 import '../widgets/nav_bar/nav_bar_notifier.dart';
 import 'add/add.dart';
 import 'favourites/favourite_screen.dart';
 
 class MainPage extends StatelessWidget {
-  static const List<Widget> _pages = [
+  static final List<Widget> _pages = [
     Home(),
     SearchPage(),
     const Add(),

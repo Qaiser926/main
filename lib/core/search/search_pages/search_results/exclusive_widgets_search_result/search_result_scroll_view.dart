@@ -4,7 +4,6 @@ import 'package:othia/core/favourites/exclusive_widgets/favourite_list_item.dart
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_search_results_ids/get_search_result_ids.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
-import 'package:othia/utils/services/exceptions.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/discover_horizontally.dart';
@@ -83,16 +82,8 @@ Widget getSearchResultSliverSection(
             return KeepAliveFutureBuilder(
                 future: eASummary,
                 builder: (context, snapshot) {
-                  try {
-                    Map<String, dynamic> decodedJson =
-                        snapshotHandler(snapshot);
-                    SummaryEventOrActivity eASummary =
-                        SummaryEventOrActivity.fromJson(decodedJson);
-                    return getFavouriteListItem(context, eASummary);
-                  } on StillLoading {
-                    //TODO better widget while future still loading
-                    return CircularProgressIndicator();
-                  }
+                  return snapshotHandler(
+                      snapshot, getFutureResultContent, [context]);
                 });
           } else {
             return null;
@@ -101,4 +92,11 @@ Widget getSearchResultSliverSection(
       ],
     );
   }
+}
+
+Widget getFutureResultContent(
+    BuildContext context, Map<String, dynamic> decodedJson) {
+  SummaryEventOrActivity eASummary =
+      SummaryEventOrActivity.fromJson(decodedJson);
+  return getFavouriteListItem(context, eASummary);
 }
