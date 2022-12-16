@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 
+import '../../core/test.dart';
+
 class NavigationBarNotifier extends ChangeNotifier {
-  static final NavigationBarNotifier _navigationBarNotifier =
-      NavigationBarNotifier._internal();
   int index = 0;
-  late final PageController pageController;
+  final PageController pageController;
+
+  final TestNotifier _testNotifier;
+
+  NavigationBarNotifier({required this.pageController})
+      : _testNotifier =
+            TestNotifier(pageController: PageController(initialPage: 0));
 
   int get getIndex => index;
 
-  factory NavigationBarNotifier() {
-    return _navigationBarNotifier;
-  }
-
-  NavigationBarNotifier._internal();
-
-  void setPageController(PageController pageController) {
-    this.pageController = pageController;
-  }
+  TestNotifier get getTestNotifier => _testNotifier;
 
   void setIndex({required int index, required BuildContext context}) {
     this.index = index;
+
     pageController.jumpToPage(index);
     notifyListeners();
   }

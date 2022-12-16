@@ -3,50 +3,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/search/search.dart';
 import 'package:othia/core/settings/settings.dart';
+import 'package:othia/core/test.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';
 import '../widgets/nav_bar/nav_bar_notifier.dart';
 import 'add/add.dart';
-import 'detailed/detailed_event.dart';
 import 'favourites/favourite_screen.dart';
 
 class MainPage extends StatelessWidget {
-  static const List<Widget> _pages = [
+  static final List<Widget> _pages = [
     // TODO insert HOME instead of EventDetail
-    EventDetail(),
-    SearchPage(),
-    Add(),
-    FavouritePage(),
-    SettingsPage()
+    TestPageBabo(),
+    const SearchPage(),
+    const Add(),
+    const FavouritePage(),
+    const SettingsPage(),
   ];
-  late final PageController _pageController;
+  final PageController _pageController = PageController(initialPage: 0);
 
-  late NavigationBarNotifier navBarNotifier;
-
-  MainPage({Key? key})
-      : navBarNotifier = NavigationBarNotifier(),
-        _pageController = PageController(initialPage: 0),
-        super(key: key) {}
+  MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // navBarNotifier.setPageController(_pageController);
     return WillPopScope(
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: NavigationBarNotifier(),
-          )
-        ],
-        child: Scaffold(
-            bottomNavigationBar: const CustomNavigationBar(),
-            body: PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: _pages,
-            )),
-      ),
+      child: return MultiProvider(
+    providers: [
+    ChangeNotifierProvider.value(
+    value: NavigationBarNotifier(pageController: _pageController),
+    ),
+    ],
+    child: Scaffold(
+    bottomNavigationBar: const CustomNavigationBar(),
+    body: PageView(
+    controller: _pageController,
+    physics: const NeverScrollableScrollPhysics(),
+    children: _pages,
+    )),
+    ),
       onWillPop: () => closeAppDialog(context),
     );
   }

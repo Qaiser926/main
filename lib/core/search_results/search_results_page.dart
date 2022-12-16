@@ -46,8 +46,6 @@ import 'package:provider/provider.dart';
 import '../../constants/app_constants.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 import '../../widgets/filter_related/search_notifier.dart';
-import '../../widgets/nav_bar/nav_bar.dart';
-import '../../widgets/nav_bar/nav_bar_notifier.dart';
 
 class SearchResultsPage extends StatefulWidget {
   @override
@@ -72,42 +70,40 @@ class _HorizontalResultPage extends State<SearchResultsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: MultiProvider(
-            providers: [
-          ChangeNotifierProvider.value(
-            value: SearchNotifier(
-                priceRange:
-                    RangeValues(searchQuery.minPrice, searchQuery.maxPrice),
-                endDate: searchQuery.endDate,
-                startDate: searchQuery.startDate,
-                sortCriteria: searchQuery.sortCriteria,
-                eAType: searchQuery.eAType,
-                selectedCategoryIds: searchQuery.selectedCategoryIds,
-                pageState: PageState.resultScreen),
-          ),
-          ChangeNotifierProvider.value(
-            value: NavigationBarNotifier(),
-          ),
-        ],
-            builder: (context, child) {
-              Provider.of<SearchNotifier>(context, listen: false)
-                  .setFilterState(filterState);
-              return Scaffold(
+      child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(
+              value: SearchNotifier(
+                  priceRange:
+                      RangeValues(searchQuery.minPrice, searchQuery.maxPrice),
+                  endDate: searchQuery.endDate,
+                  startDate: searchQuery.startDate,
+                  sortCriteria: searchQuery.sortCriteria,
+                  eAType: searchQuery.eAType,
+                  selectedCategoryIds: searchQuery.selectedCategoryIds,
+                  pageState: PageState.resultScreen),
+            ),
+          ],
+          builder: (context, child) {
+            Provider.of<SearchNotifier>(context, listen: false)
+                .setFilterState(filterState);
+            return Scaffold(
+              primary: true,
+              body: Consumer<SearchNotifier>(builder: (context, model, child) {
+                // if (model.isShowResults()) {
+                //   Navigator.pushNamed(context, Routes.detailedEventRoute);
+                // }
+                return Scaffold(
                   primary: true,
-                  bottomNavigationBar: const CustomNavigationBar(),
-                  body: Consumer<SearchNotifier>(
-                      builder: (context, model, child) {
-                    // if (model.isShowResults()) {
-                    //   Navigator.pushNamed(context, Routes.detailedEventRoute);
-                    // }
-                    return Scaffold(
-                        primary: true,
-                        appBar: DropDownAppBar(
-                            context: context, appBarTitle: "Search"),
-                        body: SearchResults(
-                          searchQuery: searchQuery,
-                        ));
-                  }));
-            }));
+                  appBar:
+                      DropDownAppBar(context: context, appBarTitle: "Search"),
+                  body: SearchResults(
+                    searchQuery: searchQuery,
+                  ),
+                );
+              }),
+            );
+          }),
+    );
   }
 }

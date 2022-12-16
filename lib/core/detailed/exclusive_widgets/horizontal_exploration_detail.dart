@@ -51,7 +51,7 @@ class ExploreCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    categoryName = CategoryIdToI18nMapper.fckMethod(context, categoryId);
+    categoryName = CategoryIdToI18nMapper.getCategoryName(context, categoryId);
     late Future<Object> eAIds = getFutureList(
         functionParameter: categoryId,
         listFunction: ListFunction.getEAIdsForCategory);

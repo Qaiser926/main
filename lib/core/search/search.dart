@@ -45,8 +45,6 @@ import '../../constants/categories.dart';
 import '../../widgets/category_filter/category_filter.dart';
 import '../../widgets/filter_related/dropdown_appbar.dart';
 import '../../widgets/filter_related/search_notifier.dart';
-import '../../widgets/nav_bar/nav_bar.dart';
-import '../../widgets/nav_bar/nav_bar_notifier.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -67,13 +65,11 @@ class SearchPage extends StatelessWidget {
                   eAType: EAType.eventsActivites,
                   selectedCategoryIds: defaultSelectedCategoryIds),
             ),
-            ChangeNotifierProvider.value(value: NavigationBarNotifier()),
           ],
           builder: (context, child) {
             return Consumer<SearchNotifier>(builder: (context, model, child) {
               return Scaffold(
                   primary: true,
-                  bottomNavigationBar: const CustomNavigationBar(),
                   appBar:
                       DropDownAppBar(context: context, appBarTitle: "Search"),
                   // here the category pictures

@@ -4,8 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../core/search/search.dart';
-
 Widget getShowResultsButton(
     {required BuildContext context,
     required Function functionAccept,
@@ -17,26 +15,29 @@ Widget getShowResultsButton(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Expanded(
-          flex: 1,
-          child: GestureDetector(
-              onTap: () {
-                Get.back();
-                // Navigator.popUntil(context, (route) {
-
-                //   if (route == Routes.mainScreenRoute) {
-                //     return true;
-                //   } else {
-                //     return false;
-                //   }
-                // });
-                Get.offAll(
-                  SearchPage(),
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.all(12),
-                child: Text(AppLocalizations.of(context)!.clearAll),
-              ))),
+        flex: 1,
+        child: GestureDetector(
+          onTap: () {
+            // NavigatorConstants.doubleBackToPrev();
+            // Get.back(id: 1,canPop: true);
+            // navigator.popUntil(context, (route) {
+            //
+            //   if (route == Routes.mainScreenRoute) {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // });
+            // Get.offAllNamed(
+            //   Routes.mainScreenRoute,
+            // );
+          },
+          child: Container(
+            padding: EdgeInsets.all(12),
+            child: Text(AppLocalizations.of(context)!.clearAll),
+          ),
+        ),
+      ),
       Expanded(
           flex: 1,
           child: ElevatedButton(

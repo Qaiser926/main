@@ -145,7 +145,7 @@ String getCategoryCaption({required BuildContext context}) {
     return AppLocalizations.of(context)!.category;
   } else if (categoryIds.length == 1) {
     String tempCategory =
-        CategoryIdToI18nMapper.fckMethod(context, categoryIds[0]);
+    CategoryIdToI18nMapper.getCategoryName(context, categoryIds[0]);
     return getShortCaption(caption: tempCategory, cutOff: 20);
   } else {
     Map<String, List<String>> categorySubcategoryMap =
@@ -155,7 +155,7 @@ String getCategoryCaption({required BuildContext context}) {
         in categorySubcategoryMap.entries) {
       if (item.value.contains(categoryIds[0])) {
         String tempCategory =
-            CategoryIdToI18nMapper.fckMethod(context, item.key);
+        CategoryIdToI18nMapper.getCategoryName(context, item.key);
         return getShortCaption(cutOff: 20, caption: tempCategory);
       }
     }
