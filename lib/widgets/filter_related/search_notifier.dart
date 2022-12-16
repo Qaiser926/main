@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:othia/widgets/category_filter/exclusives/selected_subcategory_notifier.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
 import '../../constants/categories.dart';
@@ -211,6 +213,20 @@ class SearchNotifier extends ChangeNotifier {
     this.eAType = eAType;
     notifyListeners();
     goToResultPage();
+  }
+
+  void resetCategoryList({required BuildContext context}) {
+    categoryFilterActivated = false;
+    this.selectedCategoryIds = [];
+    Provider.of<SelectedSubcategoryNotifier>(context, listen: false)
+        .resetSelectedSubcategories();
+    notifyListeners();
+  }
+
+  void setCategoryIdList({required List<String> selectedCategoryIds}) {
+    categoryFilterActivated = true;
+    this.selectedCategoryIds = selectedCategoryIds;
+    notifyListeners();
   }
 
   void changeCategoryIdList({required List<String> selectedCategoryIds}) {

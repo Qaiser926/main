@@ -39,7 +39,7 @@ class ExpandedWidget extends StatelessWidget {
       bool isModalBottomMode = model.isModalBottomMode;
       if (subcategoryIds.isNotEmpty) {
         return MultiProvider(
-          // key: key,
+            // key: key,
             providers: [
               ChangeNotifierProvider.value(
                 value:
@@ -99,10 +99,9 @@ class ExpandedWidget extends StatelessWidget {
                 .changeCategoryIdList,
             functionArgumentsAccept: {#selectedCategoryIds: list},
             closeDialog: isModalBottomMode,
-            functionReset:
-                Provider.of<SelectedSubcategoryNotifier>(context, listen: false)
-                    .resetSelectedSubcategories,
-            functionArgumentsReset: {}),
+            functionReset: Provider.of<SearchNotifier>(context, listen: false)
+                .resetCategoryList,
+            functionArgumentsReset: {#context: context}),
       ),
       // ),
     );
@@ -110,60 +109,63 @@ class ExpandedWidget extends StatelessWidget {
     return result;
   }
 
-  // child: Wrap(
-  //
-  // children: getTimeButtons(context: context), required WrapCrossAlignment crossAxisAlignment,
-  // ),
-
   Widget getSubcategoryTextButtons(
       BuildContext context, SelectedSubcategoryNotifier model) {
-    // TODO make consumer
     return Consumer<SelectedSubcategoryNotifier>(
-        builder: (context, model, child) {
-      return Wrap(
-        crossAxisAlignment: WrapCrossAlignment.start,
-        alignment: WrapAlignment.start,
-        children: List<Widget>.generate(
-          subcategoryIds.length,
-          (index) => SizedBox(
-            height: singleExpandedHeight,
-            // width: singleExpandedWidth,
-            child: GestureDetector(
-              // behavior: HitTestBehavior.translucent,
-              onTap: () {
-                var categoryProvider = Provider.of<SelectedSubcategoryNotifier>(
-                    context,
-                    listen: false);
-                categoryProvider.switchSelectedSubcategory(index);
-              },
-              child: Container(
-                height: singleExpandedHeight - 8,
-                padding: const EdgeInsets.all(4),
-                margin: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  border: model.isSelected(index)
-                      ? Border.all(color: primaryColor, width: 2.5)
-                      : Border.all(color: bgColor, width: 2.5),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                transformAlignment: Alignment.center,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(
-                          textAlign: TextAlign.center,
-                          CategoryIdToI18nMapper.getCategoryName(
-                              context, subcategoryIds[index]),
+        builder: (context, selectedSubcategoryNotifier, child) {
+      Provider.of<SearchNotifier>(context, listen: false)
+          .setCategoryIdList(selectedCategoryIds: model.selectedSubcategoryIds);
+      return Consumer<SearchNotifier>(
+          builder: (context, searchNotifier, child) {
+        Provider.of<SelectedSubcategoryNotifier>(context, listen: false)
+            .alignNotifierStati(
+                selectedCategoryIds: searchNotifier.selectedCategoryIds);
+
+        return Wrap(
+          crossAxisAlignment: WrapCrossAlignment.start,
+          alignment: WrapAlignment.start,
+          children: List<Widget>.generate(
+            subcategoryIds.length,
+            (index) => SizedBox(
+              height: singleExpandedHeight,
+              // width: singleExpandedWidth,
+              child: GestureDetector(
+                // behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  var categoryProvider =
+                      Provider.of<SelectedSubcategoryNotifier>(context,
+                          listen: false);
+                  categoryProvider.switchSelectedSubcategory(index);
+                },
+                child: Container(
+                  height: singleExpandedHeight - 8,
+                  padding: const EdgeInsets.all(4),
+                  margin: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    border: selectedSubcategoryNotifier.isSelected(index)
+                        ? Border.all(color: primaryColor, width: 2.5)
+                        : Border.all(color: bgColor, width: 2.5),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  transformAlignment: Alignment.center,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            CategoryIdToI18nMapper.getCategoryName(
+                                context, subcategoryIds[index]),
+                          ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
+      });
     });
   }
 }

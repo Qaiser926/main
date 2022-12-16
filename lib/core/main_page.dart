@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/home/home_page.dart';
 import 'package:othia/core/search/search.dart';
 // import 'package:othia/core/settings/settings.dart';
@@ -56,7 +57,10 @@ Future<bool> closeAppDialog(
   int currentSearchIndex = notifier.getSearchNotifier.currentIndex;
 
   bool? shouldPop;
-  if (currentSearchIndex != 0) {
+  if (currentSearchIndex != NavigatorConstants.SearchPageIndex) {
+    if (currentSearchIndex - 1 == NavigatorConstants.SearchPageIndex) {
+      notifier.getSearchNotifier.backToDefault();
+    }
     notifier.getSearchNotifier.setIndex = currentSearchIndex - 1;
   } else {
     shouldPop = await showDialog<bool>(

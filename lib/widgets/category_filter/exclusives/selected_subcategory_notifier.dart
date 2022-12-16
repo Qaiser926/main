@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:othia/constants/categories.dart';
 
 class SelectedSubcategoryNotifier extends ChangeNotifier {
   List<bool> _selectedSubcategories = [];
@@ -33,5 +34,23 @@ class SelectedSubcategoryNotifier extends ChangeNotifier {
           : null;
     }
     return result;
+  }
+
+  void alignNotifierStati({required List<String?> selectedCategoryIds}) {
+    if (selectedCategoryIds.length == 1) {
+      for (MapEntry<String, List<String>> item
+          in categoryIdToSubcategoryIds.entries) {
+        if (item.key == selectedCategoryIds[0]) {
+          selectedCategoryIds = item.value;
+          break;
+        }
+      }
+    }
+    for (var i = 0; i < selectedCategoryIds.length; i++) {
+      int index = subcategoryIds.indexOf(selectedCategoryIds[i]!);
+      if (index != -1) {
+        _selectedSubcategories[index] = true;
+      }
+    }
   }
 }
