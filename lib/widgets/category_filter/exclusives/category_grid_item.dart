@@ -132,9 +132,9 @@ class CategoryGridItem extends StatelessWidget {
     SearchNotifier categoryProvider =
         Provider.of<SearchNotifier>(context, listen: false);
     if (categoryProvider.getExpandedIndex == index) {
-      categoryProvider.setExpanded(index: null, categoryId: null);
+      categoryProvider.setExpanded(index: null);
     } else {
-      categoryProvider.setExpanded(index: index, categoryId: categoryId);
+      categoryProvider.setExpanded(index: index);
     }
   }
 }
