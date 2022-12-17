@@ -8,6 +8,7 @@ import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dar
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/not_logged_in.dart';
+import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
 
 import '../../constants/colors.dart';
 import '../../utils/ui/ui_utils.dart';
@@ -78,15 +79,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget getProfilePage(Map<String, dynamic> jsonData) {
     UserInfo userInfo = UserInfo.fromJson(jsonData);
-    return ListView(
-      primary: true,
-      shrinkWrap: true,
-      children: [
-        buildProfileSection(context: context, userInfo: userInfo),
-        getVerSpace(20.h),
-        buildAssociatedEASeaction(userInfo: userInfo),
-      ],
-    );
+    List<Widget> slivers = [
+      SliverToBoxAdapter(
+        child: buildProfileSection(context: context, userInfo: userInfo),
+      ),
+      getSearchResultSliverSection(
+          caption: "hosted upcoming events", Ids: userInfo.upcomingEventIds),
+      getSearchResultSliverSection(
+          caption: "hosted activities", Ids: userInfo.activityIds),
+      getSearchResultSliverSection(
+          caption: "hosted past events", Ids: userInfo.pastEventIds)
+    ];
+
+    return CustomScrollView(slivers: slivers);
   }
 
   Container buildProfileSection(
@@ -116,15 +121,16 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Column buildAssociatedEASeaction({required UserInfo userInfo}) {
-    return Column(
-      children: [
-        Text(
-          "Future Events",
-          style: Theme.of(context).textTheme.headline4,
-        )
-      ],
-    );
+  Widget getVerticalDiscovery({required UserInfo userInfo}) {
+    List<Widget> slivers = [];
+    // TODO
+    slivers.add(getSearchResultSliverSection(
+        caption: "hosted upcoming events", Ids: userInfo.upcomingEventIds));
+    slivers.add(getSearchResultSliverSection(
+        caption: "hosted activities", Ids: userInfo.activityIds));
+    slivers.add(getSearchResultSliverSection(
+        caption: "hosted past events", Ids: userInfo.pastEventIds));
+    return CustomScrollView(slivers: slivers);
   }
 
   ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
