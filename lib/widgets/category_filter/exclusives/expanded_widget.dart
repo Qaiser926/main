@@ -63,7 +63,7 @@ class ExpandedWidget extends StatelessWidget {
                         children: getSubcategoryExpandableContent(
                             context, model, closeDialog),
                       ),
-                        );
+                    );
                   }),
                 )
               : const SizedBox.shrink(),
@@ -89,13 +89,8 @@ class ExpandedWidget extends StatelessWidget {
         child: getShowResultsButton(
             context: context,
             functionAccept: Provider.of<SearchNotifier>(context, listen: false)
-                .goToResultPage,
+                .showCategoryFilterResults,
             functionArgumentsAccept: {},
-            // Provider.of<SearchNotifier>(context, listen: false)
-            //     .changeCategoryIdList,
-            // functionArgumentsAccept: {
-            //   #selectedCategoryIds: selectedSubcategoryIds
-            // },
             closeDialog: closeDialog,
             functionReset: Provider.of<SearchNotifier>(context, listen: false)
                 .resetSubcategoryList,

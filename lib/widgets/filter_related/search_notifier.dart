@@ -45,7 +45,6 @@ class SearchNotifier extends ChangeNotifier {
 
   void setExpanded({
     required int? index,
-    required String? categoryId,
   }) {
     _expandedListItemIndex = index;
     notifyListeners();
@@ -78,6 +77,7 @@ class SearchNotifier extends ChangeNotifier {
   late EAType? eAType;
 
   late List<String> selectedSubcategoryIds = [];
+
   // late List<String> defaultSelectedCategoryIds = [];
 
   // show more page related
@@ -249,8 +249,13 @@ class SearchNotifier extends ChangeNotifier {
 
   void changeForFullCategorySearch(
       {required List<String> selectedCategoryIds}) {
-    categoryFilterActivated = true;
     selectedSubcategoryIds.addAll(selectedCategoryIds);
+    showCategoryFilterResults();
+  }
+
+  void showCategoryFilterResults() {
+    setExpanded(index: null);
+    categoryFilterActivated = true;
     goToResultPage();
   }
 
