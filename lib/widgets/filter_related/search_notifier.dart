@@ -43,7 +43,6 @@ class SearchNotifier extends ChangeNotifier {
   static const int numberOfCategoriesPerRow = 2;
   int? _expandedListItemIndex;
 
-
   void setExpanded({
     required int? index,
     required String? categoryId,
@@ -53,7 +52,6 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   int? get getExpandedIndex => _expandedListItemIndex;
-
 
   ////////////
 
@@ -80,7 +78,7 @@ class SearchNotifier extends ChangeNotifier {
   late EAType? eAType;
 
   late List<String> selectedSubcategoryIds = [];
-  late List<String> defaultSelectedCategoryIds = [];
+  // late List<String> defaultSelectedCategoryIds = [];
 
   // show more page related
   late String showMoreCaption;
@@ -100,6 +98,7 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   void goToResultPage() {
+    notifyListeners();
     currentIndex = NavigatorConstants.ResultPageIndex;
     _pageController.jumpToPage(currentIndex);
   }
@@ -128,7 +127,7 @@ class SearchNotifier extends ChangeNotifier {
     endDate = defaultEndDate;
     priceRange = defaultPriceRange;
     sortCriteria = null;
-    selectedSubcategoryIds = defaultSelectedCategoryIds;
+    selectedSubcategoryIds = [];
     timeCaption = null;
     priceFilterActivated = false;
     timeFilterActivated = false;
@@ -155,7 +154,7 @@ class SearchNotifier extends ChangeNotifier {
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
-    notifyListeners();
+
     goToResultPage();
   }
 
@@ -199,7 +198,7 @@ class SearchNotifier extends ChangeNotifier {
     if (caption != null) {
       this.timeCaption = caption;
     }
-    notifyListeners();
+
     goToResultPage();
   }
 
@@ -212,7 +211,7 @@ class SearchNotifier extends ChangeNotifier {
       this.sortFilterActivated = true;
     }
     this.sortCriteria = sortCriteria;
-    notifyListeners();
+
     goToResultPage();
   }
 
@@ -235,13 +234,12 @@ class SearchNotifier extends ChangeNotifier {
       this.typeFilterActivated = true;
     }
     this.eAType = eAType;
-    notifyListeners();
     goToResultPage();
   }
 
   void resetSubcategoryList({required BuildContext context}) {
     categoryFilterActivated = false;
-    this.selectedSubcategoryIds = [];
+    selectedSubcategoryIds = [];
     if (!anyFilterActivated()) {
       if (currentIndex != NavigatorConstants.SearchPageIndex) Get.back();
       goToSearchPage();
@@ -249,10 +247,10 @@ class SearchNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
+  void changeForFullCategorySearch(
+      {required List<String> selectedCategoryIds}) {
     categoryFilterActivated = true;
-    this.selectedSubcategoryIds = selectedCategoryIds;
-    notifyListeners();
+    selectedSubcategoryIds.addAll(selectedCategoryIds);
     goToResultPage();
   }
 
