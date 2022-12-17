@@ -1,12 +1,24 @@
 //
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:get/get_core/src/get_main.dart';
 //
 // import '../../utils/ui/ui_utils.dart';
 //
 //
 // class TabProfile extends StatefulWidget {
 //   const TabProfile({Key? key}) : super(key: key);
+//
+//   @override
+//   void initState() {
+//     // TODO how to receive the user id?
+//     String eventId = Get.arguments[NavigatorConstants.EventActivityId] ?? "1";
+//     if (eventId != null)
+//     detailedEventOrActivity =
+//         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
+//
+//     super.initState();
+//   }
 //
 //   @override
 //   State<TabProfile> createState() => _TabProfileState();

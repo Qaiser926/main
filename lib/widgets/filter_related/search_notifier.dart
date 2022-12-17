@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
@@ -42,8 +43,6 @@ class SearchNotifier extends ChangeNotifier {
   static const int numberOfCategoriesPerRow = 2;
   int? _expandedListItemIndex;
 
-  //TODO seems to be unused
-  bool isModalBottomMode = true;
 
   void setExpanded({
     required int? index,
@@ -55,7 +54,6 @@ class SearchNotifier extends ChangeNotifier {
 
   int? get getExpandedIndex => _expandedListItemIndex;
 
-  bool get getIsModalBottomMode => isModalBottomMode;
 
   ////////////
 
@@ -244,6 +242,10 @@ class SearchNotifier extends ChangeNotifier {
   void resetSubcategoryList({required BuildContext context}) {
     categoryFilterActivated = false;
     selectedSubcategoryIds = [];
+    if (!anyFilterActivated()) {
+      if (currentIndex != NavigatorConstants.SearchPageIndex) Get.back();
+      goToSearchPage();
+    }
     notifyListeners();
   }
 
