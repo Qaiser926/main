@@ -119,6 +119,9 @@
   "from": "Von",
   "to": "Bis",
 
+  "notLoggedInMessage": "Log dich ein, um die Inhalte sehen zu können!",
+  "profile": "Profil",
+
   "nextWeekend": "Nächstes Wochenende",
   "thisWeekend": "Dieses Wochenende",
   "thisWeek": "Diese Woche",

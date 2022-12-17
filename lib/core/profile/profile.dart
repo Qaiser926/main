@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 
@@ -15,7 +16,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<Object> userInfo;
 
-  bool userLoggedIn = false;
+  // TODO
+  bool userLoggedIn = true;
 
   @override
   void initState() {
@@ -31,51 +33,45 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget body;
-    Widget appBarAction;
-    if (userLoggedIn) {
-      body = getProfilePage();
-      appBarAction = GestureDetector(
-          onTap: () {
-            // TODO send to options page
-            // Constant.sendToNext(context, Routes.settingRoute);
-          },
-          child: Icon(
-            Icons.settings,
-            size: 24.h,
-          ));
-    } else {
-      body = getNotLoggedIn(context: context);
-      appBarAction = SizedBox();
-    }
-
+    Widget body = getLoggedInSensitiveBody(
+        context: context,
+        loggedInWidget: getProfilePage(),
+        isLoggedIn: userLoggedIn);
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-                toolbarHeight: 73.h,
+                toolbarHeight: 53.h,
                 elevation: 0,
                 title: Text(
-                  // TODO
-                  "Profile",
+                  AppLocalizations.of(context)!.profile,
                 ),
                 centerTitle: true,
-                actions: [appBarAction, getHorSpace(20.h)],
+                actions: [
+                  GestureDetector(
+                      onTap: () {
+                        // TODO send to options page
+                        // Constant.sendToNext(context, Routes.settingRoute);
+                      },
+                      child: Icon(
+                        Icons.settings,
+                        size: 24.h,
+                      )),
+                  getHorSpace(20.h)
+                ],
                 automaticallyImplyLeading: false),
             body: body));
   }
 
   Widget getProfilePage() {
-    return Expanded(
-        flex: 1,
-        child: ListView(
-          primary: true,
-          shrinkWrap: true,
-          children: [
-            buildProfileSection(),
-            getVerSpace(20.h),
-            // TODO include hosted event/ activity widget
-          ],
-        ));
+    return ListView(
+      primary: true,
+      shrinkWrap: true,
+      children: [
+        buildProfileSection(),
+        getVerSpace(20.h),
+        // TODO include hosted event/ activity widget
+      ],
+    );
   }
 }
 
@@ -90,8 +86,10 @@ Container buildProfileSection() {
         Stack(
           alignment: Alignment.bottomRight,
           children: [
-            // TODO
-            getAssetImage("profile_image.png", width: 110.h, height: 110.h),
+            // TODO null save profile image
+            getRoundedImage(getAssetImage("default_profile_image.jpg",
+                width: 110.h, height: 110.h)),
+            // CircleAvatar(radius: 100, backgroundImage: getAssetImage("default_profile_image.jpg", width: 110.h, height: 110.h) as ImageProvider,),
             Positioned(
                 child: Container(
               height: 30.h,

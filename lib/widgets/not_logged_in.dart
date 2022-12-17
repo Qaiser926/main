@@ -11,7 +11,11 @@ Widget getNotLoggedIn({required BuildContext context}) {
           getVerSpace(200.h),
           Column(
             children: [
-              Text(AppLocalizations.of(context)!.discover),
+              Text(
+                AppLocalizations.of(context)!.notLoggedInMessage,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              getVerSpace(10.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.h),
                 child: Expanded(

@@ -120,6 +120,10 @@
 
   "from": "From",
   "to": "To",
+
+  "notLoggedInMessage": "Log in to see this page!",
+  "profile": "Profile",
+
   "location": "Location",
   "nextWeekend": "Next Weekend",
   "thisWeekend": "This Weekend",

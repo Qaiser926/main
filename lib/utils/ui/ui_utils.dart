@@ -42,7 +42,7 @@ AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
   );
 }
 
-Widget getRoundImage(Image image) {
+Widget getRoundedImage(Image image) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(31),
     child: Container(child: image),
@@ -136,40 +136,4 @@ BoxDecoration getButtonDecoration(Color? bgColor,
       image: image);
 }
 
-Widget getRichText(
-    {required String firstText,
-    required Color firstColor,
-    required FontWeight firstWeight,
-    required double firstSize,
-    required String secondText,
-    required Color secondColor,
-    required FontWeight secondWeight,
-    required double secondSize,
-    TextAlign textAlign = TextAlign.center,
-    double? txtHeight}) {
-  return RichText(
-    textAlign: textAlign,
-    text: TextSpan(
-        text: firstText,
-        style: TextStyle(
-          color: firstColor,
-          fontWeight: firstWeight,
-          fontSize: firstSize,
-          height: txtHeight,
-        ),
-        children: [
-          TextSpan(
-              text: secondText,
-              style: TextStyle(
-                  color: secondColor,
-                  fontWeight: secondWeight,
-                  fontSize: secondSize,
-                  height: txtHeight))
-        ]),
-  );
-}
 
-double getFontSize({required String fontSizeType}) {
-  final Map fontSizeDict = {"headerFontSize": 18.0, "textFontSize": 12.0};
-  return fontSizeDict[fontSizeType];
-}

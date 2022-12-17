@@ -6,32 +6,6 @@ import '../../../constants/asset_constants.dart';
 import '../../../utils/ui/ui_utils.dart';
 import '../../../widgets/button.dart';
 
-Container buildTicketPrice() {
-  // must define ticket to be empty in case no price is given
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 20.h),
-    padding: EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.h),
-    decoration: BoxDecoration(
-        color: Colors.grey, borderRadius: BorderRadius.circular(22.h)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        getRichText(
-            firstText: "Ticket Price ",
-            firstColor: Colors.black,
-      firstWeight: FontWeight.w600,
-      firstSize: 15.sp,
-      secondText: '(Economy)',
-      secondColor: Colors.grey,
-      secondWeight: FontWeight.w500,
-      secondSize: 13.sp),
-        getCustomFont(
-            text: "\$21.00", fontSize: 20.sp, fontWeight: FontWeight.w700)
-      ],
-    ),
-  );
-}
-
 Widget buildButtonWidget(BuildContext context) {
   // can be transformed to rating or similar
   return Padding(
