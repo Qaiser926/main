@@ -96,7 +96,7 @@ class ExpandedWidget extends StatelessWidget {
             // functionArgumentsAccept: {
             //   #selectedCategoryIds: selectedSubcategoryIds
             // },
-            // closeDialog: closeDialog,
+            closeDialog: closeDialog,
             functionReset: Provider.of<SearchNotifier>(context, listen: false)
                 .resetSubcategoryList,
             functionArgumentsReset: {#context: context}),
