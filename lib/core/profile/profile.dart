@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
+import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
 
@@ -84,17 +86,17 @@ class _ProfilePageState extends State<ProfilePage> {
         child: buildProfileSection(context: context, userInfo: userInfo),
       ),
       buildVerticalDiscovery(
-          caption: "hosted upcoming events",
+          caption: AppLocalizations.of(context)!.futureHostedEvents,
           Ids: userInfo.upcomingEventIds,
-          actionButtonType: ActionButtonType.likeButton),
+          actionButtonType: ActionButtonType.settingsButton),
       buildVerticalDiscovery(
-          caption: "hosted activities",
+          caption: AppLocalizations.of(context)!.hostedActivities,
           Ids: userInfo.activityIds,
-          actionButtonType: ActionButtonType.likeButton),
+          actionButtonType: ActionButtonType.settingsButton),
       buildVerticalDiscovery(
-          caption: "hosted past events",
+          caption: AppLocalizations.of(context)!.pastHostedEvents,
           Ids: userInfo.pastEventIds,
-          actionButtonType: ActionButtonType.likeButton)
+          actionButtonType: ActionButtonType.settingsButtonDisabled)
     ];
 
     return CustomScrollView(slivers: slivers);
@@ -111,7 +113,6 @@ class _ProfilePageState extends State<ProfilePage> {
           getVerSpace(20.h),
           getProfilePhotoStack(userInfo),
           getVerSpace(15.h),
-          // TODO
           Text(
             userInfo.profileName,
             style: Theme.of(context).textTheme.headline4,
@@ -137,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
         fit: BoxFit.contain,
       ).image;
     } else {
-      return getAssetImageProvider("default_profile_image.jpg",
+      return getAssetImageProvider(NavigatorConstants.DefaultProfilePicture,
           width: 100.h, height: 100.h);
     }
   }
@@ -146,8 +147,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        // TODO null save profile image
-
         CircleAvatar(
             radius: 90, backgroundImage: getProfilePictureNullSafe(userInfo)),
         Positioned(

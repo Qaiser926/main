@@ -20,6 +20,8 @@ class NavigatorConstants {
 
   static const EventActivityId = 'eAId';
 
+  static const DefaultProfilePicture = "default_profile_image.jpg";
+
   static backToPrev() {
     Get.back();
   }

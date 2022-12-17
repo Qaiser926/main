@@ -56,17 +56,4 @@ Widget getFutureVerticalDiscovery(
       context: context, eASummary: eASummary, actionButton: actionButton);
 }
 
-enum ActionButtonType { likeButton, settingsButton, settingsButtonDisabled }
 
-Widget getActionButton(
-    {required ActionButtonType actionButtonType,
-    required SummaryEventOrActivity eASummary,
-    required BuildContext context}) {
-  Map<ActionButtonType, Function> actionButtonMap = {
-    ActionButtonType.likeButton: getLikeButton
-  };
-  Function getActionButtonFunction = actionButtonMap[actionButtonType]!;
-
-  return Function.apply(
-      getActionButtonFunction, [], {#context: context, #eASummary: eASummary});
-}

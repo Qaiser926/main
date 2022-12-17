@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/modules/models/get_search_results_ids/get_search_result_ids.dart';
+import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
 
