@@ -40,7 +40,7 @@ class CategoryGridItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Provider.of<SearchNotifier>(context, listen: false)
-            .changeCategoryIdList(
+            .changeForFullCategorySearch(
                 selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
         if (isModalBottomSheetMode) {
           Navigator.of(context, rootNavigator: true).pop();

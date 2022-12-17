@@ -43,7 +43,7 @@ class SearchNotifier extends ChangeNotifier {
   int? _expandedListItemIndex;
 
   //TODO seems to be unused
-  bool isModalBottomMode = false;
+  bool isModalBottomMode = true;
 
   void setExpanded({
     required int? index,
@@ -102,6 +102,7 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   void goToResultPage() {
+    notifyListeners();
     currentIndex = NavigatorConstants.ResultPageIndex;
     _pageController.jumpToPage(currentIndex);
   }
@@ -157,7 +158,7 @@ class SearchNotifier extends ChangeNotifier {
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
-    notifyListeners();
+
     goToResultPage();
   }
 
@@ -201,7 +202,7 @@ class SearchNotifier extends ChangeNotifier {
     if (caption != null) {
       this.timeCaption = caption;
     }
-    notifyListeners();
+
     goToResultPage();
   }
 
@@ -214,7 +215,7 @@ class SearchNotifier extends ChangeNotifier {
       this.sortFilterActivated = true;
     }
     this.sortCriteria = sortCriteria;
-    notifyListeners();
+
     goToResultPage();
   }
 
@@ -237,20 +238,19 @@ class SearchNotifier extends ChangeNotifier {
       this.typeFilterActivated = true;
     }
     this.eAType = eAType;
-    notifyListeners();
     goToResultPage();
   }
 
   void resetSubcategoryList({required BuildContext context}) {
     categoryFilterActivated = false;
-    this.selectedSubcategoryIds = [];
+    selectedSubcategoryIds = [];
     notifyListeners();
   }
 
-  void changeCategoryIdList({required List<String> selectedCategoryIds}) {
+  void changeForFullCategorySearch(
+      {required List<String> selectedCategoryIds}) {
     categoryFilterActivated = true;
-    this.selectedSubcategoryIds = selectedCategoryIds;
-    notifyListeners();
+    selectedSubcategoryIds.addAll(selectedCategoryIds);
     goToResultPage();
   }
 

@@ -86,10 +86,13 @@ class ExpandedWidget extends StatelessWidget {
         child: getShowResultsButton(
             context: context,
             functionAccept: Provider.of<SearchNotifier>(context, listen: false)
-                .changeCategoryIdList,
-            functionArgumentsAccept: {
-              #selectedCategoryIds: selectedSubcategoryIds
-            },
+                .goToResultPage,
+            functionArgumentsAccept: {},
+            // Provider.of<SearchNotifier>(context, listen: false)
+            //     .changeCategoryIdList,
+            // functionArgumentsAccept: {
+            //   #selectedCategoryIds: selectedSubcategoryIds
+            // },
             closeDialog: isModalBottomMode,
             functionReset: Provider.of<SearchNotifier>(context, listen: false)
                 .resetSubcategoryList,
