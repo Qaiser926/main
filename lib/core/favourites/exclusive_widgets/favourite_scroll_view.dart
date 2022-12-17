@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:othia/core/favourites/exclusive_widgets/pinned_header.dart';
+import 'package:othia/widgets/vertical_discovery/pinned_header.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
+import '../../../widgets/vertical_discovery/favourite_list_item.dart';
 import 'empty_favourite_screen.dart';
-import 'favourite_list_item.dart';
 import 'list_change_notifier.dart';
 
 class FavouriteScrollView extends StatelessWidget {

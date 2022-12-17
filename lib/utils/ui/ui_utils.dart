@@ -19,6 +19,15 @@ Image getAssetImage(String image,
   );
 }
 
+ImageProvider getAssetImageProvider(String image,
+    {double? width,
+    double? height,
+    Color? color,
+    BoxFit boxFit = BoxFit.contain}) {
+  return getAssetImage(image, height: height, width: width, boxFit: boxFit)
+      .image;
+}
+
 AppBar getToolBar(Function function, {Widget? title, bool leading = true}) {
   return AppBar(
     toolbarHeight: 73.h,

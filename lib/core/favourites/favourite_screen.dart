@@ -19,7 +19,7 @@ class _FavouritePageState extends State<FavouritePage>
         SingleTickerProviderStateMixin,
         AutomaticKeepAliveClientMixin<FavouritePage> {
   late final TabController _tabController;
-  late Future<Object> future;
+  late Future<Object> favouriteEA;
 
   //TODO once we can get account from amazon
   bool isLoggedIn = true;
@@ -32,7 +32,7 @@ class _FavouritePageState extends State<FavouritePage>
   @override
   void initState() {
     // TODO decide if logged in or not
-    future = RestService().fetchFavouriteEventsAndActivities();
+    favouriteEA = RestService().fetchFavouriteEventsAndActivities();
     super.initState();
     _tabController = TabController(
       length: 2,
@@ -42,7 +42,7 @@ class _FavouritePageState extends State<FavouritePage>
 
   Widget getLoggedInBody() {
     return FutureBuilder(
-        future: future,
+        future: favouriteEA,
         builder: (context, snapshot) {
           return snapshotHandler(snapshot, futureFulfilledWidget, []);
         });

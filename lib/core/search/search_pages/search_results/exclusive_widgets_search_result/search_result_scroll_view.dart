@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:othia/constants/categories.dart';
-import 'package:othia/core/favourites/exclusive_widgets/favourite_list_item.dart';
-import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_search_results_ids/get_search_result_ids.dart';
-import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
-import 'package:othia/utils/services/rest-api/rest_api_service.dart';
-import 'package:othia/utils/ui/future_service.dart';
-import 'package:othia/widgets/discover_horizontally.dart';
-import 'package:sliver_tools/sliver_tools.dart';
+import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
+import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
 
 class SearchScrollView extends StatelessWidget {
   final SearchResultIds searchResultIds;
@@ -57,8 +52,6 @@ class SearchScrollView extends StatelessWidget {
     for (MapEntry<String, List> item
         in searchResultIds.searchResultIds.entries) {
       slivers.add(getSearchResultSliverSection(
-          headerText: CategoryIdToI18nMapper.getCategorySubcategoryName(
-              context, item.key),
           Ids: item.value));
     }
 
@@ -66,39 +59,4 @@ class SearchScrollView extends StatelessWidget {
   }
 }
 
-Widget getSearchResultSliverSection(
-    {required final String headerText, required List Ids}) {
-  if (Ids.isEmpty) {
-    return const SliverToBoxAdapter();
-  } else {
-    return MultiSliver(
-      pushPinnedChildren: true,
-      children: [
-        // SliverPinnedHeader(
-        //   child: getHeader(text: headerText),
-        // ),
-        SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-          if (index < Ids.length) {
-            Future<Object> eASummary =
-                RestService().getEASummary(id: Ids[index]);
-            return KeepAliveFutureBuilder(
-                future: eASummary,
-                builder: (context, snapshot) {
-                  return snapshotHandler(
-                      snapshot, getFutureResultContent, [context]);
-                });
-          } else {
-            return null;
-          }
-        }))
-      ],
-    );
-  }
-}
 
-Widget getFutureResultContent(
-    BuildContext context, Map<String, dynamic> decodedJson) {
-  SummaryEventOrActivity eASummary =
-      SummaryEventOrActivity.fromJson(decodedJson);
-  return getFavouriteListItem(context, eASummary);
-}

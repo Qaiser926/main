@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:othia/config/themes/dark_theme.dart';
 
-import '../../../constants/colors.dart';
-import '../../../utils/ui/ui_utils.dart';
+import '../../constants/colors.dart';
+import '../../utils/ui/ui_utils.dart';
 
 Widget getHeader({required final String text}) {
   return Container(

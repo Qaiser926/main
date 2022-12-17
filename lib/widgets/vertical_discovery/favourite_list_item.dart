@@ -6,13 +6,13 @@ import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dar
 import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
-import '../../../config/routes/routes.dart';
-import '../../../constants/app_constants.dart';
-import '../../../modules/models/eA_summary/eA_summary.dart';
-import '../../../utils/services/data_handling/data_handling.dart';
-import '../../../utils/services/rest-api/rest_api_service.dart';
-import '../../../utils/ui/app_dialogs.dart';
-import '../../../utils/ui/ui_utils.dart';
+import '../../config/routes/routes.dart';
+import '../../constants/app_constants.dart';
+import '../../modules/models/eA_summary/eA_summary.dart';
+import '../../utils/services/data_handling/data_handling.dart';
+import '../../utils/services/rest-api/rest_api_service.dart';
+import '../../utils/ui/app_dialogs.dart';
+import '../../utils/ui/ui_utils.dart';
 
 Widget getFavouriteListItem(
     BuildContext context, SummaryEventOrActivity eASummary) {

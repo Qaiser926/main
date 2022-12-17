@@ -86,6 +86,13 @@ class RestService {
     return result;
   }
 
+  Future<Object> getUserInfo({required userId}) async {
+    print('requesting user info for for: $userId');
+    RestOptions restOptions = RestOptions(path: '/getUserInfo-dev/');
+    final result = await get(restOptions);
+    return result;
+  }
+
   void logout() async {
     await signOutCurrentUser();
     return;
