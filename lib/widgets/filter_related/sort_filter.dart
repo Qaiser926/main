@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'get_reset_apply_filter.dart';
@@ -76,12 +75,7 @@ class _SortFilterState extends State<SortFilter> {
 
           child: Padding(
             padding: EdgeInsets.all(7.h),
-            child: getCustomFont(
-              text: caption,
-              fontSize: 14.sp,
-              maxLine: 1,
-              fontWeight: FontWeight.w600,
-            ),
+            child: Text(caption),
           ),
         ),
       ),

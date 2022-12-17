@@ -113,12 +113,7 @@ class _TimeFilterState extends State<TimeFilter> {
 
           child: Padding(
             padding: EdgeInsets.all(7.h),
-            child: getCustomFont(
-              text: caption,
-              fontSize: 14.sp,
-              maxLine: 1,
-              fontWeight: FontWeight.w600,
-            ),
+            child: Text(caption),
           ),
         ),
       ),

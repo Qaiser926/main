@@ -127,14 +127,14 @@ Widget settingContainer(Function function, String title, String image) {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(22.h)),
                 padding: EdgeInsets.all(15.h),
-                child: getSvgImage(image, width: 24.h, height: 24.h),
+                child: getAssetImage(image, width: 24.h, height: 24.h),
               ),
               getHorSpace(16.h),
               Text(title),
             ],
           ),
           // TODO
-          getSvgImage("arrow_right.svg", height: 24.h, width: 24.h)
+          getAssetImage("arrow_right.svg", height: 24.h, width: 24.h)
         ],
       ),
     ),

@@ -94,17 +94,17 @@ Container buildProfileSection() {
                 child: Container(
               height: 30.h,
               width: 30.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.h),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: shadowColor,
-                        offset: const Offset(0, 8),
-                        blurRadius: 27)
-                  ]),
-              padding: EdgeInsets.all(5.h),
-              child: getSvgImage("edit.svg", width: 20.h, height: 20.h),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.h),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: shadowColor,
+                            offset: const Offset(0, 8),
+                            blurRadius: 27)
+                      ]),
+                  padding: EdgeInsets.all(5.h),
+                  child: getAssetImage("edit.svg", width: 20.h, height: 20.h),
             ))
           ],
         ),
