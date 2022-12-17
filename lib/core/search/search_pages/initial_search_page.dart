@@ -19,7 +19,7 @@ class InitialSearchPage extends StatelessWidget {
           primary: true,
           appBar: DropDownAppBar(
               context: context,
-              appBarTitle: AppLocalizations.of(context)!.search,
+              appBarTitle: AppLocalizations.of(context)!.discover,
               automaticallyImplyLeading: false),
           body: CategoryFilter(
             context: context,

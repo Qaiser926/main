@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:othia/widgets/not_logged_in.dart';
 
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -20,6 +21,9 @@ class _FavouritePageState extends State<FavouritePage>
   late final TabController _tabController;
   late Future<Object> future;
 
+  //TODO once we can get account from amazon
+  bool isLoggedIn = true;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -27,6 +31,7 @@ class _FavouritePageState extends State<FavouritePage>
 
   @override
   void initState() {
+    // TODO decide if logged in or not
     future = RestService().fetchFavouriteEventsAndActivities();
     super.initState();
     _tabController = TabController(
@@ -35,8 +40,18 @@ class _FavouritePageState extends State<FavouritePage>
     );
   }
 
+  Widget getLoggedInBody() {
+    return FutureBuilder(
+        future: future,
+        builder: (context, snapshot) {
+          return snapshotHandler(snapshot, futureFulfilledWidget, []);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget body = getLoggedInSensitiveBody(
+        isLoggedIn: isLoggedIn, loggedInWidget: getLoggedInBody());
     super.build(context);
     return
         // KeepAlive(
@@ -49,14 +64,10 @@ class _FavouritePageState extends State<FavouritePage>
           tabController: _tabController,
           context: context,
         ),
-        body: FutureBuilder(
-            future: future,
-            builder: (context, snapshot) {
-              return snapshotHandler(snapshot, futureFulfilledWidget, []);
-            }),
+        body: body,
       ),
-      // ),
-    );
+        // ),
+      );
   }
 
   Widget futureFulfilledWidget(Map<String, dynamic> json) {
