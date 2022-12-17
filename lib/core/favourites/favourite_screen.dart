@@ -51,7 +51,9 @@ class _FavouritePageState extends State<FavouritePage>
   @override
   Widget build(BuildContext context) {
     Widget body = getLoggedInSensitiveBody(
-        isLoggedIn: isLoggedIn, loggedInWidget: getLoggedInBody());
+        isLoggedIn: isLoggedIn,
+        loggedInWidget: getLoggedInBody(),
+        context: context);
     super.build(context);
     return
         // KeepAlive(

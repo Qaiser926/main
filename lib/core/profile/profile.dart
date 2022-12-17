@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
             size: 24.h,
           ));
     } else {
-      body = getNotLoggedIn();
+      body = getNotLoggedIn(context: context);
       appBarAction = SizedBox();
     }
 

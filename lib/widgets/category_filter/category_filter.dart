@@ -148,7 +148,7 @@ String getCategoryCaption(
   } else {
     Map<String, List<String>> categorySubcategoryMap =
         categoryIdToSubcategoryIds;
-    String caption = "Several Categories";
+    String caption = AppLocalizations.of(context)!.severalCategories;
     for (MapEntry<String, List<String>> item
         in categorySubcategoryMap.entries) {
       for (var i = 0; i < subcategoryIds.length; i++) {
@@ -158,8 +158,8 @@ String getCategoryCaption(
                   context, item.key);
 
           if (tempCaption != caption) {
-            if (caption != "Several Categories") {
-              return "Several Categories";
+            if (caption != AppLocalizations.of(context)!.severalCategories) {
+              return AppLocalizations.of(context)!.severalCategories;
             } else {
               caption = tempCaption;
             }
