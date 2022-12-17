@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
@@ -241,6 +242,10 @@ class SearchNotifier extends ChangeNotifier {
   void resetSubcategoryList({required BuildContext context}) {
     categoryFilterActivated = false;
     this.selectedSubcategoryIds = [];
+    if (!anyFilterActivated()) {
+      if (currentIndex != NavigatorConstants.SearchPageIndex) Get.back();
+      goToSearchPage();
+    }
     notifyListeners();
   }
 
