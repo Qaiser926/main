@@ -96,6 +96,7 @@
     }
   },
   "category": "Kategorie",
+  "severalCategories": "Mehrere Kategorien",
   "location": "Ort",
   "time": "Zeit",
   "type": "Typ",

@@ -99,6 +99,7 @@
     }
   },
   "category": "Category",
+  "severalCategories": "Multiple Categories",
   "time": "Time",
   "type": "Type",
   "price": "Price",
