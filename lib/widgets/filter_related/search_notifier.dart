@@ -42,8 +42,6 @@ class SearchNotifier extends ChangeNotifier {
   static const int numberOfCategoriesPerRow = 2;
   int? _expandedListItemIndex;
 
-  //TODO seems to be unused
-  bool isModalBottomMode = false;
 
   void setExpanded({
     required int? index,
@@ -55,7 +53,6 @@ class SearchNotifier extends ChangeNotifier {
 
   int? get getExpandedIndex => _expandedListItemIndex;
 
-  bool get getIsModalBottomMode => isModalBottomMode;
 
   ////////////
 

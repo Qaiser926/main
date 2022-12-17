@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/categories.dart';
@@ -34,7 +35,6 @@ class ExpandedWidget extends StatelessWidget {
 
     return Consumer<SearchNotifier>(builder: (context, model, child) {
       bool expanded = model.getExpandedIndex == categoryIndex;
-      bool isModalBottomMode = model.isModalBottomMode;
       if (subcategoryIds.isNotEmpty) {
         return AnimatedContainer(
           margin: expanded ? const EdgeInsets.only(top: 10) : null,
@@ -49,6 +49,9 @@ class ExpandedWidget extends StatelessWidget {
                   ),
                   child: Consumer<SearchNotifier>(
                       builder: (context, model, child) {
+                    bool closeDialog = true;
+                    if (model.currentIndex ==
+                        NavigatorConstants.SearchPageIndex) closeDialog = false;
                     return Container(
                       margin: EdgeInsets.only(
                         bottom: containerMarginBottom,
@@ -58,9 +61,9 @@ class ExpandedWidget extends StatelessWidget {
                       ),
                       child: Column(
                         children: getSubcategoryExpandableContent(
-                            context, model, isModalBottomMode),
+                            context, model, closeDialog),
                       ),
-                    );
+                        );
                   }),
                 )
               : const SizedBox.shrink(),
@@ -72,8 +75,8 @@ class ExpandedWidget extends StatelessWidget {
     });
   }
 
-  List<Widget> getSubcategoryExpandableContent(BuildContext context,
-      SearchNotifier searchNotifier, bool isModalBottomMode) {
+  List<Widget> getSubcategoryExpandableContent(
+      BuildContext context, SearchNotifier searchNotifier, bool closeDialog) {
     List<Widget> result = [];
     result.add(getSubcategoryTextButtons(context));
     result.add(const SizedBox(
@@ -90,7 +93,7 @@ class ExpandedWidget extends StatelessWidget {
             functionArgumentsAccept: {
               #selectedCategoryIds: selectedSubcategoryIds
             },
-            closeDialog: isModalBottomMode,
+            closeDialog: closeDialog,
             functionReset: Provider.of<SearchNotifier>(context, listen: false)
                 .resetSubcategoryList,
             functionArgumentsReset: {#context: context}),

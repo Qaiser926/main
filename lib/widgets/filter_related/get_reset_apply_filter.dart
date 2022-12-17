@@ -19,19 +19,6 @@ Widget getShowResultsButton(
         child: GestureDetector(
           onTap: () {
             Function.apply(functionReset, [], functionArgumentsReset);
-            // NavigatorConstants.doubleBackToPrev();
-            // Get.back(id: 1,canPop: true);
-            // navigator.popUntil(context, (route) {
-            //
-            //   if (route == Routes.mainScreenRoute) {
-            //     return true;
-            //   } else {
-            //     return false;
-            //   }
-            // });
-            // Get.offAllNamed(
-            //   Routes.mainScreenRoute,
-            // );
           },
           child: Container(
             padding: EdgeInsets.all(12),
