@@ -2,20 +2,18 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
-import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
 import '../../config/routes/routes.dart';
 import '../../constants/app_constants.dart';
 import '../../modules/models/eA_summary/eA_summary.dart';
 import '../../utils/services/data_handling/data_handling.dart';
-import '../../utils/services/rest-api/rest_api_service.dart';
-import '../../utils/ui/app_dialogs.dart';
 import '../../utils/ui/ui_utils.dart';
 
 Widget getFavouriteListItem(
-    BuildContext context, SummaryEventOrActivity eASummary) {
+    {required BuildContext context,
+    required SummaryEventOrActivity eASummary,
+    required Widget actionButton}) {
   return GestureDetector(
     onTap: () {
       NavigatorConstants.sendToNext(Routes.detailedEventRoute,
@@ -35,7 +33,7 @@ Widget getFavouriteListItem(
                 getImage(eASummary),
                 getHorSpace(10.h),
                 getMainPart(context, eASummary),
-                getRightButtons(context, eASummary)
+                actionButton
               ],
             ),
           ),
@@ -113,40 +111,6 @@ Widget getImage(SummaryEventOrActivity eASummary) {
     child: getImageWithBackground(
         categoryId: eASummary.categoryId, photo: eASummary.photo),
   );
-}
-
-Widget getRightButtons(BuildContext context, SummaryEventOrActivity eASummary) {
-  return Row(children: [
-    IconButton(
-        constraints: BoxConstraints(maxWidth: 50.h),
-        icon: const Icon(
-          Icons.favorite,
-        ),
-        onPressed: () {
-          showDialog<bool>(
-                  context: context,
-                  builder: (context) => getDialog(objectTitle: eASummary.title))
-              .then((value) {
-            if (value!) {
-              try {
-                RestService()
-                    .removeFavouriteEventOrActivity(id: eASummary.id)
-                    .then((value) {
-                  print(value);
-                  Provider.of<FavouriteNotifier>(context, listen: false)
-                      .removeKey(key: eASummary.id);
-                });
-              } on Exception catch (e) {
-                //TODO
-                throw e;
-              } catch (e) {
-                //TODO
-                throw e;
-              }
-            }
-          });
-        }),
-  ]);
 }
 
 Widget getImageWithBackground(

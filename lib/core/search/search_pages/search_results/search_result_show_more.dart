@@ -23,7 +23,8 @@ class _SearchResultShowMore extends State<SearchResultShowMore> {
                       context: context,
                       appBarTitle: AppLocalizations.of(context)!.results),
                   body: CustomScrollView(slivers: [
-                    getSearchResultSliverSection(
+                    buildVerticalDiscovery(
+                      actionButtonType: ActionButtonType.likeButton,
                       Ids: model.showMoreIds,
                     )
                   ]));

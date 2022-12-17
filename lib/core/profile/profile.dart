@@ -83,12 +83,18 @@ class _ProfilePageState extends State<ProfilePage> {
       SliverToBoxAdapter(
         child: buildProfileSection(context: context, userInfo: userInfo),
       ),
-      getSearchResultSliverSection(
-          caption: "hosted upcoming events", Ids: userInfo.upcomingEventIds),
-      getSearchResultSliverSection(
-          caption: "hosted activities", Ids: userInfo.activityIds),
-      getSearchResultSliverSection(
-          caption: "hosted past events", Ids: userInfo.pastEventIds)
+      buildVerticalDiscovery(
+          caption: "hosted upcoming events",
+          Ids: userInfo.upcomingEventIds,
+          actionButtonType: ActionButtonType.likeButton),
+      buildVerticalDiscovery(
+          caption: "hosted activities",
+          Ids: userInfo.activityIds,
+          actionButtonType: ActionButtonType.likeButton),
+      buildVerticalDiscovery(
+          caption: "hosted past events",
+          Ids: userInfo.pastEventIds,
+          actionButtonType: ActionButtonType.likeButton)
     ];
 
     return CustomScrollView(slivers: slivers);
@@ -121,17 +127,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget getVerticalDiscovery({required UserInfo userInfo}) {
-    List<Widget> slivers = [];
-    // TODO
-    slivers.add(getSearchResultSliverSection(
-        caption: "hosted upcoming events", Ids: userInfo.upcomingEventIds));
-    slivers.add(getSearchResultSliverSection(
-        caption: "hosted activities", Ids: userInfo.activityIds));
-    slivers.add(getSearchResultSliverSection(
-        caption: "hosted past events", Ids: userInfo.pastEventIds));
-    return CustomScrollView(slivers: slivers);
-  }
 
   ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
     if (userInfo.profilePhoto != null) {

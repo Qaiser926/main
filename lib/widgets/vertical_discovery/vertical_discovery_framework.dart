@@ -3,11 +3,15 @@ import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
+import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:othia/widgets/vertical_discovery/pinned_header.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-Widget getSearchResultSliverSection({required List Ids, String? caption}) {
+Widget buildVerticalDiscovery(
+    {required List Ids,
+    String? caption,
+    required ActionButtonType actionButtonType}) {
   if (Ids.isEmpty) {
     return const SliverToBoxAdapter();
   } else {
@@ -25,8 +29,8 @@ Widget getSearchResultSliverSection({required List Ids, String? caption}) {
             return KeepAliveFutureBuilder(
                 future: eASummary,
                 builder: (context, snapshot) {
-                  return snapshotHandler(
-                      snapshot, getFutureResultContent, [context]);
+                  return snapshotHandler(snapshot, getFutureVerticalDiscovery,
+                      [context, actionButtonType]);
                 });
           } else {
             return null;
@@ -37,9 +41,32 @@ Widget getSearchResultSliverSection({required List Ids, String? caption}) {
   }
 }
 
-Widget getFutureResultContent(
-    BuildContext context, Map<String, dynamic> decodedJson) {
+Widget getFutureVerticalDiscovery(
+  BuildContext context,
+  ActionButtonType actionButtonType,
+  Map<String, dynamic> decodedJson,
+) {
   SummaryEventOrActivity eASummary =
       SummaryEventOrActivity.fromJson(decodedJson);
-  return getFavouriteListItem(context, eASummary);
+  Widget actionButton = getActionButton(
+      actionButtonType: actionButtonType,
+      eASummary: eASummary,
+      context: context);
+  return getFavouriteListItem(
+      context: context, eASummary: eASummary, actionButton: actionButton);
+}
+
+enum ActionButtonType { likeButton, settingsButton, settingsButtonDisabled }
+
+Widget getActionButton(
+    {required ActionButtonType actionButtonType,
+    required SummaryEventOrActivity eASummary,
+    required BuildContext context}) {
+  Map<ActionButtonType, Function> actionButtonMap = {
+    ActionButtonType.likeButton: getLikeButton
+  };
+  Function getActionButtonFunction = actionButtonMap[actionButtonType]!;
+
+  return Function.apply(
+      getActionButtonFunction, [], {#context: context, #eASummary: eASummary});
 }
