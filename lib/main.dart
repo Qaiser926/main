@@ -7,12 +7,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import 'amplifyconfiguration.dart';
 import 'config/routes/pages.dart';
 import 'config/routes/routes.dart';
 import 'config/themes/dark_theme.dart';
-import 'constants/supported_locales.dart';
+import 'constants/locales_settings.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -34,28 +35,38 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         // return Authenticator(
         child:
-        return GetMaterialApp(
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: supportedLocales,
-          // builder: Authenticator.builder(),
-          debugShowCheckedModeBanner: false,
-          initialRoute: Routes.homeRoute,
-          // getPages: ,
-          routes: Pages.routes,
-          theme: getDarkThemeData(),
-          onGenerateRoute: (settings) {
-            if (settings.name == Routes.homeRoute) {
-              return MaterialPageRoute(
-                  builder: Pages.routes[Routes.homeRoute]!);
-            }
-          },
-          // ),
-        );
+        return MultiProvider(
+            providers: [
+              ChangeNotifierProvider.value(
+                value: LocaleProvider(),
+              ),
+            ],
+            child: Consumer<LocaleProvider>(
+                builder: (context, localeProvider, child) {
+              return GetMaterialApp(
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                locale: localeProvider.locale,
+                supportedLocales: supportedLocales,
+                // builder: Authenticator.builder(),
+                debugShowCheckedModeBanner: false,
+                initialRoute: Routes.homeRoute,
+                // getPages: ,
+                routes: Pages.routes,
+                theme: getDarkThemeData(),
+                onGenerateRoute: (settings) {
+                  if (settings.name == Routes.homeRoute) {
+                    return MaterialPageRoute(
+                        builder: Pages.routes[Routes.homeRoute]!);
+                  }
+                },
+                // ),
+              );
+            }));
       },
     );
   }

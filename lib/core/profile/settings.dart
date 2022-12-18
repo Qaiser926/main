@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:othia/constants/locales_settings.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:provider/provider.dart';
 
-class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<SettingScreen> createState() => _SettingScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   void backClick() {
     Get.back();
   }
@@ -24,20 +28,15 @@ class _SettingScreenState extends State<SettingScreen> {
         return false;
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        appBar: getToolBar(
-          () {
-            backClick();
-          },
+        // TODO align colors
+        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+
+        appBar: AppBar(
           title: Text("Settings"),
         ),
         body: SafeArea(
           child: Column(
             children: [
-              Divider(
-                thickness: 1.h,
-              ),
               Expanded(
                   flex: 1,
                   child: ListView(
@@ -51,13 +50,13 @@ class _SettingScreenState extends State<SettingScreen> {
                       settingContainer(() {
                         // TODO
                         () {};
-                      }, "Edit Profile", "edit_profile.svg"),
+                      }, "Edit Profile", Icon(FontAwesomeIcons.userEdit)),
                       getVerSpace(20.h),
                       settingContainer(
                           // TODO
                           () {},
                           "Change Password",
-                          "change_password.svg"),
+                          Icon(FontAwesomeIcons.key)),
                       getVerSpace(30.h),
                       Text("Preferences"),
                       getVerSpace(12.h),
@@ -70,26 +69,37 @@ class _SettingScreenState extends State<SettingScreen> {
                       settingContainer(() {
                         // TODO
                         () {};
-                      }, "Privacy", "privacy.svg"),
+                      }, "Privacy", Icon(FontAwesomeIcons.shield)),
                       getVerSpace(20.h),
                       settingContainer(
                           // TODO
                           () {},
                           "Help",
-                          "info.svg"),
+                          Icon(Icons.info_outline)),
+                      getVerSpace(20.h),
+                      settingContainer(
+                          // TODO
+                          () {
+                        context
+                            .read<LocaleProvider>()
+                            .setLocale(Locale('de', ''));
+                      }, AppLocalizations.of(context)!.hostedActivities,
+                          Icon(Icons.info_outline)),
                     ],
                   )),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.h),
-                child: Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: ElevatedButton(
-                          onPressed:
-                              // TODO write logout logic
-                              () => {},
-                          child: Text("Logout"))),
-                ),
+                child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(double.infinity,
+                              35.h), // <--- this line helped me
+                        ),
+                        onPressed:
+                            // TODO write logout logic
+                            () => {},
+                        child: Text("Logout"))),
               ),
               getVerSpace(30.h)
             ],
@@ -100,21 +110,15 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 }
 
-Widget settingContainer(Function function, String title, String image) {
+Widget settingContainer(Function function, String title, Icon icon) {
   return GestureDetector(
     onTap: () {
       function();
     },
     child: Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(22.h),
-          boxShadow: [
-            BoxShadow(
-                // TODO style
-                offset: const Offset(0, 8),
-                blurRadius: 27)
-          ]),
+        borderRadius: BorderRadius.circular(22.h),
+      ),
       padding: EdgeInsets.only(bottom: 3.h, left: 3.h, top: 3.h, right: 18.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,14 +131,17 @@ Widget settingContainer(Function function, String title, String image) {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(22.h)),
                 padding: EdgeInsets.all(15.h),
-                child: getAssetImage(image, width: 24.h, height: 24.h),
+                child: icon,
               ),
               getHorSpace(16.h),
               Text(title),
             ],
           ),
-          // TODO
-          getAssetImage("arrow_right.svg", height: 24.h, width: 24.h)
+          // TODO, maybe keyboard_arrow_right
+          Icon(
+            FontAwesomeIcons.angleRight,
+            size: 24.h,
+          )
         ],
       ),
     ),

@@ -33,10 +33,11 @@ class MainPage extends StatelessWidget {
           value: NavigationBarNotifier(pageController: _pageController),
         ),
       ],
-      child: Consumer<NavigationBarNotifier>(builder: (context, model, child) {
+      child: Consumer<NavigationBarNotifier>(
+          builder: (context, navigationBarNotifier, child) {
         return WillPopScope(
           onWillPop: () {
-            return closeAppDialog(context, model);
+            return closeAppDialog(context, navigationBarNotifier);
           },
           child: Scaffold(
             bottomNavigationBar: const CustomNavigationBar(),

@@ -78,6 +78,7 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.0.5
   syncfusion_flutter_datepicker: ^20.3.60
+  font_awesome_flutter: ^10.3.0
 
 
 

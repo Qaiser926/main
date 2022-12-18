@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/core/profile/settings.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
@@ -55,8 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 actions: [
                   GestureDetector(
                       onTap: () {
-                        // TODO send to options page
-                        // Constant.sendToNext(context, Routes.settingRoute);
+                        Get.to(SettingsScreen());
                       },
                       child: Icon(
                         Icons.settings,
