@@ -16,6 +16,7 @@ import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.da
 
 import '../../constants/colors.dart';
 import '../../utils/ui/ui_utils.dart';
+import '../add/add.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -82,25 +83,54 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget getProfilePage(Map<String, dynamic> jsonData) {
     UserInfo userInfo = UserInfo.fromJson(jsonData);
-    List<Widget> slivers = [
-      SliverToBoxAdapter(
-        child: buildProfileSection(context: context, userInfo: userInfo),
-      ),
-      buildVerticalDiscovery(
-          caption: AppLocalizations.of(context)!.futureHostedEvents,
-          Ids: userInfo.upcomingEventIds,
-          actionButtonType: ActionButtonType.settingsButton),
-      buildVerticalDiscovery(
-          caption: AppLocalizations.of(context)!.hostedActivities,
-          Ids: userInfo.activityIds,
-          actionButtonType: ActionButtonType.settingsButton),
-      buildVerticalDiscovery(
-          caption: AppLocalizations.of(context)!.pastHostedEvents,
-          Ids: userInfo.pastEventIds,
-          actionButtonType: ActionButtonType.settingsButtonDisabled)
-    ];
+    if (userInfo.upcomingEventIds.isEmpty &
+        userInfo.activityIds.isEmpty &
+        userInfo.pastEventIds.isEmpty) {
+      return noHostedEA(userInfo);
+    } else {
+      List<Widget> slivers = [
+        SliverToBoxAdapter(
+          child: buildProfileSection(context: context, userInfo: userInfo),
+        ),
+        buildVerticalDiscovery(
+            caption: AppLocalizations.of(context)!.futureHostedEvents,
+            Ids: userInfo.upcomingEventIds,
+            actionButtonType: ActionButtonType.settingsButton),
+        buildVerticalDiscovery(
+            caption: AppLocalizations.of(context)!.hostedActivities,
+            Ids: userInfo.activityIds,
+            actionButtonType: ActionButtonType.settingsButton),
+        buildVerticalDiscovery(
+            caption: AppLocalizations.of(context)!.pastHostedEvents,
+            Ids: userInfo.pastEventIds,
+            actionButtonType: ActionButtonType.settingsButtonDisabled)
+      ];
+      return CustomScrollView(slivers: slivers);
+    }
+  }
 
-    return CustomScrollView(slivers: slivers);
+  Widget noHostedEA(UserInfo userInfo) {
+    return Column(
+      children: [
+        buildProfileSection(context: context, userInfo: userInfo),
+        getVerSpace(90.h),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.h),
+          child: Text(
+            AppLocalizations.of(context)!.noAssociatedEAMessage,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        getVerSpace(3.h),
+        ElevatedButton(
+            onPressed: () => {Get.to(Add())},
+            style: ElevatedButton.styleFrom(
+              shape: CircleBorder(),
+              padding: EdgeInsets.all(5.h),
+            ),
+            child: Icon(Icons.add))
+      ],
+    );
   }
 
   Container buildProfileSection(
@@ -128,7 +158,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
 
   ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
     if (userInfo.profilePhoto != null) {
