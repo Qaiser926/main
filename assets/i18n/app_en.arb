@@ -157,6 +157,8 @@
    "editProfile": "Edit Profile",
    "accountSettings": "Account Settings",
    "language": "Language",
+   "german": "German",
+   "english": "English",
 
    "entertainment": "Entertainment",
      "@entertainment": {

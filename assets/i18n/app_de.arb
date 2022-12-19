@@ -154,6 +154,8 @@
  "editProfile": "Profil bearbeiten",
  "accountSettings": "Account Einstellungen",
  "language": "Sprachen",
+  "german": "Deutsch",
+    "english": "Englisch",
 
     "entertainment": "Unterhaltung",
      "@entertainment": {

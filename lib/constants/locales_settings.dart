@@ -18,4 +18,6 @@ class LocaleProvider with ChangeNotifier {
     _locale = null;
     notifyListeners();
   }
+
+  Locale? get getLocale => _locale;
 }

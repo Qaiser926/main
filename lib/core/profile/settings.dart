@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:othia/constants/locales_settings.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:provider/provider.dart';
+
+import 'settings/language_settings.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -83,11 +83,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           )),
                       getVerSpace(20.h),
                       settingContainer(
-                          // TODO
                           () {
-                        context
-                            .read<LocaleProvider>()
-                            .setLocale(Locale('de', ''));
+                            Get.to(LanguageScreen());
                       }, AppLocalizations.of(context)!.language,
                           Icon(Icons.translate)),
                     ],
@@ -142,7 +139,6 @@ Widget settingContainer(Function function, String title, Icon icon) {
               Text(title),
             ],
           ),
-          // TODO, maybe keyboard_arrow_right
           Icon(
             FontAwesomeIcons.angleRight,
             size: 24.h,
