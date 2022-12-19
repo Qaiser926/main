@@ -6,7 +6,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
+import 'settings/help_settings.dart';
 import 'settings/language_settings.dart';
+import 'settings/privacy.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -61,21 +63,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       getVerSpace(30.h),
                       Text(AppLocalizations.of(context)!.preferences),
                       getVerSpace(12.h),
-                      // settingContainer(() {
-                      //   // TODO
-                      //       () {};
-                      // }, "Notification", "notification-image.svg"),
-                      // getVerSpace(20.h),
-
-                      settingContainer(() {
-                        // TODO
-                        () {};
+                      settingContainer(
+                          // TODO
+                          () {
+                        Get.to(PrivacyScreen());
                       }, AppLocalizations.of(context)!.privacy,
                           Icon(FontAwesomeIcons.shield)),
                       getVerSpace(20.h),
                       settingContainer(
                           // TODO
-                          () {},
+                          () {
+                        Get.to(HelpScreen());
+                      },
                           AppLocalizations.of(context)!.help,
                           Icon(
                             Icons.info_outline,

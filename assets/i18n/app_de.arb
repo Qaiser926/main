@@ -156,6 +156,8 @@
  "language": "Sprachen",
   "german": "Deutsch",
     "english": "Englisch",
+  "helpText": "Wenn du Hilfe benötigst, Fragen hast oder uns Feedback geben möchtest, dann kontaktiere uns: othia@outlook.de",
+
 
     "entertainment": "Unterhaltung",
      "@entertainment": {

@@ -159,6 +159,8 @@
    "language": "Language",
    "german": "German",
    "english": "English",
+    "helpText": "If you need help or you want to give us feeback, feel free to contact us: othia@outlook.de",
+
 
    "entertainment": "Entertainment",
      "@entertainment": {
