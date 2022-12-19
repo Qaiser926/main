@@ -32,7 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
         appBar: AppBar(
-          title: Text("Settings"),
+          title: Text(AppLocalizations.of(context)!.settings),
         ),
         body: SafeArea(
           child: Column(
@@ -45,20 +45,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     shrinkWrap: true,
                     children: [
                       getVerSpace(20.h),
-                      Text("Account Settings"),
+                      Text(AppLocalizations.of(context)!.accountSettings),
                       getVerSpace(12.h),
                       settingContainer(() {
                         // TODO
                         () {};
-                      }, "Edit Profile", Icon(FontAwesomeIcons.userEdit)),
+                      }, AppLocalizations.of(context)!.editProfile,
+                          Icon(FontAwesomeIcons.userEdit)),
                       getVerSpace(20.h),
                       settingContainer(
                           // TODO
                           () {},
-                          "Change Password",
+                          AppLocalizations.of(context)!.changePassword,
                           Icon(FontAwesomeIcons.key)),
                       getVerSpace(30.h),
-                      Text("Preferences"),
+                      Text(AppLocalizations.of(context)!.preferences),
                       getVerSpace(12.h),
                       // settingContainer(() {
                       //   // TODO
@@ -69,13 +70,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       settingContainer(() {
                         // TODO
                         () {};
-                      }, "Privacy", Icon(FontAwesomeIcons.shield)),
+                      }, AppLocalizations.of(context)!.privacy,
+                          Icon(FontAwesomeIcons.shield)),
                       getVerSpace(20.h),
                       settingContainer(
                           // TODO
                           () {},
-                          "Help",
-                          Icon(Icons.info_outline)),
+                          AppLocalizations.of(context)!.help,
+                          Icon(
+                            Icons.info_outline,
+                            size: 28.h,
+                          )),
                       getVerSpace(20.h),
                       settingContainer(
                           // TODO
@@ -83,8 +88,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         context
                             .read<LocaleProvider>()
                             .setLocale(Locale('de', ''));
-                      }, AppLocalizations.of(context)!.hostedActivities,
-                          Icon(Icons.info_outline)),
+                      }, AppLocalizations.of(context)!.language,
+                          Icon(Icons.translate)),
                     ],
                   )),
               Padding(

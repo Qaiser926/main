@@ -82,7 +82,7 @@ Future<bool> closeAppDialog(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
-                child: Text(AppLocalizations.of(context)!.cancel),
+                child: Text(AppLocalizations.of(context)!.confirm),
               ),
             ],
           );

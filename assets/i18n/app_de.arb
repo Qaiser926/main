@@ -119,7 +119,9 @@
   "from": "Von",
   "to": "Bis",
 
-  "notLoggedInMessage": "Log dich ein, um die Inhalte sehen zu können!",
+  "notLoggedInMessageLike": "Log dich ein, um Favoriten hinzufügen zu können",
+
+  "notLoggedInMessage": "Log dich ein, um die Inhalte sehen zu können",
   "profile": "Profil",
 
   "nextWeekend": "Nächstes Wochenende",
@@ -143,6 +145,15 @@
   "futureHostedEvents": "Von dir erstellte zukünftige Events",
   "pastHostedEvents": "Von dir erstellte vergangene Events",
   "hostedActivities": "Von dir erstellte Aktivitäten",
+
+  "help": "Hilfe",
+ "privacy": "Privatsphäre",
+ "preferences": "Präferenzen",
+ "settings": "Einstellungen",
+ "changePassword": "Passwort bearbeiten",
+ "editProfile": "Profil bearbeiten",
+ "accountSettings": "Account Einstellungen",
+ "language": "Sprachen",
 
     "entertainment": "Unterhaltung",
      "@entertainment": {

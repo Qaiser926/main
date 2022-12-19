@@ -121,6 +121,8 @@
   "from": "From",
   "to": "To",
 
+  "notLoggedInMessageLike": "Log in to add favorites",
+
   "notLoggedInMessage": "Log in to see this page!",
   "profile": "Profile",
 
@@ -146,6 +148,15 @@
     "futureHostedEvents": "Upcoming events created by you",
      "pastHostedEvents": "Past events created by you",
      "hostedActivities": "Activities created by you",
+
+   "help": "Help",
+   "privacy": "Privacy",
+   "preferences": "Preferences",
+   "settings": "Settings",
+   "changePassword": "Change Password",
+   "editProfile": "Edit Profile",
+   "accountSettings": "Account Settings",
+   "language": "Language",
 
    "entertainment": "Entertainment",
      "@entertainment": {

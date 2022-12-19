@@ -94,7 +94,7 @@ class FavouriteScrollView extends StatelessWidget {
                 return getFavouriteListItem(
                     context: context,
                     eASummary: favouriteList.values.elementAt(index),
-                    actionButton: getLikeButton(
+                    actionButton: getFavouriteLikeButton(
                         context: context,
                         eASummary: favouriteList.values.elementAt(index)));
               }

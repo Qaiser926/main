@@ -32,12 +32,35 @@ class RestService {
     return result;
   }
 
-  Future<Object> removeFavouriteEventOrActivity({required id}) async {
-    print('removing favourite event or activity with id: $id');
+  Future<Object> removeFavouriteEventOrActivity({required eAId}) async {
+    print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
     print(token);
+    // TODO login
     RestOptions restOptions = RestOptions(
-        path: '/removeFavourite-dev/$id', headers: {'token': '${token}'});
+        path: '/removeFavourite-dev/$eAId', headers: {'token': '${token}'});
+    final result = await delete(restOptions);
+    return result;
+  }
+
+  Future<Object> addFavouriteEventOrActivity({required eAId}) async {
+    print('removing favourite event or activity with id: $eAId');
+    String token = await getIdToken();
+    print(token);
+    // TODO login
+    RestOptions restOptions = RestOptions(
+        path: '/addLikedEA-dev/$eAId', headers: {'token': '${token}'});
+    final result = await delete(restOptions);
+    return result;
+  }
+
+  Future<Object> isEALikedByUser({required eAId}) async {
+    print('removing favourite event or activity with id: $eAId');
+    String token = await getIdToken();
+    print(token);
+    // TODO login
+    RestOptions restOptions = RestOptions(
+        path: '/isEALikedByUser-dev/$eAId', headers: {'token': '${token}'});
     final result = await delete(restOptions);
     return result;
   }
