@@ -63,3 +63,8 @@ Future<String> getIdToken() async {
   String token = user.userPoolTokens!.idToken;
   return token;
 }
+
+Future<String> getUserId() async {
+  final AuthUser user = await Amplify.Auth.getCurrentUser();
+  return user.userId;
+}
