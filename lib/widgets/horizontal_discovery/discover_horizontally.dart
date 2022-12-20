@@ -37,13 +37,13 @@ class BaseDiscoveryClass extends StatelessWidget {
             child: Column(
               children: [
                 Divider(thickness: 3.h),
-                getVerSpace(25),
+                getVerSpace(15),
               ],
             ),
           ),
-        if (!showDivider) getVerSpace(10.h),
+        if (!showDivider) getVerSpace(5.h),
         Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 12, 0),
+            padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -66,7 +66,7 @@ class BaseDiscoveryClass extends StatelessWidget {
                       child: Text(AppLocalizations.of(context)!.showMore))
               ],
             )),
-        getVerSpace(25),
+        getVerSpace(15),
         if (!Ids.isEmpty) HorizontalEADiscovery(Ids: Ids),
         if (Ids.isEmpty) getNoResultsMessage(context),
       ],
@@ -102,7 +102,7 @@ class HorizontalEADiscovery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 200.h,
+        height: 155.h,
         child: ListView.builder(
             primary: false,
             shrinkWrap: true,
