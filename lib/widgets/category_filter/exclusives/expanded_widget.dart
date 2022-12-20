@@ -91,7 +91,6 @@ class ExpandedWidget extends StatelessWidget {
             functionAccept: Provider.of<SearchNotifier>(context, listen: false)
                 .showCategoryFilterResults,
             functionArgumentsAccept: {},
-            closeDialog: closeDialog,
             functionReset: Provider.of<SearchNotifier>(context, listen: false)
                 .resetSubcategoryList,
             functionArgumentsReset: {#context: context}),
