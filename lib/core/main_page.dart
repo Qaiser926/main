@@ -14,7 +14,7 @@ import 'favourites/favourite_screen.dart';
 
 class MainPage extends StatelessWidget {
   static final List<Widget> _pages = [
-    Home(),
+    HomePage(),
     SearchPage(),
     const Add(),
     const FavouritePage(),
@@ -33,10 +33,11 @@ class MainPage extends StatelessWidget {
           value: NavigationBarNotifier(pageController: _pageController),
         ),
       ],
-      child: Consumer<NavigationBarNotifier>(builder: (context, model, child) {
+      child: Consumer<NavigationBarNotifier>(
+          builder: (context, navigationBarNotifier, child) {
         return WillPopScope(
           onWillPop: () {
-            return closeAppDialog(context, model);
+            return closeAppDialog(context, navigationBarNotifier);
           },
           child: Scaffold(
             bottomNavigationBar: const CustomNavigationBar(),
@@ -81,7 +82,7 @@ Future<bool> closeAppDialog(
                 onPressed: () {
                   Navigator.pop(context, true);
                 },
-                child: Text(AppLocalizations.of(context)!.cancel),
+                child: Text(AppLocalizations.of(context)!.confirm),
               ),
             ],
           );

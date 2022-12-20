@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/favourites/exclusive_widgets/pinned_header.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/vertical_discovery/pinned_header.dart';
 
 class EmptyFavourite extends StatelessWidget {
   final String noElementsText;

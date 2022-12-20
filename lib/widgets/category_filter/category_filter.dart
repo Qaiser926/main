@@ -148,18 +148,27 @@ String getCategoryCaption(
   } else {
     Map<String, List<String>> categorySubcategoryMap =
         categoryIdToSubcategoryIds;
-    String caption = "";
+    String caption = AppLocalizations.of(context)!.severalCategories;
     for (MapEntry<String, List<String>> item
         in categorySubcategoryMap.entries) {
-      if (item.value.contains(subcategoryIds[0])) {
-        String tempCategory = CategoryIdToI18nMapper.getCategorySubcategoryName(
-            context, item.key);
-        return getShortCaption(
-            cutOff: NavigatorConstants.CategoryNameCutOff,
-            caption: tempCategory);
+      for (var i = 0; i < subcategoryIds.length; i++) {
+        if (item.value.contains(subcategoryIds[i])) {
+          String tempCaption =
+              CategoryIdToI18nMapper.getCategorySubcategoryName(
+                  context, item.key);
+
+          if (tempCaption != caption) {
+            if (caption != AppLocalizations.of(context)!.severalCategories) {
+              return AppLocalizations.of(context)!.severalCategories;
+            } else {
+              caption = tempCaption;
+            }
+          }
+        }
       }
     }
-    return AppLocalizations.of(context)!.category;
+    return getShortCaption(
+        cutOff: NavigatorConstants.CategoryNameCutOff, caption: caption);
   }
 }
 

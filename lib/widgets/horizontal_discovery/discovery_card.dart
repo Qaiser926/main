@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/config/routes/routes.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/colors.dart';
-
-import '../config/routes/routes.dart';
-import '../modules/models/eA_summary/eA_summary.dart';
-import '../utils/services/data_handling/data_handling.dart';
-import '../utils/ui/ui_utils.dart';
+import 'package:othia/modules/models/eA_summary/eA_summary.dart';
+import 'package:othia/utils/services/data_handling/data_handling.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 
 class EASummaryCard extends StatelessWidget {
   final SummaryEventOrActivity eASummary;

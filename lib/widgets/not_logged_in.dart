@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
-Widget getNotLoggedIn() {
+Widget getNotLoggedIn({required BuildContext context}) {
   return Container(
       alignment: Alignment.center,
       child: Column(
@@ -10,7 +11,11 @@ Widget getNotLoggedIn() {
           getVerSpace(200.h),
           Column(
             children: [
-              Text("To view this feature you must be logged in"),
+              Text(
+                AppLocalizations.of(context)!.notLoggedInMessage,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              getVerSpace(10.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.h),
                 child: Expanded(
@@ -30,10 +35,12 @@ Widget getNotLoggedIn() {
 }
 
 Widget getLoggedInSensitiveBody(
-    {required Widget loggedInWidget, required bool isLoggedIn}) {
+    {required Widget loggedInWidget,
+    required bool isLoggedIn,
+    required BuildContext context}) {
   if (isLoggedIn) {
     return loggedInWidget;
   } else {
-    return getNotLoggedIn();
+    return getNotLoggedIn(context: context);
   }
 }

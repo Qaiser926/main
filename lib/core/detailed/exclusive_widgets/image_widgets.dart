@@ -48,7 +48,7 @@ class ImageWidget extends StatelessWidget {
                 // idea would be to open a notification window and inform user that she/ he needs to be logged in to perform this action
                 // user can either cancel or is forwarded to login screen
                 child: IconRow(
-                    objectId: detailedEventOrActivity.id,
+                    eAId: detailedEventOrActivity.id,
                     isLiked: true,
                     userId: "something"),
               ),

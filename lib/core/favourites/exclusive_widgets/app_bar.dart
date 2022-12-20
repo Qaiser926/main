@@ -15,6 +15,7 @@ class FavouriteAppBar extends AppBar {
       : super(
           title: Text(AppLocalizations.of(context)!.favourites),
           elevation: 0,
+          automaticallyImplyLeading: false,
           bottom: PreferredSize(
             preferredSize: const Size(double.infinity, 70),
             child: Container(

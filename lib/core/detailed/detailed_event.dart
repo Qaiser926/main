@@ -78,6 +78,12 @@ class _EventDetailState extends State<EventDetail> {
           return false;
         },
         child: Scaffold(
+          // TODO include share url
+          bottomNavigationBar: ButtonWidget(
+              iCalElement: iCalElement,
+              shareUrl: "temp",
+              websiteUrl: detailedEventOrActivity.websiteUrl,
+              ticketUrl: detailedEventOrActivity.ticketUrl),
           body: Container(
             //in diesem container sind sind alle attribute nacheinander enthalten, beim hinzufügen
             // wird durch die infinity characteristik der container erweitert (scrollbar)
@@ -85,62 +91,46 @@ class _EventDetailState extends State<EventDetail> {
             width: double.infinity,
             // Hintergrundfarbe des Containers
 
-            child: Column(
-              // alle elemente sind in der column angeordnet
-              children: [
-                Expanded(
-                  // the first item has the expanded characteristic, meaning that it fills the available space
-                  flex: 1,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        // in the image widget, the event details (name, place, time are contained)
-                        ImageWidget(
-                          detailedEventOrActivity: detailedEventOrActivity,
-                          iCalElement: iCalElement,
-                        ),
-                        // space between ImageWidget and ticket price
-                        getVerSpace(10.h),
-                        // TODO follower only if not Othia scraped
-                        getFollowWidget(context),
-                        getVerSpace(25.h),
-                        if (detailedEventOrActivity.description != null)
-                          DescriptionWidget(
-                              description:
-                              detailedEventOrActivity.description!),
-                        if (!detailedEventOrActivity.isOnline)
-                          SimpleMap(latLng.LatLng(
-                              detailedEventOrActivity.location.latitude!,
-                              detailedEventOrActivity.location.longitude!)),
-                        if (detailedEventOrActivity.time.openingTime != null)
-                          OpeningTimesSection(
-                              openingTime:
-                              detailedEventOrActivity.time.openingTime!),
-
-                        // TODO include share url + decide where to integrate
-                        ButtonWidget(
-                            iCalElement: iCalElement,
-                            shareUrl: "temp",
-                            websiteUrl: detailedEventOrActivity.websiteUrl,
-                            ticketUrl: detailedEventOrActivity.ticketUrl),
-                        getVerSpace(25.h),
-                        if (detailedEventOrActivity.eventSeriesId != null)
-                          ExploreEventSeries(
-                              eventSeriesId:
-                              detailedEventOrActivity.eventSeriesId!),
-                        ExploreCategory(
-                            categoryId: detailedEventOrActivity.categoryId),
-                        if (detailedEventOrActivity.location.locationId != null)
-                          ExploreLocation(
-                              locationId:
-                              detailedEventOrActivity.location.locationId!),
-                      ],
-                    ),
-
-                    // make it all scrollable
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // in the image widget, the event details (name, place, time are contained)
+                  ImageWidget(
+                    detailedEventOrActivity: detailedEventOrActivity,
+                    iCalElement: iCalElement,
                   ),
-                )
-              ],
+                  // space between ImageWidget and ticket price
+                  getVerSpace(10.h),
+                  // TODO follower only if not Othia scraped
+                  getFollowWidget(context),
+                  getVerSpace(25.h),
+                  if (detailedEventOrActivity.description != null)
+                    DescriptionWidget(
+                        description:
+                        detailedEventOrActivity.description!),
+                  if (!detailedEventOrActivity.isOnline)
+                    SimpleMap(latLng.LatLng(
+                        detailedEventOrActivity.location.latitude!,
+                        detailedEventOrActivity.location.longitude!)),
+                  if (detailedEventOrActivity.time.openingTime != null)
+                    OpeningTimesSection(
+                        openingTime:
+                        detailedEventOrActivity.time.openingTime!),
+                  getVerSpace(25.h),
+                  if (detailedEventOrActivity.eventSeriesId != null)
+                    ExploreEventSeries(
+                        eventSeriesId:
+                        detailedEventOrActivity.eventSeriesId!),
+                  ExploreCategory(
+                      categoryId: detailedEventOrActivity.categoryId),
+                  if (detailedEventOrActivity.location.locationId != null)
+                    ExploreLocation(
+                        locationId:
+                        detailedEventOrActivity.location.locationId!),
+                ],
+              ),
+
+              // make it all scrollable
             ),
           ),
         ),

@@ -11,5 +11,5 @@ class SearchResultIds {
   });
 
   factory SearchResultIds.fromJson(Map<String, dynamic> json) =>
-      _$SearchResultsIdsFromJson(json);
+      _$SearchResultIdsFromJson(json);
 }
