@@ -3,6 +3,12 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
+
+  "home": "Home",
+  "compingUpEvents": "Coming up Events",
+    "popularEA": "Popular Events & Activities",
+    "universityEvents": "University Events",
+
   "follow": "Follow",
   "favourites": "Favourites",
   "futureEvents": "Future Events",

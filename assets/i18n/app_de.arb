@@ -1,5 +1,11 @@
 {
   "helloWorld": "Hallo Welt!",
+
+  "home": "Startseite",
+  "compingUpEvents": "Bald beginnende Events",
+  "popularEA": "Populäre Events & Aktivitäten",
+  "universityEvents": "Universitäre Events",
+
   "follow": "Folgen",
   "favourites": "Favoriten",
   "futureEvents": "Bevorstehende Events",

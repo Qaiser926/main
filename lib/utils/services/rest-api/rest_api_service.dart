@@ -116,6 +116,13 @@ class RestService {
     return result;
   }
 
+  Future<Object> getHomePageIds() async {
+    print('requesting home page ids');
+    RestOptions restOptions = RestOptions(path: '/getHomePageIds-dev/');
+    final result = await get(restOptions);
+    return result;
+  }
+
   void logout() async {
     await signOutCurrentUser();
     return;

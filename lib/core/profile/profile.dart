@@ -69,11 +69,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 automaticallyImplyLeading: false),
             body: getLoggedInSensitiveBody(
                 context: context,
-                loggedInWidget: ProfilePageFuturreBuilder(),
+                loggedInWidget: ProfilePageFutureBuilder(),
                 isLoggedIn: userLoggedIn)));
   }
 
-  Widget ProfilePageFuturreBuilder() {
+  Widget ProfilePageFutureBuilder() {
     return KeepAliveFutureBuilder(
         future: userInfo,
         builder: (context, snapshot) {

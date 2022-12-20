@@ -14,7 +14,7 @@ class Pages {
   static Map<String, WidgetBuilder> routes = {
     Routes.homeRoute: (context) => const SplashScreen(),
     Routes.mainScreenRoute: (context) => MainPage(),
-    Routes.homeScreenRoute: (context) => const Home(),
+    Routes.homeScreenRoute: (context) => const HomePage(),
     Routes.detailedEventRoute: (context) => const EventDetail(),
     Routes.favouriteRoute: (context) => const FavouritePage(),
     Routes.searchRoute: (context) => SearchPage(),

@@ -14,7 +14,7 @@ import 'favourites/favourite_screen.dart';
 
 class MainPage extends StatelessWidget {
   static final List<Widget> _pages = [
-    Home(),
+    HomePage(),
     SearchPage(),
     const Add(),
     const FavouritePage(),
