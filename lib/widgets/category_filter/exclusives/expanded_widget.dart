@@ -112,7 +112,7 @@ class ExpandedWidget extends StatelessWidget {
             height: singleExpandedHeight,
             // width: singleExpandedWidth,
             child: GestureDetector(
-              // behavior: HitTestBehavior.translucent,
+              behavior: HitTestBehavior.translucent,
               onTap: () {
                 Provider.of<SearchNotifier>(context, listen: false)
                     .switchSelectedSubcategory(

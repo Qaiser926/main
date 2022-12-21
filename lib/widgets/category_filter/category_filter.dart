@@ -17,20 +17,21 @@ Future<dynamic> CategoryFilterDialog({required BuildContext context}) {
       context: context,
       builder: (_) {
         return MultiProvider(
-            providers: [
-              ChangeNotifierProvider.value(
-                value: test,
-              )
-            ],
-            child:
-                // TODO make container height dynamic
-                Container(
-              height: 675,
-              child: CategoryFilter(
-                context: context,
-                isModalBottomSheetMode: true,
-              ),
-            ));
+          providers: [
+            ChangeNotifierProvider.value(
+              value: test,
+            )
+          ],
+          child:
+              // TODO make container height dynamic
+              Container(
+            height: 675,
+            child: CategoryFilter(
+              context: context,
+              isModalBottomSheetMode: true,
+            ),
+          ),
+        );
       });
 }
 

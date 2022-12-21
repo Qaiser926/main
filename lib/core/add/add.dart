@@ -22,24 +22,28 @@ class Add extends StatelessWidget {
       print(_pageController.page);
     });
     AddNotifier notifier = AddNotifier(firstPage);
+
+    InputNotifier inputNotifier = InputNotifier();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: notifier,
         ),
         ChangeNotifierProvider.value(
-          value: InputNotifier(),
+          value: inputNotifier,
         )
       ],
       child: Scaffold(
-        floatingActionButton: getFloatingButtons(),
+        persistentFooterButtons: [getFloatingButtons()],
+        // bottomNavigationBar: getFloatingButtons(),
+        // floatingActionButton: ,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: PageView(
             onPageChanged: ((value) {
               notifier.currentPage = value;
             }),
             controller: _pageController,
-            children: [FirstAddPage(), SecondAddPage()]),
+            children: [FirstAddPage(inputNotifier), SecondAddPage()]),
       ),
     );
   }
