@@ -60,13 +60,22 @@ class Time {
   final OpeningTimeCode? openingTimeCode;
   final Map? openingTime;
 
-  Time({
-    this.startTimeUtc,
-    this.openingTimeCode,
-    this.endTimeUtc,
-    this.openingTime
-  });
+  Time({this.startTimeUtc,
+      this.openingTimeCode,
+      this.endTimeUtc,
+      this.openingTime});
 
-  factory Time.fromJson(Map<String, dynamic> json) =>
-      _$TimeFromJson(json);
+  factory Time.fromJson(Map<String, dynamic> json) => _$TimeFromJson(json);
+}
+
+// TODO might not be used
+@JsonSerializable()
+class Coordinates {
+  final double latitude;
+  final double longitude;
+
+  Coordinates({required this.latitude, required this.longitude});
+
+  factory Coordinates.fromJson(Map<String, dynamic> json) =>
+      _$CoordinatesFromJson(json);
 }

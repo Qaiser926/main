@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/widgets/category_filter/category_filter.dart';
 import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/search_filter.dart';
 import 'package:othia/widgets/filter_related/search_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../widgets/filter_related/filter.dart';
 
 class InitialSearchPage extends StatelessWidget {
   const InitialSearchPage({Key? key}) : super(key: key);
@@ -19,7 +19,9 @@ class InitialSearchPage extends StatelessWidget {
           appBar: DropDownAppBar(
               filter:
                   Consumer<SearchNotifier>(builder: (context, model, child) {
-                return buildDropdownBar(context: context);
+                    return SearchFilter(
+                  context: context,
+                ).buildDropdownBar();
               }),
               context: context,
               appBarTitle: AppLocalizations.of(context)!.discover,

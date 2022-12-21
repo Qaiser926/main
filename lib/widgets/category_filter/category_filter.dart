@@ -4,6 +4,7 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/categories.dart';
+import '../filter_related/abstract_search_notifier.dart';
 import '../filter_related/search_notifier.dart';
 import 'exclusives/category_grid_item.dart';
 import 'exclusives/expanded_widget.dart';
@@ -130,7 +131,8 @@ List<Widget> getCategoryGrid({required bool isModalBottomSheetMode}) {
 }
 
 String getCategoryCaption(
-    {required BuildContext context, required SearchNotifier searchNotifier}) {
+    {required BuildContext context,
+    required AbstractSearchNotifier searchNotifier}) {
   // special case if one page "Show More"
   if (searchNotifier.currentIndex == NavigatorConstants.ShowMorePageIndex) {
     return getShortCaption(

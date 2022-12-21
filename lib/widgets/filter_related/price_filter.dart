@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
@@ -161,7 +162,8 @@ Widget getPriceBox(
 
 
 String getPriceCaption(
-    {required BuildContext context, required SearchNotifier searchNotifier}) {
+    {required BuildContext context,
+    required AbstractSearchNotifier searchNotifier}) {
   if (searchNotifier.priceFilterActivated) {
     RangeValues range = searchNotifier.getPriceRange;
     if (range.start == range.end) {

@@ -24,4 +24,10 @@ class SearchNotifier extends AbstractSearchNotifier {
             startDate: startDate,
             endDate: endDate,
             priceRange: priceRange);
+
+  @override
+  void goToFirstPage() {
+    currentIndex = NavigatorConstants.SearchPageIndex;
+    pageController.jumpToPage(currentIndex);
+  }
 }

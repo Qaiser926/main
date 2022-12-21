@@ -9,7 +9,7 @@ import '../../constants/app_constants.dart';
 abstract class AbstractSearchNotifier extends ChangeNotifier {
   // Pagecontroller related
   bool isControllerSet = false;
-  final PageController _pageController;
+  final PageController pageController;
 
   AbstractSearchNotifier(
       {priceRange = const RangeValues(
@@ -20,7 +20,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
       this.eAType = EAType.eventsActivites,
       selectedCategoryIds,
       required PageController pageController})
-      : _pageController = pageController {
+      : pageController = pageController {
     this.priceRange = defaultPriceRange = priceRange;
     this.startDate = defaultStartDate = startDate ?? DateTime.now();
     this.endDate =
@@ -88,32 +88,29 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
   bool dateReset = false;
 
   PageController getPageController() {
-    return _pageController;
+    return pageController;
   }
 
   set setIndex(int newPage) {
     currentIndex = newPage;
-    _pageController.jumpToPage(currentIndex);
+    pageController.jumpToPage(currentIndex);
     notifyListeners();
   }
 
   void goToResultPage() {
     notifyListeners();
     currentIndex = NavigatorConstants.ResultPageIndex;
-    _pageController.jumpToPage(currentIndex);
+    pageController.jumpToPage(currentIndex);
   }
 
-  void goToSearchPage() {
-    currentIndex = NavigatorConstants.SearchPageIndex;
-    _pageController.jumpToPage(currentIndex);
-  }
+  void goToFirstPage();
 
   void goToShowMorePage(
       {required String showMoreCaption,
       required List<String?> showMoreIds,
       required String showMoreCategoryTitle}) {
     currentIndex = NavigatorConstants.ShowMorePageIndex;
-    _pageController.jumpToPage(currentIndex);
+    pageController.jumpToPage(currentIndex);
     this.showMoreCaption = showMoreCaption;
     this.showMoreIds = showMoreIds;
     this.showMoreCategoryTitle = showMoreCategoryTitle;
@@ -242,7 +239,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
     selectedSubcategoryIds = [];
     if (!anyFilterActivated()) {
       if (currentIndex != NavigatorConstants.SearchPageIndex) Get.back();
-      goToSearchPage();
+      goToFirstPage();
     }
     notifyListeners();
   }

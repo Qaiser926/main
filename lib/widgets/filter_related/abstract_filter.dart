@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
@@ -10,18 +11,17 @@ import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
 import '../category_filter/category_filter.dart';
-import 'search_notifier.dart';
 
-abstract class AbstractFilter {
+abstract class AbstractFilter<T> {
   AbstractFilter({required BuildContext context});
 
   Consumer<dynamic> buildDropdownBar() {
     // var test = Provider.of<SearchNotifier>(context, listen: false);
     // test.activateShowSearchResults();
 
-    return Consumer<SearchNotifier>(builder: (context, model, child) {
-      final List<Widget> filters =
-          getFilters(context: context, searchNotifier: model);
+    return Consumer<T>(builder: (context, model, child) {
+      final List<Widget> filters = getFilters(
+          context: context, searchNotifier: model as AbstractSearchNotifier);
       return Container(
           alignment: Alignment.centerLeft,
           child: SizedBox(
@@ -44,9 +44,13 @@ abstract class AbstractFilter {
 
   Widget getResetFilter(BuildContext context) {
     return GestureDetector(
-      onTap: () => {
-        Provider.of<SearchNotifier>(context, listen: false).backToDefault(),
-        Provider.of<SearchNotifier>(context, listen: false).goToSearchPage(),
+      onTap: () =>
+      {
+        // TODO not working
+        Provider.of<AbstractSearchNotifier>(context, listen: false)
+            .backToDefault(),
+        Provider.of<AbstractSearchNotifier>(context, listen: false)
+            .goToFirstPage(),
       },
       child: Container(
         margin: EdgeInsets.only(right: 12.h, left: 0),
@@ -118,7 +122,8 @@ abstract class AbstractFilter {
   }
 
   List<Widget> getFilters(
-      {required BuildContext context, required SearchNotifier searchNotifier}) {
+      {required BuildContext context,
+      required AbstractSearchNotifier searchNotifier}) {
     List<Widget> filter = [
       // index has only effect if it is zero --> all others just 1
       getFilter(

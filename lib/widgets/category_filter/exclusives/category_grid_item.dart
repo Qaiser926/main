@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/app_constants.dart';
@@ -43,7 +44,7 @@ class CategoryGridItem extends StatelessWidget {
             .changeForFullCategorySearch(
                 selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
         if (isModalBottomSheetMode) {
-          Navigator.of(context, rootNavigator: true).pop();
+          Get.back();
         }
       },
       child: SizedBox(

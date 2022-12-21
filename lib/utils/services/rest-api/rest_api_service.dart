@@ -110,6 +110,14 @@ class RestService {
     return result;
   }
 
+  Future<Object> getMapResultIds({required searchQuery}) async {
+    print('requesting Map result ids');
+    //TODO define API call for several query parameters
+    RestOptions restOptions = RestOptions(path: '/getMapResultIds-dev/');
+    final result = await get(restOptions);
+    return result;
+  }
+
   Future<Object> getUserInfo({required userId}) async {
     print('requesting user info for for: $userId');
     RestOptions restOptions = RestOptions(path: '/getUserInfo-dev/');
