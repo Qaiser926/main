@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/home/exclusive_widgets/map_picture.dart';
 import 'package:othia/modules/models/get_home_page_ids/get_home_page_ids.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
@@ -47,16 +48,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getHomePage(Map<String, dynamic> jsonData) {
-    // TODO
     HomePageIds homePageIds = HomePageIds.fromJson(jsonData);
     return SingleChildScrollView(
         child: Column(
       children: [
+        MapPicture(),
         BaseDiscoveryClass(
-            caption: AppLocalizations.of(context)!.compingUpEvents,
-            Ids: homePageIds.compingUpEvents,
-            showMore: false,
-            showDivider: false),
+          caption: AppLocalizations.of(context)!.compingUpEvents,
+          Ids: homePageIds.compingUpEvents,
+          showMore: false,
+        ),
         BaseDiscoveryClass(
           caption: AppLocalizations.of(context)!.openActivities,
           Ids: homePageIds.openActivities,
