@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'add_exclusives/add_first_page.dart';
+import 'add_exclusives/input_notifier.dart';
+import 'add_exclusives/notifier.dart';
 
 class Add extends StatelessWidget {
   const Add({super.key});
@@ -8,17 +11,76 @@ class Add extends StatelessWidget {
   static const animationDuration = Duration(milliseconds: 200);
   static const animationCurve = Curves.decelerate;
 
-  static final PageController _pageController = PageController(initialPage: 0);
+  static const int firstPage = 0;
+
+  static final PageController _pageController =
+      PageController(initialPage: firstPage);
 
   @override
   Widget build(BuildContext context) {
-    PageView body = getBody();
-
-    return Scaffold(
-      body: body,
-      floatingActionButton: getFloatingButtons(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    _pageController.addListener(() {
+      print(_pageController.page);
+    });
+    AddNotifier notifier = AddNotifier(firstPage);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: notifier,
+        ),
+        ChangeNotifierProvider.value(
+          value: InputNotifier(),
+        )
+      ],
+      child: Scaffold(
+        floatingActionButton: getFloatingButtons(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: PageView(
+            onPageChanged: ((value) {
+              notifier.currentPage = value;
+            }),
+            controller: _pageController,
+            children: [FirstAddPage(), SecondAddPage()]),
+      ),
     );
+  }
+
+  Widget getFloatingButtons() {
+    List<Widget> rowChildren = [];
+    try {
+      print(_pageController.page);
+    } on AssertionError catch (e) {
+      print(_pageController.initialPage);
+    }
+
+    return Consumer<AddNotifier>(builder: (context, model, child) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          model.currentPage == firstPage
+              ? const SizedBox.shrink()
+              : getNavigationButton(Icons.arrow_back, previousPage),
+          getNavigationButton(Icons.arrow_forward, nextPage),
+        ],
+      );
+    });
+  }
+
+  Widget getNavigationButton(IconData icon, void Function() onPressedFunction) {
+    return SizedBox(
+        width: 100,
+        child: ElevatedButton(
+          style: const ButtonStyle(
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+            ),
+          ),
+          // splashColor: Colors.transparent,
+
+          onPressed: () => onPressedFunction(),
+          child: Icon(icon),
+        ));
   }
 
   void nextPage() {
@@ -29,41 +91,5 @@ class Add extends StatelessWidget {
   void previousPage() {
     _pageController.previousPage(
         duration: animationDuration, curve: animationCurve);
-  }
-
-  PageView getBody() {
-    return PageView(
-        controller: _pageController,
-        children: [FirstAddPage(), SecondAddPage()]);
-  }
-
-  Row getFloatingButtons() {
-    List<Widget> rowChildren = [];
-    try {
-      print(_pageController.page);
-    } on AssertionError catch (e) {
-      print(_pageController.initialPage);
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        getCustomFloating(Icons.arrow_back, previousPage),
-        getCustomFloating(Icons.arrow_forward, nextPage),
-      ],
-    );
-  }
-
-  Widget getCustomFloating(IconData icon, void Function() onPressedFunction) {
-    return SizedBox(
-      width: 100,
-      child: FloatingActionButton(
-        splashColor: Colors.transparent,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        onPressed: () => onPressedFunction(),
-        child: Icon(icon),
-      ),
-    );
   }
 }

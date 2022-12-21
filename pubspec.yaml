@@ -45,7 +45,7 @@ dependencies:
   #utils
   intl: ^0.17.0
   flutter_screenutil: ^5.5.3+2
-  flutter_svg: ^1.1.1+1
+  flutter_svg: ^1.1.6
   url_launcher: ^6.1.7
   instant: ^0.4.1
   provider: ^6.0.4
@@ -69,18 +69,18 @@ dependencies:
   json_annotation: ^4.7.0
   uuid: ^3.0.6
   #amplify
-  amplify_flutter: ^0.6.0
+  amplify_flutter: ^0.6.10
   #  amplify_datastore: ^0.6.0
-  amplify_api: ^0.6.0
-  amplify_auth_cognito: ^0.6.0
-  amplify_authenticator: ^0.2.0
+  amplify_api: ^0.6.10
+  amplify_auth_cognito: ^0.6.10
+  amplify_authenticator: ^0.2.4
   # ui
   typicons_flutter: ^0.5.0
   geolocator: ^9.0.2
   geocoding: ^2.0.5
   syncfusion_flutter_datepicker: ^20.3.60
   font_awesome_flutter: ^10.3.0
-  flutter_html: ^0.11.1
+  flutter_html: ^3.0.0-alpha.6
 
 
 dev_dependencies:

@@ -58,6 +58,7 @@ class RestService {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
     print(token);
+    String userId = await getUserId();
     // TODO login
     RestOptions restOptions = RestOptions(
         path: '/isEALikedByUser-dev/$eAId', headers: {'token': '${token}'});

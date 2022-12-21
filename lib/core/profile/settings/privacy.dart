@@ -36,10 +36,12 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           child: ListView(
             children: [
               getVerSpace(25.h),
-              Html(
-                data: AssetConstants.dataProtectionDisclaimer,
+              Padding(
                 padding: EdgeInsets.all(8.0),
-              )
+                child: Html(
+                  data: AssetConstants.dataProtectionDisclaimer,
+                ),
+              ),
             ],
           ),
         ),
