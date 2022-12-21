@@ -22,33 +22,33 @@ class EASummaryCard extends StatelessWidget {
             arguments: {NavigatorConstants.EventActivityId: eASummary.id})
       },
       child: Container(
-        width: 185.w,
+        width: 160.w,
         margin: EdgeInsets.only(right: 20.h, left: index == 0 ? 20.h : 0),
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
             Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22.h),
+                  borderRadius: BorderRadius.circular(19.h),
                   image: DecorationImage(
                       image: getPhotoNullSave(
                               categoryId: eASummary.categoryId,
                               photo: eASummary.photo)
                           .image,
                       fit: BoxFit.fill)),
-              height: 140.h,
-              width: 248.h,
-              padding: EdgeInsets.only(left: 12.h, top: 12.h),
+              height: 118.h,
+              width: 159.h,
+              padding: EdgeInsets.only(left: 6.h, top: 6.h),
               child: getPriceWrapper(context: context, eASummary: eASummary),
             ),
             Positioned(
-              width: 152.h,
-              top: 100.h,
+              width: 131.h,
+              top: 85.h,
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.tertiary,
-                    borderRadius: BorderRadius.circular(22.h)),
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                    borderRadius: BorderRadius.circular(13.h)),
+                padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 6.h),
                 child: getSummaryInformation(
                     eASummary: eASummary, context: context),
                 // height: 133.h,
@@ -75,6 +75,7 @@ Widget getPriceWrapper(
           getPriceText(
               context: context, isShort: true, prices: eASummary.prices),
           maxLines: 1,
+          style: TextStyle(fontSize: 11.h),
         ),
       ),
     ],
@@ -91,19 +92,21 @@ Widget getSummaryInformation(
         eASummary.title,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontSize: 11.h),
       ),
-      getVerSpace(5.h),
+      getVerSpace(3.h),
       Row(
         children: [
           Icon(
             Icons.location_on_outlined,
-            size: 14.h,
+            size: 11.h,
           ),
           getHorSpace(3.h),
           Text(
             getLocationString(location: eASummary.location, isShort: true),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 11.h),
           )
 
 // include here price information
@@ -114,7 +117,7 @@ Widget getSummaryInformation(
         children: [
           Icon(
             Icons.access_time_outlined,
-            size: 14.h,
+            size: 11.h,
           ),
           getHorSpace(3.h),
           Text(
@@ -123,6 +126,7 @@ Widget getSummaryInformation(
                 startTimeUtc: eASummary.time.startTimeUtc,
                 openingTimeCode: eASummary.time.openingTimeCode),
             maxLines: 1,
+            style: TextStyle(fontSize: 11.h),
           )
         ],
       ),

@@ -93,6 +93,7 @@ class _EventDetailState extends State<EventDetail> {
 
             child: SingleChildScrollView(
               child: Column(
+                // TODO align distances
                 children: [
                   // in the image widget, the event details (name, place, time are contained)
                   ImageWidget(
