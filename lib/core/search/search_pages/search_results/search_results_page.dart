@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/search/search_pages/search_results/exclusive_widgets_search_result/search_results.dart';
 import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/filter.dart';
 import 'package:othia/widgets/filter_related/search_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,10 @@ class _SearchResultsPage extends State<SearchResultsPage> {
         return Scaffold(
           primary: true,
           appBar: DropDownAppBar(
+              filter:
+                  Consumer<SearchNotifier>(builder: (context, model, child) {
+                return buildDropdownBar(context: context);
+              }),
               context: context,
               appBarTitle: AppLocalizations.of(context)!.results),
           body: SearchResults(
