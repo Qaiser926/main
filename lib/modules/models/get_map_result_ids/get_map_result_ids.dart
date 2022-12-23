@@ -4,12 +4,12 @@ part 'get_map_result_ids.g.dart';
 
 @JsonSerializable()
 class MapResultIds {
-  Map<String, List> activityResults;
-  Map<String, List> eventResults;
+  final List<Map<String, dynamic>?> activityResults;
+  final List<Map<String, dynamic>?> eventResults;
 
   MapResultIds({
-    required final this.activityResults,
-    required final this.eventResults,
+    required this.activityResults,
+    required this.eventResults,
   });
 
   factory MapResultIds.fromJson(Map<String, dynamic> json) =>

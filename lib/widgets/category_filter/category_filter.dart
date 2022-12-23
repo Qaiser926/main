@@ -114,6 +114,7 @@ List<Widget> getCategoryGrid(
       children: [
         Flexible(
           child: getCategoryGridItem(
+            dynamicNotifier: dynamicProvider,
             index: index,
             isModalBottomSheetMode: isModalBottomSheetMode,
           ),
@@ -123,6 +124,7 @@ List<Widget> getCategoryGrid(
         ),
         Flexible(
           child: getCategoryGridItem(
+            dynamicNotifier: dynamicProvider,
             index: index + 1,
             isModalBottomSheetMode: isModalBottomSheetMode,
           ),
@@ -148,14 +150,14 @@ List<Widget> getCategoryGrid(
 
 String getCategoryCaption(
     {required BuildContext context,
-    required AbstractSearchNotifier searchNotifier}) {
+    required AbstractSearchNotifier dynamicNotifier}) {
   // special case if one page "Show More"
-  if (searchNotifier.currentIndex == NavigatorConstants.ShowMorePageIndex) {
+  if (dynamicNotifier.currentIndex == NavigatorConstants.ShowMorePageIndex) {
     return getShortCaption(
-        caption: searchNotifier.showMoreCategoryTitle,
+        caption: dynamicNotifier.showMoreCategoryTitle,
         cutOff: NavigatorConstants.CategoryNameCutOff);
   }
-  List<String> subcategoryIds = searchNotifier.getSelectedSubcategoryIds;
+  List<String> subcategoryIds = dynamicNotifier.getSelectedSubcategoryIds;
   if (subcategoryIds.length == 0) {
     return AppLocalizations.of(context)!.category;
   } else if (subcategoryIds.length == 1) {

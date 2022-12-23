@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/app_constants.dart';
 import '../../../constants/categories.dart';
 import '../../../constants/colors.dart';
-import '../../filter_related/search_notifier.dart';
 
 Widget getCategoryGridItem(
-    {required int index, required bool isModalBottomSheetMode}) {
+    {required int index,
+    required bool isModalBottomSheetMode,
+    required AbstractSearchNotifier dynamicNotifier}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
+    dynamicNotifier: dynamicNotifier,
     index: index,
     categoryId: categoryId,
     isModalBottomSheetMode: isModalBottomSheetMode,
@@ -19,6 +22,7 @@ Widget getCategoryGridItem(
 }
 
 class CategoryGridItem extends StatelessWidget {
+  AbstractSearchNotifier dynamicNotifier;
   final int index;
   final String categoryId;
   final bool isModalBottomSheetMode;
@@ -34,15 +38,15 @@ class CategoryGridItem extends StatelessWidget {
     required this.index,
     required this.categoryId,
     required this.isModalBottomSheetMode,
+    required this.dynamicNotifier,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<SearchNotifier>(context, listen: false)
-            .changeForFullCategorySearch(
-                selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
+        dynamicNotifier.changeForFullCategorySearch(
+            selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
         if (isModalBottomSheetMode) {
           Get.back();
         }
@@ -100,7 +104,7 @@ class CategoryGridItem extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Consumer<SearchNotifier>(
+                        Consumer<AbstractSearchNotifier>(
                             builder: (context, model, child) {
                           return model.getExpandedIndex == index
                               ? const Icon(Icons.expand_less_outlined)
@@ -113,7 +117,8 @@ class CategoryGridItem extends StatelessWidget {
               ],
             ),
             IgnorePointer(
-              child: Consumer<SearchNotifier>(builder: (context, model, child) {
+              child: Consumer<AbstractSearchNotifier>(
+                  builder: (context, model, child) {
                 return model.getExpandedIndex == index
                     ? Container(
                         decoration: BoxDecoration(
@@ -130,12 +135,10 @@ class CategoryGridItem extends StatelessWidget {
   }
 
   void onLowerAreaTapped(BuildContext context) {
-    SearchNotifier categoryProvider =
-        Provider.of<SearchNotifier>(context, listen: false);
-    if (categoryProvider.getExpandedIndex == index) {
-      categoryProvider.setExpanded(index: null);
+    if (dynamicNotifier.getExpandedIndex == index) {
+      dynamicNotifier.setExpanded(index: null);
     } else {
-      categoryProvider.setExpanded(index: index);
+      dynamicNotifier.setExpanded(index: index);
     }
   }
 }

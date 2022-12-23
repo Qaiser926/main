@@ -11,6 +11,8 @@ import 'package:othia/widgets/filter_related/map_filter.dart';
 import 'package:othia/widgets/filter_related/map_notifier.dart';
 import 'package:provider/provider.dart';
 
+import 'current_position.dart';
+
 class MapBodyInit extends StatelessWidget {
   const MapBodyInit({Key? key}) : super(key: key);
 
@@ -21,7 +23,6 @@ class MapBodyInit extends StatelessWidget {
         return Scaffold(
           primary: true,
           appBar: DropDownAppBar(
-              // TODO
               filter: Consumer<MapNotifier>(builder: (context, model, child) {
                 return MapFilter(
                         context: context,
@@ -55,50 +56,9 @@ class _MapBodyState extends State<MapBody> {
 
   @override
   void initState() {
-    _getCurrentPosition();
+    UserPosition userPosition = UserPosition(context);
+    _currentPosition = userPosition.getPosition;
     super.initState();
-  }
-
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
-        return false;
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
-    }
-    return true;
-  }
-
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
-      setState(() => {
-            _currentPosition = position,
-          });
-    }).catchError((e) {
-      debugPrint(e);
-    });
   }
 
   @override

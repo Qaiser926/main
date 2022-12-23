@@ -173,7 +173,7 @@ abstract class AbstractFilter<T> {
             context: context,
             index: 1,
             caption: getCategoryCaption(
-                context: context, searchNotifier: dynamicNotifier),
+                context: context, dynamicNotifier: dynamicNotifier),
             coloredBorder: dynamicNotifier.categoryFilterActivated,
             onTapFunction: () {
               return CategoryFilterDialog(

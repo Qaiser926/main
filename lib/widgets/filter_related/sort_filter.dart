@@ -5,7 +5,6 @@ import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'get_reset_apply_filter.dart';
-import 'search_notifier.dart';
 
 enum SortCriteria { price, date, popularity }
 
@@ -25,27 +24,28 @@ Future<dynamic> sortFilterDialog(
             )
           ],
           child: Wrap(
-            children: [SortFilter(context: context)],
+            children: [SortFilter(dynamicProvider: dynamicProvider)],
           ),
         );
       });
 }
 
 class SortFilter extends StatefulWidget {
-  BuildContext context;
+  AbstractSearchNotifier dynamicProvider;
 
-  SortFilter({super.key, required BuildContext this.context});
+  SortFilter({super.key, required this.dynamicProvider});
 
   @override
-  State<SortFilter> createState() => _SortFilterState(context: this.context);
+  State<SortFilter> createState() =>
+      _SortFilterState(dynamicProvider: dynamicProvider);
 }
 
 class _SortFilterState extends State<SortFilter> {
   late SortCriteria? sortCriteria;
+  AbstractSearchNotifier dynamicProvider;
 
-  _SortFilterState({required BuildContext context}) {
-    sortCriteria =
-        Provider.of<SearchNotifier>(context, listen: false).getSortCriteria;
+  _SortFilterState({required this.dynamicProvider}) {
+    sortCriteria = dynamicProvider.getSortCriteria;
   }
 
   @override
@@ -85,7 +85,8 @@ class _SortFilterState extends State<SortFilter> {
   }
 
   bool determineEnabled(
-      {required SortCriteria sortCriteria, required SearchNotifier model}) {
+      {required SortCriteria sortCriteria,
+      required AbstractSearchNotifier model}) {
     if (sortCriteria == model.sortCriteria) {
       return true;
     } else {
@@ -94,28 +95,25 @@ class _SortFilterState extends State<SortFilter> {
   }
 
   Function getSortFunction({required SortCriteria sortCriteria}) {
-    if (sortCriteria ==
-        Provider.of<SearchNotifier>(context, listen: false).getSortCriteria) {
+    if (sortCriteria == dynamicProvider.getSortCriteria) {
       return () => {
             setState(() {
               this.sortCriteria = null;
-              Provider.of<SearchNotifier>(context, listen: false)
-                  .setSortCriteria(sortCriteria: null);
+              dynamicProvider.setSortCriteria(sortCriteria: null);
             })
           };
     } else {
       return () => {
             setState(() {
               this.sortCriteria = sortCriteria;
-              Provider.of<SearchNotifier>(context, listen: false)
-                  .setSortCriteria(sortCriteria: sortCriteria);
+              dynamicProvider.setSortCriteria(sortCriteria: sortCriteria);
             })
           };
     }
   }
 
   List<Widget> getTimeButtons(
-      {required BuildContext context, required SearchNotifier model}) {
+      {required BuildContext context, required AbstractSearchNotifier model}) {
     List<Widget> sortButtons = [
       getSortButton(
           context: context,
@@ -141,7 +139,7 @@ class _SortFilterState extends State<SortFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
       return Column(
         children: [
           Padding(
@@ -161,12 +159,10 @@ class _SortFilterState extends State<SortFilter> {
             child: getShowResultsButton(
                 context: context,
                 functionAccept:
-                    Provider.of<SearchNotifier>(context, listen: false)
-                        .changeSortCriteria,
+                dynamicProvider.changeSortCriteria,
                 functionArgumentsAccept: {#sortCriteria: sortCriteria},
                 functionReset:
-                    Provider.of<SearchNotifier>(context, listen: false)
-                        .resetSort,
+                dynamicProvider.resetSort,
                 functionArgumentsReset: {},
                 closeDialog: true),
           )

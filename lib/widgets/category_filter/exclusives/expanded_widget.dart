@@ -37,7 +37,7 @@ class ExpandedWidget<T> extends StatefulWidget {
       dynamicNotifier: this.dynamicNotifier);
 }
 
-class _ExpandedWidgetState<T> extends State<ExpandedWidget> {
+class _ExpandedWidgetState extends State<ExpandedWidget> {
   BuildContext context;
   final List<String> subcategoryIds;
   static const double singleExpandedHeight = 50;
@@ -141,8 +141,7 @@ class _ExpandedWidgetState<T> extends State<ExpandedWidget> {
   }
 
   Widget getSubcategoryTextButtons(BuildContext context) {
-    return Consumer<T>(builder: (context, model, child) {
-      model as AbstractSearchNotifier;
+    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.start,
         alignment: WrapAlignment.start,
