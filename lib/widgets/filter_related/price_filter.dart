@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
 import 'get_reset_apply_filter.dart';
-import 'search_notifier.dart';
 
-Future<dynamic> priceFilterDialog({required BuildContext context}) {
-  var test = Provider.of<SearchNotifier>(context, listen: false);
+Future<dynamic> priceFilterDialog(
+    {required BuildContext context,
+    required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
       isScrollControlled: true,
       elevation: 3,
@@ -20,11 +20,16 @@ Future<dynamic> priceFilterDialog({required BuildContext context}) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: test,
+              value: dynamicProvider,
             )
           ],
           child: Wrap(
-            children: [PriceFilter(context: context)],
+            children: [
+              PriceFilter(
+                context: context,
+                dynamicProvider: dynamicProvider,
+              )
+            ],
           ),
         );
       });
@@ -33,28 +38,34 @@ Future<dynamic> priceFilterDialog({required BuildContext context}) {
 class PriceFilter extends StatefulWidget {
   final double startValue = NavigatorConstants.PriceRangeStart;
   final double endValue = NavigatorConstants.PriceRangeEnd;
+  AbstractSearchNotifier dynamicProvider;
   BuildContext context;
 
-  PriceFilter({super.key, required BuildContext this.context});
+  PriceFilter(
+      {super.key,
+      required BuildContext this.context,
+      required this.dynamicProvider});
 
   @override
-  State<PriceFilter> createState() => _PriceFilterState(context: this.context);
+  State<PriceFilter> createState() => _PriceFilterState(
+      context: this.context, dynamicProvider: dynamicProvider);
 }
 
 class _PriceFilterState extends State<PriceFilter> {
+  AbstractSearchNotifier dynamicProvider;
   late RangeValues _values;
 
-  _PriceFilterState({required BuildContext context}) {
-    _values = Provider.of<SearchNotifier>(context, listen: false).getPriceRange;
+  _PriceFilterState(
+      {required BuildContext context, required this.dynamicProvider}) {
+    _values = dynamicProvider.getPriceRange;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
       if (model.priceReset) {
         _values = model.getPriceRange;
-        Provider.of<SearchNotifier>(context, listen: false)
-            .setPriceResetFalse();
+        dynamicProvider.setPriceResetFalse();
       }
       ;
 
@@ -120,16 +131,14 @@ class _PriceFilterState extends State<PriceFilter> {
             child: getShowResultsButton(
                 context: context,
                 functionAccept:
-                Provider.of<SearchNotifier>(context, listen: false)
-                    .changePriceRange,
+                dynamicProvider.changePriceRange,
                 functionArgumentsAccept: {
                   #priceRange: RangeValues(_values.start.roundToDouble(),
                       _values.end.roundToDouble())
                 },
                 functionArgumentsReset: {},
                 functionReset:
-                    Provider.of<SearchNotifier>(context, listen: false)
-                        .resetPriceRange,
+                dynamicProvider.resetPriceRange,
                 closeDialog: true),
           )
         ],
@@ -163,9 +172,9 @@ Widget getPriceBox(
 
 String getPriceCaption(
     {required BuildContext context,
-    required AbstractSearchNotifier searchNotifier}) {
-  if (searchNotifier.priceFilterActivated) {
-    RangeValues range = searchNotifier.getPriceRange;
+    required AbstractSearchNotifier dynamicNotifier}) {
+  if (dynamicNotifier.priceFilterActivated) {
+    RangeValues range = dynamicNotifier.getPriceRange;
     if (range.start == range.end) {
       if (range.start == 0) {
         return AppLocalizations.of(context)!.free;

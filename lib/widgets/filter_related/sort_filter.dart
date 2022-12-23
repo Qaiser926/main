@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'get_reset_apply_filter.dart';
@@ -8,8 +9,9 @@ import 'search_notifier.dart';
 
 enum SortCriteria { price, date, popularity }
 
-Future<dynamic> sortFilterDialog({required BuildContext context}) {
-  var test = Provider.of<SearchNotifier>(context, listen: false);
+Future<dynamic> sortFilterDialog(
+    {required BuildContext context,
+    required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
       isScrollControlled: true,
       elevation: 3,
@@ -19,7 +21,7 @@ Future<dynamic> sortFilterDialog({required BuildContext context}) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: test,
+              value: dynamicProvider,
             )
           ],
           child: Wrap(
@@ -174,9 +176,10 @@ class _SortFilterState extends State<SortFilter> {
   }
 }
 
-String getSortCaption({required BuildContext context}) {
-  SortCriteria? sortCriteria =
-      Provider.of<SearchNotifier>(context, listen: false).getSortCriteria;
+String getSortCaption(
+    {required BuildContext context,
+    required AbstractSearchNotifier dynamicProvider}) {
+  SortCriteria? sortCriteria = dynamicProvider.getSortCriteria;
   if (sortCriteria != null) {
     return getCaptionForSortCriteria(
         sortCriteria: sortCriteria, context: context);

@@ -21,7 +21,8 @@ class InitialSearchPage extends StatelessWidget {
                   Consumer<SearchNotifier>(builder: (context, model, child) {
                     return SearchFilter(
                   context: context,
-                ).buildDropdownBar();
+                        dynamicProvider:
+                            Provider.of<SearchNotifier>(context, listen: false)).buildDropdownBar();
               }),
               context: context,
               appBarTitle: AppLocalizations.of(context)!.discover,
@@ -29,6 +30,8 @@ class InitialSearchPage extends StatelessWidget {
           body: CategoryFilter(
             context: context,
             isModalBottomSheetMode: false,
+            dynamicProvider:
+                Provider.of<SearchNotifier>(context, listen: false),
           ),
         );
       }),

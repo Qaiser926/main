@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 
 import '../../constants/categories.dart';
 import '../filter_related/abstract_search_notifier.dart';
-import '../filter_related/search_notifier.dart';
 import 'exclusives/category_grid_item.dart';
 import 'exclusives/expanded_widget.dart';
 
-Future<dynamic> CategoryFilterDialog({required BuildContext context}) {
-  var test = Provider.of<SearchNotifier>(context, listen: false);
+Future<dynamic> CategoryFilterDialog(
+    {required BuildContext context,
+    required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
       isScrollControlled: true,
       elevation: 3,
@@ -20,7 +20,7 @@ Future<dynamic> CategoryFilterDialog({required BuildContext context}) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: test,
+              value: dynamicProvider,
             )
           ],
           child:
@@ -28,38 +28,46 @@ Future<dynamic> CategoryFilterDialog({required BuildContext context}) {
               Container(
             height: 675,
             child: CategoryFilter(
-              context: context,
-              isModalBottomSheetMode: true,
-            ),
+                context: context,
+                isModalBottomSheetMode: true,
+                dynamicProvider: dynamicProvider),
           ),
         );
       });
 }
 
 class CategoryFilter extends StatefulWidget {
-  late final List<Widget> niceList =
-      getCategoryGrid(isModalBottomSheetMode: isModalBottomSheetMode);
+  late final List<Widget> niceList = getCategoryGrid(
+      isModalBottomSheetMode: isModalBottomSheetMode,
+      dynamicProvider: dynamicProvider,
+      context: context);
   BuildContext context;
   bool isModalBottomSheetMode;
+  AbstractSearchNotifier dynamicProvider;
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
       EdgeInsets.symmetric(horizontal: 10);
 
   CategoryFilter(
-      {super.key, required this.context, required this.isModalBottomSheetMode});
+      {super.key,
+      required this.context,
+      required this.isModalBottomSheetMode,
+      required this.dynamicProvider});
 
   @override
-  State<CategoryFilter> createState() => CategoryFilterState(context: context);
+  State<CategoryFilter> createState() =>
+      CategoryFilterState(context: context, dynamicProvider: dynamicProvider);
 }
 
 class CategoryFilterState extends State<CategoryFilter>
     with AutomaticKeepAliveClientMixin<CategoryFilter> {
   late List<String> selectedCategoryIds;
+  AbstractSearchNotifier dynamicProvider;
 
-  CategoryFilterState({required BuildContext context}) {
-    selectedCategoryIds = Provider.of<SearchNotifier>(context, listen: false)
-        .getSelectedSubcategoryIds;
+  CategoryFilterState(
+      {required BuildContext context, required this.dynamicProvider}) {
+    selectedCategoryIds = dynamicProvider.getSelectedSubcategoryIds;
   }
 
   @override
@@ -96,7 +104,10 @@ class CategoryFilterState extends State<CategoryFilter>
   bool get wantKeepAlive => true;
 }
 
-List<Widget> getCategoryGrid({required bool isModalBottomSheetMode}) {
+List<Widget> getCategoryGrid(
+    {required bool isModalBottomSheetMode,
+    required AbstractSearchNotifier dynamicProvider,
+    required BuildContext context}) {
   List<Widget> categoryGrid = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
     categoryGrid.add(Row(
@@ -120,9 +131,13 @@ List<Widget> getCategoryGrid({required bool isModalBottomSheetMode}) {
     ));
     categoryGrid.add(ExpandedWidget(
       categoryIndex: index,
+      dynamicNotifier: dynamicProvider,
+      context: context,
     ));
     categoryGrid.add(ExpandedWidget(
       categoryIndex: index + 1,
+      dynamicNotifier: dynamicProvider,
+      context: context,
     ));
     categoryGrid.add(const SizedBox(
       height: CategoryFilter.gridItemDistance,

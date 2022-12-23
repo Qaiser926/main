@@ -7,8 +7,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
-import 'package:othia/widgets/filter_related/search_filter.dart';
-import 'package:othia/widgets/filter_related/search_notifier.dart';
+import 'package:othia/widgets/filter_related/map_filter.dart';
+import 'package:othia/widgets/filter_related/map_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MapBodyInit extends StatelessWidget {
@@ -17,16 +17,17 @@ class MapBodyInit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Consumer<SearchNotifier>(builder: (context, model, child) {
+      child: Consumer<MapNotifier>(builder: (context, model, child) {
         return Scaffold(
           primary: true,
           appBar: DropDownAppBar(
               // TODO
-              filter:
-                  Consumer<SearchNotifier>(builder: (context, model, child) {
-                return SearchFilter(
-                  context: context,
-                ).buildDropdownBar();
+              filter: Consumer<MapNotifier>(builder: (context, model, child) {
+                return MapFilter(
+                        context: context,
+                        dynamicProvider:
+                            Provider.of<MapNotifier>(context, listen: false))
+                    .buildDropdownBar();
               }),
               context: context,
               appBarTitle: AppLocalizations.of(context)!.discover,

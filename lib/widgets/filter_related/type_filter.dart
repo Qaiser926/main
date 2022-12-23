@@ -3,13 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import 'abstract_search_notifier.dart';
 import 'get_reset_apply_filter.dart';
-import 'search_notifier.dart';
 
 enum EAType { events, activities, eventsActivites }
 
-Future<dynamic> typeFilterDialog({required BuildContext context}) {
-  var test = Provider.of<SearchNotifier>(context, listen: false);
+Future<dynamic> typeFilterDialog(
+    {required BuildContext context,
+    required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
       isScrollControlled: true,
       elevation: 3,
@@ -19,30 +20,36 @@ Future<dynamic> typeFilterDialog({required BuildContext context}) {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: test,
+              value: dynamicProvider,
             )
           ],
           child: Wrap(
-            children: [TypeFilter(context: context)],
+            children: [
+              TypeFilter(
+                dynamicProvider: dynamicProvider,
+              )
+            ],
           ),
         );
       });
 }
 
-class TypeFilter extends StatefulWidget {
-  BuildContext context;
+class TypeFilter<T> extends StatefulWidget {
+  AbstractSearchNotifier dynamicProvider;
 
-  TypeFilter({super.key, required BuildContext this.context});
+  TypeFilter({super.key, required this.dynamicProvider});
 
   @override
-  State<TypeFilter> createState() => _TypeFilterState(context: this.context);
+  State<TypeFilter> createState() =>
+      _TypeFilterState(dynamicProvider: this.dynamicProvider);
 }
 
-class _TypeFilterState extends State<TypeFilter> {
+class _TypeFilterState<T> extends State<TypeFilter> {
   late EAType? eAType;
+  AbstractSearchNotifier dynamicProvider;
 
-  _TypeFilterState({required BuildContext context}) {
-    eAType = Provider.of<SearchNotifier>(context, listen: false).getEAType;
+  _TypeFilterState({required this.dynamicProvider}) {
+    eAType = dynamicProvider.getEAType;
   }
 
   @override
@@ -82,7 +89,7 @@ class _TypeFilterState extends State<TypeFilter> {
   }
 
   bool determineEnabled(
-      {required EAType eAType, required SearchNotifier model}) {
+      {required EAType eAType, required AbstractSearchNotifier model}) {
     if (eAType == model.eAType) {
       return true;
     } else {
@@ -91,28 +98,25 @@ class _TypeFilterState extends State<TypeFilter> {
   }
 
   Function getTypeFunction({required EAType eAType}) {
-    if (eAType ==
-        Provider.of<SearchNotifier>(context, listen: false).getEAType) {
+    if (eAType == dynamicProvider.getEAType) {
       return () => {
             setState(() {
               this.eAType = null;
-              Provider.of<SearchNotifier>(context, listen: false)
-                  .setEAType(eAType: null);
+              dynamicProvider.setEAType(eAType: null);
             })
           };
     } else {
       return () => {
             setState(() {
               this.eAType = eAType;
-              Provider.of<SearchNotifier>(context, listen: false)
-                  .setEAType(eAType: eAType);
+              dynamicProvider.setEAType(eAType: eAType);
             })
           };
     }
   }
 
   List<Widget> getTypeButtons(
-      {required BuildContext context, required SearchNotifier model}) {
+      {required BuildContext context, required AbstractSearchNotifier model}) {
     List<Widget> sortButtons = [
       getTypeButton(
           context: context,
@@ -137,7 +141,7 @@ class _TypeFilterState extends State<TypeFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
       return Column(
         children: [
           Padding(
@@ -157,12 +161,10 @@ class _TypeFilterState extends State<TypeFilter> {
             child: getShowResultsButton(
                 context: context,
                 functionAccept:
-                    Provider.of<SearchNotifier>(context, listen: false)
-                        .changeEAType,
+                dynamicProvider.changeEAType,
                 functionArgumentsAccept: {#eAType: eAType},
                 functionReset:
-                    Provider.of<SearchNotifier>(context, listen: false)
-                        .resetEAType,
+                dynamicProvider.resetEAType,
                 functionArgumentsReset: {},
                 closeDialog: true),
           )
@@ -172,10 +174,12 @@ class _TypeFilterState extends State<TypeFilter> {
   }
 }
 
-String getTypeCaption({required BuildContext context}) {
-  if (Provider.of<SearchNotifier>(context, listen: false).typeFilterActivated) {
-    EAType? eAType =
-        Provider.of<SearchNotifier>(context, listen: false).getEAType;
+String getTypeCaption({
+  required BuildContext context,
+  required AbstractSearchNotifier dynamicProvider,
+}) {
+  if (dynamicProvider.typeFilterActivated) {
+    EAType? eAType = dynamicProvider.getEAType;
     if (eAType != null) {
       return getCaptionForType(eAType: eAType, context: context);
     } else {

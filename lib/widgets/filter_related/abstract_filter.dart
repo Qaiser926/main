@@ -13,7 +13,10 @@ import 'package:provider/provider.dart';
 import '../category_filter/category_filter.dart';
 
 abstract class AbstractFilter<T> {
-  AbstractFilter({required BuildContext context});
+  final AbstractSearchNotifier dynamicProvider;
+  BuildContext context;
+
+  AbstractFilter({required this.context, required this.dynamicProvider});
 
   Consumer<dynamic> buildDropdownBar() {
     // var test = Provider.of<SearchNotifier>(context, listen: false);
@@ -21,7 +24,8 @@ abstract class AbstractFilter<T> {
 
     return Consumer<T>(builder: (context, model, child) {
       final List<Widget> filters = getFilters(
-          context: context, searchNotifier: model as AbstractSearchNotifier);
+          context: context, dynamicNotifier: model as AbstractSearchNotifier);
+
       return Container(
           alignment: Alignment.centerLeft,
           child: SizedBox(
@@ -46,11 +50,8 @@ abstract class AbstractFilter<T> {
     return GestureDetector(
       onTap: () =>
       {
-        // TODO not working
-        Provider.of<AbstractSearchNotifier>(context, listen: false)
-            .backToDefault(),
-        Provider.of<AbstractSearchNotifier>(context, listen: false)
-            .goToFirstPage(),
+        dynamicProvider.backToDefault(),
+        dynamicProvider.goToFirstPage(),
       },
       child: Container(
         margin: EdgeInsets.only(right: 12.h, left: 0),
@@ -123,24 +124,27 @@ abstract class AbstractFilter<T> {
 
   List<Widget> getFilters(
       {required BuildContext context,
-      required AbstractSearchNotifier searchNotifier}) {
+      required AbstractSearchNotifier dynamicNotifier}) {
     List<Widget> filter = [
       // index has only effect if it is zero --> all others just 1
       getFilter(
           context: context,
           index: 1,
-          caption:
-              getPriceCaption(context: context, searchNotifier: searchNotifier),
-          coloredBorder: searchNotifier.priceFilterActivated,
+          caption: getPriceCaption(
+              context: context, dynamicNotifier: dynamicNotifier),
+          coloredBorder: dynamicNotifier.priceFilterActivated,
           onTapFunction: () {
-            return priceFilterDialog(context: context);
+            return priceFilterDialog(
+                context: context, dynamicProvider: dynamicNotifier);
           }),
       getFilter(
           context: context,
           index: 1,
-          caption: getTypeCaption(context: context),
-          coloredBorder: searchNotifier.typeFilterActivated,
-          onTapFunction: () => typeFilterDialog(context: context)),
+          caption: getTypeCaption(
+              context: context, dynamicProvider: dynamicNotifier),
+          coloredBorder: dynamicNotifier.typeFilterActivated,
+          onTapFunction: () => typeFilterDialog(
+              context: context, dynamicProvider: dynamicNotifier)),
       // getFilter(
       //     context: context,
       //     index: 1,
@@ -149,16 +153,18 @@ abstract class AbstractFilter<T> {
       //     onTapFunction: () => print("addFilter")),
     ];
     // only add category if not in start screen
-    if (searchNotifier.currentIndex != NavigatorConstants.SearchPageIndex) {
+    if (dynamicNotifier.currentIndex != NavigatorConstants.SearchPageIndex) {
       filter.insert(
         0,
         getFilter(
             context: context,
             index: 1,
-            caption: getTimeCaption(context: context),
-            coloredBorder: searchNotifier.timeFilterActivated,
+            caption: getTimeCaption(
+                context: context, dynamicProvider: dynamicNotifier),
+            coloredBorder: dynamicNotifier.timeFilterActivated,
             onTapFunction: () {
-              return TimeFilterDialog(context: context);
+              return TimeFilterDialog(
+                  context: context, dynamicProvider: dynamicNotifier);
             }),
       );
       filter.insert(
@@ -167,19 +173,22 @@ abstract class AbstractFilter<T> {
             context: context,
             index: 1,
             caption: getCategoryCaption(
-                context: context, searchNotifier: searchNotifier),
-            coloredBorder: searchNotifier.categoryFilterActivated,
+                context: context, searchNotifier: dynamicNotifier),
+            coloredBorder: dynamicNotifier.categoryFilterActivated,
             onTapFunction: () {
-              return CategoryFilterDialog(context: context);
+              return CategoryFilterDialog(
+                  context: context, dynamicProvider: dynamicNotifier);
             }),
       );
       filter.add(
         getFilter(
             context: context,
             index: 1,
-            caption: getSortCaption(context: context),
-            coloredBorder: searchNotifier.sortFilterActivated,
-            onTapFunction: () => sortFilterDialog(context: context)),
+            caption: getSortCaption(
+                context: context, dynamicProvider: dynamicNotifier),
+            coloredBorder: dynamicNotifier.sortFilterActivated,
+            onTapFunction: () => sortFilterDialog(
+                context: context, dynamicProvider: dynamicNotifier)),
       );
     } else {
       filter.insert(
@@ -187,14 +196,16 @@ abstract class AbstractFilter<T> {
         getFilter(
             context: context,
             index: 1,
-            caption: getTimeCaption(context: context),
-            coloredBorder: searchNotifier.timeFilterActivated,
+            caption: getTimeCaption(
+                context: context, dynamicProvider: dynamicNotifier),
+            coloredBorder: dynamicNotifier.timeFilterActivated,
             onTapFunction: () {
-              return TimeFilterDialog(context: context);
+              return TimeFilterDialog(
+                  context: context, dynamicProvider: dynamicNotifier);
             }),
       );
     }
-    if (searchNotifier.anyFilterActivated()) {
+    if (dynamicNotifier.anyFilterActivated()) {
       filter.insert(
         0,
         getResetFilter(context),

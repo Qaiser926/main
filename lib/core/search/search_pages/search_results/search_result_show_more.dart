@@ -26,7 +26,9 @@ class _SearchResultShowMore extends State<SearchResultShowMore> {
                           builder: (context, model, child) {
                             return SearchFilter(
                           context: context,
-                        ).buildDropdownBar();
+                                dynamicProvider: Provider.of<SearchNotifier>(
+                                    context,
+                                    listen: false)).buildDropdownBar();
                       }),
                       context: context,
                       appBarTitle: AppLocalizations.of(context)!.results),
