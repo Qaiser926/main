@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
-
-import '../../../constants/app_constantsservice.dart';
 
 abstract class AbstractSearchNotifier extends ChangeNotifier {
   // Pagecontroller related
