@@ -10,6 +10,18 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
   bool isControllerSet = false;
   final PageController pageController;
 
+  //TODO only when button search is activated, request RestService
+  // Future<Object> searchQueryResult;
+  //
+  // dynamic tdf() {
+  //   searchQueryResult = RestService().getMapResultIds(
+  //       searchQuery: getSearchQuery());
+  // }
+  //
+  // Future<Object> getFuture(){
+  //   return searchQueryResult;
+  // }
+
   AbstractSearchNotifier(
       {priceRange = const RangeValues(
           NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
