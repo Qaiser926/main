@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:othia/core/map/current_position.dart';
+import 'package:othia/core/map/map_initialization.dart';
 import 'package:othia/core/map/map_results.dart';
-import 'package:othia/widgets/filter_related/map_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MapPage extends StatefulWidget {
   static final List<Widget> _pages = [
     // TODO , might be to have one page "activate category filter", maybe another that filter have to be applied
-    // MapBodyInit(),
-    MapResults(),
+    MapInit(),
+    MapResultsInit(),
   ];
 
   MapPage({super.key});
@@ -19,15 +21,17 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage>
     with AutomaticKeepAliveClientMixin<MapPage> {
-  late MapNotifier notifier;
+  late MapNotifier mapNotifier;
   late PageController _pageController;
+  late UserPositionNotifier userPositionNotifier;
 
   @override
   void initState() {
-    notifier = MapNotifier(
+    mapNotifier = MapNotifier(
       pageController: PageController(initialPage: 0),
     );
-    _pageController = notifier.getPageController();
+    _pageController = mapNotifier.getPageController();
+    userPositionNotifier = UserPositionNotifier(context);
     super.initState();
   }
 
@@ -36,8 +40,9 @@ class _MapPageState extends State<MapPage>
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: notifier,
-        )
+          value: mapNotifier,
+        ),
+        ChangeNotifierProvider.value(value: userPositionNotifier)
       ],
       child: PageView(
         controller: _pageController,

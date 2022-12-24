@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
+import 'package:othia/constants/app_constants.dart';
+import 'package:othia/constants/categories.dart';
+import 'package:othia/constants/colors.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
-
-import '../../../constants/app_constants.dart';
-import '../../../constants/categories.dart';
-import '../../../constants/colors.dart';
 
 Widget getCategoryGridItem(
     {required int index,

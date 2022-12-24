@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:othia/widgets/filter_related/search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 
 import '../../constants/app_constants.dart';
 import '../../core/add/add.dart';

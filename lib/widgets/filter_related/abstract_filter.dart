@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
-
-import '../category_filter/category_filter.dart';
 
 abstract class AbstractFilter<T> {
   final AbstractSearchNotifier dynamicProvider;
@@ -176,7 +175,7 @@ abstract class AbstractFilter<T> {
                 context: context, dynamicNotifier: dynamicNotifier),
             coloredBorder: dynamicNotifier.categoryFilterActivated,
             onTapFunction: () {
-              return CategoryFilterDialog(
+              return getCategoryFilterDialog(
                   context: context, dynamicProvider: dynamicNotifier);
             }),
       );

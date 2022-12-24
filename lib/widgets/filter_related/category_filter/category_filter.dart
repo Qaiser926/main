@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/constants/categories.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/categories.dart';
-import '../filter_related/abstract_search_notifier.dart';
 import 'exclusives/category_grid_item.dart';
 import 'exclusives/expanded_widget.dart';
 
-Future<dynamic> CategoryFilterDialog(
+Future<dynamic> getCategoryFilterDialog(
     {required BuildContext context,
     required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
@@ -26,11 +26,9 @@ Future<dynamic> CategoryFilterDialog(
           child:
               // TODO make container height dynamic
               Container(
-            height: 675,
+                height: 675,
             child: CategoryFilter(
-                context: context,
-                isModalBottomSheetMode: true,
-                dynamicProvider: dynamicProvider),
+                isModalBottomSheetMode: true, dynamicProvider: dynamicProvider),
           ),
         );
       });
@@ -39,9 +37,8 @@ Future<dynamic> CategoryFilterDialog(
 class CategoryFilter extends StatefulWidget {
   late final List<Widget> niceList = getCategoryGrid(
       isModalBottomSheetMode: isModalBottomSheetMode,
-      dynamicProvider: dynamicProvider,
-      context: context);
-  BuildContext context;
+      dynamicProvider: dynamicProvider);
+
   bool isModalBottomSheetMode;
   AbstractSearchNotifier dynamicProvider;
 
@@ -51,13 +48,12 @@ class CategoryFilter extends StatefulWidget {
 
   CategoryFilter(
       {super.key,
-      required this.context,
       required this.isModalBottomSheetMode,
       required this.dynamicProvider});
 
   @override
   State<CategoryFilter> createState() =>
-      CategoryFilterState(context: context, dynamicProvider: dynamicProvider);
+      CategoryFilterState(dynamicProvider: dynamicProvider);
 }
 
 class CategoryFilterState extends State<CategoryFilter>
@@ -65,8 +61,7 @@ class CategoryFilterState extends State<CategoryFilter>
   late List<String> selectedCategoryIds;
   AbstractSearchNotifier dynamicProvider;
 
-  CategoryFilterState(
-      {required BuildContext context, required this.dynamicProvider}) {
+  CategoryFilterState({required this.dynamicProvider}) {
     selectedCategoryIds = dynamicProvider.getSelectedSubcategoryIds;
   }
 
@@ -91,12 +86,19 @@ class CategoryFilterState extends State<CategoryFilter>
             )),
       );
     }
-    return Container(
-      padding: CategoryFilter.gridItemPadding,
-      child: CustomScrollView(
-          // controller: widget._scrollController,
-          cacheExtent: double.maxFinite,
-          slivers: sliverList),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: dynamicProvider,
+        )
+      ],
+      child: Container(
+        padding: CategoryFilter.gridItemPadding,
+        child: CustomScrollView(
+            // controller: widget._scrollController,
+            cacheExtent: double.maxFinite,
+            slivers: sliverList),
+      ),
     );
   }
 
@@ -106,8 +108,7 @@ class CategoryFilterState extends State<CategoryFilter>
 
 List<Widget> getCategoryGrid(
     {required bool isModalBottomSheetMode,
-    required AbstractSearchNotifier dynamicProvider,
-    required BuildContext context}) {
+    required AbstractSearchNotifier dynamicProvider}) {
   List<Widget> categoryGrid = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
     categoryGrid.add(Row(
@@ -134,12 +135,10 @@ List<Widget> getCategoryGrid(
     categoryGrid.add(ExpandedWidget(
       categoryIndex: index,
       dynamicNotifier: dynamicProvider,
-      context: context,
     ));
     categoryGrid.add(ExpandedWidget(
       categoryIndex: index + 1,
       dynamicNotifier: dynamicProvider,
-      context: context,
     ));
     categoryGrid.add(const SizedBox(
       height: CategoryFilter.gridItemDistance,

@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';

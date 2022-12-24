@@ -4,7 +4,7 @@ import 'package:othia/core/search/search_pages/initial_search_page.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/filter_related/search_notifier.dart';
+import '../../widgets/filter_related/notifiers/search_notifier.dart';
 import 'search_pages/search_results/search_result_show_more.dart';
 import 'search_pages/search_results/search_results_page.dart';
 

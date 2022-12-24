@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/ui/future_service.dart';
-import 'package:othia/widgets/filter_related/search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:othia/widgets/horizontal_discovery/discovery_card.dart';
 import 'package:provider/provider.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/widgets/category_filter/category_filter.dart';
 import 'package:othia/widgets/filter_related/abstract_filter.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
-import 'package:othia/widgets/filter_related/map_notifier.dart';
+import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
 
 import 'price_filter.dart';
 import 'sort_filter.dart';
@@ -13,6 +13,7 @@ import 'type_filter.dart';
 class MapFilter extends AbstractFilter<MapNotifier> {
   MapFilter({required super.context, required super.dynamicProvider});
 
+  // TODO disable buttons on first page, change behaviour
   @override
   List<Widget> getFilters(
       {required BuildContext context,
@@ -25,7 +26,7 @@ class MapFilter extends AbstractFilter<MapNotifier> {
               context: context, dynamicNotifier: dynamicNotifier),
           coloredBorder: dynamicNotifier.categoryFilterActivated,
           onTapFunction: () {
-            return CategoryFilterDialog(
+            return getCategoryFilterDialog(
                 context: context, dynamicProvider: dynamicNotifier);
           }),
       getFilter(

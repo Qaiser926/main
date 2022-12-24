@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
-import '../../constants/app_constants.dart';
+import '../../../constants/app_constants.dart';
 
-class MapNotifier extends AbstractSearchNotifier {
+class SearchNotifier extends AbstractSearchNotifier {
   // Pagecontroller related
   bool isControllerSet = false;
 
-  MapNotifier(
+  SearchNotifier(
       {priceRange = const RangeValues(
           NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
       startDate,

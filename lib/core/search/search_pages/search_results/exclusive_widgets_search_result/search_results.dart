@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 
 import '../../../../../modules/models/get_search_results_ids/get_search_result_ids.dart';
 import '../../../../../utils/ui/future_service.dart';

@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import 'abstract_search_notifier.dart';
 import 'get_reset_apply_filter.dart';
+import 'notifiers/abstract_search_notifier.dart';
 
 enum EAType { events, activities, eventsActivites }
 

@@ -1,12 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart' as latLng;
 
-class UserPosition {
-  UserPosition(BuildContext context) {
+class UserPositionNotifier extends ChangeNotifier {
+  UserPositionNotifier(BuildContext context) {
     this._getCurrentPosition(context);
   }
 
-  Position? _currentPosition;
+  latLng.LatLng? userPosition;
 
   Future<bool> _handleLocationPermission(BuildContext context) async {
     bool serviceEnabled;
@@ -38,15 +40,15 @@ class UserPosition {
 
   Future<void> _getCurrentPosition(BuildContext context) async {
     final hasPermission = await _handleLocationPermission(context);
-
     if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      _currentPosition = position;
+      userPosition = latLng.LatLng(position.latitude, position.longitude);
+      notifyListeners();
     }).catchError((e) {
       debugPrint(e);
     });
   }
 
-  Position? get getPosition => _currentPosition;
+  latLng.LatLng? get getUserPosition => userPosition;
 }

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/widgets/filter_related/abstract_search_notifier.dart';
+import 'package:othia/constants/categories.dart';
+import 'package:othia/constants/colors.dart';
+import 'package:othia/widgets/filter_related/get_reset_apply_filter.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '../../../constants/categories.dart';
-import '../../../constants/colors.dart';
-import '../../filter_related/get_reset_apply_filter.dart';
-
-class ExpandedWidget<T> extends StatefulWidget {
-  BuildContext context;
+class ExpandedWidget<AbstractSearchNotifier> extends StatefulWidget {
   final List<String> subcategoryIds;
   static const double singleExpandedHeight = 50;
   static const double singleExpandedWidth = 100;
@@ -24,21 +22,17 @@ class ExpandedWidget<T> extends StatefulWidget {
   ExpandedWidget({
     required this.categoryIndex,
     required this.dynamicNotifier,
-    required this.context,
   }) : subcategoryIds = categoryIdToSubcategoryIds
                 .containsKey(Categories.categoryIds[categoryIndex])
             ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
             : [];
 
   @override
-  State<ExpandedWidget> createState() => _ExpandedWidgetState(
-      categoryIndex: categoryIndex,
-      context: this.context,
-      dynamicNotifier: this.dynamicNotifier);
+  State<ExpandedWidget> createState() =>
+      _ExpandedWidgetState(categoryIndex: categoryIndex);
 }
 
 class _ExpandedWidgetState extends State<ExpandedWidget> {
-  BuildContext context;
   final List<String> subcategoryIds;
   static const double singleExpandedHeight = 50;
   static const double singleExpandedWidth = 100;
@@ -48,12 +42,9 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
   static const int animationTime = 200;
   static const double borderRadius = 23;
   final int categoryIndex;
-  AbstractSearchNotifier dynamicNotifier;
 
   _ExpandedWidgetState({
     required this.categoryIndex,
-    required this.dynamicNotifier,
-    required this.context,
   }) : subcategoryIds = categoryIdToSubcategoryIds
                 .containsKey(Categories.categoryIds[categoryIndex])
             ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
@@ -83,30 +74,27 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
               ? Container(
                   decoration: BoxDecoration(
                     color: listItemColor,
-              borderRadius: BorderRadius.circular(borderRadius),
-            ),
-            child: Consumer<AbstractSearchNotifier>(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                  child: Consumer<AbstractSearchNotifier>(
                       builder: (context, model, child) {
                     bool closeDialog = true;
                     if (model.currentIndex ==
                         NavigatorConstants.SearchPageIndex) closeDialog = false;
                     return Container(
-                        margin: EdgeInsets.only(
-                          bottom: containerMarginBottom,
-                          top: containerMarginTop,
-                          left: 10.h,
-                          right: 10.h,
-                        ),
-                        child: Text("123")
-
-                        // Column(
-                        //
-                        //   children: getSubcategoryExpandableContent(
-                        //       context, model as AbstractSearchNotifier, closeDialog),
-                        // ),
-                        );
-                }),
-          )
+                      margin: EdgeInsets.only(
+                        bottom: containerMarginBottom,
+                        top: containerMarginTop,
+                        left: 10.h,
+                        right: 10.h,
+                      ),
+                      child: Column(
+                        children: getSubcategoryExpandableContent(
+                            context, widget.dynamicNotifier, closeDialog),
+                      ),
+                    );
+                  }),
+                )
               : const SizedBox.shrink(),
         );
       } else {
@@ -119,11 +107,11 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
   List<Widget> getSubcategoryExpandableContent(BuildContext context,
       AbstractSearchNotifier dynamicNotifier, bool closeDialog) {
     List<Widget> result = [];
-    result.add(getSubcategoryTextButtons(context));
+    result.add(getSubcategoryTextButtons(
+        context: context, dynamicNotifier: dynamicNotifier));
     result.add(const SizedBox(
       height: 12,
     ));
-    var selectedSubcategoryIds = dynamicNotifier.getSelectedSubcategoryIds;
     result.add(
       Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -140,7 +128,9 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
     return result;
   }
 
-  Widget getSubcategoryTextButtons(BuildContext context) {
+  Widget getSubcategoryTextButtons(
+      {required BuildContext context,
+      required AbstractSearchNotifier dynamicNotifier}) {
     return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.start,
@@ -153,42 +143,38 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                    dynamicNotifier.switchSelectedSubcategory(
-                        subcategoryIds[subcategoryIndex]);
-                  },
-                  child: Container(
-                    height: singleExpandedHeight - 8,
-                    padding: const EdgeInsets.all(4),
-                    margin: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      border: model.isSubcategorySelected(
+                dynamicNotifier.switchSelectedSubcategory(
+                    subcategoryIds[subcategoryIndex]);
+              },
+              child: Container(
+                height: singleExpandedHeight - 8,
+                padding: const EdgeInsets.all(4),
+                margin: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  border: model.isSubcategorySelected(
                           subcategoryIds[subcategoryIndex])
-                          ? Border.all(color: primaryColor, width: 2.5)
-                          : Border.all(color: bgColor, width: 2.5),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    transformAlignment: Alignment.center,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              CategoryIdToI18nMapper.getCategorySubcategoryName(
-                                  context, subcategoryIds[subcategoryIndex]),
-                            ),
-                          ),
-                        ]),
-                  ),
+                      ? Border.all(color: primaryColor, width: 2.5)
+                      : Border.all(color: bgColor, width: 2.5),
+                  borderRadius: BorderRadius.circular(18),
                 ),
+                transformAlignment: Alignment.center,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          CategoryIdToI18nMapper.getCategorySubcategoryName(
+                              context, subcategoryIds[subcategoryIndex]),
+                        ),
+                      ),
+                    ]),
               ),
+            ),
+          ),
         ),
       );
     });
   }
-}
-
-void test() {
-  print("got called0");
 }
