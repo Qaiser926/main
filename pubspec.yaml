@@ -48,6 +48,7 @@ dependencies:
   flutter_svg: ^1.1.6
   instant: ^0.4.1
   provider: ^6.0.4
+  flutter_sticky_header: ^0.6.5
 
   #os calls
   url_launcher: ^6.1.7
@@ -60,11 +61,12 @@ dependencies:
   readmore: ^2.1.0
   carousel_slider: ^4.1.1
   flutter_multiselect: ^1.0.0
-  flutter_map_marker_cluster: ^1.0.1
+
   #map packages
   latlng: any
   flutter_map: ^3.0.0
   maps_launcher: ^2.0.1
+  flutter_map_marker_cluster: ^1.0.1
   #state and route management
   path_provider: ^2.0.11
   get: ^4.6.5

@@ -35,7 +35,6 @@ class MapFilter extends AbstractFilter<MapNotifier> {
           caption: getTimeCaption(
               context: context, dynamicProvider: dynamicNotifier),
           coloredBorder: dynamicNotifier.timeFilterActivated,
-          backgroundColor: Colors.grey,
           onTapFunction: () {
             return TimeFilterDialog(
                 context: context, dynamicProvider: dynamicNotifier);
@@ -47,6 +46,7 @@ class MapFilter extends AbstractFilter<MapNotifier> {
           caption: getPriceCaption(
               context: context, dynamicNotifier: dynamicNotifier),
           coloredBorder: dynamicNotifier.priceFilterActivated,
+          textStyle: TextStyle(color: Colors.grey),
           onTapFunction: () {
             return priceFilterDialog(
                 context: context, dynamicProvider: dynamicNotifier);

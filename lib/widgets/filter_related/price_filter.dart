@@ -12,6 +12,7 @@ Future<dynamic> priceFilterDialog(
     {required BuildContext context,
     required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

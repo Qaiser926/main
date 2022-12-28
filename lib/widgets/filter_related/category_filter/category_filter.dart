@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
@@ -12,6 +13,7 @@ Future<dynamic> getCategoryFilterDialog(
     {required BuildContext context,
     required AbstractSearchNotifier dynamicProvider}) {
   return showModalBottomSheet(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -24,9 +26,9 @@ Future<dynamic> getCategoryFilterDialog(
             )
           ],
           child:
-              // TODO make container height dynamic
+          // TODO make container height dynamic & align height of container
               Container(
-                height: 675,
+            height: 675,
             child: CategoryFilter(
                 isModalBottomSheetMode: true, dynamicProvider: dynamicProvider),
           ),
@@ -68,22 +70,14 @@ class CategoryFilterState extends State<CategoryFilter>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    List<Widget> sliverList = [
-      SliverList(
-        delegate: SliverChildListDelegate(widget.niceList,
-            addAutomaticKeepAlives: true),
-      )
-    ];
+    Widget header = SizedBox();
+
     if (widget.isModalBottomSheetMode) {
-      sliverList.insert(
-        0,
-        SliverPadding(
-            padding: EdgeInsets.all(10),
-            sliver: SliverToBoxAdapter(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [CloseButton()]),
-            )),
+      header = Container(
+        // color: Theme.of(context).scaffoldBackgroundColor,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [CloseButton()]),
       );
     }
     return MultiProvider(
@@ -97,7 +91,14 @@ class CategoryFilterState extends State<CategoryFilter>
         child: CustomScrollView(
             // controller: widget._scrollController,
             cacheExtent: double.maxFinite,
-            slivers: sliverList),
+            slivers: [
+              SliverStickyHeader(
+                  header: header,
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(widget.niceList,
+                        addAutomaticKeepAlives: true),
+                  ))
+            ]),
       ),
     );
   }

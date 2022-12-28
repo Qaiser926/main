@@ -86,7 +86,7 @@ abstract class AbstractFilter<T> {
       required String caption,
       required Function onTapFunction,
       required bool coloredBorder,
-      Color? backgroundColor}) {
+      TextStyle? textStyle}) {
     Color? borderColor = null;
     if (coloredBorder) {
       borderColor = Theme.of(context).colorScheme.primary;
@@ -100,7 +100,7 @@ abstract class AbstractFilter<T> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.h),
           border: Border.all(color: borderColor),
-          color: backgroundColor ?? Theme.of(context).colorScheme.tertiary,
+          color: Theme.of(context).colorScheme.tertiary,
         ),
         alignment: Alignment.center,
         child: Padding(
@@ -109,7 +109,7 @@ abstract class AbstractFilter<T> {
             children: [
               Text(
                 caption,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: textStyle ?? Theme.of(context).textTheme.bodyText1,
               ),
               Icon(
                 Icons.arrow_drop_down,
