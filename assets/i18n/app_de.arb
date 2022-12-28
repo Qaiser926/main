@@ -2,6 +2,8 @@
   "helloWorld": "Hallo Welt!",
 
   "home": "Startseite",
+  "map": "Karte",
+  "exploreMap": "Klicke, um die Karte zu öffnen",
   "compingUpEvents": "Bald beginnende Events",
   "popularEA": "Populäre Events & Aktivitäten",
   "universityEvents": "Universitäre Events",

@@ -4,32 +4,28 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/map/map.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 class MapPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //TODO align distances
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-            padding: EdgeInsets.fromLTRB(30, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(30, 0, 20, 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  // TODO
-                  "Map",
+                  AppLocalizations.of(context)!.map,
                   style: Theme.of(context).textTheme.headline2,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                TextButton(
-                    onPressed: () {
-                      // TODO
-                    },
-                    child: Text(AppLocalizations.of(context)!.showMore))
               ],
             )),
         Padding(
@@ -41,18 +37,18 @@ class MapPicture extends StatelessWidget {
               children: [
                 ClipRRect(
                     borderRadius: BorderRadius.circular(20.h),
-                    child: getAssetImage("map_image.png")),
+                    child: getAssetImage(NavigatorConstants.MapImage)),
                 Positioned.fill(
                   child: Align(
                       alignment: Alignment.center,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.grey.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(6.h),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text('Click to explore on Map',
+                          padding: EdgeInsets.all(3.h),
+                          child: Text(AppLocalizations.of(context)!.exploreMap,
                               style: TextStyle(fontSize: 17.h)),
                         ),
                       )),

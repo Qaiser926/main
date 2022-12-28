@@ -5,6 +5,8 @@
   },
 
   "home": "Home",
+  "map": "Map",
+  "exploreMap": "Click to explore on Map",
   "compingUpEvents": "Coming up Events",
     "popularEA": "Popular Events & Activities",
     "universityEvents": "University Events",

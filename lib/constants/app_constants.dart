@@ -22,6 +22,8 @@ class NavigatorConstants {
 
   static const DefaultProfilePicture = "default_profile_image.jpg";
 
+  static const MapImage = "map_image.png";
+
   static backToPrev() {
     Get.back();
   }
