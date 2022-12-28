@@ -69,7 +69,7 @@ class _MapResultsState extends State<MapResults> {
               });
         });
       } else {
-        // TODO implement other text during waiting for user permission
+        // TODO implement exception handling and messages for user permission, e.g. implement loading when map is not shown
         // TODO align style
         return Align(
           alignment: Alignment.center,
