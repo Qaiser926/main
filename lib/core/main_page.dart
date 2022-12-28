@@ -56,7 +56,6 @@ class MainPage extends StatelessWidget {
 Future<bool> closeAppDialog(
     BuildContext context, NavigationBarNotifier notifier) async {
   int currentSearchIndex = notifier.getSearchNotifier.currentIndex;
-
   bool? shouldPop;
   if (currentSearchIndex != NavigatorConstants.SearchPageIndex) {
     if (currentSearchIndex - 1 == NavigatorConstants.SearchPageIndex) {
