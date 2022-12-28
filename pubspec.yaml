@@ -60,6 +60,7 @@ dependencies:
   readmore: ^2.1.0
   carousel_slider: ^4.1.1
   flutter_multiselect: ^1.0.0
+  flutter_map_marker_cluster: ^1.0.1
   #map packages
   latlng: any
   flutter_map: ^3.0.0
