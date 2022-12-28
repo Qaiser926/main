@@ -116,6 +116,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
       Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: getShowResultsButton(
+            closeDialog: closeDialog,
             context: context,
             functionAccept: dynamicNotifier.showCategoryFilterResults,
             functionArgumentsAccept: {},
