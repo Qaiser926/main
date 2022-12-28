@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
@@ -13,7 +13,7 @@ import 'get_reset_apply_filter.dart';
 
 Future<dynamic> TimeFilterDialog(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicProvider}) {
+    required AbstractQueryNotifier dynamicProvider}) {
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
@@ -37,7 +37,7 @@ Future<dynamic> TimeFilterDialog(
 }
 
 class TimeFilter extends StatefulWidget {
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
 
   TimeFilter({super.key, required this.dynamicProvider});
 
@@ -47,7 +47,7 @@ class TimeFilter extends StatefulWidget {
 }
 
 class _TimeFilterState extends State<TimeFilter> {
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
   DateTime? startDate;
   DateTime? endDate;
   bool todayButtonEnabled = false;
@@ -408,7 +408,7 @@ class _TimeFilterState extends State<TimeFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       if (model.dateReset) {
         Future.delayed(Duration.zero, () async {
           setToDefault();
@@ -514,7 +514,7 @@ Widget getTimeBox(
 
 String getTimeCaption(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicProvider}) {
+    required AbstractQueryNotifier dynamicProvider}) {
   if (dynamicProvider.timeFilterActivated) {
     DateTime startDate = dynamicProvider.getStartDate;
     DateTime endDate = dynamicProvider.getEndDate;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
 import 'package:othia/widgets/filter_related/filter_frameworks/abstract_filter.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
 
 import '../price_filter.dart';
@@ -17,7 +17,7 @@ class MapFilter extends AbstractFilter<MapNotifier> {
   @override
   List<Widget> getFilters(
       {required BuildContext context,
-      required AbstractSearchNotifier dynamicNotifier}) {
+      required AbstractQueryNotifier dynamicNotifier}) {
     List<Widget> filter = [
       getFilter(
           context: context,

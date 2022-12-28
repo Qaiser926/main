@@ -4,13 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'get_reset_apply_filter.dart';
-import 'notifiers/abstract_search_notifier.dart';
+import 'notifiers/abstract_query_notifier.dart';
 
 enum EAType { events, activities, eventsActivites }
 
 Future<dynamic> typeFilterDialog(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicProvider}) {
+    required AbstractQueryNotifier dynamicProvider}) {
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
@@ -36,7 +36,7 @@ Future<dynamic> typeFilterDialog(
 }
 
 class TypeFilter<T> extends StatefulWidget {
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
 
   TypeFilter({super.key, required this.dynamicProvider});
 
@@ -47,7 +47,7 @@ class TypeFilter<T> extends StatefulWidget {
 
 class _TypeFilterState<T> extends State<TypeFilter> {
   late EAType? eAType;
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
 
   _TypeFilterState({required this.dynamicProvider}) {
     eAType = dynamicProvider.getEAType;
@@ -90,7 +90,7 @@ class _TypeFilterState<T> extends State<TypeFilter> {
   }
 
   bool determineEnabled(
-      {required EAType eAType, required AbstractSearchNotifier model}) {
+      {required EAType eAType, required AbstractQueryNotifier model}) {
     if (eAType == model.eAType) {
       return true;
     } else {
@@ -117,7 +117,7 @@ class _TypeFilterState<T> extends State<TypeFilter> {
   }
 
   List<Widget> getTypeButtons(
-      {required BuildContext context, required AbstractSearchNotifier model}) {
+      {required BuildContext context, required AbstractQueryNotifier model}) {
     List<Widget> sortButtons = [
       getTypeButton(
           context: context,
@@ -142,7 +142,7 @@ class _TypeFilterState<T> extends State<TypeFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       return Column(
         children: [
           Padding(
@@ -177,7 +177,7 @@ class _TypeFilterState<T> extends State<TypeFilter> {
 
 String getTypeCaption({
   required BuildContext context,
-  required AbstractSearchNotifier dynamicProvider,
+  required AbstractQueryNotifier dynamicProvider,
 }) {
   if (dynamicProvider.typeFilterActivated) {
     EAType? eAType = dynamicProvider.getEAType;

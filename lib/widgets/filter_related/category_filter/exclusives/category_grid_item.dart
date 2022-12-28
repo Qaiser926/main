@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/constants/colors.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:provider/provider.dart';
 
 Widget getCategoryGridItem(
     {required int index,
     required bool isModalBottomSheetMode,
-    required AbstractSearchNotifier dynamicNotifier}) {
+    required AbstractQueryNotifier dynamicNotifier}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
@@ -21,7 +21,7 @@ Widget getCategoryGridItem(
 }
 
 class CategoryGridItem extends StatelessWidget {
-  AbstractSearchNotifier dynamicNotifier;
+  AbstractQueryNotifier dynamicNotifier;
   final int index;
   final String categoryId;
   final bool isModalBottomSheetMode;
@@ -103,7 +103,7 @@ class CategoryGridItem extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        Consumer<AbstractSearchNotifier>(
+                        Consumer<AbstractQueryNotifier>(
                             builder: (context, model, child) {
                           return model.getExpandedIndex == index
                               ? const Icon(Icons.expand_less_outlined)
@@ -116,7 +116,7 @@ class CategoryGridItem extends StatelessWidget {
               ],
             ),
             IgnorePointer(
-              child: Consumer<AbstractSearchNotifier>(
+              child: Consumer<AbstractQueryNotifier>(
                   builder: (context, model, child) {
                 return model.getExpandedIndex == index
                     ? Container(

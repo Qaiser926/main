@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 class MapPage extends StatefulWidget {
   static final List<Widget> _pages = [
-    // TODO , might be to have one page "activate category filter", maybe another that filter have to be applied
     MapInit(),
     MapResultsInit(),
   ];

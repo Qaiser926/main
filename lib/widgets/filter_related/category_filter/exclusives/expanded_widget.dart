@@ -4,7 +4,7 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/constants/colors.dart';
 import 'package:othia/widgets/filter_related/get_reset_apply_filter.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:provider/provider.dart';
 
 class ExpandedWidget<AbstractSearchNotifier> extends StatefulWidget {
@@ -62,7 +62,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
         containerMarginTop +
         bottomRowHeight;
 
-    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       bool expanded = model.getExpandedIndex == categoryIndex;
       if (subcategoryIds.isNotEmpty) {
         return AnimatedContainer(
@@ -76,7 +76,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
                     color: listItemColor,
                     borderRadius: BorderRadius.circular(borderRadius),
                   ),
-                  child: Consumer<AbstractSearchNotifier>(
+            child: Consumer<AbstractQueryNotifier>(
                       builder: (context, model, child) {
                     bool closeDialog = true;
                     if (model.currentIndex ==
@@ -105,7 +105,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
   }
 
   List<Widget> getSubcategoryExpandableContent(BuildContext context,
-      AbstractSearchNotifier dynamicNotifier, bool closeDialog) {
+      AbstractQueryNotifier dynamicNotifier, bool closeDialog) {
     List<Widget> result = [];
     result.add(getSubcategoryTextButtons(
         context: context, dynamicNotifier: dynamicNotifier));
@@ -131,8 +131,8 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
 
   Widget getSubcategoryTextButtons(
       {required BuildContext context,
-      required AbstractSearchNotifier dynamicNotifier}) {
-    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
+      required AbstractQueryNotifier dynamicNotifier}) {
+    return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.start,
         alignment: WrapAlignment.start,

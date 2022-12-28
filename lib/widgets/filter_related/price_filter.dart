@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
@@ -10,7 +10,7 @@ import 'get_reset_apply_filter.dart';
 
 Future<dynamic> priceFilterDialog(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicProvider}) {
+    required AbstractQueryNotifier dynamicProvider}) {
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
@@ -39,7 +39,7 @@ Future<dynamic> priceFilterDialog(
 class PriceFilter extends StatefulWidget {
   final double startValue = NavigatorConstants.PriceRangeStart;
   final double endValue = NavigatorConstants.PriceRangeEnd;
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
   BuildContext context;
 
   PriceFilter(
@@ -53,7 +53,7 @@ class PriceFilter extends StatefulWidget {
 }
 
 class _PriceFilterState extends State<PriceFilter> {
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
   late RangeValues _values;
 
   _PriceFilterState(
@@ -63,7 +63,7 @@ class _PriceFilterState extends State<PriceFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AbstractSearchNotifier>(builder: (context, model, child) {
+    return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       if (model.priceReset) {
         _values = model.getPriceRange;
         dynamicProvider.setPriceResetFalse();
@@ -173,7 +173,7 @@ Widget getPriceBox(
 
 String getPriceCaption(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicNotifier}) {
+    required AbstractQueryNotifier dynamicNotifier}) {
   if (dynamicNotifier.priceFilterActivated) {
     RangeValues range = dynamicNotifier.getPriceRange;
     if (range.start == range.end) {

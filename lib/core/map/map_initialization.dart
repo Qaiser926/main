@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
@@ -27,10 +25,6 @@ class MapInitialization extends StatefulWidget {
 }
 
 class _MapInitializationState extends State<MapInitialization> {
-  void backClick() {
-    Get.back();
-  }
-
   @override
   void initState() {
     super.initState();

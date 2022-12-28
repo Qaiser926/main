@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'exclusives/category_grid_item.dart';
@@ -11,7 +11,7 @@ import 'exclusives/expanded_widget.dart';
 
 Future<dynamic> getCategoryFilterDialog(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicProvider}) {
+    required AbstractQueryNotifier dynamicProvider}) {
   return showModalBottomSheet(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
@@ -42,7 +42,7 @@ class CategoryFilter extends StatefulWidget {
       dynamicProvider: dynamicProvider);
 
   bool isModalBottomSheetMode;
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
@@ -61,7 +61,7 @@ class CategoryFilter extends StatefulWidget {
 class CategoryFilterState extends State<CategoryFilter>
     with AutomaticKeepAliveClientMixin<CategoryFilter> {
   late List<String> selectedCategoryIds;
-  AbstractSearchNotifier dynamicProvider;
+  AbstractQueryNotifier dynamicProvider;
 
   CategoryFilterState({required this.dynamicProvider}) {
     selectedCategoryIds = dynamicProvider.getSelectedSubcategoryIds;
@@ -109,7 +109,7 @@ class CategoryFilterState extends State<CategoryFilter>
 
 List<Widget> getCategoryGrid(
     {required bool isModalBottomSheetMode,
-    required AbstractSearchNotifier dynamicProvider}) {
+    required AbstractQueryNotifier dynamicProvider}) {
   List<Widget> categoryGrid = [];
   for (int index = 0; index < Categories.categoryIds.length; index += 2) {
     categoryGrid.add(Row(
@@ -150,7 +150,7 @@ List<Widget> getCategoryGrid(
 
 String getCategoryCaption(
     {required BuildContext context,
-    required AbstractSearchNotifier dynamicNotifier}) {
+    required AbstractQueryNotifier dynamicNotifier}) {
   // special case if one page "Show More"
   if (dynamicNotifier.currentIndex == NavigatorConstants.ShowMorePageIndex) {
     return getShortCaption(

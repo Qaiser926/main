@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:othia/widgets/filter_related/price_filter.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/time_filter.dart';
@@ -12,7 +12,7 @@ import 'package:othia/widgets/filter_related/type_filter.dart';
 import 'package:provider/provider.dart';
 
 abstract class AbstractFilter<T> {
-  final AbstractSearchNotifier dynamicProvider;
+  final AbstractQueryNotifier dynamicProvider;
   BuildContext context;
 
   AbstractFilter({required this.context, required this.dynamicProvider});
@@ -23,7 +23,7 @@ abstract class AbstractFilter<T> {
 
     return Consumer<T>(builder: (context, model, child) {
       final List<Widget> filters = getFilters(
-          context: context, dynamicNotifier: model as AbstractSearchNotifier);
+          context: context, dynamicNotifier: model as AbstractQueryNotifier);
 
       return Container(
           alignment: Alignment.centerLeft,
@@ -124,7 +124,7 @@ abstract class AbstractFilter<T> {
 
   List<Widget> getFilters(
       {required BuildContext context,
-      required AbstractSearchNotifier dynamicNotifier}) {
+      required AbstractQueryNotifier dynamicNotifier}) {
     List<Widget> filter = [
       // index has only effect if it is zero --> all others just 1
       getFilter(

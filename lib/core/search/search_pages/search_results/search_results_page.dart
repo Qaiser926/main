@@ -23,17 +23,15 @@ class _SearchResultsPage extends State<SearchResultsPage> {
           appBar: DropDownAppBar(
               filter:
                   Consumer<SearchNotifier>(builder: (context, model, child) {
-                    return SearchFilter(
-                  context: context,
+                return SearchFilter(
+                        context: context,
                         dynamicProvider:
-                            Provider.of<SearchNotifier>(context, listen: false)).buildDropdownBar();
+                            Provider.of<SearchNotifier>(context, listen: false))
+                    .buildDropdownBar();
               }),
               context: context,
               appBarTitle: AppLocalizations.of(context)!.results),
-          body: SearchResults(
-            searchQuery: Provider.of<SearchNotifier>(context, listen: false)
-                .getSearchQuery(),
-          ),
+          body: SearchResults(),
         );
       }),
     ));

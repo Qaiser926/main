@@ -5,24 +5,12 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
-abstract class AbstractSearchNotifier extends ChangeNotifier {
+abstract class AbstractQueryNotifier extends ChangeNotifier {
   // Pagecontroller related
   bool isControllerSet = false;
   final PageController pageController;
 
-  //TODO only when button search is activated, request RestService
-  // Future<Object> searchQueryResult;
-  //
-  // dynamic tdf() {
-  //   searchQueryResult = RestService().getMapResultIds(
-  //       searchQuery: getSearchQuery());
-  // }
-  //
-  // Future<Object> getFuture(){
-  //   return searchQueryResult;
-  // }
-
-  AbstractSearchNotifier(
+  AbstractQueryNotifier(
       {priceRange = const RangeValues(
           NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
       startDate,
@@ -39,6 +27,17 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
   }
 
   ////////////////
+
+  // request handling
+  late Future<Object> searchQueryResult;
+
+  void sendRequest();
+
+  Future<Object> getSearchQueryResult() {
+    return searchQueryResult;
+  }
+
+  //////////////////////////////
 
   void switchSelectedSubcategory(String subcategoryId) {
     isSubcategorySelected(subcategoryId)
@@ -89,7 +88,6 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
 
   late List<String> selectedSubcategoryIds = [];
 
-  // late List<String> defaultSelectedCategoryIds = [];
 
   // show more page related
   late String showMoreCaption;
@@ -162,7 +160,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
   void changePriceRange({required RangeValues priceRange}) {
     this.priceRange = priceRange;
     priceFilterActivated = true;
-
+    sendRequest();
     goToResultPage();
   }
 
@@ -206,7 +204,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
     if (caption != null) {
       this.timeCaption = caption;
     }
-
+    sendRequest();
     goToResultPage();
   }
 
@@ -219,7 +217,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
       this.sortFilterActivated = true;
     }
     this.sortCriteria = sortCriteria;
-
+    sendRequest();
     goToResultPage();
   }
 
@@ -242,6 +240,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
       this.typeFilterActivated = true;
     }
     this.eAType = eAType;
+    sendRequest();
     goToResultPage();
   }
 
@@ -264,6 +263,7 @@ abstract class AbstractSearchNotifier extends ChangeNotifier {
   void showCategoryFilterResults() {
     setExpanded(index: null);
     categoryFilterActivated = true;
+    sendRequest();
     goToResultPage();
   }
 
