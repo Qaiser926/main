@@ -3,15 +3,33 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:othia/core/add/add_exclusives/TimeSelector.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
-class FirstAddPage extends StatelessWidget {
-  GlobalKey<FormState> test2 = GlobalKey();
-  InputNotifier not;
+// TODO give user hints if information are missing
+// TODO categorization, price, ticket link, description, optional: slider for activity lvl
 
-  FirstAddPage(this.not);
+enum DateType {
+  StartDate,
+  EndDate,
+}
+
+class FirstAddPage extends StatefulWidget {
+  InputNotifier inputNotifier;
+
+  FirstAddPage(this.inputNotifier);
+
+  @override
+  State<FirstAddPage> createState() => _FirstAddPageState(inputNotifier);
+}
+
+class _FirstAddPageState extends State<FirstAddPage> {
+  GlobalKey<FormState> test2 = GlobalKey();
+  InputNotifier inputNotifier;
+
+  _FirstAddPageState(this.inputNotifier);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +45,7 @@ class FirstAddPage extends StatelessWidget {
               onTap: () async {
                 Image? temp = await _getFromGallery();
                 if (temp != null) {
-                  not.addImage = temp;
+                  inputNotifier.addImage = temp;
                 }
               },
               child: Stack(
@@ -37,20 +55,37 @@ class FirstAddPage extends StatelessWidget {
                         ? SizedBox.shrink()
                         : model.loadedImages[0];
                   }),
+                  // TODO dynamic text, after uploading  "change image"
                   Center(child: Text("Hier klicken")),
                 ],
               ),
             ),
           ),
-          getSwitch(
-              headline: "Was möchtest du hinzufügen?",
-              onPressed: onPressedOne,
-              isSelected: Provider.of<InputNotifier>(context, listen: true)
-                  .selectedFruits,
-              children: [
-                Text('Event'),
-                Text('Activity'),
-              ]),
+
+          Consumer<InputNotifier>(builder: (context, model, child) {
+            return getSwitch(
+                headline:
+                    "Do you want to add a start and end date or opening times?",
+                onPressed: onPressedOne,
+                isSelected: model.selectedFruits,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      model.selectedFruits = 0;
+                    },
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      child: Text("Start/ End time"),
+                    ),
+                  ),
+                  Text('Öffnungszeiten'),
+                ]);
+          }),
+
+          if (Provider.of<InputNotifier>(context, listen: true)
+              .selectedFruits[0])
+            TimeSelector(context: context, inputNotifier: inputNotifier),
+          // TODO informiere user über Unterschied
           getSwitch(
               headline: "Privat oder Öffentlich?",
               onPressed: onPressedTwo,
@@ -73,6 +108,7 @@ class FirstAddPage extends StatelessWidget {
   }
 
   Future<Image?> _getFromGallery() async {
+    // TODO enable that image can be changed
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
@@ -85,11 +121,11 @@ class FirstAddPage extends StatelessWidget {
   }
 
   void onPressedOne(int index) {
-    not.selectedFruits = index;
+    inputNotifier.selectedFruits = index;
   }
 
   void onPressedTwo(int index) {
-    not.privateOrPublic = index;
+    inputNotifier.privateOrPublic = index;
   }
 
   Widget getSwitch(
@@ -114,6 +150,7 @@ class FirstAddPage extends StatelessWidget {
   }
 
   Widget getPadding() {
+    // TODO introduce online option
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(

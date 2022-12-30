@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AddNotifier extends ChangeNotifier {
+class AddPageNotifier extends ChangeNotifier {
   int _currentPage = 0;
 
-  AddNotifier(int firstPage) : _currentPage = firstPage;
+  AddPageNotifier(int firstPage) : _currentPage = firstPage;
 
   int get currentPage => _currentPage;
 

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'add_exclusives/add_first_page.dart';
+import 'add_exclusives/add_page_notifier.dart';
 import 'add_exclusives/input_notifier.dart';
-import 'add_exclusives/notifier.dart';
+
+//TODO only for logged in users, show log in page
 
 class Add extends StatelessWidget {
   const Add({super.key});
@@ -21,7 +23,7 @@ class Add extends StatelessWidget {
     _pageController.addListener(() {
       print(_pageController.page);
     });
-    AddNotifier notifier = AddNotifier(firstPage);
+    AddPageNotifier notifier = AddPageNotifier(firstPage);
 
     InputNotifier inputNotifier = InputNotifier();
     return MultiProvider(
@@ -56,7 +58,7 @@ class Add extends StatelessWidget {
       print(_pageController.initialPage);
     }
 
-    return Consumer<AddNotifier>(builder: (context, model, child) {
+    return Consumer<AddPageNotifier>(builder: (context, model, child) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
