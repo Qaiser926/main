@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:othia/core/add/add_exclusives/add_first_page.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
@@ -13,7 +13,7 @@ enum DateType {
 }
 
 class TimeSelector extends StatelessWidget {
-  InputNotifier inputNotifier;
+  AddEANotifier inputNotifier;
   BuildContext context;
 
   TimeSelector({required this.inputNotifier, required this.context});
@@ -67,23 +67,9 @@ class TimeSelector extends StatelessWidget {
               if (endTimeSelectable) {
                 pickDateTime(DateType.EndDate);
               } else {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text("Please select a start date before"),
-                        actionsAlignment: MainAxisAlignment.spaceBetween,
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              inputNotifier.resetEndDateTime();
-                              Get.back();
-                            },
-                            child: Text("OK"),
-                          ),
-                        ],
-                      );
-                    });
+                getInfoDialog(
+                    info: "Please select a start date before",
+                    context: context);
               }
             },
             child: showEndTime
@@ -147,23 +133,10 @@ class TimeSelector extends StatelessWidget {
         inputNotifier.resetEndDateTime();
       } else {
         if (completeDateTime.isBefore(inputNotifier.startDateTime!)) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text("cannot select end date before start date"),
-                  actionsAlignment: MainAxisAlignment.spaceBetween,
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        inputNotifier.resetEndDateTime();
-                        Get.back();
-                      },
-                      child: Text("OK"),
-                    ),
-                  ],
-                );
-              });
+          inputNotifier.resetEndDateTime();
+          getInfoDialog(
+              info: 'End time cannot be before starting time',
+              context: context);
         } else {
           inputNotifier.endDateTime = completeDateTime;
         }

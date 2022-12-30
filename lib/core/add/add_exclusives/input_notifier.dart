@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InputNotifier extends ChangeNotifier {
+class AddEANotifier extends ChangeNotifier {
   final List<bool> selectedFruits = <bool>[false, false];
   final List<bool> privateOrPublic = <bool>[true, false];
 
@@ -8,8 +8,24 @@ class InputNotifier extends ChangeNotifier {
   DateTime? startDateTime;
   DateTime? endDateTime;
 
+  Map<int, List?> openingTimes = {
+    1: null,
+    2: null,
+    3: null,
+    4: null,
+    5: null,
+    6: null,
+    7: null
+  };
+  int activatedWeekDay = 1;
+
   void resetEndDateTime() {
     endDateTime = null;
+    notifyListeners();
+  }
+
+  void activeWeekday(int weekday) {
+    activatedWeekDay = weekday;
     notifyListeners();
   }
 

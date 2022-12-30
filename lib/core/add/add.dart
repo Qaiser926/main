@@ -25,7 +25,7 @@ class Add extends StatelessWidget {
     });
     AddPageNotifier notifier = AddPageNotifier(firstPage);
 
-    InputNotifier inputNotifier = InputNotifier();
+    AddEANotifier inputNotifier = AddEANotifier();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(

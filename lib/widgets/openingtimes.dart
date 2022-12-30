@@ -1,25 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OpeningTimes extends StatelessWidget {
   final Map openingTime;
+  final bool isChangeable;
 
-  const OpeningTimes({super.key, required this.openingTime});
+  const OpeningTimes(
+      {super.key, required this.openingTime, this.isChangeable = false});
 
   @override
   Widget build(BuildContext context) {
     // special case of always opened is marked by the list [0,0]
-    return
-        Container(
-            child: Column(
-                children: List.generate(openingTime.length, (indexOuter) {
-          var rowContent = null;
-          // first Case where dictionary for weekday is a list of opening hours
-          if (openingTime["${indexOuter + 1}"] != null) {
+    return Container(
+        child: Column(
+            children: List.generate(openingTime.length, (indexOuter) {
+      var rowContent = null;
+          // index outer = weekday
+      // first Case where dictionary for weekday is a list of opening hours
+      if (openingTime["${indexOuter + 1}"] != null) {
             int innerListLength = openingTime["${indexOuter + 1}"].length;
             rowContent = List.generate(
               innerListLength,
@@ -38,14 +42,16 @@ class OpeningTimes extends StatelessWidget {
                   openingText = "$startTimeFormatted - $endTimeFormatted";
                 }
                 return Row(children: [
-                  Text(
-                    openingText,
-                    style: Theme.of(context).textTheme.headline4,
-                    maxLines: 1,
-                  ),
-
-                  getVerSpace(8.h),
-                ]);
+              Text(
+                openingText,
+                style: Theme.of(context).textTheme.headline4,
+                maxLines: 1,
+              ),
+              getVerSpace(8.h),
+              if (isChangeable)
+                getEditOpeningTimeButton(
+                    weekDay: indexOuter + 1, context: context),
+            ]);
               },
             );
           }
@@ -53,13 +59,15 @@ class OpeningTimes extends StatelessWidget {
           else {
             rowContent = [
               Row(children: [
-                Text(
-                  AppLocalizations.of(context)!.closed,
-                  style: Theme.of(context).textTheme.headline4,
-                  maxLines: 1,
-                ),
-
-              ])
+            Text(
+              AppLocalizations.of(context)!.closed,
+              style: Theme.of(context).textTheme.headline4,
+              maxLines: 1,
+            ),
+            if (isChangeable)
+              getEditOpeningTimeButton(
+                  weekDay: indexOuter + 1, context: context),
+          ])
             ];
           }
 

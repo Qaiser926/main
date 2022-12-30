@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:othia/core/add/add_exclusives/TimeSelector.dart';
+import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+import 'package:othia/core/add/add_exclusives/time_selector.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
 // TODO give user hints if information are missing
 // TODO categorization, price, ticket link, description, optional: slider for activity lvl
+// TODO use icons
 
 enum DateType {
   StartDate,
@@ -17,7 +20,7 @@ enum DateType {
 }
 
 class FirstAddPage extends StatefulWidget {
-  InputNotifier inputNotifier;
+  AddEANotifier inputNotifier;
 
   FirstAddPage(this.inputNotifier);
 
@@ -27,7 +30,7 @@ class FirstAddPage extends StatefulWidget {
 
 class _FirstAddPageState extends State<FirstAddPage> {
   GlobalKey<FormState> test2 = GlobalKey();
-  InputNotifier inputNotifier;
+  AddEANotifier inputNotifier;
 
   _FirstAddPageState(this.inputNotifier);
 
@@ -50,7 +53,7 @@ class _FirstAddPageState extends State<FirstAddPage> {
               },
               child: Stack(
                 children: [
-                  Consumer<InputNotifier>(builder: (context, model, child) {
+                  Consumer<AddEANotifier>(builder: (context, model, child) {
                     return model.loadedImages.isEmpty
                         ? SizedBox.shrink()
                         : model.loadedImages[0];
@@ -62,15 +65,36 @@ class _FirstAddPageState extends State<FirstAddPage> {
             ),
           ),
 
-          Consumer<InputNotifier>(builder: (context, model, child) {
+          Consumer<AddEANotifier>(builder: (context, model, child) {
             return getSwitch(
-                headline:
-                    "Do you want to add a start and end date or opening times?",
+                headline: GestureDetector(
+                  onTap: () => {
+                    getInfoDialog(
+                        info:
+                            "According to whether you set a start/ end date or opening time, we consider your"
+                            " post as event or activity respectively.",
+                        context: context)
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "Do you want to add a start/ end date or opening times?  ",
+                        ),
+                        WidgetSpan(
+                          child: Icon(Icons.info_outline, size: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 onPressed: onPressedOne,
                 isSelected: model.selectedFruits,
                 children: [
                   GestureDetector(
                     onTap: () {
+                      // TODO include warnings if the corresponding other option has already been set
                       model.selectedFruits = 0;
                     },
                     child: AnimatedContainer(
@@ -82,14 +106,19 @@ class _FirstAddPageState extends State<FirstAddPage> {
                 ]);
           }),
 
-          if (Provider.of<InputNotifier>(context, listen: true)
+          if (Provider.of<AddEANotifier>(context, listen: true)
               .selectedFruits[0])
             TimeSelector(context: context, inputNotifier: inputNotifier),
-          // TODO informiere user über Unterschied
+
+          if (Provider.of<AddEANotifier>(context, listen: true)
+              .selectedFruits[1])
+            OpeningTimesSelector(
+                context: context, inputNotifier: inputNotifier),
+          // TODO informiere user über Unterschied privat/ öffentlich
           getSwitch(
-              headline: "Privat oder Öffentlich?",
+              headline: Text("Privat oder Öffentlich?"),
               onPressed: onPressedTwo,
-              isSelected: Provider.of<InputNotifier>(context, listen: true)
+              isSelected: Provider.of<AddEANotifier>(context, listen: true)
                   .privateOrPublic,
               children: [
                 Text('Öffentlich'),
@@ -129,12 +158,12 @@ class _FirstAddPageState extends State<FirstAddPage> {
   }
 
   Widget getSwitch(
-      {required String headline,
+      {required Widget headline,
       required Function onPressed,
       required isSelected,
       required children}) {
     return Column(children: [
-      Text(headline),
+      headline,
       ToggleButtons(
           direction: Axis.horizontal,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -211,6 +240,25 @@ class _FirstAddPageState extends State<FirstAddPage> {
       ),
     );
   }
+}
+
+Future getInfoDialog({required String info, required BuildContext context}) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(info),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text("Close"),
+            ),
+          ],
+        );
+      });
 }
 
 class SecondAddPage extends StatelessWidget {
