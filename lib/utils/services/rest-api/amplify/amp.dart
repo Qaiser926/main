@@ -56,6 +56,17 @@ Future<AuthUser> getCurrentUser() async {
 //   }
 // }
 
+Future<void> amplifyUpdatePassword(
+    {required String oldPassword, required String newPassword}) async {
+  try {
+    await Amplify.Auth.updatePassword(
+        newPassword: newPassword, oldPassword: oldPassword);
+  } on AmplifyException catch (e) {
+    //TODO
+    throw Exception(e);
+  }
+}
+
 Future<String> getIdToken() async {
   final CognitoAuthSession user = await Amplify.Auth.fetchAuthSession(
           options: CognitoSessionOptions(getAWSCredentials: true))

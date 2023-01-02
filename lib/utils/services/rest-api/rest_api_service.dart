@@ -132,6 +132,18 @@ class RestService {
     return result;
   }
 
+  Future<Object> resetPassword() async {
+    RestOptions restOptions = RestOptions(path: '/getHomePageIds-dev/');
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<void> updatePassword(
+      {required String oldPassword, required String newPassword}) async {
+    final result = await amplifyUpdatePassword(
+        newPassword: newPassword, oldPassword: oldPassword);
+  }
+
   void logout() async {
     await signOutCurrentUser();
     return;

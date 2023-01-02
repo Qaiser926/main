@@ -157,6 +157,22 @@
   "logout": "Logout",
   "helpText": "If you need help or you want to give us feeback, feel free to contact us: othia@outlook.de",
   "noAssociatedEAMessage": "You have not created any Events or Activities yet. Add an event or activity now!",
+  "shortPasswordErrorMessage": "The password must have at least {passwordLength} characters.",
+  "@shortPasswordErrorMessage": {
+    "placeholders": {
+      "passwordLength": {}
+    }
+  },
+  "longPasswordErrorMessage": "The password must not have more than {passwordLength} characters.",
+  "@longPasswordErrorMessage": {
+    "placeholders": {
+      "passwordLength": {}
+    }
+  },
+  "matchingPasswordErrorMessage": "matching",
+  "oldPassword": "current Password",
+  "newPassword": "new Password",
+  "confirmPassword": "confirm Password",
   "entertainment": "Entertainment",
   "@entertainment": {
     "description": "entertainment"

@@ -155,6 +155,22 @@
   "english": "Englisch",
   "helpText": "Wenn du Hilfe benötigst, Fragen hast oder uns Feedback geben möchtest, dann kontaktiere uns: othia@outlook.de",
   "noAssociatedEAMessage": "Du hast noch keine Events oder Aktivitäten erstellt. Füge jetzt ein Event oder eine Aktivität hinzu!",
+  "shortPasswordErrorMessage": "Das Passwort muss mindestens {passwordLength} Zeichen lang sein.",
+  "@shortPasswordErrorMessage": {
+    "placeholders": {
+      "passwordLength": {}
+    }
+  },
+  "longPasswordErrorMessage": "Das Passwort darf nicht mehr als {passwordLength} Zeichen lang sein.",
+  "@longPasswordErrorMessage": {
+    "placeholders": {
+      "passwordLength": {}
+    }
+  },
+  "matchingPasswordErrorMessage": "Die beiden Passwörter müssen übereinstimmen.",
+  "oldPassword": "aktuelles Passwort",
+  "newPassword": "neues Passwort",
+  "confirmPassword": "Passwort bestätigen",
   "entertainment": "Unterhaltung",
   "@entertainment": {
     "description": "entertainment"

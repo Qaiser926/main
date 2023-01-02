@@ -8,6 +8,11 @@ class WidgetConstants {
   static const double categoryGridItemTextWidth = categoryGridItemWidth - 58;
 }
 
+class OtherConstants {
+  static const int minPasswordLength = 8;
+  static const int maxPasswordLength = 63;
+}
+
 class NavigatorConstants {
   static const PriceRangeStart = 0.0;
   static const PriceRangeEnd = 200.0;

@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:othia/core/profile/settings/actions.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
+import '../../utils/helpers/logout.dart';
 import 'settings/help_settings.dart';
 import 'settings/language_settings.dart';
 import 'settings/privacy.dart';
@@ -51,29 +53,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       getVerSpace(12.h),
                       getSettingContainer(() {
                         // TODO
-                        () {};
+                        () {
+                          // AmplifyAu
+                        };
                       }, AppLocalizations.of(context)!.editProfile,
-                          Icon(FontAwesomeIcons.userPen)),
+                          const Icon(FontAwesomeIcons.userPen)),
                       getVerSpace(20.h),
                       getSettingContainer(
                           // TODO
-                          () {},
-                          AppLocalizations.of(context)!.changePassword,
-                          Icon(FontAwesomeIcons.key)),
+                          () {
+                        Get.to(ChangePasswordScreen());
+                      }, AppLocalizations.of(context)!.changePassword,
+                          const Icon(FontAwesomeIcons.key)),
                       getVerSpace(30.h),
                       Text(AppLocalizations.of(context)!.preferences),
                       getVerSpace(12.h),
                       getSettingContainer(
                           // TODO
                           () {
-                        Get.to(PrivacyScreen());
+                        Get.to(const PrivacyScreen());
                       }, AppLocalizations.of(context)!.privacy,
-                          Icon(FontAwesomeIcons.shield)),
+                          const Icon(FontAwesomeIcons.shield)),
                       getVerSpace(20.h),
                       getSettingContainer(
                           // TODO
                           () {
-                        Get.to(HelpScreen());
+                        Get.to(const HelpScreen());
                       },
                           AppLocalizations.of(context)!.help,
                           Icon(
@@ -82,15 +87,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           )),
                       getVerSpace(20.h),
                       getSettingContainer(() {
-                        Get.to(LanguageScreen());
+                        Get.to(const LanguageScreen());
                       }, AppLocalizations.of(context)!.language,
-                          Icon(Icons.translate)),
+                          const Icon(Icons.translate)),
                     ],
                   )),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.h),
                 child: Padding(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(double.infinity,
@@ -98,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         onPressed:
                             // TODO write logout logic
-                            () => {},
+                            () => logout(),
                         child: Text(
                           AppLocalizations.of(context)!.logout,
                         ))),
