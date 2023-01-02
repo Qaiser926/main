@@ -83,6 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget getProfilePage(Map<String, dynamic> jsonData) {
     UserInfo userInfo = UserInfo.fromJson(jsonData);
+
     if (userInfo.upcomingEventIds.isEmpty &
         userInfo.activityIds.isEmpty &
         userInfo.pastEventIds.isEmpty) {
@@ -132,78 +133,79 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
+}
 
-  Container buildProfileSection(
-      {required BuildContext context, required UserInfo userInfo}) {
-    return Container(
-      // TODO, user our color
-      color: accentColor.withOpacity(0.05),
-      width: double.infinity,
-      child: Column(
-        children: [
-          getVerSpace(20.h),
-          getProfilePhotoStack(userInfo),
-          getVerSpace(15.h),
-          Text(
-            userInfo.profileName,
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          getVerSpace(15.h),
-          Text(
-            userInfo.profileEMail,
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          getVerSpace(20.h),
-        ],
-      ),
-    );
+ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
+  if (userInfo.profilePhoto != null) {
+    return Image.memory(
+      base64Decode(userInfo.profilePhoto!),
+      width: 100.h,
+      height: 100.h,
+      fit: BoxFit.contain,
+    ).image;
+  } else {
+    return getAssetImageProvider(NavigatorConstants.DefaultProfilePicture,
+        width: 100.h, height: 100.h);
   }
+}
 
-  ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
-    if (userInfo.profilePhoto != null) {
-      return Image.memory(
-        base64Decode(userInfo.profilePhoto!),
-        width: 100.h,
-        height: 100.h,
-        fit: BoxFit.contain,
-      ).image;
-    } else {
-      return getAssetImageProvider(NavigatorConstants.DefaultProfilePicture,
-          width: 100.h, height: 100.h);
-    }
-  }
+Stack getProfilePhotoStack(UserInfo userInfo, BuildContext context) {
+  return Stack(
+    alignment: Alignment.bottomRight,
+    children: [
+      CircleAvatar(
+          radius: 90, backgroundImage: getProfilePictureNullSafe(userInfo)),
+      // Positioned(
+      //   child: Container(
+      //     height: 30.h,
+      //     width: 30.h,
+      //     decoration: BoxDecoration(
+      //         borderRadius: BorderRadius.circular(20.h),
+      //         color: Theme.of(context).colorScheme.primary,
+      //         boxShadow: [
+      //           BoxShadow(
+      //               color: shadowColor,
+      //               offset: const Offset(0, 8),
+      //               blurRadius: 27)
+      //         ]),
+      //     padding: EdgeInsets.all(5.h),
+      //     child: GestureDetector(
+      //       // TODO forward to change profile page
+      //       onTap: () => {},
+      //       child: Icon(
+      //         Icons.edit,
+      //         size: 20.h,
+      //         color: Colors.white,
+      //       ),
+      //     ),
+      //   ),
+      // )
+    ],
+  );
+}
 
-  Stack getProfilePhotoStack(UserInfo userInfo) {
-    return Stack(
-      alignment: Alignment.bottomRight,
+Container buildProfileSection(
+    {required BuildContext context, required UserInfo userInfo}) {
+  return Container(
+    // TODO, user our color
+    color: accentColor.withOpacity(0.05),
+    width: double.infinity,
+    child: Column(
       children: [
-        CircleAvatar(
-            radius: 90, backgroundImage: getProfilePictureNullSafe(userInfo)),
-        Positioned(
-            child: Container(
-          height: 30.h,
-          width: 30.h,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.h),
-              color: Theme.of(context).colorScheme.primary,
-              boxShadow: [
-                BoxShadow(
-                    color: shadowColor,
-                    offset: const Offset(0, 8),
-                    blurRadius: 27)
-              ]),
-          padding: EdgeInsets.all(5.h),
-          child: GestureDetector(
-            // TODO forward to change profile page
-            onTap: () => {},
-            child: Icon(
-              Icons.edit,
-              size: 20.h,
-              color: Colors.white,
-            ),
-          ),
-        ))
+        getVerSpace(20.h),
+        getProfilePhotoStack(userInfo, context),
+        getVerSpace(15.h),
+        Text(
+          userInfo.profileName,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        getVerSpace(15.h),
+        Text(
+          userInfo.profileEMail,
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        getVerSpace(20.h),
       ],
-    );
-  }
+    ),
+  );
 }
