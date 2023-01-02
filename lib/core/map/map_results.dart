@@ -172,10 +172,12 @@ class _MapResultsState extends State<MapResults> {
 
   List<Marker> getResultMarkers() {
     List<Marker> markerList = [];
+
+    // TODO: check if user position gets clustered
     markerList.add(Marker(
         width: 50.0,
         height: 500.0,
-        rotate: true,
+        rotate: false,
         point: userPosition!,
         builder: (ctx) => Icon(
               Icons.my_location,

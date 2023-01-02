@@ -102,11 +102,13 @@ Widget getSummaryInformation(
             size: 11.h,
           ),
           getHorSpace(3.h),
-          Text(
-            getLocationString(location: eASummary.location, isShort: true),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 11.h),
+          Expanded(
+            child: Text(
+              getLocationString(location: eASummary.location, isShort: true),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 11.h),
+            ),
           )
 
 // include here price information
@@ -120,13 +122,16 @@ Widget getSummaryInformation(
             size: 11.h,
           ),
           getHorSpace(3.h),
-          Text(
-            getTimeInformation(
-                context: context,
-                startTimeUtc: eASummary.time.startTimeUtc,
-                openingTimeCode: eASummary.time.openingTimeCode),
-            maxLines: 1,
-            style: TextStyle(fontSize: 11.h),
+          Expanded(
+            child: Text(
+              getTimeInformation(
+                  context: context,
+                  startTimeUtc: eASummary.time.startTimeUtc,
+                  openingTimeCode: eASummary.time.openingTimeCode),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(fontSize: 11.h),
+            ),
           )
         ],
       ),
