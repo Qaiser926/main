@@ -8,7 +8,7 @@ class AddEANotifier extends ChangeNotifier {
   DateTime? startDateTime;
   DateTime? endDateTime;
 
-  Map<String, List> openingTimes = {
+  Map<String, List<List<double?>>> openingTimes = {
     "1": [],
     "2": [],
     "3": [],
@@ -18,6 +18,23 @@ class AddEANotifier extends ChangeNotifier {
     "7": []
   };
   int activatedWeekDay = 1;
+
+  List getOpeningTimesList() {
+    return openingTimes[activatedWeekDay.toString()]!;
+  }
+
+  void deleteNullOpeningTimes() {
+    for (var openingTimesList in openingTimes.values) {
+      for (var i = openingTimesList.length - 1; i >= 0; i--) {
+        if ((openingTimesList[i][0] == null) |
+            (openingTimesList[i][1] == null)) {
+          openingTimesList.removeAt(i);
+        }
+      }
+    }
+    ;
+    notifyListeners();
+  }
 
   void closedOnWeekDay() {
     openingTimes[activatedWeekDay.toString()] = [];
@@ -43,8 +60,8 @@ class AddEANotifier extends ChangeNotifier {
     if (openingTimes[activatedWeekDay.toString()]!.isEmpty) {
       return false;
     } else {
-      if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
-          (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
+      if ((openingTimes[activatedWeekDay.toString()]![0]![0] == 0) &
+          (openingTimes[activatedWeekDay.toString()]![0]![1] == 0)) {
         return true;
       } else {
         return false;
@@ -59,6 +76,11 @@ class AddEANotifier extends ChangeNotifier {
 
   void activeWeekday(int weekday) {
     activatedWeekDay = weekday;
+    notifyListeners();
+  }
+
+  void addHours() {
+    openingTimes[activatedWeekDay.toString()]!.add([null, null]);
     notifyListeners();
   }
 

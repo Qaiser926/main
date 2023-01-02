@@ -136,9 +136,13 @@ String languageSensibleOpeningTimeCode(
       .substring(openingTimeCode.toString().indexOf('.') + 1)]!;
 }
 
-String formatTime({required double unformattedTime}) {
-  String formattedTime = unformattedTime.toInt().toString().padLeft(4, '0');
-  return "${formattedTime.substring(0, 2)}:${formattedTime.substring(2, 4)}";
+String formatTime({required double? unformattedTime}) {
+  if (unformattedTime != null) {
+    String formattedTime = unformattedTime.toInt().toString().padLeft(4, '0');
+    return "${formattedTime.substring(0, 2)}:${formattedTime.substring(2, 4)}";
+  } else {
+    return "";
+  }
 }
 
 String getLocationString(
