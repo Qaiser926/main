@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'add_exclusives/add_first_page.dart';
@@ -39,62 +40,26 @@ class Add extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                    padding: EdgeInsets.all(10.h),
-                    child: GestureDetector(
-                      onTap: () => {
-                        switchPagesNotifier.currentPage = 0,
-                        _pageController.jumpToPage(0)
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: switchPageModel.currentPage == 0
-                                ? Theme.of(context).colorScheme.primary
-                                : null,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: Theme.of(context).colorScheme.primary)),
-                        width: 40.h,
-                        height: 40.h,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "1",
-                          ),
-                        ),
-                      ),
-                    )),
-                Icon(
-                  Icons.arrow_forward,
-                  size: 20.h,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.h),
-                  child: GestureDetector(
-                    child: Container(
-                      child: Text("2"),
-                    ),
-                  ),
-                ),
-                Padding(
-                    padding: EdgeInsets.all(10.h),
-                    child: GestureDetector(
-                      child: GestureDetector(
-                        child: Container(
-                          child: Text("3"),
-                        ),
-                      ),
-                    )),
-                Padding(
-                    padding: EdgeInsets.all(10.h),
-                    child: GestureDetector(
-                      child: GestureDetector(
-                        child: Container(
-                          child: Text("4"),
-                        ),
-                      ),
-                    ))
+                buildUpperNavigationElement(
+                    context: context,
+                    index: 0,
+                    switchPageModel: switchPageModel),
+                getArrowIcon(context),
+                buildUpperNavigationElement(
+                    context: context,
+                    index: 1,
+                    switchPageModel: switchPageModel),
+                getArrowIcon(context),
+                buildUpperNavigationElement(
+                    context: context,
+                    index: 2,
+                    switchPageModel: switchPageModel),
+                getArrowIcon(context),
+                buildUpperNavigationElement(
+                    context: context,
+                    index: 3,
+                    switchPageModel: switchPageModel),
+                getHorSpace(16.h)
               ],
             );
           })
@@ -128,6 +93,46 @@ class Add extends StatelessWidget {
     });
   }
 
+  Widget buildUpperNavigationElement(
+      {required BuildContext context,
+      required AddPageNotifier switchPageModel,
+      required int index}) {
+    return Padding(
+        padding: EdgeInsets.all(10.h),
+        child: GestureDetector(
+          onTap: () => {
+            switchPageModel.currentPage = index,
+            _pageController.jumpToPage(index)
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: switchPageModel.currentPage == index
+                    ? Theme.of(context).colorScheme.primary
+                    : null,
+                shape: BoxShape.circle,
+                border:
+                    Border.all(color: Theme.of(context).colorScheme.primary)),
+            width: 40.h,
+            height: 40.h,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                (index + 1).toString(),
+              ),
+            ),
+          ),
+        ));
+  }
+
+  Icon getArrowIcon(BuildContext context) {
+    return Icon(
+      Icons.arrow_forward,
+      size: 20.h,
+      color: Theme.of(context).colorScheme.primary,
+    );
+  }
+
+  // TODO when switching pages, the left button changes its position
   Widget getNavigationButton(
       IconData icon,
       void Function(BuildContext context) onPressedFunction,
