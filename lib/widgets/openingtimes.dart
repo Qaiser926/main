@@ -21,27 +21,28 @@ class OpeningTimes extends StatelessWidget {
         child: Column(
             children: List.generate(openingTime.length, (indexOuter) {
       var rowContent = null;
-          // index outer = weekday
+      // index outer + 1 = weekday
       // first Case where dictionary for weekday is a list of opening hours
       if (openingTime["${indexOuter + 1}"] != null) {
-            int innerListLength = openingTime["${indexOuter + 1}"].length;
-            rowContent = List.generate(
-              innerListLength,
-              (indexInner) {
-                String openingText = "";
-                if ((openingTime["${indexOuter + 1}"][indexInner][0] == 0) &
-                    (openingTime["${indexOuter + 1}"][indexInner][1] == 0)) {
-                  openingText = AppLocalizations.of(context)!.alwaysOpen;
-                } else {
-                  String startTimeFormatted = formatTime(
-                      unformattedTime: openingTime["${indexOuter + 1}"]
-                          [indexInner][0]);
-                  String endTimeFormatted = formatTime(
-                      unformattedTime: openingTime["${indexOuter + 1}"]
-                          [indexInner][1]);
-                  openingText = "$startTimeFormatted - $endTimeFormatted";
-                }
-                return Row(children: [
+        int innerListLength = openingTime["${indexOuter + 1}"].length;
+        rowContent = List.generate(
+          innerListLength,
+          (indexInner) {
+            String openingText = "";
+            // e.g.: always open on Monday: "1": [[[0], [0]]]
+            if ((openingTime["${indexOuter + 1}"][indexInner][0] == 0) &
+                (openingTime["${indexOuter + 1}"][indexInner][1] == 0)) {
+              openingText = AppLocalizations.of(context)!.alwaysOpen;
+            } else {
+              String startTimeFormatted = formatTime(
+                  unformattedTime: openingTime["${indexOuter + 1}"][indexInner]
+                      [0]);
+              String endTimeFormatted = formatTime(
+                  unformattedTime: openingTime["${indexOuter + 1}"][indexInner]
+                      [1]);
+              openingText = "$startTimeFormatted - $endTimeFormatted";
+            }
+            return Row(children: [
               Text(
                 openingText,
                 style: Theme.of(context).textTheme.headline4,
@@ -52,13 +53,15 @@ class OpeningTimes extends StatelessWidget {
                 getEditOpeningTimeButton(
                     weekDay: indexOuter + 1, context: context),
             ]);
-              },
-            );
-          }
-          // case where dicitonary-list for weekday is null
-          else {
-            rowContent = [
-              Row(children: [
+          },
+        );
+      }
+      // case where dicitonary-list for weekday is null or the list is empty, both indicating activity is closed
+      // e.g. closed on Tuesday "2": [] or "2": null
+      if (rowContent == null) rowContent = [];
+      if (rowContent.isEmpty) {
+        rowContent = [
+          Row(children: [
             Text(
               AppLocalizations.of(context)!.closed,
               style: Theme.of(context).textTheme.headline4,
@@ -68,26 +71,24 @@ class OpeningTimes extends StatelessWidget {
               getEditOpeningTimeButton(
                   weekDay: indexOuter + 1, context: context),
           ])
-            ];
-          }
+        ];
+      }
 
-          return Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  getWeekday(
-                      weekDayNumber: indexOuter + 1, context: context)[0],
-                  style: Theme.of(context).textTheme.headline4,
-                  maxLines: 1,
-                ),
-                Column(children: rowContent)
-              ],
+      return Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getWeekday(weekDayNumber: indexOuter + 1, context: context)[0],
+              style: Theme.of(context).textTheme.headline4,
+              maxLines: 1,
             ),
-          );
-        })));
-
+            Column(children: rowContent)
+          ],
+        ),
+      );
+    })));
   }
 }

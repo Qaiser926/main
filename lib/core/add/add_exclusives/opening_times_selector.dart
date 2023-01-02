@@ -54,7 +54,8 @@ Future<dynamic> openingTimesDialog(
               value: Provider.of<AddEANotifier>(context, listen: false),
             )
           ],
-          child: Consumer<AddEANotifier>(builder: (context, model, child) {
+          child:
+              Consumer<AddEANotifier>(builder: (context, inputNotifier, child) {
             return Dialog(
               child: SingleChildScrollView(
                 child: Padding(
@@ -72,14 +73,16 @@ Future<dynamic> openingTimesDialog(
                                   padding: EdgeInsets.only(
                                       left: 4.h, top: 0, right: 4.h, bottom: 0),
                                   child: GestureDetector(
-                                    onTap: () =>
-                                        {model.activeWeekday(weekDayIndex + 1)},
+                                    onTap: () => {
+                                      inputNotifier
+                                          .activeWeekday(weekDayIndex + 1)
+                                    },
                                     child: Text(
                                       getWeekday(
                                           weekDayNumber: weekDayIndex + 1,
                                           context: context)[1],
                                       style: (weekDayIndex + 1) ==
-                                              model.activatedWeekDay
+                                              inputNotifier.activatedWeekDay
                                           ? TextStyle(
                                               color: Theme.of(context)
                                                   .colorScheme
@@ -89,7 +92,26 @@ Future<dynamic> openingTimesDialog(
                                     ),
                                   ),
                                 ));
-                              })))
+                              }))),
+                      getVerSpace(10.h),
+                      Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        alignment: WrapAlignment.start,
+                        children: [
+                          getSpecialOpeningTimeButton(
+                              context: context,
+                              caption: "24h open",
+                              coloredBorder: inputNotifier.isAlwaysOpen(),
+                              onTapFunction: () =>
+                                  {inputNotifier.alwaysOpenOnWeekDay()}),
+                          getSpecialOpeningTimeButton(
+                              context: context,
+                              caption: "Closed",
+                              coloredBorder: inputNotifier.isClosed(),
+                              onTapFunction: () =>
+                                  {inputNotifier.closedOnWeekDay()})
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -98,4 +120,35 @@ Future<dynamic> openingTimesDialog(
           }),
         );
       });
+}
+
+Widget getSpecialOpeningTimeButton(
+    {required BuildContext context,
+    required String caption,
+    required Function onTapFunction,
+    required bool coloredBorder}) {
+  Color? borderColor = null;
+  if (coloredBorder) {
+    borderColor = Theme.of(context).colorScheme.primary;
+  } else {
+    borderColor = Theme.of(context).highlightColor;
+  }
+  return Padding(
+    padding: EdgeInsets.all(5),
+    child: GestureDetector(
+      onTap: () => onTapFunction(),
+      child: Container(
+        // margin: EdgeInsets.only(right: 12.h, left: 20.h ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.h),
+          border: Border.all(color: borderColor),
+        ),
+
+        child: Padding(
+          padding: EdgeInsets.all(7.h),
+          child: Text(caption),
+        ),
+      ),
+    ),
+  );
 }

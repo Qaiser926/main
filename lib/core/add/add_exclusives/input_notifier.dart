@@ -8,16 +8,49 @@ class AddEANotifier extends ChangeNotifier {
   DateTime? startDateTime;
   DateTime? endDateTime;
 
-  Map<int, List?> openingTimes = {
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-    6: null,
-    7: null
+  Map<String, List> openingTimes = {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": []
   };
   int activatedWeekDay = 1;
+
+  void closedOnWeekDay() {
+    openingTimes[activatedWeekDay.toString()] = [];
+    notifyListeners();
+  }
+
+  void alwaysOpenOnWeekDay() {
+    openingTimes[activatedWeekDay.toString()] = [
+      [0, 0]
+    ];
+    notifyListeners();
+  }
+
+  bool isClosed() {
+    if (openingTimes[activatedWeekDay.toString()]!.isEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool isAlwaysOpen() {
+    if (openingTimes[activatedWeekDay.toString()]!.isEmpty) {
+      return false;
+    } else {
+      if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
+          (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 
   void resetEndDateTime() {
     endDateTime = null;
