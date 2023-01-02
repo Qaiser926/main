@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddEANotifier extends ChangeNotifier {
-  final List<bool> selectedFruits = <bool>[false, false];
+  final List<bool> times = <bool>[false, false];
   final List<bool> privateOrPublic = <bool>[true, false];
 
   // TODO: before sending, transform to UTC
@@ -32,7 +32,6 @@ class AddEANotifier extends ChangeNotifier {
         }
       }
     }
-    ;
     notifyListeners();
   }
 
@@ -60,8 +59,8 @@ class AddEANotifier extends ChangeNotifier {
     if (openingTimes[activatedWeekDay.toString()]!.isEmpty) {
       return false;
     } else {
-      if ((openingTimes[activatedWeekDay.toString()]![0]![0] == 0) &
-          (openingTimes[activatedWeekDay.toString()]![0]![1] == 0)) {
+      if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
+          (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
         return true;
       } else {
         return false;
@@ -86,11 +85,65 @@ class AddEANotifier extends ChangeNotifier {
 
   List<Image> loadedImages = [];
 
-  set selectedFruits(index) {
-    for (int i = 0; i < selectedFruits.length; i++) {
-      selectedFruits[i] = i == index;
+  set times(index) {
+    for (int i = 0; i < times.length; i++) {
+      times[i] = i == index;
     }
     notifyListeners();
+  }
+
+  void changeTimeType(int index, BuildContext context) {
+    // there can be either opening times or start/ end time associated -> make user aware
+    bool isOpeningTimesModified = false;
+    for (var openingTimesList in openingTimes.values) {
+      if (openingTimesList.isNotEmpty) isOpeningTimesModified = true;
+    }
+    bool isStartTimeModified = startDateTime != null;
+    bool caseOpeningTimesReset = isOpeningTimesModified & (index == 0);
+    bool caseStartTimeReset = isStartTimeModified & (index == 1);
+    if (caseOpeningTimesReset | caseStartTimeReset) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                content: caseStartTimeReset
+                    ? Text(
+                        "Switching will cause your stated Start Time to be lost")
+                    : Text(
+                        "Switching will cause you stated Opening Times to be lost"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      child: const Text("Cancel"),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      times = index;
+                      resetOtherType(index);
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(14),
+                      child: const Text("Continue"),
+                    ),
+                  ),
+                ],
+              ));
+    } else {
+      times = index;
+    }
+  }
+
+  void resetOtherType(int index) {
+    if (index == 0) {
+      openingTimes.forEach((k, v) => openingTimes[k] = []);
+    } else {
+      startDateTime = endDateTime = null;
+    }
   }
 
   set privateOrPublic(index) {

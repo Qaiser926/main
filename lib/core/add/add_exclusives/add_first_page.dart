@@ -67,6 +67,7 @@ class _FirstAddPageState extends State<FirstAddPage> {
 
           Consumer<AddEANotifier>(builder: (context, model, child) {
             return getSwitch(
+                context: context,
                 headline: GestureDetector(
                   onTap: () => {
                     getInfoDialog(
@@ -89,33 +90,23 @@ class _FirstAddPageState extends State<FirstAddPage> {
                     ),
                   ),
                 ),
-                onPressed: onPressedOne,
-                isSelected: model.selectedFruits,
+                onPressed: changeTimeType,
+                isSelected: model.times,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      // TODO include warnings if the corresponding other option has already been set
-                      model.selectedFruits = 0;
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      child: Text("Start/ End time"),
-                    ),
-                  ),
+                  Text("Start/ End time"),
                   Text('Öffnungszeiten'),
                 ]);
           }),
 
-          if (Provider.of<AddEANotifier>(context, listen: true)
-              .selectedFruits[0])
+          if (Provider.of<AddEANotifier>(context, listen: true).times[0])
             TimeSelector(context: context, inputNotifier: inputNotifier),
 
-          if (Provider.of<AddEANotifier>(context, listen: true)
-              .selectedFruits[1])
+          if (Provider.of<AddEANotifier>(context, listen: true).times[1])
             OpeningTimesSelector(
                 context: context, inputNotifier: inputNotifier),
           // TODO informiere user über Unterschied privat/ öffentlich
           getSwitch(
+              context: context,
               headline: Text("Privat oder Öffentlich?"),
               onPressed: onPressedTwo,
               isSelected: Provider.of<AddEANotifier>(context, listen: true)
@@ -149,11 +140,11 @@ class _FirstAddPageState extends State<FirstAddPage> {
     }
   }
 
-  void onPressedOne(int index) {
-    inputNotifier.selectedFruits = index;
+  void changeTimeType(int index, BuildContext context) {
+    inputNotifier.changeTimeType(index, context);
   }
 
-  void onPressedTwo(int index) {
+  void onPressedTwo(int index, BuildContext context) {
     inputNotifier.privateOrPublic = index;
   }
 
@@ -161,7 +152,8 @@ class _FirstAddPageState extends State<FirstAddPage> {
       {required Widget headline,
       required Function onPressed,
       required isSelected,
-      required children}) {
+      required children,
+      required BuildContext context}) {
     return Column(children: [
       headline,
       ToggleButtons(
@@ -173,7 +165,7 @@ class _FirstAddPageState extends State<FirstAddPage> {
           ),
           isSelected: isSelected,
           renderBorder: true,
-          onPressed: (index) => onPressed(index),
+          onPressed: (index) => onPressed(index, context),
           children: children),
     ]);
   }
