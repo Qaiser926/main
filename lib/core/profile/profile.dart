@@ -149,41 +149,6 @@ ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
   }
 }
 
-Stack getProfilePhotoStack(UserInfo userInfo, BuildContext context) {
-  return Stack(
-    alignment: Alignment.bottomRight,
-    children: [
-      CircleAvatar(
-          radius: 90, backgroundImage: getProfilePictureNullSafe(userInfo)),
-      // Positioned(
-      //   child: Container(
-      //     height: 30.h,
-      //     width: 30.h,
-      //     decoration: BoxDecoration(
-      //         borderRadius: BorderRadius.circular(20.h),
-      //         color: Theme.of(context).colorScheme.primary,
-      //         boxShadow: [
-      //           BoxShadow(
-      //               color: shadowColor,
-      //               offset: const Offset(0, 8),
-      //               blurRadius: 27)
-      //         ]),
-      //     padding: EdgeInsets.all(5.h),
-      //     child: GestureDetector(
-      //       // TODO forward to change profile page
-      //       onTap: () => {},
-      //       child: Icon(
-      //         Icons.edit,
-      //         size: 20.h,
-      //         color: Colors.white,
-      //       ),
-      //     ),
-      //   ),
-      // )
-    ],
-  );
-}
-
 Container buildProfileSection(
     {required BuildContext context, required UserInfo userInfo}) {
   return Container(
@@ -193,7 +158,8 @@ Container buildProfileSection(
     child: Column(
       children: [
         getVerSpace(20.h),
-        getProfilePhotoStack(userInfo, context),
+        CircleAvatar(
+            radius: 90, backgroundImage: getProfilePictureNullSafe(userInfo)),
         getVerSpace(15.h),
         Text(
           userInfo.profileName,
