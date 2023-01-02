@@ -3,14 +3,11 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-
-  "home": "Home",
   "map": "Map",
   "exploreMap": "Click to explore on Map",
   "compingUpEvents": "Coming up Events",
-    "popularEA": "Popular Events & Activities",
-    "universityEvents": "University Events",
-
+  "popularEA": "Popular Events & Activities",
+  "universityEvents": "University Events",
   "follow": "Follow",
   "favourites": "Favourites",
   "futureEvents": "Future Events",
@@ -121,19 +118,14 @@
   "clearFilter": "Reset Filter",
   "free": "Free",
   "unlimited": "Unlimited",
-
   "search": "Search",
-   "discover": "Discover",
+  "discover": "Discover",
   "results": "Search Results",
-
   "from": "From",
   "to": "To",
-
   "notLoggedInMessageLike": "Log in to add favorites",
-
   "notLoggedInMessage": "Log in to see this page!",
   "profile": "Profile",
-
   "location": "Location",
   "nextWeekend": "Next Weekend",
   "thisWeekend": "This Weekend",
@@ -144,145 +136,138 @@
   "priceRising": "Price ↑",
   "dateRising": "Date ↑",
   "popularity": "Popularity",
-
   "noResultsFound": "No results found for search criteria",
-
   "closeAppDialog": "Do you want to exit the App?",
-   "confirm": "Confirm",
-   "cancel": "Cancel",
-
-   "showMore": "Show More",
-
-    "futureHostedEvents": "Upcoming events created by you",
-     "pastHostedEvents": "Past events created by you",
-     "hostedActivities": "Activities created by you",
-
-   "help": "Help",
-   "privacy": "Privacy",
-   "preferences": "Preferences",
-   "settings": "Settings",
-   "changePassword": "Change Password",
-   "editProfile": "Edit Profile",
-   "accountSettings": "Account Settings",
-   "language": "Language",
-   "german": "German",
-   "english": "English",
-    "helpText": "If you need help or you want to give us feeback, feel free to contact us: othia@outlook.de",
-    "noAssociatedEAMessage": "You have not created any Events or Activities yet. Add an event or activity now!",
-
-   "entertainment": "Entertainment",
-     "@entertainment": {
-       "description": "entertainment"
-     },
-     "nightlife": "Nightlife & Clubs",
-     "@nightlife": {
-       "description": "nightlife"
-     },
-     "food": "Food & Tasting",
-     "@food": {
-       "description": "food"
-     },
-     "sport": "Sport & Fun",
-     "@sport": {
-       "description": "sport"
-     },
-     "wellness": "Retreat & Wellness",
-     "@wellness": {
-       "description": "wellness"
-     },
-     "attractionTours": "Attraction, Tours & Trips",
-     "@attractionTours": {
-       "description": "attraction"
-     },
-     "culture": "Culture & Performing Art",
-     "@culture": {
-       "description": "culture"
-     },
-     "studentsFamily": "Students, Family & Couples",
-     "@studentsFamily": {
-       "description": "students"
-     },
-     "exhibition": "Community & Workshops",
-     "@exhibition": {
-       "description": "exhibition"
-     },
-     "diverse": "Diverse",
-     "@diverse": {
-       "description": "diverse"
-     },
-     "comedyCabaret": "Comedy & Cabaret",
-     "musicConcert": "Music Concert",
-     "moviePlanetarium": "Movie & Planetarium",
-     "musicFestival": "Music Festival",
-     "musical": "Musical",
-     "entertainmentShow": "Entertainment Show",
-     "circus": "Circus",
-     "fairAmusementPark": "Fair & Amusement Park",
-     "gaming": "Gaming",
-     "carnival": "Carnival",
-     "otherEntertainment": "Other Entertainment",
-     "rave": "Rave",
-     "chartsParty": "Charts Party",
-     "hipHopParty": "Hip-Hop Party",
-     "party": "Party",
-     "lgbtq": "LGBTQ",
-     "karaoke": "Karaoke",
-     "cocktailsDrinks": "Cocktails & Drinks",
-     "otherNightlifeClubs": "Other Nightlife & Clubs",
-     "fitness": "Fitness",
-     "outdoor": "Outdoor",
-     "sportEvent": "Sport Event",
-     "funActivities": "Fun Activities",
-     "dancing": "Dancing",
-     "otherSportFun": "Other Sport & Fun",
-     "tripSightseeing": "Trip & Sightseeing",
-     "aquariumZoo": "Aquarium & Zoo",
-     "attraction": "Attraction",
-     "otherAttractionToursTrips": "Other Attraction, Tours & Trips",
-     "health": "Health",
-     "spiruality": "Spiruality",
-     "beauty": "Beauty",
-     "fashion": "Fashion",
-     "yoga": "Yoga",
-     "wellnessSpa": "Wellness & Spa",
-     "otherRetreatWellness": "Other Retreat & Wellness",
-     "streetFood": "Street-Food",
-     "popUpRestaurant": "Pop-up Restaurant",
-     "cafe": "Cafe",
-     "restaurant": "Restaurant",
-     "tasting": "Tasting",
-     "foodFestival": "Food Festival",
-     "otherFoodTasting": "Other Food & Tasting",
-     "operaOperetta": "Opera & Operetta",
-     "classicConcert": "Classic Concert",
-     "theatre": "Theatre",
-     "reading": "Reading",
-     "poetrySlam": "Poetry Slam",
-     "artExhibitionGallery": "Art Exhibition & Gallery",
-     "museum": "Museum",
-     "danceBallet": "Dance & Ballet",
-     "cultureFestival": "Culture Festival",
-     "otherCulturePerformingArt": "Other Culture & Performing Art",
-     "students": "Students",
-     "family": "Family",
-     "kids": "Kids",
-     "couples": "Couples",
-     "otherStudentsFamilyCouples": "Other Students, Family & Couples",
-     "massReligiousHappenings": "Mass & Religious Happenings",
-     "politics": "Politics",
-     "communityEvent": "Community Event",
-     "workshop": "Workshop",
-     "weeklyMarket": "Weekly Market",
-     "fleaMarket": "Flea Market",
-     "talk": "Talk",
-     "conferencesCareerEvents": "Conferences & Career Events",
-     "charity": "Charity",
-     "garden": "Garden",
-     "otherExhibitonCommunityWorkshops": "Other Exhibiton, Community & Workshops",
-     "dating": "Dating",
-     "shopping": "Shopping",
-     "home": "Home ",
-     "otherDiverse": "Other Diverse"
-
-
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "showMore": "Show More",
+  "futureHostedEvents": "Upcoming events created by you",
+  "pastHostedEvents": "Past events created by you",
+  "hostedActivities": "Activities created by you",
+  "help": "Help",
+  "privacy": "Privacy",
+  "preferences": "Preferences",
+  "settings": "Settings",
+  "changePassword": "Change Password",
+  "editProfile": "Edit Profile",
+  "accountSettings": "Account Settings",
+  "language": "Language",
+  "german": "German",
+  "english": "English",
+  "logout": "Logout",
+  "helpText": "If you need help or you want to give us feeback, feel free to contact us: othia@outlook.de",
+  "noAssociatedEAMessage": "You have not created any Events or Activities yet. Add an event or activity now!",
+  "entertainment": "Entertainment",
+  "@entertainment": {
+    "description": "entertainment"
+  },
+  "nightlife": "Nightlife & Clubs",
+  "@nightlife": {
+    "description": "nightlife"
+  },
+  "food": "Food & Tasting",
+  "@food": {
+    "description": "food"
+  },
+  "sport": "Sport & Fun",
+  "@sport": {
+    "description": "sport"
+  },
+  "wellness": "Retreat & Wellness",
+  "@wellness": {
+    "description": "wellness"
+  },
+  "attractionTours": "Attraction, Tours & Trips",
+  "@attractionTours": {
+    "description": "attraction"
+  },
+  "culture": "Culture & Performing Art",
+  "@culture": {
+    "description": "culture"
+  },
+  "studentsFamily": "Students, Family & Couples",
+  "@studentsFamily": {
+    "description": "students"
+  },
+  "exhibition": "Community & Workshops",
+  "@exhibition": {
+    "description": "exhibition"
+  },
+  "diverse": "Diverse",
+  "@diverse": {
+    "description": "diverse"
+  },
+  "comedyCabaret": "Comedy & Cabaret",
+  "musicConcert": "Music Concert",
+  "moviePlanetarium": "Movie & Planetarium",
+  "musicFestival": "Music Festival",
+  "musical": "Musical",
+  "entertainmentShow": "Entertainment Show",
+  "circus": "Circus",
+  "fairAmusementPark": "Fair & Amusement Park",
+  "gaming": "Gaming",
+  "carnival": "Carnival",
+  "otherEntertainment": "Other Entertainment",
+  "rave": "Rave",
+  "chartsParty": "Charts Party",
+  "hipHopParty": "Hip-Hop Party",
+  "party": "Party",
+  "lgbtq": "LGBTQ",
+  "karaoke": "Karaoke",
+  "cocktailsDrinks": "Cocktails & Drinks",
+  "otherNightlifeClubs": "Other Nightlife & Clubs",
+  "fitness": "Fitness",
+  "outdoor": "Outdoor",
+  "sportEvent": "Sport Event",
+  "funActivities": "Fun Activities",
+  "dancing": "Dancing",
+  "otherSportFun": "Other Sport & Fun",
+  "tripSightseeing": "Trip & Sightseeing",
+  "aquariumZoo": "Aquarium & Zoo",
+  "attraction": "Attraction",
+  "otherAttractionToursTrips": "Other Attraction, Tours & Trips",
+  "health": "Health",
+  "spiruality": "Spiruality",
+  "beauty": "Beauty",
+  "fashion": "Fashion",
+  "yoga": "Yoga",
+  "wellnessSpa": "Wellness & Spa",
+  "otherRetreatWellness": "Other Retreat & Wellness",
+  "streetFood": "Street-Food",
+  "popUpRestaurant": "Pop-up Restaurant",
+  "cafe": "Cafe",
+  "restaurant": "Restaurant",
+  "tasting": "Tasting",
+  "foodFestival": "Food Festival",
+  "otherFoodTasting": "Other Food & Tasting",
+  "operaOperetta": "Opera & Operetta",
+  "classicConcert": "Classic Concert",
+  "theatre": "Theatre",
+  "reading": "Reading",
+  "poetrySlam": "Poetry Slam",
+  "artExhibitionGallery": "Art Exhibition & Gallery",
+  "museum": "Museum",
+  "danceBallet": "Dance & Ballet",
+  "cultureFestival": "Culture Festival",
+  "otherCulturePerformingArt": "Other Culture & Performing Art",
+  "students": "Students",
+  "family": "Family",
+  "kids": "Kids",
+  "couples": "Couples",
+  "otherStudentsFamilyCouples": "Other Students, Family & Couples",
+  "massReligiousHappenings": "Mass & Religious Happenings",
+  "politics": "Politics",
+  "communityEvent": "Community Event",
+  "workshop": "Workshop",
+  "weeklyMarket": "Weekly Market",
+  "fleaMarket": "Flea Market",
+  "talk": "Talk",
+  "conferencesCareerEvents": "Conferences & Career Events",
+  "charity": "Charity",
+  "garden": "Garden",
+  "otherExhibitonCommunityWorkshops": "Other Exhibiton, Community & Workshops",
+  "dating": "Dating",
+  "shopping": "Shopping",
+  "home": "Home ",
+  "otherDiverse": "Other Diverse"
 }

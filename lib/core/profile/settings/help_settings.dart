@@ -13,12 +13,9 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
-
-
   void backClick() {
     Get.back();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +38,8 @@ class _HelpScreenState extends State<HelpScreen> {
                 getVerSpace(25.h),
                 Text(AppLocalizations.of(context)!.helpText)
               ],
-            ),),
+            ),
+          ),
         ),
       ),
     );

@@ -49,13 +49,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       getVerSpace(20.h),
                       Text(AppLocalizations.of(context)!.accountSettings),
                       getVerSpace(12.h),
-                      settingContainer(() {
+                      getSettingContainer(() {
                         // TODO
                         () {};
                       }, AppLocalizations.of(context)!.editProfile,
-                          Icon(FontAwesomeIcons.userEdit)),
+                          Icon(FontAwesomeIcons.userPen)),
                       getVerSpace(20.h),
-                      settingContainer(
+                      getSettingContainer(
                           // TODO
                           () {},
                           AppLocalizations.of(context)!.changePassword,
@@ -63,14 +63,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       getVerSpace(30.h),
                       Text(AppLocalizations.of(context)!.preferences),
                       getVerSpace(12.h),
-                      settingContainer(
+                      getSettingContainer(
                           // TODO
                           () {
                         Get.to(PrivacyScreen());
                       }, AppLocalizations.of(context)!.privacy,
                           Icon(FontAwesomeIcons.shield)),
                       getVerSpace(20.h),
-                      settingContainer(
+                      getSettingContainer(
                           // TODO
                           () {
                         Get.to(HelpScreen());
@@ -81,9 +81,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             size: 28.h,
                           )),
                       getVerSpace(20.h),
-                      settingContainer(
-                          () {
-                            Get.to(LanguageScreen());
+                      getSettingContainer(() {
+                        Get.to(LanguageScreen());
                       }, AppLocalizations.of(context)!.language,
                           Icon(Icons.translate)),
                     ],
@@ -100,7 +99,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onPressed:
                             // TODO write logout logic
                             () => {},
-                        child: Text("Logout"))),
+                        child: Text(
+                          AppLocalizations.of(context)!.logout,
+                        ))),
               ),
               getVerSpace(30.h)
             ],
@@ -111,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-Widget settingContainer(Function function, String title, Icon icon) {
+Widget getSettingContainer(Function function, String title, Icon icon) {
   return GestureDetector(
     onTap: () {
       function();
