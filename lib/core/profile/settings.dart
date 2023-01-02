@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:othia/core/profile/settings/actions.dart';
+import 'package:othia/core/profile/settings/change_password.dart';
+import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 import '../../utils/helpers/logout.dart';
@@ -52,32 +53,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(AppLocalizations.of(context)!.accountSettings),
                       getVerSpace(12.h),
                       getSettingContainer(() {
-                        // TODO
-                        () {
-                          // AmplifyAu
-                        };
+                        Get.to(const EditProfile());
                       }, AppLocalizations.of(context)!.editProfile,
                           const Icon(FontAwesomeIcons.userPen)),
                       getVerSpace(20.h),
-                      getSettingContainer(
-                          // TODO
-                          () {
+                      getSettingContainer(() {
                         Get.to(ChangePasswordScreen());
                       }, AppLocalizations.of(context)!.changePassword,
                           const Icon(FontAwesomeIcons.key)),
                       getVerSpace(30.h),
                       Text(AppLocalizations.of(context)!.preferences),
                       getVerSpace(12.h),
-                      getSettingContainer(
-                          // TODO
-                          () {
+                      getSettingContainer(() {
                         Get.to(const PrivacyScreen());
                       }, AppLocalizations.of(context)!.privacy,
                           const Icon(FontAwesomeIcons.shield)),
                       getVerSpace(20.h),
-                      getSettingContainer(
-                          // TODO
-                          () {
+                      getSettingContainer(() {
                         Get.to(const HelpScreen());
                       },
                           AppLocalizations.of(context)!.help,
