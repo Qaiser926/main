@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/categories.dart';
+import 'package:othia/core/add/add.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -36,9 +37,17 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
+                padding: EdgeInsets.only(bottom: 20.h, top: 10.h),
+                // TODO work on text
+                child: Text(
+                    "You can add private and public events and activities, also if you are not the official organizer"),
+              ),
+              getHeadline(context: context, caption: "Title"),
+              Padding(
                 padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                 child: buildTitleSection(),
               ),
+              getHeadline(context: context, caption: "Categorization"),
               Padding(
                   padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                   child: buildDropDown(

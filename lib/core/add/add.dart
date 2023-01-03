@@ -178,3 +178,21 @@ class Add extends StatelessWidget {
         _pageController.page as int;
   }
 }
+
+Column getHeadline({required BuildContext context, required String caption}) {
+  return Column(
+    children: [
+      Padding(
+        padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+        child: Row(
+          children: [
+            Text(caption,
+                textAlign: TextAlign.start,
+                style: Theme.of(context).textTheme.headline4)
+          ],
+        ),
+      ),
+      Divider(thickness: 2.h),
+    ],
+  );
+}
