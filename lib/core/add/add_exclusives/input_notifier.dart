@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddEANotifier extends ChangeNotifier {
+  String? title;
+
   final List<bool> times = <bool>[false, false];
   final List<bool> privateOrPublic = <bool>[true, false];
 
@@ -27,7 +29,7 @@ class AddEANotifier extends ChangeNotifier {
     for (var openingTimesList in openingTimes.values) {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
         if ((openingTimesList[i][0] == null) |
-            (openingTimesList[i][1] == null)) {
+        (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);
         }
       }
@@ -60,7 +62,7 @@ class AddEANotifier extends ChangeNotifier {
       return false;
     } else {
       if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
-          (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
+      (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
         return true;
       } else {
         return false;
@@ -105,34 +107,34 @@ class AddEANotifier extends ChangeNotifier {
       showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
-                content: caseStartTimeReset
-                    ? Text(
-                        "Switching will cause your stated Start Time to be lost")
-                    : Text(
-                        "Switching will cause you stated Opening Times to be lost"),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(14),
-                      child: const Text("Cancel"),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      times = index;
-                      resetOtherType(index);
-                      Navigator.of(ctx).pop();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(14),
-                      child: const Text("Continue"),
-                    ),
-                  ),
-                ],
-              ));
+            content: caseStartTimeReset
+                ? Text(
+                "Switching will cause your stated Start Time to be lost")
+                : Text(
+                "Switching will cause you stated Opening Times to be lost"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  child: const Text("Cancel"),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  times = index;
+                  resetOtherType(index);
+                  Navigator.of(ctx).pop();
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  child: const Text("Continue"),
+                ),
+              ),
+            ],
+          ));
     } else {
       times = index;
     }

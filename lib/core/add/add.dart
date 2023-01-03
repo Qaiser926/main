@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/add/add_exclusives/BasicInfoPage.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +75,11 @@ class Add extends StatelessWidget {
               switchPagesNotifier.currentPage = value;
             }),
             controller: _pageController,
-            children: [FirstAddPage(inputNotifier), SecondAddPage()]),
+            children: [
+              BasicInfoPage(inputNotifier),
+              FirstAddPage(inputNotifier),
+              SecondAddPage()
+            ]),
       ),
     );
   }

@@ -12,7 +12,6 @@ import 'input_notifier.dart';
 
 // TODO give user hints if information are missing
 // TODO categorization, price, ticket link, description, optional: slider for activity lvl
-// TODO use icons
 
 enum DateType {
   StartDate,
