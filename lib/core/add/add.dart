@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
 
 import 'add_exclusives/add_first_page.dart';
@@ -22,8 +23,18 @@ class Add extends StatelessWidget {
   static final PageController _pageController =
       PageController(initialPage: firstPage);
 
+  // TODO
+  bool isLoggedIn = true;
+
   @override
   Widget build(BuildContext context) {
+    return getLoggedInSensitiveBody(
+        isLoggedIn: isLoggedIn,
+        loggedInWidget: getLoggedInBody(),
+        context: context);
+  }
+
+  Widget getLoggedInBody() {
     AddPageNotifier switchPagesNotifier = AddPageNotifier(firstPage);
 
     AddEANotifier inputNotifier = AddEANotifier();

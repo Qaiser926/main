@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
-// TODO give user hints if information are missing when going to next page
 // TODO categorization, price, ticket link, description, optional: slider for activity lvl
 // TODO show must be logged in if user is not logged in
 
@@ -58,9 +57,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                       notifierFunction: (mainCategoryId) {
                         widget.inputNotifier.mainCategoryId = mainCategoryId;
                         widget.inputNotifier.categoryId = null;
-                        widget.inputNotifier.basicInformation.currentState
-                            ?.reset();
-                        // setState(() => {});
+
+                        setState(() => {});
                         widget.inputNotifier.notifyListeners();
                       })),
               if (consumerInputNotifier.mainCategoryId != null)
