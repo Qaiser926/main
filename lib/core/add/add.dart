@@ -9,11 +9,11 @@ import 'add_exclusives/add_page_notifier.dart';
 import 'add_exclusives/input_notifier.dart';
 
 //TODO only for logged in users, show log in page
+// TODO adjustments for modifying an event
 
 class Add extends StatelessWidget {
   Add({super.key});
 
-  final formKey = GlobalKey<FormState>();
   static const animationDuration = Duration(milliseconds: 200);
   static const animationCurve = Curves.decelerate;
 
@@ -73,8 +73,7 @@ class Add extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: PageView(
             onPageChanged: ((value) {
-              print("validate now");
-              if (formKey.currentState!.validate()) {
+              if (inputNotifier.goToNextPage(switchPagesNotifier)) {
                 switchPagesNotifier.currentPage = value;
               } else {
                 _pageController.jumpToPage(switchPagesNotifier.currentPage);
@@ -82,7 +81,7 @@ class Add extends StatelessWidget {
             }),
             controller: _pageController,
             children: [
-              BasicInfoPage(inputNotifier, formKey),
+              BasicInfoPage(inputNotifier),
               FirstAddPage(inputNotifier),
               SecondAddPage()
             ]),

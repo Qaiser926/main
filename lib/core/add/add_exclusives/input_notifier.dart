@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
 
 class AddEANotifier extends ChangeNotifier {
   String? title;
+
+  String? mainCategoryId;
+
+  // TODO before sending, transform to UUID
+  String? categoryId;
+
+  GlobalKey<FormState> titleKey = GlobalKey<FormState>();
+  GlobalKey<FormState> basicInformation = GlobalKey<FormState>();
+
+  bool goToNextPage(AddPageNotifier switchPagesNotifier) {
+    if (switchPagesNotifier.currentPage == 0) {
+      if (basicInformation.currentState!.validate()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
 
   final List<bool> times = <bool>[false, false];
   final List<bool> privateOrPublic = <bool>[true, false];
