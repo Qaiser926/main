@@ -18,7 +18,7 @@ class Pages {
     Routes.detailedEventRoute: (context) => const EventDetail(),
     Routes.favouriteRoute: (context) => const FavouritePage(),
     Routes.searchRoute: (context) => SearchPage(),
-    Routes.addScreenRoute: (context) => const Add(),
+    Routes.addScreenRoute: (context) => Add(),
     // Routes.searchResults: (context) => SearchResultsPage(),
   };
 }

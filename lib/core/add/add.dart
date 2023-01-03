@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/add/add_exclusives/BasicInfoPage.dart';
+import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +11,9 @@ import 'add_exclusives/input_notifier.dart';
 //TODO only for logged in users, show log in page
 
 class Add extends StatelessWidget {
-  const Add({super.key});
+  Add({super.key});
 
+  final formKey = GlobalKey<FormState>();
   static const animationDuration = Duration(milliseconds: 200);
   static const animationCurve = Curves.decelerate;
 
@@ -72,11 +73,16 @@ class Add extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: PageView(
             onPageChanged: ((value) {
-              switchPagesNotifier.currentPage = value;
+              print("validate now");
+              if (formKey.currentState!.validate()) {
+                switchPagesNotifier.currentPage = value;
+              } else {
+                _pageController.jumpToPage(switchPagesNotifier.currentPage);
+              }
             }),
             controller: _pageController,
             children: [
-              BasicInfoPage(inputNotifier),
+              BasicInfoPage(inputNotifier, formKey),
               FirstAddPage(inputNotifier),
               SecondAddPage()
             ]),
