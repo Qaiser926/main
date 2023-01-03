@@ -5,8 +5,6 @@ class AddEANotifier extends ChangeNotifier {
   String? title;
 
   String? mainCategoryId;
-
-  // TODO before sending, transform to UUID
   String? categoryId;
 
   GlobalKey<FormState> titleKey = GlobalKey<FormState>();

@@ -23,19 +23,24 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   TextEditingController _textController = TextEditingController();
 
   dynamic value;
+  String? mainCategoryId;
+  String? categoryId;
+  String? title;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddEANotifier>(
-        builder: (context, consumerInputNotifier, child) {
-      return Form(
-        key: widget.inputNotifier.basicInformation,
-        child: Scaffold(
-          body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Padding(
+    return Form(
+      key: widget.inputNotifier.basicInformation,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
                 padding: EdgeInsets.only(bottom: 20.h, top: 10.h),
                 // TODO work on text
                 child: Text(
@@ -50,34 +55,37 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
               Padding(
                   padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                   child: buildDropDown(
-                      defaultValue: consumerInputNotifier.mainCategoryId,
-                      hintText: "Select the main category",
-                      onValidErrorText: 'Please state a category',
-                      dropDownList: Categories.categoryIds,
-                      notifierFunction: (mainCategoryId) {
-                        widget.inputNotifier.mainCategoryId = mainCategoryId;
-                        widget.inputNotifier.categoryId = null;
-
-                        setState(() => {});
-                        widget.inputNotifier.notifyListeners();
+                      defaultValue: widget.inputNotifier.mainCategoryId,
+                    hintText: "Select the main category",
+                    onValidErrorText: 'Please state a category',
+                    dropDownList: Categories.categoryIds,
+                    notifierFunction: (mainCategoryId) {
+                      widget.inputNotifier.mainCategoryId = mainCategoryId;
+                      widget.inputNotifier.categoryId = null;
+                      //
+                      setState(() => {
+                            this.mainCategoryId = mainCategoryId,
+                            this.categoryId = null
+                          });
+                    })),
+            if (widget.inputNotifier.mainCategoryId != null)
+              new Padding(
+                  padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+                  child: buildDropDown(
+                      defaultValue: widget.inputNotifier.categoryId,
+                      hintText: "Select a sub-category",
+                      onValidErrorText: 'Please state a sub-category',
+                      dropDownList: categoryIdToSubcategoryIds[
+                          widget.inputNotifier.mainCategoryId]!,
+                      notifierFunction: (categoryId) {
+                        setState(() => {this.categoryId = categoryId});
+                        widget.inputNotifier.categoryId = categoryId;
                       })),
-              if (consumerInputNotifier.mainCategoryId != null)
-                new Padding(
-                    padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                    child: buildDropDown(
-                        defaultValue: consumerInputNotifier.categoryId,
-                        hintText: "Select a sub-category",
-                        onValidErrorText: 'Please state a sub-category',
-                        dropDownList: categoryIdToSubcategoryIds[
-                            consumerInputNotifier.mainCategoryId]!,
-                        notifierFunction: (categoryId) {
-                          widget.inputNotifier.categoryId = categoryId;
-                        })),
             ]),
           ),
         ),
       );
-    });
+    // });
   }
 
   Column buildTitleSection() {
@@ -91,10 +99,12 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         },
         initialValue: Provider.of<AddEANotifier>(context, listen: false).title,
         controller:
-            Provider.of<AddEANotifier>(context, listen: false).title == null
+        Provider.of<AddEANotifier>(context, listen: false).title == null
                 ? _textController
                 : null,
         onChanged: (title) {
+          setState(() => {this.title = title});
+
           widget.inputNotifier.title = title;
         },
         maxLength: 100,
