@@ -16,18 +16,19 @@ class AddEANotifier extends ChangeNotifier {
   latLng.LatLng? latLong;
 
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
   bool snackBarShown = false;
 
   bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
-    if (switchPagesNotifier.currentPage == 0) {
-      if (basicInformationFormKey.currentState!.validate()) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    // if (switchPagesNotifier.currentPage == 0) {
+    //   if (basicInformationFormKey.currentState!.validate()) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
     if ((switchPagesNotifier.currentPage == 1) & (targetPage == 2)) {
       if (addressFormKey.currentState!.validate()) {
         return true;
@@ -43,7 +44,7 @@ class AddEANotifier extends ChangeNotifier {
   List<Image> loadedImages = [];
 
   // TODO when extracting interpret first  bool as start/ end time and second as opening times
-  final List<bool> times = <bool>[false, false];
+  final List<bool> times = <bool>[true, false];
 
   // TODO when extracting interpret first  bool as real location and second as online
   final List<bool> locationType = <bool>[true, false];
@@ -141,7 +142,7 @@ class AddEANotifier extends ChangeNotifier {
 
   void resetEndDateTime() {
     endDateTime = null;
-    notifyListeners();
+    // notifyListeners();
   }
 
   void activeWeekday(int weekday) {
@@ -155,49 +156,7 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void changeTimeType(int index, BuildContext context) {
-    // there can be either opening times or start/ end time associated -> make user aware
-    bool isOpeningTimesModified = false;
-    for (var openingTimesList in openingTimes.values) {
-      if (openingTimesList.isNotEmpty) isOpeningTimesModified = true;
-    }
-    bool isStartTimeModified = startDateTime != null;
-    bool caseOpeningTimesReset = isOpeningTimesModified & (index == 0);
-    bool caseStartTimeReset = isStartTimeModified & (index == 1);
-    if (caseOpeningTimesReset | caseStartTimeReset) {
-      showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            content: caseStartTimeReset
-                ? Text(
-                "Switching will cause your stated Start Time to be lost")
-                : Text(
-                "Switching will cause you stated Opening Times to be lost"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(ctx).pop();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  child: const Text("Cancel"),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  times = index;
-                  resetOtherType(index);
-                  Navigator.of(ctx).pop();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(14),
-                  child: const Text("Continue"),
-                ),
-              ),
-            ],
-          ));
-    } else {
       times = index;
-    }
   }
 
   void resetOtherType(int index) {

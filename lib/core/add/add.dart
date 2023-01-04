@@ -98,15 +98,22 @@ class Add extends StatelessWidget {
             getLatLongFromAddress(inputNotifier.getAddressString())
                 .then((latLong) {
               if (latLong != null) {
-                // inputNotifier.isAddressInvalid = false;
-                // inputNotifier.notifyListeners();
+                // TODO also check if time is correctly set
                 inputNotifier.latLong = latLong;
-                switchPagesNotifier.currentPage = value;
-                _pageController.jumpToPage(value);
-                inputNotifier.addressFormKey.currentState?.validate();
+                // check if the times are correclty set
+                if (inputNotifier.timeFormKey.currentState!.validate() |
+                    inputNotifier.times[1]) {
+                  switchPagesNotifier.currentPage = value;
+                  _pageController.jumpToPage(value);
+                } else {
+                  _pageController.jumpToPage(switchPagesNotifier.currentPage);
+                }
+
+                // inputNotifier.addressFormKey.currentState?.validate();
               } else {
                 inputNotifier.isAddressInvalid = true;
                 inputNotifier.addressFormKey.currentState?.validate();
+                inputNotifier.timeFormKey.currentState!.validate();
                 _pageController.jumpToPage(switchPagesNotifier.currentPage);
                 inputNotifier.isAddressInvalid = false;
               }

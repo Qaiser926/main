@@ -100,8 +100,11 @@ class _LocationTimePageState extends State<LocationTimePage> {
                       ]),
                   if (Provider.of<AddEANotifier>(context, listen: true)
                       .times[0])
-                    TimeSelector(
-                        context: context, inputNotifier: widget.inputNotifier),
+                    Form(
+                        key: widget.inputNotifier.timeFormKey,
+                        child: TimeSelector(
+                            context: context,
+                            inputNotifier: widget.inputNotifier)),
                   if (Provider.of<AddEANotifier>(context, listen: true)
                       .times[1])
                     OpeningTimesSelector(
