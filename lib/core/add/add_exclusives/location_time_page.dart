@@ -107,8 +107,11 @@ class _LocationTimePageState extends State<LocationTimePage> {
                             inputNotifier: widget.inputNotifier)),
                   if (Provider.of<AddEANotifier>(context, listen: true)
                       .times[1])
-                    OpeningTimesSelector(
-                        context: context, inputNotifier: widget.inputNotifier),
+                    Form(
+                        key: widget.inputNotifier.timeFormKey,
+                        child: OpeningTimesSelector(
+                            context: context,
+                            inputNotifier: widget.inputNotifier)),
                 ]);
           })),
     );

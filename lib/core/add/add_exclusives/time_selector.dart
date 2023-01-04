@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/add_first_page.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
-import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -40,62 +39,36 @@ class TimeSelector extends StatelessWidget {
 
       return Column(
         children: [
-          ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                    if (inputNotifier.startDateTime != null) {
-                      return Theme.of(context).colorScheme.tertiary;
-                    }
-                    return null; // Use the component's default.
-                  },
+          Padding(
+              padding: EdgeInsets.only(top: 5.h),
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  inputNotifier.timeFormKey.currentState?.reset();
+                  pickDateTime(DateType.StartDate);
+                },
+                child: IgnorePointer(
+                  child: TextFormField(
+                      // TODO align color such that it has the same color as the other TextFormFields
+                      style:
+                          TextStyle(color: Theme.of(context).bottomAppBarColor),
+                      controller: TextEditingController(
+                        text: showStartTime
+                            ? "Start: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.startDateTime!)}"
+                            : "Select Start Time",
+                      ),
+                      validator: _validateStartTime,
+                      decoration: new InputDecoration(
+                        contentPadding: EdgeInsets.all(5.h),
+                        border: OutlineInputBorder(),
+                      )),
                 ),
-              ),
-              onPressed: () async {
-                pickDateTime(DateType.StartDate);
-              },
-              child: showStartTime
-                  ? TimeRow(
-                      "Start: ${getTimeText(context: context, localDateTime: inputNotifier.startDateTime!)}")
-                  : TimeRow("Select Start Time")),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () {
-              inputNotifier.timeFormKey.currentState?.reset();
-              pickDateTime(DateType.StartDate);
-            },
-            child: IgnorePointer(
-              child: TextFormField(
-                  controller: TextEditingController(
-                    text: showStartTime
-                        ? "Start: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.startDateTime!)}"
-                        : "Select Start Time",
-                  ),
-                  validator: _validateStartTime,
-                  decoration: new InputDecoration(
-                    contentPadding: EdgeInsets.all(5.h),
-                    border: OutlineInputBorder(),
-                  )),
-            ),
-          ),
-          ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                    if (!endTimeSelectable) {
-                      return Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.5);
-                    }
-                    if (inputNotifier.endDateTime != null) {
-                      return Theme.of(context).colorScheme.tertiary;
-                    }
-                    return null; // Use the component's default.
-                  },
-                ),
-              ),
-              onPressed: () async {
+              )),
+          Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () async {
                 if (endTimeSelectable) {
                   pickDateTime(DateType.EndDate);
                 } else {
@@ -104,20 +77,26 @@ class TimeSelector extends StatelessWidget {
                       context: context);
                 }
               },
-              child: showEndTime
-                  ? TimeRow(
-                      "End: ${getTimeText(context: context, localDateTime: inputNotifier.endDateTime!)}")
-                  : TimeRow("Select End Time")),
+              child: IgnorePointer(
+                child: TextFormField(
+                    // TODO align color such that it has the same color as the other TextFormFields
+                    style:
+                        TextStyle(color: Theme.of(context).bottomAppBarColor),
+                    controller: TextEditingController(
+                      text: showEndTime
+                          ? "End: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.endDateTime!)}"
+                          : "Select End Time",
+                    ),
+                    decoration: new InputDecoration(
+                      contentPadding: EdgeInsets.all(5.h),
+                      border: OutlineInputBorder(),
+                    )),
+              ),
+            ),
+          ),
         ],
       );
     });
-  }
-
-  Row TimeRow(String text) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(text), getHorSpace(5.h), Icon(Icons.edit)],
-    );
   }
 
   Future pickDateTime(DateType dateType) async {
