@@ -63,11 +63,16 @@ dependencies:
   carousel_slider: ^4.1.1
   flutter_multiselect: ^1.0.0
 
-  #map packages
+
+  #loction & map packages
+  geolocator: ^9.0.2
+  geocoding: ^2.0.5
   latlng: any
   flutter_map: ^3.0.0
   maps_launcher: ^2.0.1
   flutter_map_marker_cluster: ^1.0.1
+
+
   #state and route management
   path_provider: ^2.0.11
   get: ^4.6.5
@@ -83,8 +88,6 @@ dependencies:
   amplify_authenticator: ^0.2.4
   # ui
   typicons_flutter: ^0.5.0
-  geolocator: ^9.0.2
-  geocoding: ^2.0.5
   syncfusion_flutter_datepicker: ^20.3.60
   font_awesome_flutter: ^10.3.0
   flutter_html: ^3.0.0-alpha.6

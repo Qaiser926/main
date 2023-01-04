@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
 
 class AddEANotifier extends ChangeNotifier {
@@ -12,20 +13,23 @@ class AddEANotifier extends ChangeNotifier {
   String? streetNumber;
   String? city;
   String? postalCode;
+  latLng.LatLng? latLong;
 
-  GlobalKey<FormState> locationFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
+  bool snackBarShown = false;
+
   bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
-    // if (switchPagesNotifier.currentPage == 0) {
-    //   if (basicInformationFormKey.currentState!.validate()) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // }
+    if (switchPagesNotifier.currentPage == 0) {
+      if (basicInformationFormKey.currentState!.validate()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
     if ((switchPagesNotifier.currentPage == 1) & (targetPage == 2)) {
-      if (locationFormKey.currentState!.validate()) {
+      if (addressFormKey.currentState!.validate()) {
         return true;
       } else {
         return false;
@@ -34,8 +38,11 @@ class AddEANotifier extends ChangeNotifier {
     return true;
   }
 
+  bool isAddressInvalid = false;
+
   List<Image> loadedImages = [];
 
+  // TODO when extracting interpret first  bool as start/ end time and second as opening times
   final List<bool> times = <bool>[false, false];
 
   // TODO when extracting interpret first  bool as real location and second as online
@@ -52,6 +59,10 @@ class AddEANotifier extends ChangeNotifier {
 // TODO
   void changeLocationType(index, BuildContext context) {
     changeSwitch(index: index, changingList: locationType);
+  }
+
+  String getAddressString() {
+    return "${locationTitle ?? ""}, ${street ?? ""} ${streetNumber ?? ""}, ${postalCode ?? ""} ${city ?? ""}";
   }
 
   // set locationType(index) {

@@ -34,7 +34,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             'You can add private and public events and activities, also if you are not the official organizer'),
         duration: Duration(seconds: 7, milliseconds: 500),
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      if (!Provider.of<AddEANotifier>(context, listen: false).snackBarShown) {
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Provider.of<AddEANotifier>(context, listen: false).snackBarShown = true;
+      }
     });
   }
 
@@ -46,12 +49,18 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            getHeadline(context: context, caption: "Title"),
+            getHeadline(
+                context: context,
+                caption: Text("Title",
+                    style: Theme.of(context).textTheme.headline4)),
             Padding(
               padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
               child: buildTitleSection(),
             ),
-            getHeadline(context: context, caption: "Categorization"),
+            getHeadline(
+                context: context,
+                caption: Text("Categorization",
+                    style: Theme.of(context).textTheme.headline4)),
             Padding(
                 padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                 child: buildDropDown(

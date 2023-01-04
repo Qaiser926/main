@@ -6,6 +6,7 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/services/rest-api/geocoding.dart';
 import 'add_exclusives/add_first_page.dart';
 import 'add_exclusives/add_page_notifier.dart';
 import 'add_exclusives/input_notifier.dart';
@@ -86,10 +87,39 @@ class Add extends StatelessWidget {
   Widget getLoggedInBody() {
     return PageView(
         onPageChanged: ((value) {
-          if (inputNotifier.goToNextPage(switchPagesNotifier, value)) {
-            switchPagesNotifier.currentPage = value;
-          } else {
+          FocusManager.instance.primaryFocus?.unfocus(); // dismiss keyboard
+          // the first if clause is a special case as for the address the user states,
+          // latitude and longitude are requested. Until the latitude and longitude is not returned,
+          // the user cannot go to the next page. If no latitude and longitude are received, the notifier value
+          // of isAddressInvalid is changed which triggers a Consumer on the location page to validate the forms
+          if ((switchPagesNotifier.currentPage == 1) &
+              (value == 2) &
+              inputNotifier.locationType[0]) {
+            getLatLongFromAddress(inputNotifier.getAddressString())
+                .then((latLong) {
+              if (latLong != null) {
+                // inputNotifier.isAddressInvalid = false;
+                // inputNotifier.notifyListeners();
+                inputNotifier.latLong = latLong;
+                switchPagesNotifier.currentPage = value;
+                _pageController.jumpToPage(value);
+                inputNotifier.addressFormKey.currentState?.validate();
+              } else {
+                inputNotifier.isAddressInvalid = true;
+                inputNotifier.addressFormKey.currentState?.validate();
+                _pageController.jumpToPage(switchPagesNotifier.currentPage);
+                inputNotifier.isAddressInvalid = false;
+              }
+            });
+            // per default go not to the next page until location answer is loaded
             _pageController.jumpToPage(switchPagesNotifier.currentPage);
+          } else {
+            // this is the normal case without requests for the other pages
+            if (inputNotifier.goToNextPage(switchPagesNotifier, value)) {
+              switchPagesNotifier.currentPage = value;
+            } else {
+              _pageController.jumpToPage(switchPagesNotifier.currentPage);
+            }
           }
         }),
         controller: _pageController,
@@ -123,7 +153,6 @@ class Add extends StatelessWidget {
         padding: EdgeInsets.all(10.h),
         child: GestureDetector(
           onTap: () => {
-            switchPageModel.currentPage = index,
             _pageController.jumpToPage(index)
           },
           child: Container(
@@ -191,17 +220,14 @@ class Add extends StatelessWidget {
   }
 }
 
-Column getHeadline({required BuildContext context, required String caption}) {
+Column getHeadline({required BuildContext context, required Widget caption}) {
   return Column(
     children: [
       Padding(
         padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
         child: Row(
-          children: [
-            Text(caption,
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headline4)
-          ],
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [caption],
         ),
       ),
       Divider(thickness: 2.h),

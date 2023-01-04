@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/core/add/add.dart';
+import 'package:othia/core/add/add_exclusives/address_form.dart';
+import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
+import 'time_selector.dart';
 
 // TODO categorization, price, ticket link, description, optional: slider for activity lvl
 
@@ -18,8 +23,6 @@ class LocationTimePage extends StatefulWidget {
 }
 
 class _LocationTimePageState extends State<LocationTimePage> {
-  TextEditingController _textController = TextEditingController();
-
   String? locationTitle;
   String? street;
   String? streetNumber;
@@ -41,7 +44,10 @@ class _LocationTimePageState extends State<LocationTimePage> {
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  getHeadline(context: context, caption: "Location"),
+                  getHeadline(
+                      context: context,
+                      caption: Text("Location",
+                          style: Theme.of(context).textTheme.headline4)),
                   getSwitch(
                       onPressed: changeLocationType,
                       isSelected: inputNotifierConsumer.locationType,
@@ -55,7 +61,51 @@ class _LocationTimePageState extends State<LocationTimePage> {
                           child: Text('Online'),
                         ),
                       ]),
-                  if (inputNotifierConsumer.locationType[0]) buildAddressForm(),
+                  if (inputNotifierConsumer.locationType[0])
+                    AddressForm(
+                        context: context, inputNotifier: inputNotifierConsumer),
+                  getVerSpace(10.h),
+                  getHeadline(
+                    context: context,
+                    caption: GestureDetector(
+                      onTap: () => {
+                        getInfoDialog(
+                            info:
+                                "According to whether you set a start/ end date or opening time, we consider your"
+                                " post as event or activity respectively.",
+                            context: context)
+                      },
+                      child: Row(children: [
+                        Text("Time",
+                            style: Theme.of(context).textTheme.headline4),
+                        Padding(
+                          padding: EdgeInsets.only(left: 5.h),
+                          child: Icon(Icons.info_outline, size: 14),
+                        )
+                      ]),
+                    ),
+                  ),
+                  getSwitch(
+                      onPressed: changeTimeType,
+                      isSelected: inputNotifierConsumer.times,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text("Start time & End time"),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text('Opening hours'),
+                        ),
+                      ]),
+                  if (Provider.of<AddEANotifier>(context, listen: true)
+                      .times[0])
+                    TimeSelector(
+                        context: context, inputNotifier: widget.inputNotifier),
+                  if (Provider.of<AddEANotifier>(context, listen: true)
+                      .times[1])
+                    OpeningTimesSelector(
+                        context: context, inputNotifier: widget.inputNotifier),
                 ]);
           })),
     );
@@ -87,147 +137,23 @@ class _LocationTimePageState extends State<LocationTimePage> {
         onPressed: (index) => onPressed(index, context),
         children: children);
   }
-
-  Widget buildAddressForm() {
-    // TODO build column as customaizable form field with own validation logic
-    return Form(
-        key: widget.inputNotifier.locationFormKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextFormField(
-              hintText: "Titel / Name",
-              optional: false,
-              onChangedFunction: (text) {
-                widget.inputNotifier.locationTitle = text;
-                setState(() => {
-                      this.locationTitle = text,
-                    });
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5.h),
-                      child: CustomTextFormField(
-                        onChangedFunction: (text) {
-                          widget.inputNotifier.street = text;
-                          setState(() => {
-                                this.street = text,
-                              });
-                        },
-                        hintText: "Straße",
-                        optional: false,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: CustomTextFormField(
-                      onChangedFunction: (text) {
-                        widget.inputNotifier.streetNumber = text;
-                        setState(() => {
-                              this.streetNumber = text,
-                            });
-                      },
-                      hintText: "Nr",
-                      optional: false,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 5.h),
-                    child: CustomTextFormField(
-                      onChangedFunction: (text) {
-                        widget.inputNotifier.city = text;
-                        setState(() => {
-                              this.city = text,
-                            });
-                      },
-                      hintText: "Stadt",
-                      optional: false,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: CustomTextFormField(
-                    onChangedFunction: (text) {
-                      widget.inputNotifier.postalCode = text;
-                      setState(() => {
-                            this.postalCode = text,
-                          });
-                    },
-                    hintText: "Plz",
-                    optional: false,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ));
-  }
-
-// Column buildTitleSection() {
-//   return Column(children: <Widget>[
-//     TextFormField(
-//       validator: (value) {
-//         if (value == null || value.isEmpty) {
-//           return 'Please enter some text';
-//         }
-//         return null;
-//       },
-//       initialValue: Provider.of<AddEANotifier>(context, listen: false).title,
-//       controller:
-//           Provider.of<AddEANotifier>(context, listen: false).title == null
-//               ? _textController
-//               : null,
-//       onChanged: (title) {
-//         setState(() => {this.title = title});
-//
-//         widget.inputNotifier.title = title;
-//       },
-//       maxLength: 100,
-//       maxLines: null,
-//       decoration: new InputDecoration(
-//           contentPadding: EdgeInsets.all(5.h),
-//           border: OutlineInputBorder(),
-//           hintText: 'Enter the title '),
-//     ),
-//   ]);
-// }
 }
 
-class CustomTextFormField extends TextFormField {
-  CustomTextFormField(
-      {super.key,
-      String? hintText,
-      required bool optional,
-      required Function(dynamic val) onChangedFunction})
-      : super(
-          decoration: new InputDecoration(
-              contentPadding: EdgeInsets.all(5.h),
-              border: OutlineInputBorder(),
-              hintText: hintText),
-          // TODO write validator
-          validator: optional
-              ? null
-              : (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Could not validate stated address';
-                  }
-                  return null;
-                },
-          onChanged: onChangedFunction,
+Future getInfoDialog({required String info, required BuildContext context}) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(info),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text("Close"),
+            ),
+          ],
         );
+      });
 }
