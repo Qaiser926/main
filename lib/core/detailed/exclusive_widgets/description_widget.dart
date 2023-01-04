@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DescriptionWidget extends StatelessWidget {
   String description;
@@ -18,13 +18,20 @@ class DescriptionWidget extends StatelessWidget {
         Flexible(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children:
-            [Divider(thickness: 3.h),
-              getVerSpace(25),
-              Text(AppLocalizations.of(context)!.description, style: Theme.of(context).textTheme.headline2,),
-              getVerSpace(25),
-              getMultilineCustomFontRestricted(textTheme: Theme.of(context)
-                  .textTheme.headline4, text: description, maxLines: 3),
-              getVerSpace(25.h),]),)
+            [
+          Divider(thickness: 3.h),
+          getVerSpace(25),
+          Text(
+            AppLocalizations.of(context)!.description,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          getVerSpace(25),
+          getMultilineCustomFontRestricted(
+              textTheme: Theme.of(context).textTheme.headlineSmall,
+              text: description,
+              maxLines: 3),
+          getVerSpace(25.h),
+        ]),)
     ,
     );
 

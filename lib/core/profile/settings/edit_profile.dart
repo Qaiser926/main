@@ -35,54 +35,56 @@ class EditProfile extends StatelessWidget {
         ],
         builder: (context, child) {
           return SafeArea(
-            child: Scaffold(
-              bottomNavigationBar: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.h),
-                child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: primaryColor,
-                      backgroundColor: listItemColor,
-                      minimumSize: Size(
-                          double.infinity, 35.h), // <--- this line helped me
-                    ),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(
-                                  "Do you really want to delete your account?"),
-                              content: Text(
-                                  "this step is nicht rückgängig zu machen"),
-                              actions: [
-                                TextButton(onPressed: () {}, child: Text("sf")),
-                                TextButton(
-                                    onPressed: () {}, child: Text("csf")),
-                              ],
-                            );
-                          });
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 1000,
+              child: Scaffold(
+                bottomNavigationBar: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.h),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: primaryColor,
+                        backgroundColor: listItemColor,
+                        minimumSize: Size(
+                            double.infinity, 35.h), // <--- this line helped me
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(
+                                    "Do you really want to delete your account?"),
+                                content: Text(
+                                    "this step is nicht rückgängig zu machen"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {}, child: Text("sf")),
+                                  TextButton(
+                                      onPressed: () {}, child: Text("csf")),
+                                ],
+                              );
+                            });
 
-                      // AlertDialog(title: Text("dfd"),);
-                      //
-                      //
-                      // await Dialog(
-                      //   child: Text("dfssd"),
-                      // );
-                      //TODO account deletion workflow
-                    },
-                    child: Text(
-                      "Delete Account",
+                        // AlertDialog(title: Text("dfd"),);
+                        //
+                        //
+                        // await Dialog(
+                        //   child: Text("dfssd"),
+                        // );
+                        //TODO account deletion workflow
+                      },
+                      child: Text(
+                        "Delete Account",
+                      ),
                     ),
                   ),
                 ),
-              ),
-              body:
-                  Consumer<UserInfoNotifier>(builder: (context, model, child) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(children: [
+                body: Consumer<UserInfoNotifier>(
+                    builder: (context, model, child) {
+                  return Column(children: [
                     getProfilePhotoStack(model.newUserInfo, context),
                     getItem(context,
                         controller: nameController,
@@ -97,9 +99,9 @@ class EditProfile extends StatelessWidget {
                         leadingIcon: Icons.alternate_email_outlined, onTap: () {
                       print("email pressed");
                     }),
-                  ]),
-                );
-              }),
+                  ]);
+                }),
+              ),
             ),
           );
         });
@@ -115,24 +117,32 @@ class EditProfile extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () => onTap(),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(leadingIcon),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(headline, style: Theme.of(context).primaryTextTheme.caption),
-              Text(controller.text),
-              Flexible(
-                child: Text(
-                  "LAAAAAAAAAANGE BESCHREIBUBNGLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                  style: Theme.of(context).primaryTextTheme.labelSmall,
-                ),
+        child: Expanded(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Icon(leadingIcon),
+            SizedBox(
+              height: 200,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(headline,
+                      style: Theme.of(context).primaryTextTheme.labelMedium),
+                  Text(controller.text),
+                  // Flexible(
+                  //   child:
+                  Text(
+                    overflow: TextOverflow.visible,
+                    "adore mao diquyorem ipsum dolor sit ametsdfsdfsdfssss.",
+                    style: Theme.of(context).primaryTextTheme.labelSmall,
+                  ),
+                  // ),
+                ],
               ),
-            ],
-          ),
-          Spacer(),
-          Icon(Icons.edit),
-        ]),
+            ),
+            Spacer(),
+            Icon(Icons.edit),
+          ]),
+        ),
       ),
     );
   }

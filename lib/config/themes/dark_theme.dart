@@ -56,18 +56,18 @@ ThemeData getDarkThemeData() {
     /// A text theme that contrasts with the primary color.
 
     primaryTextTheme: TextTheme(
-      headline4: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
-      headline3: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-      headline2:
+      headlineSmall: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+      headlineMedium:
+          const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+      headlineLarge:
           TextStyle(fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h),
       labelSmall: TextStyle(overflow: TextOverflow.visible),
-      overline: TextStyle(fontWeight: FontWeight.w300),
     ),
 
     /// Text with a color that contrasts with the card and canvas colors.
     textTheme: TextTheme(
-        headline4: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
-        headline2: TextStyle(
+        headlineSmall: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+        headlineLarge: TextStyle(
             fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h)),
 
 // This is the theme of your application.

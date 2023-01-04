@@ -28,9 +28,13 @@ class _SimpleMapState extends State<SimpleMap> {
     child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children:
-        [Divider(thickness: 3.h),
+        [
+          Divider(thickness: 3.h),
           getVerSpace(25),
-        Text(AppLocalizations.of(context)!.location, style: Theme.of(context).textTheme.headline2,),
+          Text(
+            AppLocalizations.of(context)!.location,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
           getVerSpace(25),
           ClipRRect(
               borderRadius: BorderRadius.circular(20),

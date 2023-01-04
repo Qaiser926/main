@@ -22,7 +22,7 @@ class MapPicture extends StatelessWidget {
               children: [
                 Text(
                   AppLocalizations.of(context)!.map,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.headlineLarge,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

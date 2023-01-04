@@ -13,7 +13,7 @@ Widget getNotLoggedIn({required BuildContext context}) {
             children: [
               Text(
                 AppLocalizations.of(context)!.notLoggedInMessage,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
               getVerSpace(10.h),
               Padding(

@@ -85,7 +85,7 @@ class _PriceFilterState extends State<PriceFilter> {
           //     child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           //       Text(
           //         AppLocalizations.of(context)!.priceRangeDescription,
-          //         style: Theme.of(context).textTheme.headline2,
+          //         style: Theme.of(context).textTheme.headlineLarge,
           //       )
           //     ])),
           RangeSlider(

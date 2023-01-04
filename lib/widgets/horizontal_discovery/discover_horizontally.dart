@@ -49,7 +49,7 @@ class BaseDiscoveryClass extends StatelessWidget {
               children: [
                 Text(
                   caption,
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.headlineLarge,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -84,7 +84,7 @@ Widget getNoResultsMessage(BuildContext context) {
           children: [
             Text(
               AppLocalizations.of(context)!.noResultsFound,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
             getVerSpace(55),
           ],

@@ -12,7 +12,7 @@ Widget getHeader({required final String text}) {
         getVerSpace(8),
         Text(
           text,
-          style: getDarkThemeData().primaryTextTheme.headline3,
+          style: getDarkThemeData().primaryTextTheme.headlineMedium,
           textAlign: TextAlign.center,
         ),
         getVerSpace(8),

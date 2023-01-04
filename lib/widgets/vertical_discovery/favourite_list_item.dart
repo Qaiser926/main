@@ -52,7 +52,7 @@ Widget getMainPart(BuildContext context, SummaryEventOrActivity eASummary) {
           eASummary.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         Row(children: [
           Icon(

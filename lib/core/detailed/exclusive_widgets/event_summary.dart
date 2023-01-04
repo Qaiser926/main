@@ -49,7 +49,7 @@ class EventSummary extends StatelessWidget {
             child: Text(
               title,
               maxLines: 2,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
 

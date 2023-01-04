@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/openingtimes.dart';
+
 import '../../../utils/ui/ui_utils.dart';
 
 class OpeningTimesSection extends StatelessWidget {
@@ -21,7 +22,7 @@ class OpeningTimesSection extends StatelessWidget {
             getVerSpace(25),
             Text(
               AppLocalizations.of(context)!.openingHours,
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             getVerSpace(25),
             OpeningTimes(openingTime: openingTime),

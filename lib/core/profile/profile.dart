@@ -186,12 +186,12 @@ Container buildProfileSection(
         getVerSpace(15.h),
         Text(
           userInfo.profileName,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         getVerSpace(15.h),
         Text(
           userInfo.profileEMail,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineSmall,
         ),
         getVerSpace(20.h),
       ],
