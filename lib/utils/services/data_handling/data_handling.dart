@@ -1,9 +1,12 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../modules/models/shared_data_models.dart';
 import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
+
+import '../../../modules/models/shared_data_models.dart';
 
 double roundDouble(double value, int places) {
   num mod = pow(10.0, places);
@@ -17,7 +20,8 @@ Image getPhotoNullSave(
     String? photo}) {
   if (photo != null) {
     return Image.memory(
-      base64Decode(photo),fit: BoxFit.contain,
+      base64Decode(photo),
+      fit: BoxFit.contain,
       width: width,
       height: height,
     );
@@ -132,22 +136,21 @@ String formatTime({required double unformattedTime}) {
   return "${formattedTime.substring(0, 2)}:${formattedTime.substring(2, 4)}";
 }
 
-String getLocationString(
-    {required Location location,
-    bool isShort=false}) {
+String getLocationString({required Location location, bool isShort = false}) {
   if (location.isOnline) {
     return "Online";
   }
-  if ((location.street != null) & (location.streetNumber != null) & (!isShort)) {
+  if ((location.street != null) &
+      (location.streetNumber != null) &
+      (!isShort)) {
     return '${location.city}, ${location.street} ${location.streetNumber}';
   }
   if ((location.street != null)) {
-    if(!isShort) {
+    if (!isShort) {
       return '${location.city}, ${location.street}';
     } else {
       return '${location.street}, ${location.city}';
     }
-
   }
   if ((location.locationTitle != null)) {
     if (!isShort) {
@@ -155,13 +158,15 @@ String getLocationString(
     } else {
       return '${location.locationTitle}, ${location.city}';
     }
-
   } else {
     return location.city!;
   }
 }
 
-String getPriceText({required BuildContext context, List<double>? prices, bool isShort = false}) {
+String getPriceText(
+    {required BuildContext context,
+    List<double>? prices,
+    bool isShort = false}) {
   String priceText = AppLocalizations.of(context)!.noPriceAvailable;
   if (isShort) {
     priceText = " - ";
@@ -196,4 +201,16 @@ String getTicketStatus({required BuildContext context, Status? status}) {
     }
   }
   return ticketStatus;
+}
+
+Future<String?> getFromGallery() async {
+  XFile? pickedFile = await ImagePicker().pickImage(
+    source: ImageSource.gallery,
+    maxWidth: 1800,
+    maxHeight: 1800,
+  );
+  if (pickedFile != null) {
+    return pickedFile.path;
+  }
+  return null;
 }

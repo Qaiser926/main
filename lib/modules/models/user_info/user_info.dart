@@ -7,6 +7,8 @@ class UserInfo {
   final String profileName;
   final String profileEMail;
   final String? profilePhoto;
+  final String gender;
+  final String birthdate;
 
   final List<String?> upcomingEventIds;
   final List<String?> pastEventIds;
@@ -15,6 +17,8 @@ class UserInfo {
   UserInfo(
       {required this.profileName,
       required this.profileEMail,
+      required this.gender,
+      required this.birthdate,
       this.profilePhoto,
       required this.activityIds,
       required this.pastEventIds,

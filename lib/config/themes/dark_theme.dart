@@ -60,6 +60,8 @@ ThemeData getDarkThemeData() {
       headline3: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
       headline2:
           TextStyle(fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h),
+      labelSmall: TextStyle(overflow: TextOverflow.visible),
+      overline: TextStyle(fontWeight: FontWeight.w300),
     ),
 
     /// Text with a color that contrasts with the card and canvas colors.

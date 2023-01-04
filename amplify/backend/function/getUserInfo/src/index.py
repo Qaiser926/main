@@ -4,11 +4,13 @@ photo_binary = b'/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh
     'ascii')
 
 
+# CARE THIS Function returns sensitive user information
 def handler(event, context):
     print('received event:')
     print(event)
 
     return {
+
         # todo gets either userId or amazon user id
         #  the upcoming events etc are those hosted by the user
         # only state active ones
@@ -18,10 +20,11 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        'body': json.dumps({"profileName": "Mattis Kunstmann", "profileEMail": "mattis.kunstmann@outlook.com",
-                            "profilePhoto": photo_binary,
-            "upcomingEventIds": ["1", "1"],
-                "pastEventIds": ["1", "1", "1", "1", "1", "1", "1", "1"],
-                "activityIds": []
-            })
+        'body': json.dumps(
+            {"profileName": "Mattis Kunstmann", "profileEMail": "mattis.kunstmann@outlook.com",
+             "profilePhoto": photo_binary, "gender": "String", "birthdate": "28.11.1998",
+             "upcomingEventIds": ["1", "1"],
+             "pastEventIds": ["1", "1", "1", "1", "1", "1", "1", "1"],
+             "activityIds": []
+             })
     }

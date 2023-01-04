@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:othia/core/profile/settings/change_password.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
+import 'package:othia/core/profile/user_info_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 import '../../utils/helpers/logout.dart';
@@ -14,7 +15,10 @@ import 'settings/language_settings.dart';
 import 'settings/privacy.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  final UserInfoNotifier userInfoNotifier;
+
+  const SettingsScreen(UserInfoNotifier this.userInfoNotifier, {Key? key})
+      : super(key: key);
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -53,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(AppLocalizations.of(context)!.accountSettings),
                       getVerSpace(12.h),
                       getSettingContainer(() {
-                        Get.to(const EditProfile());
+                        Get.to(EditProfile(widget.userInfoNotifier));
                       }, AppLocalizations.of(context)!.editProfile,
                           const Icon(FontAwesomeIcons.userPen)),
                       getVerSpace(20.h),

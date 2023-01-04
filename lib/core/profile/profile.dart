@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/profile/settings.dart';
+import 'package:othia/core/profile/user_info_notifier.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
@@ -13,6 +14,7 @@ import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
 import '../../utils/ui/ui_utils.dart';
@@ -46,68 +48,89 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    UserInfoNotifier userInfoNotifier = UserInfoNotifier();
+
     return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(
-                toolbarHeight: 53.h,
-                elevation: 0,
-                title: Text(
-                  AppLocalizations.of(context)!.profile,
-                ),
-                centerTitle: true,
-                actions: [
-                  GestureDetector(
-                      onTap: () {
-                        Get.to(SettingsScreen());
-                      },
-                      child: Icon(
-                        Icons.settings,
-                        size: 24.h,
-                      )),
-                  getHorSpace(20.h)
-                ],
-                automaticallyImplyLeading: false),
-            body: getLoggedInSensitiveBody(
-                context: context,
-                loggedInWidget: ProfilePageFutureBuilder(),
-                isLoggedIn: userLoggedIn)));
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: userInfoNotifier,
+          )
+        ],
+        builder: (context, child) {
+          return Scaffold(
+              appBar: AppBar(
+                  toolbarHeight: 53.h,
+                  elevation: 0,
+                  title: Text(
+                    AppLocalizations.of(context)!.profile,
+                  ),
+                  centerTitle: true,
+                  actions: [
+                    GestureDetector(
+                        onTap: () {
+                          Get.to(SettingsScreen(userInfoNotifier));
+                        },
+                        child: Icon(
+                          Icons.settings,
+                          size: 24.h,
+                        )),
+                    getHorSpace(20.h)
+                  ],
+                  automaticallyImplyLeading: false),
+              body: getLoggedInSensitiveBody(
+                  context: context,
+                  loggedInWidget: profilePageFutureBuilder(context),
+                  isLoggedIn: userLoggedIn));
+        },
+      ),
+    );
   }
 
-  Widget ProfilePageFutureBuilder() {
+  Widget profilePageFutureBuilder(BuildContext context) {
+    UserInfoNotifier userInfoNotifier =
+        Provider.of<UserInfoNotifier>(context, listen: false);
     return KeepAliveFutureBuilder(
         future: userInfo,
         builder: (context, snapshot) {
-          return snapshotHandler(snapshot, getProfilePage, []);
+          return MultiProvider(providers: [
+            ChangeNotifierProvider.value(
+              value: userInfoNotifier,
+            )
+          ], child: snapshotHandler(snapshot, getProfilePage, [context]));
         });
   }
 
-  Widget getProfilePage(Map<String, dynamic> jsonData) {
+  Widget getProfilePage(BuildContext context, Map<String, dynamic> jsonData) {
     UserInfo userInfo = UserInfo.fromJson(jsonData);
-
-    if (userInfo.upcomingEventIds.isEmpty &
-        userInfo.activityIds.isEmpty &
-        userInfo.pastEventIds.isEmpty) {
-      return noHostedEA(userInfo);
-    } else {
-      List<Widget> slivers = [
-        SliverToBoxAdapter(
-          child: buildProfileSection(context: context, userInfo: userInfo),
-        ),
-        buildVerticalDiscovery(
-            caption: AppLocalizations.of(context)!.futureHostedEvents,
-            Ids: userInfo.upcomingEventIds,
-            actionButtonType: ActionButtonType.settingsButton),
-        buildVerticalDiscovery(
-            caption: AppLocalizations.of(context)!.hostedActivities,
-            Ids: userInfo.activityIds,
-            actionButtonType: ActionButtonType.settingsButton),
-        buildVerticalDiscovery(
-            caption: AppLocalizations.of(context)!.pastHostedEvents,
-            Ids: userInfo.pastEventIds,
-            actionButtonType: ActionButtonType.settingsButtonDisabled)
-      ];
-      return CustomScrollView(slivers: slivers);
-    }
+    Provider.of<UserInfoNotifier>(context, listen: false).userInfo = userInfo;
+    return Consumer<UserInfoNotifier>(builder: (context, model, child) {
+      if (model.userInfo.upcomingEventIds.isEmpty &
+          model.userInfo.activityIds.isEmpty &
+          model.userInfo.pastEventIds.isEmpty) {
+        return noHostedEA(model.userInfo);
+      } else {
+        List<Widget> slivers = [
+          SliverToBoxAdapter(
+            child:
+                buildProfileSection(context: context, userInfo: model.userInfo),
+          ),
+          buildVerticalDiscovery(
+              caption: AppLocalizations.of(context)!.futureHostedEvents,
+              Ids: model.userInfo.upcomingEventIds,
+              actionButtonType: ActionButtonType.settingsButton),
+          buildVerticalDiscovery(
+              caption: AppLocalizations.of(context)!.hostedActivities,
+              Ids: model.userInfo.activityIds,
+              actionButtonType: ActionButtonType.settingsButton),
+          buildVerticalDiscovery(
+              caption: AppLocalizations.of(context)!.pastHostedEvents,
+              Ids: model.userInfo.pastEventIds,
+              actionButtonType: ActionButtonType.settingsButtonDisabled)
+        ];
+        return CustomScrollView(slivers: slivers);
+      }
+    });
   }
 
   Widget noHostedEA(UserInfo userInfo) {

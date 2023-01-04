@@ -22,20 +22,22 @@ Widget buildVerticalDiscovery(
           SliverPinnedHeader(
             child: getHeader(text: caption),
           ),
-        SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-          if (index < Ids.length) {
-            Future<Object> eASummary =
-                RestService().getEASummary(id: Ids[index]);
-            return KeepAliveFutureBuilder(
-                future: eASummary,
-                builder: (context, snapshot) {
-                  return snapshotHandler(snapshot, getFutureVerticalDiscovery,
-                      [context, actionButtonType]);
-                });
-          } else {
-            return null;
-          }
-        }))
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            if (index < Ids.length) {
+              Future<Object> eASummary =
+                  RestService().getEASummary(id: Ids[index]);
+              return KeepAliveFutureBuilder(
+                  future: eASummary,
+                  builder: (context, snapshot) {
+                    return snapshotHandler(snapshot, getFutureVerticalDiscovery,
+                        [context, actionButtonType]);
+                  });
+            } else {
+              return null;
+            }
+          }),
+        )
       ],
     );
   }
@@ -55,5 +57,3 @@ Widget getFutureVerticalDiscovery(
   return getFavouriteListItem(
       context: context, eASummary: eASummary, actionButton: actionButton);
 }
-
-
