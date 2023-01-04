@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
+import 'package:othia/core/add/add_exclusives/location_time_page.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
@@ -22,82 +23,82 @@ class Add extends StatelessWidget {
 
   static final PageController _pageController =
       PageController(initialPage: firstPage);
+  AddPageNotifier switchPagesNotifier = AddPageNotifier(firstPage);
+
+  AddEANotifier inputNotifier = AddEANotifier();
 
   // TODO
   bool isLoggedIn = true;
 
   @override
   Widget build(BuildContext context) {
-    return getLoggedInSensitiveBody(
-        isLoggedIn: isLoggedIn,
-        loggedInWidget: getLoggedInBody(),
-        context: context);
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: switchPagesNotifier,
+          ),
+          ChangeNotifierProvider.value(
+            value: inputNotifier,
+          )
+        ],
+        child: Scaffold(
+            appBar: AppBar(automaticallyImplyLeading: false, actions: [
+              Consumer<AddPageNotifier>(
+                  builder: (context, switchPageModel, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildUpperNavigationElement(
+                        context: context,
+                        index: 0,
+                        switchPageModel: switchPageModel),
+                    getArrowIcon(context),
+                    buildUpperNavigationElement(
+                        context: context,
+                        index: 1,
+                        switchPageModel: switchPageModel),
+                    getArrowIcon(context),
+                    buildUpperNavigationElement(
+                        context: context,
+                        index: 2,
+                        switchPageModel: switchPageModel),
+                    getArrowIcon(context),
+                    buildUpperNavigationElement(
+                        context: context,
+                        index: 3,
+                        switchPageModel: switchPageModel),
+                    getHorSpace(16.h)
+                  ],
+                );
+              })
+            ]),
+            persistentFooterButtons: [getFloatingButtons()],
+            // bottomNavigationBar: getFloatingButtons(),
+            // floatingActionButton: ,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            body: getLoggedInSensitiveBody(
+                isLoggedIn: isLoggedIn,
+                loggedInWidget: getLoggedInBody(),
+                context: context)));
   }
 
   Widget getLoggedInBody() {
-    AddPageNotifier switchPagesNotifier = AddPageNotifier(firstPage);
-
-    AddEANotifier inputNotifier = AddEANotifier();
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: switchPagesNotifier,
-        ),
-        ChangeNotifierProvider.value(
-          value: inputNotifier,
-        )
-      ],
-      child: Scaffold(
-        appBar: AppBar(automaticallyImplyLeading: false, actions: [
-          Consumer<AddPageNotifier>(builder: (context, switchPageModel, child) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildUpperNavigationElement(
-                    context: context,
-                    index: 0,
-                    switchPageModel: switchPageModel),
-                getArrowIcon(context),
-                buildUpperNavigationElement(
-                    context: context,
-                    index: 1,
-                    switchPageModel: switchPageModel),
-                getArrowIcon(context),
-                buildUpperNavigationElement(
-                    context: context,
-                    index: 2,
-                    switchPageModel: switchPageModel),
-                getArrowIcon(context),
-                buildUpperNavigationElement(
-                    context: context,
-                    index: 3,
-                    switchPageModel: switchPageModel),
-                getHorSpace(16.h)
-              ],
-            );
-          })
-        ]),
-
-        persistentFooterButtons: [getFloatingButtons()],
-        // bottomNavigationBar: getFloatingButtons(),
-        // floatingActionButton: ,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: PageView(
-            onPageChanged: ((value) {
-              if (inputNotifier.goToNextPage(switchPagesNotifier)) {
-                switchPagesNotifier.currentPage = value;
-              } else {
-                _pageController.jumpToPage(switchPagesNotifier.currentPage);
-              }
-            }),
-            controller: _pageController,
-            children: [
-              BasicInfoPage(inputNotifier),
-              FirstAddPage(inputNotifier),
-              SecondAddPage()
-            ]),
-      ),
-    );
+    return PageView(
+        onPageChanged: ((value) {
+          if (inputNotifier.goToNextPage(switchPagesNotifier, value)) {
+            switchPagesNotifier.currentPage = value;
+          } else {
+            _pageController.jumpToPage(switchPagesNotifier.currentPage);
+          }
+        }),
+        controller: _pageController,
+        children: [
+          BasicInfoPage(inputNotifier),
+          LocationTimePage(inputNotifier),
+          FirstAddPage(inputNotifier),
+          SecondAddPage()
+        ]);
   }
 
   Widget getFloatingButtons() {

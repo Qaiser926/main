@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'input_notifier.dart';
 
 // TODO categorization, price, ticket link, description, optional: slider for activity lvl
-// TODO show must be logged in if user is not logged in
 
 class BasicInfoPage extends StatefulWidget {
   AddEANotifier inputNotifier;
@@ -22,7 +21,6 @@ class BasicInfoPage extends StatefulWidget {
 class _BasicInfoPageState extends State<BasicInfoPage> {
   TextEditingController _textController = TextEditingController();
 
-  dynamic value;
   String? mainCategoryId;
   String? categoryId;
   String? title;
@@ -30,32 +28,34 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final snackBar = SnackBar(
+        content: const Text(
+            'You can add private and public events and activities, also if you are not the official organizer'),
+        duration: Duration(seconds: 7, milliseconds: 500),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: widget.inputNotifier.basicInformation,
+      key: widget.inputNotifier.basicInformationFormKey,
       child: Scaffold(
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            getHeadline(context: context, caption: "Title"),
             Padding(
-                padding: EdgeInsets.only(bottom: 20.h, top: 10.h),
-                // TODO work on text
-                child: Text(
-                    "You can add private and public events and activities, also if you are not the official organizer"),
-              ),
-              getHeadline(context: context, caption: "Title"),
-              Padding(
+              padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+              child: buildTitleSection(),
+            ),
+            getHeadline(context: context, caption: "Categorization"),
+            Padding(
                 padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                child: buildTitleSection(),
-              ),
-              getHeadline(context: context, caption: "Categorization"),
-              Padding(
-                  padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                  child: buildDropDown(
-                      defaultValue: widget.inputNotifier.mainCategoryId,
+                child: buildDropDown(
+                    defaultValue: widget.inputNotifier.mainCategoryId,
                     hintText: "Select the main category",
                     onValidErrorText: 'Please state a category',
                     dropDownList: Categories.categoryIds,
@@ -81,10 +81,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                         setState(() => {this.categoryId = categoryId});
                         widget.inputNotifier.categoryId = categoryId;
                       })),
-            ]),
-          ),
+          ]),
         ),
-      );
+      ),
+    );
     // });
   }
 

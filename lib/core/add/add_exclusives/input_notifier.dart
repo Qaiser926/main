@@ -7,12 +7,25 @@ class AddEANotifier extends ChangeNotifier {
   String? mainCategoryId;
   String? categoryId;
 
-  GlobalKey<FormState> titleKey = GlobalKey<FormState>();
-  GlobalKey<FormState> basicInformation = GlobalKey<FormState>();
+  String? locationTitle;
+  String? street;
+  String? streetNumber;
+  String? city;
+  String? postalCode;
 
-  bool goToNextPage(AddPageNotifier switchPagesNotifier) {
-    if (switchPagesNotifier.currentPage == 0) {
-      if (basicInformation.currentState!.validate()) {
+  GlobalKey<FormState> locationFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
+
+  bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
+    // if (switchPagesNotifier.currentPage == 0) {
+    //   if (basicInformationFormKey.currentState!.validate()) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
+    if ((switchPagesNotifier.currentPage == 1) & (targetPage == 2)) {
+      if (locationFormKey.currentState!.validate()) {
         return true;
       } else {
         return false;
@@ -21,12 +34,35 @@ class AddEANotifier extends ChangeNotifier {
     return true;
   }
 
+  List<Image> loadedImages = [];
+
   final List<bool> times = <bool>[false, false];
+
+  // TODO when extracting interpret first  bool as real location and second as online
+  final List<bool> locationType = <bool>[true, false];
   final List<bool> privateOrPublic = <bool>[true, false];
+
+  void changeSwitch({required int index, required List<bool> changingList}) {
+    for (int i = 0; i < changingList.length; i++) {
+      changingList[i] = i == index;
+    }
+    notifyListeners();
+  }
+
+// TODO
+  void changeLocationType(index, BuildContext context) {
+    changeSwitch(index: index, changingList: locationType);
+  }
+
+  // set locationType(index) {
+  //   changeSwitch(index: index, changingList: locationType);
+  // }
 
   // TODO: before sending, transform to UTC
   DateTime? startDateTime;
   DateTime? endDateTime;
+
+// time related
 
   Map<String, List<List<double?>>> openingTimes = {
     "1": [],
@@ -39,6 +75,10 @@ class AddEANotifier extends ChangeNotifier {
   };
   int activatedWeekDay = 1;
 
+  set times(index) {
+    changeSwitch(index: index, changingList: times);
+  }
+
   List getOpeningTimesList() {
     return openingTimes[activatedWeekDay.toString()]!;
   }
@@ -47,7 +87,7 @@ class AddEANotifier extends ChangeNotifier {
     for (var openingTimesList in openingTimes.values) {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
         if ((openingTimesList[i][0] == null) |
-        (openingTimesList[i][1] == null)) {
+            (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);
         }
       }
@@ -100,15 +140,6 @@ class AddEANotifier extends ChangeNotifier {
 
   void addHours() {
     openingTimes[activatedWeekDay.toString()]!.add([null, null]);
-    notifyListeners();
-  }
-
-  List<Image> loadedImages = [];
-
-  set times(index) {
-    for (int i = 0; i < times.length; i++) {
-      times[i] = i == index;
-    }
     notifyListeners();
   }
 
