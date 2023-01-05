@@ -86,6 +86,7 @@ class EditProfile extends StatelessWidget {
                             });
                       },
                       child: Text(
+                        // TODO
                         "Delete Account",
                       ),
                     ),

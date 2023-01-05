@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
@@ -6,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:othia/constants/colors.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/location_time_page.dart';
+import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -29,41 +32,17 @@ class DetailsPage extends StatelessWidget {
             getHeadline(
                 context: context,
                 caption: Text("Image",
-                    style: Theme.of(context).textTheme.headline4)),
-            // TODO wait for Mattis to recycle code
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () async {
-                  Image? temp = await _getFromGallery();
-                  if (temp != null) {
-                    inputNotifier.addImage = temp;
-                  }
-                },
-                child: Stack(
-                  children: [
-                    Consumer<AddEANotifier>(builder: (context, model, child) {
-                      return model.loadedImages.isEmpty
-                          ? SizedBox.shrink()
-                          : model.loadedImages[0];
-                    }),
-                    // TODO dynamic text, after uploading  "change image"
-                    Center(child: Text("Hier klicken")),
-                  ],
-                ),
-              ),
-            ),
+                    style: Theme.of(context).textTheme.headlineLarge)),
+            buildImagePicker(context),
             getHeadline(
                 context: context,
                 caption: Text("Description (optional)",
-                    style: Theme.of(context).textTheme.headline4)),
+                    style: Theme.of(context).textTheme.headlineLarge)),
             buildDescriptionBox(context),
             getHeadline(
                 context: context,
                 caption: Text("Price",
-                    style: Theme.of(context).textTheme.headline4)),
+                    style: Theme.of(context).textTheme.headlineLarge)),
             buildPricePicker(context),
             getVerSpace(10.h),
             getHeadline(
@@ -77,7 +56,7 @@ class DetailsPage extends StatelessWidget {
                 },
                 child: Row(children: [
                   Text("Ticketing or Website (optional)",
-                      style: Theme.of(context).textTheme.headline4),
+                      style: Theme.of(context).textTheme.headlineLarge),
                   Padding(
                     padding: EdgeInsets.only(left: 5.h),
                     child: Icon(Icons.info_outline, size: 14),
@@ -107,73 +86,72 @@ class DetailsPage extends StatelessWidget {
   Consumer buildDescriptionBox(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-      return TextFormField(
-        controller: inputNotifierConsumer.title == null
-            ? null
-            : TextEditingController(
-                text: inputNotifierConsumer.title,
-              ),
+          return TextFormField(
+            controller: inputNotifierConsumer.title == null
+                ? null
+                : TextEditingController(
+              text: inputNotifierConsumer.title,
+            ),
 
-        onChanged: (description) {
-          inputNotifierConsumer.title = description;
-        },
-        // TODO as constant
-        maxLength: 400,
-        maxLines: null,
-        minLines: 3,
-        decoration: new InputDecoration(
-            contentPadding: EdgeInsets.all(5.h),
-            border: OutlineInputBorder(),
-            hintText: 'Enter the description '),
-      );
-    });
+            onChanged: (description) {
+              inputNotifierConsumer.title = description;
+            },
+            // TODO as constant
+            maxLength: 400,
+            maxLines: null,
+            minLines: 3,
+            decoration: new InputDecoration(
+                contentPadding: EdgeInsets.all(5.h),
+                border: OutlineInputBorder(),
+                hintText: 'Enter the description '),
+          );
+        });
   }
 
   Consumer buildPricePicker(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-      return Column(
-        // TODO make each price row containing of label, price and cross scorllable
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: inputNotifierConsumer.prices.length,
-              itemBuilder: (context, index) {
-                return buildPriceRow(
-                    index: index,
-                    inputPrice: inputNotifierConsumer.prices[index],
-                    inputNotifierConsumer: inputNotifierConsumer);
-              }),
-          getVerSpace(5.h),
-          GestureDetector(
-            onTap: () {
-              inputNotifierConsumer.prices.add(InputPrice());
-              inputNotifier.notifyListeners();
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 5.h),
-                  child: Text(
-                    "Add Price Group",
-                    style:
+          return Column(
+            // TODO make each price row containing of label, price and cross scorllable
+            children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: inputNotifierConsumer.prices.length,
+                  itemBuilder: (context, index) {
+                    return buildPriceRow(
+                        index: index,
+                        inputPrice: inputNotifierConsumer.prices[index],
+                        inputNotifierConsumer: inputNotifierConsumer);
+                  }),
+              getVerSpace(5.h),
+              GestureDetector(
+                onTap: () {
+                  inputNotifierConsumer.prices.add(InputPrice());
+                  inputNotifier.notifyListeners();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 5.h),
+                      child: Text(
+                        "Add Price Group",
+                        style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
-                  ),
+                      ),
+                    ),
+                    Icon(Icons.add)
+                  ],
                 ),
-                Icon(Icons.add)
-              ],
-            ),
-          )
-        ],
-      );
-    });
+              )
+            ],
+          );
+        });
   }
 
-  Widget buildPriceRow(
-      {required int index,
-      required InputPrice inputPrice,
-      required AddEANotifier inputNotifierConsumer}) {
+  Widget buildPriceRow({required int index,
+    required InputPrice inputPrice,
+    required AddEANotifier inputNotifierConsumer}) {
     return Padding(
       padding: EdgeInsets.only(top: 5.h),
       child: Row(
@@ -186,8 +164,8 @@ class DetailsPage extends StatelessWidget {
                     controller: inputPrice.label == null
                         ? null
                         : TextEditingController(
-                            text: inputPrice.label,
-                          ),
+                      text: inputPrice.label,
+                    ),
                     onChanged: (label) {
                       // TODO, define variable globally on how many characters to include
                       inputNotifierConsumer.prices[index].label =
@@ -208,8 +186,8 @@ class DetailsPage extends StatelessWidget {
                   controller: inputPrice.price == null
                       ? null
                       : TextEditingController(
-                          text: inputPrice.price.toString(),
-                        ),
+                    text: inputPrice.price.toString(),
+                  ),
                   inputFormatters: <TextInputFormatter>[
                     CurrencyTextInputFormatter(
                       locale: 'de',
@@ -244,14 +222,14 @@ class DetailsPage extends StatelessWidget {
   Consumer buildTicketLink(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-      return TextFormField(
-        controller: inputNotifierConsumer.title == null
-            ? null
-            : TextEditingController(
-                text: inputNotifierConsumer.title,
-              ),
-        onChanged: (description) {
-          inputNotifierConsumer.title = description;
+          return TextFormField(
+            controller: inputNotifierConsumer.title == null
+                ? null
+                : TextEditingController(
+              text: inputNotifierConsumer.title,
+            ),
+            onChanged: (description) {
+              inputNotifierConsumer.title = description;
         },
         maxLines: null,
         minLines: 3,
@@ -261,6 +239,48 @@ class DetailsPage extends StatelessWidget {
             hintText: 'Provide a ticket link'),
       );
     });
+  }
+
+  Widget buildImagePicker(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        CircleAvatar(
+          radius: 90,
+        ),
+        Positioned(
+          child: Container(
+            height: 30.h,
+            width: 30.h,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.h),
+                color: Theme.of(context).colorScheme.primary,
+                boxShadow: [
+                  BoxShadow(
+                      color: shadowColor,
+                      offset: const Offset(0, 8),
+                      blurRadius: 27)
+                ]),
+            padding: EdgeInsets.all(5.h),
+            child: GestureDetector(
+              onTap: () async {
+                String? path = await getFromGallery();
+                if (path != null) {
+                  final bytes = File(path).readAsBytesSync();
+                  final img64 = base64Encode(bytes);
+                  // userInfoNotifier.updateUserInfo(image: img64);
+                }
+              },
+              child: Icon(
+                Icons.edit,
+                size: 20.h,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 }
 

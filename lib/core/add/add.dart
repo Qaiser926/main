@@ -232,7 +232,7 @@ Column getHeadline({required BuildContext context, required Widget caption}) {
   return Column(
     children: [
       Padding(
-        padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+        padding: EdgeInsets.only(bottom: 4.h, top: 10.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [caption],

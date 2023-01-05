@@ -41,7 +41,7 @@ class _LocationTimePageState extends State<LocationTimePage> {
                   getHeadline(
                       context: context,
                       caption: Text("Location",
-                          style: Theme.of(context).textTheme.headline4)),
+                          style: Theme.of(context).textTheme.headlineLarge)),
                   getSwitch(
                       onPressed: changeLocationType,
                       isSelected: inputNotifierConsumer.locationType,
@@ -71,7 +71,7 @@ class _LocationTimePageState extends State<LocationTimePage> {
                       },
                       child: Row(children: [
                         Text("Time",
-                            style: Theme.of(context).textTheme.headline4),
+                            style: Theme.of(context).textTheme.headlineLarge),
                         Padding(
                           padding: EdgeInsets.only(left: 5.h),
                           child: Icon(Icons.info_outline, size: 14),

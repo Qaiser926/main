@@ -52,7 +52,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             getHeadline(
                 context: context,
                 caption: Text("Title",
-                    style: Theme.of(context).textTheme.headline4)),
+                    style: Theme.of(context).textTheme.headlineLarge)),
             Padding(
               padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
               child: buildTitleSection(),
@@ -60,7 +60,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             getHeadline(
                 context: context,
                 caption: Text("Categorization",
-                    style: Theme.of(context).textTheme.headline4)),
+                    style: Theme.of(context).textTheme.headlineLarge)),
             Padding(
                 padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                 child: buildDropDown(
