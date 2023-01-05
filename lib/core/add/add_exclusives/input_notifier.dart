@@ -17,6 +17,7 @@ class AddEANotifier extends ChangeNotifier {
   latLng.LatLng? latLong;
 
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> imageFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
@@ -24,6 +25,7 @@ class AddEANotifier extends ChangeNotifier {
   bool snackBarShown = false;
 
   String? description;
+  String? image;
 
   bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
     // if (switchPagesNotifier.currentPage == 0) {
@@ -45,6 +47,15 @@ class AddEANotifier extends ChangeNotifier {
     }
     if ((targetPage == 2)) {
       clearPrices();
+    }
+    if ((switchPagesNotifier.currentPage == 2) &
+        (targetPage == 3) &
+        (imageFormKey.currentState != null)) {
+      if (imageFormKey.currentState!.validate()) {
+        return true;
+      } else {
+        return false;
+      }
     }
     return true;
   }

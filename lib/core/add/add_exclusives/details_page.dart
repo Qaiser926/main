@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:othia/constants/colors.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/location_time_page.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
@@ -33,7 +32,10 @@ class DetailsPage extends StatelessWidget {
                 context: context,
                 caption: Text("Image",
                     style: Theme.of(context).textTheme.headlineLarge)),
-            buildImagePicker(context),
+            Form(
+              child: buildImagePicker(context),
+              key: inputNotifier.imageFormKey,
+            ),
             getHeadline(
                 context: context,
                 caption: Text("Description (optional)",
@@ -86,72 +88,73 @@ class DetailsPage extends StatelessWidget {
   Consumer buildDescriptionBox(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-          return TextFormField(
-            controller: inputNotifierConsumer.title == null
-                ? null
-                : TextEditingController(
-              text: inputNotifierConsumer.title,
-            ),
+      return TextFormField(
+        controller: inputNotifierConsumer.title == null
+            ? null
+            : TextEditingController(
+                text: inputNotifierConsumer.title,
+              ),
 
-            onChanged: (description) {
-              inputNotifierConsumer.title = description;
-            },
-            // TODO as constant
-            maxLength: 400,
-            maxLines: null,
-            minLines: 3,
-            decoration: new InputDecoration(
-                contentPadding: EdgeInsets.all(5.h),
-                border: OutlineInputBorder(),
-                hintText: 'Enter the description '),
-          );
-        });
+        onChanged: (description) {
+          inputNotifierConsumer.title = description;
+        },
+        // TODO as constant
+        maxLength: 400,
+        maxLines: null,
+        minLines: 3,
+        decoration: new InputDecoration(
+            contentPadding: EdgeInsets.all(5.h),
+            border: OutlineInputBorder(),
+            hintText: 'Enter the description '),
+      );
+    });
   }
 
   Consumer buildPricePicker(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-          return Column(
-            // TODO make each price row containing of label, price and cross scorllable
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: inputNotifierConsumer.prices.length,
-                  itemBuilder: (context, index) {
-                    return buildPriceRow(
-                        index: index,
-                        inputPrice: inputNotifierConsumer.prices[index],
-                        inputNotifierConsumer: inputNotifierConsumer);
-                  }),
-              getVerSpace(5.h),
-              GestureDetector(
-                onTap: () {
-                  inputNotifierConsumer.prices.add(InputPrice());
-                  inputNotifier.notifyListeners();
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 5.h),
-                      child: Text(
-                        "Add Price Group",
-                        style:
+      return Column(
+        // TODO make each price row containing of label, price and cross scorllable
+        children: [
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: inputNotifierConsumer.prices.length,
+              itemBuilder: (context, index) {
+                return buildPriceRow(
+                    index: index,
+                    inputPrice: inputNotifierConsumer.prices[index],
+                    inputNotifierConsumer: inputNotifierConsumer);
+              }),
+          getVerSpace(5.h),
+          GestureDetector(
+            onTap: () {
+              inputNotifierConsumer.prices.add(InputPrice());
+              inputNotifier.notifyListeners();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(right: 5.h),
+                  child: Text(
+                    "Add Price Group",
+                    style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
-                      ),
-                    ),
-                    Icon(Icons.add)
-                  ],
+                  ),
                 ),
-              )
-            ],
-          );
-        });
+                Icon(Icons.add)
+              ],
+            ),
+          )
+        ],
+      );
+    });
   }
 
-  Widget buildPriceRow({required int index,
-    required InputPrice inputPrice,
-    required AddEANotifier inputNotifierConsumer}) {
+  Widget buildPriceRow(
+      {required int index,
+      required InputPrice inputPrice,
+      required AddEANotifier inputNotifierConsumer}) {
     return Padding(
       padding: EdgeInsets.only(top: 5.h),
       child: Row(
@@ -164,8 +167,8 @@ class DetailsPage extends StatelessWidget {
                     controller: inputPrice.label == null
                         ? null
                         : TextEditingController(
-                      text: inputPrice.label,
-                    ),
+                            text: inputPrice.label,
+                          ),
                     onChanged: (label) {
                       // TODO, define variable globally on how many characters to include
                       inputNotifierConsumer.prices[index].label =
@@ -186,8 +189,8 @@ class DetailsPage extends StatelessWidget {
                   controller: inputPrice.price == null
                       ? null
                       : TextEditingController(
-                    text: inputPrice.price.toString(),
-                  ),
+                          text: inputPrice.price.toString(),
+                        ),
                   inputFormatters: <TextInputFormatter>[
                     CurrencyTextInputFormatter(
                       locale: 'de',
@@ -222,14 +225,14 @@ class DetailsPage extends StatelessWidget {
   Consumer buildTicketLink(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-          return TextFormField(
-            controller: inputNotifierConsumer.title == null
-                ? null
-                : TextEditingController(
-              text: inputNotifierConsumer.title,
-            ),
-            onChanged: (description) {
-              inputNotifierConsumer.title = description;
+      return TextFormField(
+        controller: inputNotifierConsumer.title == null
+            ? null
+            : TextEditingController(
+                text: inputNotifierConsumer.title,
+              ),
+        onChanged: (description) {
+          inputNotifierConsumer.title = description;
         },
         maxLines: null,
         minLines: 3,
@@ -242,43 +245,129 @@ class DetailsPage extends StatelessWidget {
   }
 
   Widget buildImagePicker(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        CircleAvatar(
-          radius: 90,
-        ),
-        Positioned(
-          child: Container(
-            height: 30.h,
-            width: 30.h,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.h),
-                color: Theme.of(context).colorScheme.primary,
-                boxShadow: [
-                  BoxShadow(
-                      color: shadowColor,
-                      offset: const Offset(0, 8),
-                      blurRadius: 27)
-                ]),
-            padding: EdgeInsets.all(5.h),
-            child: GestureDetector(
-              onTap: () async {
-                String? path = await getFromGallery();
-                if (path != null) {
-                  final bytes = File(path).readAsBytesSync();
-                  final img64 = base64Encode(bytes);
-                  // userInfoNotifier.updateUserInfo(image: img64);
-                }
-              },
-              child: Icon(
-                Icons.edit,
-                size: 20.h,
-                color: Colors.white,
-              ),
+    return Consumer<AddEANotifier>(
+        builder: (context, inputNotifierConsumer, child) {
+      return Column(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              String? path = await getFromGallery();
+              if (path != null) {
+                final bytes = File(path).readAsBytesSync();
+                final userProvidedImage = base64Encode(bytes);
+                inputNotifierConsumer.image = userProvidedImage;
+                inputNotifierConsumer.notifyListeners();
+              }
+            },
+            child: Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                Container(
+                    height: 230.h,
+                    width: 400.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10.h)),
+                      image: DecorationImage(
+                        image: getPhotoNullSave(
+                                categoryId: inputNotifierConsumer.categoryId!,
+                                photo: inputNotifierConsumer.image)
+                            .image,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        width: 150.h,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .tertiary
+                              .withOpacity(0.8),
+                          borderRadius: BorderRadius.all(Radius.circular(10.h)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(10.h),
+                          child: Text(
+                            inputNotifierConsumer.image == null
+                                ? "Click to change the default image"
+                                : "Click to choose another picture",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
+                          ),
+                        )),
+                  ),
+                ),
+              ],
             ),
           ),
-        )
+          if (inputNotifierConsumer.image != null)
+            getImagePickerHelpers(inputNotifierConsumer, context),
+        ],
+      );
+    });
+  }
+
+  Column getImagePickerHelpers(
+      AddEANotifier inputNotifierConsumer, BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 5.h),
+          child: GestureDetector(
+              onTap: () {
+                inputNotifierConsumer.image = null;
+                inputNotifierConsumer.notifyListeners();
+              },
+              child: Row(
+                children: [
+                  Text(
+                    "Back to default Image",
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
+                  getHorSpace(5.h),
+                  Icon(Icons.close)
+                ],
+              )),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+                child: GestureDetector(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Text("Confirm Copyright"),
+                  getHorSpace(5.h),
+                  Icon(Icons.info_outline)
+                ],
+              ),
+            )),
+            Expanded(
+              child: FormField(
+                initialValue: false,
+                validator: (val) {
+                  if (val == false) return 'Please subscribe to mailing list.';
+                  return null;
+                },
+                builder: (FormFieldState<bool> field) {
+                  return SwitchListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    value: field.value ?? false,
+                    onChanged: (val) {
+                      field.didChange(val);
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
