@@ -110,9 +110,10 @@ class _AddressFormState extends State<AddressForm> {
                   Expanded(
                     flex: 2,
                     child: CustomTextFormField(
+                      numberInput: true,
                       initialValue: widget.inputNotifier.postalCode,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                       ],
                       validationFunction: _validateAddress,
                       onChangedFunction: (text) {
@@ -139,8 +140,10 @@ class CustomTextFormField extends TextFormField {
       required Function(dynamic val) onChangedFunction,
       required String? Function(String?) validationFunction,
       List<FilteringTextInputFormatter>? inputFormatters,
-      required dynamic initialValue})
+      required dynamic initialValue,
+      bool numberInput = false})
       : super(
+      keyboardType: numberInput ? TextInputType.number : null,
             decoration: new InputDecoration(
                 contentPadding: EdgeInsets.all(5.h),
                 border: OutlineInputBorder(),

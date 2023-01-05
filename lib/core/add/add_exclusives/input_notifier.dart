@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
+import 'package:othia/core/add/add_exclusives/details_page.dart';
 
 class AddEANotifier extends ChangeNotifier {
   String? title;
@@ -19,7 +20,10 @@ class AddEANotifier extends ChangeNotifier {
   GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
+  // is needed to indicate if the snackbar giving info about the adding process on the first page was already shown (did not work with stateful widget alone)
   bool snackBarShown = false;
+
+  String? description;
 
   bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
     // if (switchPagesNotifier.currentPage == 0) {
@@ -29,14 +33,32 @@ class AddEANotifier extends ChangeNotifier {
     //     return false;
     //   }
     // }
-    if ((switchPagesNotifier.currentPage == 1) & (targetPage == 2)) {
+    if ((switchPagesNotifier.currentPage == 1) &
+        (targetPage == 2) &
+        (addressFormKey.currentState != null)) {
+      clearPrices();
       if (addressFormKey.currentState!.validate()) {
         return true;
       } else {
         return false;
       }
     }
+    if ((targetPage == 2)) {
+      clearPrices();
+    }
     return true;
+  }
+
+  void clearPrices() {
+    for (var i = 0; i < prices.length; i++) {
+      if ((prices[i].price == null) & (prices[i].label == null)) {
+        prices.removeAt(i);
+      }
+    }
+    if (prices.isEmpty) {
+      prices.add(InputPrice());
+    }
+    notifyListeners();
   }
 
   bool isAddressInvalid = false;
@@ -66,9 +88,7 @@ class AddEANotifier extends ChangeNotifier {
     return "${locationTitle ?? ""}, ${street ?? ""} ${streetNumber ?? ""}, ${postalCode ?? ""} ${city ?? ""}";
   }
 
-  // set locationType(index) {
-  //   changeSwitch(index: index, changingList: locationType);
-  // }
+  List<InputPrice> prices = [InputPrice()];
 
   // TODO: before sending, transform to UTC
   DateTime? startDateTime;
@@ -98,6 +118,7 @@ class AddEANotifier extends ChangeNotifier {
   void deleteNullOpeningTimes() {
     for (var openingTimesList in openingTimes.values) {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
+        // first is opening time, the second closing time
         if ((openingTimesList[i][0] == null) |
             (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);

@@ -23,12 +23,6 @@ class LocationTimePage extends StatefulWidget {
 }
 
 class _LocationTimePageState extends State<LocationTimePage> {
-  String? locationTitle;
-  String? street;
-  String? streetNumber;
-  String? city;
-  String? postalCode;
-
   @override
   void initState() {
     super.initState();
@@ -100,6 +94,7 @@ class _LocationTimePageState extends State<LocationTimePage> {
                       ]),
                   if (Provider.of<AddEANotifier>(context, listen: true)
                       .times[0])
+                  // in order for the the global key to have a state, it is necessary to define it here (also for the opening times selector)
                     Form(
                         key: widget.inputNotifier.timeFormKey,
                         child: TimeSelector(
