@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:othia/core/add/add.dart';
+import 'package:othia/core/add/add_exclusives/location_time_page.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +57,7 @@ class DetailsPage extends StatelessWidget {
             ),
             getHeadline(
                 context: context,
-                caption: Text("Description",
+                caption: Text("Description (optional)",
                     style: Theme.of(context).textTheme.headline4)),
             buildDescriptionBox(context),
             getHeadline(
@@ -64,6 +65,27 @@ class DetailsPage extends StatelessWidget {
                 caption: Text("Price",
                     style: Theme.of(context).textTheme.headline4)),
             buildPricePicker(context),
+            getVerSpace(10.h),
+            getHeadline(
+              context: context,
+              caption: GestureDetector(
+                onTap: () => {
+                  getInfoDialog(
+                      info:
+                          "Here you have the opportunity to insert your ticket-url or website-url. User will be forwarded from the Othia app to the corresponding url.",
+                      context: context)
+                },
+                child: Row(children: [
+                  Text("Ticketing or Website (optional)",
+                      style: Theme.of(context).textTheme.headline4),
+                  Padding(
+                    padding: EdgeInsets.only(left: 5.h),
+                    child: Icon(Icons.info_outline, size: 14),
+                  )
+                ]),
+              ),
+            ),
+            buildTicketLink(context),
           ])),
     );
     // });
@@ -111,6 +133,7 @@ class DetailsPage extends StatelessWidget {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return Column(
+        // TODO make each price row containing of label, price and cross scorllable
         children: [
           ListView.builder(
               shrinkWrap: true,
@@ -133,7 +156,7 @@ class DetailsPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 5.h),
                   child: Text(
-                    "Add Price",
+                    "Add Price Group",
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
@@ -175,7 +198,7 @@ class DetailsPage extends StatelessWidget {
                     decoration: new InputDecoration(
                         contentPadding: EdgeInsets.all(5.h),
                         border: OutlineInputBorder(),
-                        hintText: 'Label'),
+                        hintText: 'Label, e.g. "Student", "Children"'),
                   ))),
           Expanded(
             flex: 1,
@@ -216,6 +239,28 @@ class DetailsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Consumer buildTicketLink(BuildContext context) {
+    return Consumer<AddEANotifier>(
+        builder: (context, inputNotifierConsumer, child) {
+      return TextFormField(
+        controller: inputNotifierConsumer.title == null
+            ? null
+            : TextEditingController(
+                text: inputNotifierConsumer.title,
+              ),
+        onChanged: (description) {
+          inputNotifierConsumer.title = description;
+        },
+        maxLines: null,
+        minLines: 3,
+        decoration: new InputDecoration(
+            contentPadding: EdgeInsets.all(5.h),
+            border: OutlineInputBorder(),
+            hintText: 'Provide a ticket link'),
+      );
+    });
   }
 }
 
