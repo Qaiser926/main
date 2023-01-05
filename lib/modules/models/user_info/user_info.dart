@@ -9,6 +9,7 @@ class UserInfo {
   final String? profilePhoto;
   final String gender;
   final String birthdate;
+  final String userId;
 
   final List<String?> upcomingEventIds;
   final List<String?> pastEventIds;
@@ -19,6 +20,7 @@ class UserInfo {
       required this.profileEMail,
       required this.gender,
       required this.birthdate,
+      required this.userId,
       this.profilePhoto,
       required this.activityIds,
       required this.pastEventIds,
@@ -26,4 +28,6 @@ class UserInfo {
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserInfoToJson(this);
 }

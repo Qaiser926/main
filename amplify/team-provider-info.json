@@ -18,7 +18,7 @@
       "function": {
         "apiLambda": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/apiLambda-582f7055765577535536-build.zip"
+          "s3Key": "amplify-builds/apiLambda-6a5a5252703448687a4c-build.zip"
         },
         "getFavouriteEventsAndActivities": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
@@ -54,7 +54,7 @@
         },
         "getUserInfo": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getUserInfo-492f5541564c472f6531-build.zip"
+          "s3Key": "amplify-builds/getUserInfo-572f626d584e57475969-build.zip"
         },
         "addLikedEA": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
@@ -68,10 +68,18 @@
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
           "s3Key": "amplify-builds/getHomePageIds-4c3147644f4272464a6a-build.zip"
         },
-        "removeFavourite": {},
         "getMapResultIds": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
           "s3Key": "amplify-builds/getMapResultIds-612b6374617a46494838-build.zip"
+        },
+        "removeFavourite": {},
+        "deleteAccount": {
+          "deploymentBucketName": "amplify-othia-dev-141535-deployment",
+          "s3Key": "amplify-builds/deleteAccount-67596c43394a4962724e-build.zip"
+        },
+        "savePrivateUserInformation": {
+          "deploymentBucketName": "amplify-othia-dev-141535-deployment",
+          "s3Key": "amplify-builds/savePrivateUserInformation-64566e33497a49665a34-build.zip"
         }
       },
       "api": {

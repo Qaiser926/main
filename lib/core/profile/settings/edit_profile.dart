@@ -3,30 +3,32 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/colors.dart';
 import '../../../modules/models/user_info/user_info.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
+import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../profile.dart';
 import '../user_info_notifier.dart';
+
+enum ProfileFields { name, eMail, birthdate, gender }
+
+enum WidgetTypes { icon, title, dialogTitle }
 
 class EditProfile extends StatelessWidget {
   final UserInfoNotifier userInfoNotifier;
 
   EditProfile(UserInfoNotifier this.userInfoNotifier, {super.key});
 
+  late final BuildContext localizationAndThemeContext;
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController =
-        TextEditingController(text: userInfoNotifier.newUserInfo.profileName);
-    TextEditingController emailController =
-        TextEditingController(text: userInfoNotifier.newUserInfo.profileEMail);
-    TextEditingController birthdateController =
-        TextEditingController(text: "birthdate");
-    TextEditingController genderController =
-        TextEditingController(text: "diverse");
+    localizationAndThemeContext = context;
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
@@ -55,26 +57,33 @@ class EditProfile extends StatelessWidget {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text(
-                                    "Do you really want to delete your account?"),
-                                content: Text(
-                                    "this step is nicht rückgängig zu machen"),
+                                title: Text(AppLocalizations.of(
+                                        localizationAndThemeContext)!
+                                    .deleteAccountDialogTitle),
+                                content: Text(AppLocalizations.of(
+                                        localizationAndThemeContext)!
+                                    .deleteAccountDialogContent),
                                 actions: [
                                   TextButton(
-                                      onPressed: () {}, child: Text("sf")),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(AppLocalizations.of(
+                                              localizationAndThemeContext)!
+                                          .cancel)),
                                   TextButton(
-                                      onPressed: () {}, child: Text("csf")),
+                                      onPressed: () {
+                                        RestService().deleteAccount("as"
+                                            // userInfoNotifier.userInfo.userId
+                                            );
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(AppLocalizations.of(
+                                              localizationAndThemeContext)!
+                                          .delete)),
                                 ],
                               );
                             });
-
-                        // AlertDialog(title: Text("dfd"),);
-                        //
-                        //
-                        // await Dialog(
-                        //   child: Text("dfssd"),
-                        // );
-                        //TODO account deletion workflow
                       },
                       child: Text(
                         "Delete Account",
@@ -84,21 +93,42 @@ class EditProfile extends StatelessWidget {
                 ),
                 body: Consumer<UserInfoNotifier>(
                     builder: (context, model, child) {
+                  TextEditingController nameController = TextEditingController(
+                      text: model.newUserInfo.profileName);
+                  TextEditingController emailController = TextEditingController(
+                      text: model.newUserInfo.profileEMail);
+                  TextEditingController birthdateController =
+                      TextEditingController(text: model.newUserInfo.birthdate);
+                  TextEditingController genderController =
+                      TextEditingController(text: model.newUserInfo.gender);
                   return Column(children: [
                     getProfilePhotoStack(model.newUserInfo, context),
-                    getItem(context,
-                        controller: nameController,
-                        headline: "Name",
-                        leadingIcon: Icons.account_circle, onTap: () {
-                      print("name pressed");
-                    }),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    getItem(
+                      context,
+                      profileField: ProfileFields.name,
+                      controller: nameController,
+                    ),
+                    // Divider(),
+                    // getItem(
+                    //   context,
+                    //   profileField: ProfileFields.eMail,
+                    //   controller: emailController,
+                    // ),
                     Divider(),
-                    getItem(context,
-                        controller: emailController,
-                        headline: "Email",
-                        leadingIcon: Icons.alternate_email_outlined, onTap: () {
-                      print("email pressed");
-                    }),
+                    getItem(
+                      context,
+                      profileField: ProfileFields.gender,
+                      controller: genderController,
+                    ),
+                    Divider(),
+                    getItem(
+                      context,
+                      profileField: ProfileFields.birthdate,
+                      controller: birthdateController,
+                    ),
                   ]);
                 }),
               ),
@@ -107,42 +137,72 @@ class EditProfile extends StatelessWidget {
         });
   }
 
-  Widget getItem(BuildContext context,
-      {required TextEditingController controller,
-      required IconData leadingIcon,
-      required String headline,
-      required Function onTap}) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () => onTap(),
-        child: Expanded(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Icon(leadingIcon),
-            SizedBox(
-              height: 200,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(headline,
-                      style: Theme.of(context).primaryTextTheme.labelMedium),
-                  Text(controller.text),
-                  // Flexible(
-                  //   child:
-                  Text(
-                    overflow: TextOverflow.visible,
-                    "adore mao diquyorem ipsum dolor sit ametsdfsdfsdfssss.",
-                    style: Theme.of(context).primaryTextTheme.labelSmall,
-                  ),
-                  // ),
-                ],
-              ),
+  Future getDialog(BuildContext context, String initValue, Widget title,
+      ProfileFields profileField) {
+    TextEditingController controller = TextEditingController(text: initValue);
+    controller.selection =
+        TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+
+    dynamic val = showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: title,
+          actions: [
+            TextFormField(
+              autofocus: true,
+              controller: controller,
             ),
-            Spacer(),
-            Icon(Icons.edit),
-          ]),
-        ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              ElevatedButton(
+                  onPressed: () => Navigator.pop(context, null),
+                  child: Text(AppLocalizations.of(localizationAndThemeContext)!
+                      .cancel)),
+              ElevatedButton(
+                  onPressed: () => Navigator.pop(context, controller.text),
+                  child: Text(
+                      AppLocalizations.of(localizationAndThemeContext)!.save)),
+            ]),
+          ],
+        );
+      },
+    );
+    return val;
+  }
+
+  Widget getItem(
+    BuildContext context, {
+    required ProfileFields profileField,
+    required TextEditingController controller,
+  }) {
+    Map<WidgetTypes, Widget> dynamicWidgets = getFieldValues(profileField);
+
+    return InkWell(
+      onTap: () async {
+        Future val = getDialog(context, controller.text,
+            dynamicWidgets[WidgetTypes.dialogTitle]!, profileField);
+        Provider.of<UserInfoNotifier>(context, listen: false)
+            .updateUserInfo(profileField: profileField, value: await val);
+      },
+      child: Container(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          dynamicWidgets[WidgetTypes.icon]!,
+          SizedBox(
+            width: 10,
+          ),
+          SizedBox(
+            height: 40,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                dynamicWidgets[WidgetTypes.title]!,
+                Text(controller.text),
+              ],
+            ),
+          ),
+          Spacer(),
+          Icon(Icons.edit),
+        ]),
       ),
     );
   }
@@ -168,7 +228,6 @@ class EditProfile extends StatelessWidget {
                 ]),
             padding: EdgeInsets.all(5.h),
             child: GestureDetector(
-              // TODO forward to change profile page
               onTap: () async {
                 String? path = await getFromGallery();
                 if (path != null) {
@@ -187,5 +246,79 @@ class EditProfile extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Map<WidgetTypes, Widget> getFieldValues(ProfileFields profileFields) {
+    switch (profileFields) {
+      case ProfileFields.birthdate:
+        {
+          String title =
+              AppLocalizations.of(localizationAndThemeContext)!.birthdate;
+          return {
+            WidgetTypes.title: getTitle(title),
+            WidgetTypes.icon: getIcon(Icons.date_range),
+            WidgetTypes.dialogTitle: getDialogTitle(
+                AppLocalizations.of(localizationAndThemeContext)!
+                    .profileDialogTitle(title)),
+          };
+        }
+
+      case ProfileFields.gender:
+        {
+          String title =
+              AppLocalizations.of(localizationAndThemeContext)!.gender;
+          return {
+            WidgetTypes.title: getTitle(title),
+            WidgetTypes.icon: getIcon(Icons.accessibility_new),
+            WidgetTypes.dialogTitle: getDialogTitle(
+                AppLocalizations.of(localizationAndThemeContext)!
+                    .profileDialogTitle(title)),
+          };
+        }
+
+      case ProfileFields.eMail:
+        {
+          String title =
+              AppLocalizations.of(localizationAndThemeContext)!.eMail;
+          return {
+            WidgetTypes.title: getTitle(title),
+            WidgetTypes.icon: getIcon(Icons.alternate_email_outlined),
+            WidgetTypes.dialogTitle: getDialogTitle(
+                AppLocalizations.of(localizationAndThemeContext)!
+                    .profileDialogTitle(title)),
+          };
+        }
+
+      case ProfileFields.name:
+        {
+          return getWidgetMap(
+              AppLocalizations.of(localizationAndThemeContext)!.name,
+              Icons.account_circle);
+        }
+    }
+  }
+
+  Map<WidgetTypes, Widget> getWidgetMap(String title, IconData iconData) {
+    return {
+      WidgetTypes.title: getTitle(title),
+      WidgetTypes.icon: getIcon(iconData),
+      WidgetTypes.dialogTitle: getDialogTitle(
+          AppLocalizations.of(localizationAndThemeContext)!
+              .profileDialogTitle(title)),
+    };
+  }
+
+  Icon getIcon(IconData iconData) {
+    return Icon(iconData);
+  }
+
+  Text getTitle(String headlineText) {
+    return Text(headlineText,
+        style:
+            Theme.of(localizationAndThemeContext).primaryTextTheme.labelMedium);
+  }
+
+  Text getDialogTitle(String title) {
+    return Text(title);
   }
 }

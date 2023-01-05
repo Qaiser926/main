@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //   userInfo =
     //       RestService().fetchEventOrActivityDetails(eventOrActivityId: userId);
     // }
-    userInfo = RestService().getUserInfo(userId: "123");
+    userInfo = RestService().getPrivateUserInfo(userId: "123");
     super.initState();
   }
 
@@ -105,27 +105,27 @@ class _ProfilePageState extends State<ProfilePage> {
     UserInfo userInfo = UserInfo.fromJson(jsonData);
     Provider.of<UserInfoNotifier>(context, listen: false).userInfo = userInfo;
     return Consumer<UserInfoNotifier>(builder: (context, model, child) {
-      if (model.userInfo.upcomingEventIds.isEmpty &
-          model.userInfo.activityIds.isEmpty &
-          model.userInfo.pastEventIds.isEmpty) {
-        return noHostedEA(model.userInfo);
+      if (model.newUserInfo.upcomingEventIds.isEmpty &
+          model.newUserInfo.activityIds.isEmpty &
+          model.newUserInfo.pastEventIds.isEmpty) {
+        return noHostedEA(model.newUserInfo);
       } else {
         List<Widget> slivers = [
           SliverToBoxAdapter(
-            child:
-                buildProfileSection(context: context, userInfo: model.userInfo),
+            child: getProfileSection(
+                context: context, userInfo: model.newUserInfo),
           ),
           buildVerticalDiscovery(
               caption: AppLocalizations.of(context)!.futureHostedEvents,
-              Ids: model.userInfo.upcomingEventIds,
+              Ids: model.newUserInfo.upcomingEventIds,
               actionButtonType: ActionButtonType.settingsButton),
           buildVerticalDiscovery(
               caption: AppLocalizations.of(context)!.hostedActivities,
-              Ids: model.userInfo.activityIds,
+              Ids: model.newUserInfo.activityIds,
               actionButtonType: ActionButtonType.settingsButton),
           buildVerticalDiscovery(
               caption: AppLocalizations.of(context)!.pastHostedEvents,
-              Ids: model.userInfo.pastEventIds,
+              Ids: model.newUserInfo.pastEventIds,
               actionButtonType: ActionButtonType.settingsButtonDisabled)
         ];
         return CustomScrollView(slivers: slivers);
@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget noHostedEA(UserInfo userInfo) {
     return Column(
       children: [
-        buildProfileSection(context: context, userInfo: userInfo),
+        getProfileSection(context: context, userInfo: userInfo),
         getVerSpace(90.h),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.h),
@@ -172,11 +172,10 @@ ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
   }
 }
 
-Container buildProfileSection(
+Container getProfileSection(
     {required BuildContext context, required UserInfo userInfo}) {
   return Container(
-    // TODO, user our color
-    color: accentColor.withOpacity(0.05),
+    color: bgColor,
     width: double.infinity,
     child: Column(
       children: [

@@ -138,8 +138,12 @@
   "popularity": "Popularity",
   "noResultsFound": "No results found for search criteria",
   "closeAppDialog": "Do you want to exit the App?",
+  "deleteAccountDialogTitle": "Do you really want to delete your account?",
+  "deleteAccountDialogContent": "all your data will be deleted. this is permanent",
+  "delete": "Delete",
   "confirm": "Confirm",
   "cancel": "Cancel",
+  "save": "Save",
   "showMore": "Show More",
   "futureHostedEvents": "Upcoming events created by you",
   "pastHostedEvents": "Past events created by you",
@@ -151,6 +155,16 @@
   "changePassword": "Change Password",
   "editProfile": "Edit Profile",
   "accountSettings": "Account Settings",
+  "gender": "Gender",
+  "birthdate": "Girthdate",
+  "eMail": "E-Mail",
+  "name": "Name",
+  "profileDialogTitle": "Input your {placeholder}",
+  "@profileDialogTitle": {
+    "placeholders": {
+      "placeholder": {}
+    }
+  },
   "language": "Language",
   "german": "German",
   "english": "English",

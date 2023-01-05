@@ -22,6 +22,7 @@ def handler(event, context):
         },
         'body': json.dumps(
             {"profileName": "Mattis Kunstmann", "profileEMail": "mattis.kunstmann@outlook.com",
+             "userId": "Ich-bin-eine-UUID",
              "profilePhoto": photo_binary, "gender": "String", "birthdate": "28.11.1998",
              "upcomingEventIds": ["1", "1"],
              "pastEventIds": ["1", "1", "1", "1", "1", "1", "1", "1"],

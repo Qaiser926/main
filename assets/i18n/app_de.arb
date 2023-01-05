@@ -136,8 +136,12 @@
   "popularity": "Popularität",
   "noResultsFound": "Keine Ergebnisse gefunden für Suchkriterien",
   "closeAppDialog": "Möchtest du die App schließen?",
+  "deleteAccountDialogTitle": "Möchtest du wirklich deinen Account löschen?",
+  "deleteAccountDialogContent": "Alle deine Daten werden gelöscht - dies ist nicht rückgängig zu machen",
+  "delete": "Löschen",
   "confirm": "Bestätigen",
   "cancel": "Abbrechen",
+  "save": "Speichern",
   "showMore": "Mehr Zeigen",
   "futureHostedEvents": "Von dir erstellte zukünftige Events",
   "pastHostedEvents": "Von dir erstellte vergangene Events",
@@ -149,6 +153,16 @@
   "changePassword": "Passwort ändern",
   "editProfile": "Profil bearbeiten",
   "accountSettings": "Account Einstellungen",
+  "gender": "Geschlecht",
+  "birthdate": "Geburtsdatum",
+  "eMail": "E-Mail",
+  "name": "Name",
+  "profileDialogTitle": "Gib deinen {placeholder} ein",
+  "@profileDialogTitle": {
+    "placeholders": {
+      "placeholder": {}
+    }
+  },
   "logout": "Ausloggen",
   "language": "Sprachen",
   "german": "Deutsch",

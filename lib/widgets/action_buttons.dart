@@ -39,23 +39,6 @@ Widget getFavouriteLikeButton({
   required BuildContext context,
   required SummaryEventOrActivity eASummary,
 }) {
-  List<Widget> actions = [
-    Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextButton(
-// FlatButton widget is used to make a text to work like a button
-          onPressed: () => Navigator.pop(context, false),
-// function used to perform after pressing the button
-          child: Text(AppLocalizations.of(context)!.cancel),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(context, true),
-          child: Text(AppLocalizations.of(context)!.confirm),
-        ),
-      ],
-    )
-  ];
   return Row(children: [
     IconButton(
         constraints: BoxConstraints(maxWidth: 50.h),
@@ -66,10 +49,24 @@ Widget getFavouriteLikeButton({
           showDialog<bool>(
               context: context,
               builder: (context) => getDialog(
-                    dialogText: AppLocalizations.of(context)!
-                        .removeFavoriteDialog(eASummary.title),
-                    actions: actions,
-                  )).then((value) {
+                      dialogText: AppLocalizations.of(context)!
+                          .removeFavoriteDialog(eASummary.title),
+                      actions: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: Text(AppLocalizations.of(context)!.cancel),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child:
+                                  Text(AppLocalizations.of(context)!.confirm),
+                            ),
+                          ],
+                        ),
+                      ])).then((value) {
             if (value!) {
               try {
                 RestService()

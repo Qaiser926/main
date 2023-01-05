@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
+import '../../../modules/models/user_info/user_info.dart';
 import 'amplify/amp.dart';
 
 class RestService {
@@ -35,8 +37,6 @@ class RestService {
   Future<Object> removeFavouriteEventOrActivity({required eAId}) async {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
-    print(token);
-    // TODO login
     RestOptions restOptions = RestOptions(
         path: '/removeFavourite-dev/$eAId', headers: {'token': '${token}'});
     final result = await delete(restOptions);
@@ -46,23 +46,23 @@ class RestService {
   Future<Object> addFavouriteEventOrActivity({required eAId}) async {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
-    print(token);
+
     // TODO login
     RestOptions restOptions = RestOptions(
         path: '/addLikedEA-dev/$eAId', headers: {'token': '${token}'});
-    final result = await delete(restOptions);
+    final result = await put(restOptions);
     return result;
   }
 
   Future<Object> isEALikedByUser({required eAId}) async {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
-    print(token);
+
     String userId = await getUserId();
     // TODO login
     RestOptions restOptions = RestOptions(
         path: '/isEALikedByUser-dev/$eAId', headers: {'token': '${token}'});
-    final result = await delete(restOptions);
+    final result = await get(restOptions);
     return result;
   }
 
@@ -118,10 +118,20 @@ class RestService {
     return result;
   }
 
-  Future<Object> getUserInfo({required userId}) async {
+  Future<Object> getPrivateUserInfo({required userId}) async {
     print('requesting user info for for: $userId');
     RestOptions restOptions = RestOptions(path: '/getUserInfo-dev/');
     final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> savePrivateUserInfo({required UserInfo userInfo}) async {
+    String token = await getIdToken();
+    RestOptions restOptions = RestOptions(
+        path: '/saveprivateuserinformation',
+        headers: {'token': '${token}'},
+        body: transformClassToBody(userInfo));
+    final result = await post(restOptions);
     return result;
   }
 
@@ -132,16 +142,24 @@ class RestService {
     return result;
   }
 
-  Future<Object> resetPassword() async {
-    RestOptions restOptions = RestOptions(path: '/getHomePageIds-dev/');
-    final result = await get(restOptions);
-    return result;
-  }
+  // Future<Object> resetPassword() async {
+  //   RestOptions restOptions = RestOptions(path: '/getHomePageIds-dev/');
+  //   final result = await get(restOptions);
+  //   return result;
+  // }
 
   Future<void> updatePassword(
       {required String oldPassword, required String newPassword}) async {
     final result = await amplifyUpdatePassword(
         newPassword: newPassword, oldPassword: oldPassword);
+  }
+
+  Future<Object> deleteAccount(String userId) async {
+    String token = await getIdToken();
+    RestOptions restOptions = RestOptions(
+        path: '/deleteaccount/$userId', headers: {'token': '${token}'});
+    final result = await delete(restOptions);
+    return result;
   }
 
   void logout() async {
