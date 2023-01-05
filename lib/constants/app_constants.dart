@@ -6,7 +6,7 @@ import '../utils/helpers/builders.dart';
 
 class OthiaConstants {
   static final String awsApiEndpoint = getAwsApiEndpoint();
-  static const String othiaDomain = 'othia.de';
+  static const String othiaDomain = 'www.othia.de';
 
   //TODO make this constant together with the link in rest api services
   static const String eventDetailPath = 'events';
