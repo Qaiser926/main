@@ -293,9 +293,27 @@
   "conferencesCareerEvents": "Conferences & Career Events",
   "charity": "Charity",
   "garden": "Garden",
-  "otherExhibitonCommunityWorkshops": "Other Exhibiton, Community & Workshops",
+  "otherCommunityWorkshops": "Other Community & Workshops",
   "dating": "Dating",
   "shopping": "Shopping",
   "home": "Home ",
-  "otherDiverse": "Other Diverse"
+  "otherDiverse": "Other Diverse",
+
+  "cognitiveLevelZero": "Keine kognitiven Anstrengungen nötig",
+    "cognitiveLevelOne": "Leichte kognitive Anstrengungen nötig",
+    "cognitiveLevelTwo": "Verarbeiten neuer Informationen nötig",
+    "cognitiveLevelThree": "Lösen von Rätseln oder Ähnliches",
+    "cognitiveLevelFour": "Komplexes Denken und Lernen elementar",
+
+     "socialLevelZero": "Keine Zwischenmenschlichen Interaktionen",
+        "socialLevelOne": "Einige Zwischenmenschlichen Interaktionen",
+        "socialLevelTwo": "Konversationen mit anderen Menschen inhärent",
+        "socialLevelThree": "Zusammentreffen mit vielen Unbekannten",
+        "socialLevelFour": "Große Menschenmengen anzutreffen",
+
+
+   "personEligibilityZero": "Nicht möglich oder sehr ungewöhnlich",
+           "personEligibilityOne": "Möglich aber ungewöhnlich",
+           "personEligibilityTwo": "Möglich",
+           "coupleOrFriendGroupEligibilityThree": "Sehr gut möglich oder unmöglich in anderen Konstellationen"
 }

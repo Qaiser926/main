@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/address_form.dart';
 import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
@@ -150,7 +149,7 @@ Future getInfoDialog({required String info, required BuildContext context}) {
           actions: [
             ElevatedButton(
               onPressed: () {
-                Get.back();
+                Navigator.of(context).pop();
               },
               child: Text("Close"),
             ),

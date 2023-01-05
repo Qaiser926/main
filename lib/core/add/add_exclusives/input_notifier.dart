@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
-import 'package:othia/core/add/add_exclusives/details_page.dart';
+import 'package:othia/core/add/add_exclusives/price_picker.dart';
 
 class AddEANotifier extends ChangeNotifier {
   String? title;
@@ -17,7 +17,6 @@ class AddEANotifier extends ChangeNotifier {
   latLng.LatLng? latLong;
 
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> imageFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
@@ -26,6 +25,22 @@ class AddEANotifier extends ChangeNotifier {
 
   String? description;
   String? image;
+
+  // Level parameters
+  int physicalLevel = 0;
+  bool physicalLevelActivated = false;
+  int cognitiveLevel = 0;
+  bool cognitiveLevelActivated = false;
+  int socialLevel = 0;
+  bool socialLevelActivated = false;
+  int singlePersonEligibilityLevel = 0;
+  bool singlePersonEligibilityLevelActivated = false;
+  int coupleEligibilityLevel = 0;
+  bool coupleEligibilityLevelActivated = false;
+  int friendGroupEligibilityLevel = 0;
+  bool friendGroupEligibilityLevelActivated = false;
+  int professionalEligibilityLevel = 0;
+  bool professionalEligibilityLevelActivated = false;
 
   bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
     // if (switchPagesNotifier.currentPage == 0) {
@@ -50,15 +65,15 @@ class AddEANotifier extends ChangeNotifier {
     }
     if ((switchPagesNotifier.currentPage == 2) &
         (targetPage == 3) &
-        (imageFormKey.currentState != null)) {
-      if (imageFormKey.currentState!.validate()) {
-        return true;
-      } else {
-        return false;
-      }
+        ((image != null) & !copyRightVerified)) {
+      showCopyrightErrorMessage = true;
+      return false;
     }
     return true;
   }
+
+  bool showCopyrightErrorMessage = false;
+  bool copyRightVerified = false;
 
   void clearPrices() {
     for (var i = 0; i < prices.length; i++) {

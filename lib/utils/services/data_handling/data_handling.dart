@@ -6,9 +6,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:othia/utils/ui/ui_utils.dart';
-
 import '../../../modules/models/shared_data_models.dart';
 
 double roundDouble(double value, int places) {
