@@ -6,10 +6,12 @@ import '../../../widgets/carousel_widget.dart';
 import '../../../widgets/filtered_image_stack.dart';
 
 
-class getImageCarousel extends StatelessWidget {
-  List<String>? pictures;
-  String categoryId;
-  getImageCarousel({super.key, required this.pictures, required this.categoryId});
+class ImageCarousel extends StatelessWidget {
+  final List<String>? pictures;
+  final String categoryId;
+
+  const ImageCarousel(
+      {super.key, required this.pictures, required this.categoryId});
 
   @override
   Widget build(BuildContext context) {

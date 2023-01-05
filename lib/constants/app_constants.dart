@@ -2,6 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../utils/helpers/builders.dart';
+
+class OthiaConstants {
+  static final String awsApiEndpoint = getAwsApiEndpoint();
+  static const String othiaDomain = 'othia.de';
+
+  //TODO make this constant together with the link in rest api services
+  static const String eventDetailPath = 'events';
+}
+
 class WidgetConstants {
   static const double categoryGridItemHeight = 170;
   static const double categoryGridItemWidth = 192.8;

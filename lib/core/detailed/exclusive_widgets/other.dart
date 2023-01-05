@@ -45,7 +45,7 @@ Widget getFollowWidget(BuildContext context) {
   );
 }
 
-Container LocationWidget() {
+Container getLocationWidget() {
   return Container(
     margin: EdgeInsets.symmetric(horizontal: 20.h),
     height: 116.h,

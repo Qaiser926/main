@@ -11,12 +11,10 @@ import 'icon_row.dart';
 class ImageWidget extends StatelessWidget {
 
   final DetailedEventOrActivity detailedEventOrActivity;
-  Event? iCalElement;
+  final Event? iCalElement;
 
-
-  ImageWidget({super.key,
-    required this.detailedEventOrActivity, this.iCalElement
-  });
+  const ImageWidget(
+      {super.key, required this.detailedEventOrActivity, this.iCalElement});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,7 @@ class ImageWidget extends StatelessWidget {
         children: [
           // first Container is picture
           Positioned(
-            child: getImageCarousel(
+            child: ImageCarousel(
                 categoryId: detailedEventOrActivity.categoryId,
                 pictures: detailedEventOrActivity.photos),
           ),

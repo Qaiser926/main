@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
@@ -20,14 +21,15 @@ class RestService {
       {required String eventOrActivityId}) async {
     print('fetching event details with id $eventOrActivityId');
 
-    RestOptions restOptions = RestOptions(path: '/events/$eventOrActivityId');
+    RestOptions restOptions = RestOptions(
+        path: '/${OthiaConstants.eventDetailPath}/$eventOrActivityId');
     final result = await get(restOptions);
     return result;
   }
 
   Future<Object> fetchFavouriteEventsAndActivities() async {
     print('fetching event details with id');
-
+    //TODO make user specific
     RestOptions restOptions =
         RestOptions(path: '/favouriteeventsandactivities/');
     final result = await get(restOptions);

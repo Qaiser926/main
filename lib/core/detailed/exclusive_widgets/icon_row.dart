@@ -5,14 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../utils/helpers/builders.dart';
 import '../../../utils/ui/ui_utils.dart';
 
 class IconRow extends StatelessWidget {
   String? userId;
   String eAId;
   bool? isLiked;
-  var appDocDir;
-  String objectUrl = 'https://example.com';
 
   // TODO define if URL is built or directly sent & initial status of liked button + update of button & share Image as Othia image
   String shareImage = '8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg';
@@ -21,7 +20,7 @@ class IconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Image image = getAssetImage(shareImage) as Image;
+    // Image image = getAssetImage(shareImage);
     // define if Like button exists
     List<Widget> buttonsOnRightSide = [
       TextButton(
@@ -29,8 +28,10 @@ class IconRow extends StatelessWidget {
           Icons.share,
         ),
         onPressed: () {
+          final String shareLink = shareLinkBuilder(eAId);
+
           Share.share(
-              '${AppLocalizations.of(context)!.shareMessage} $objectUrl');
+              '${AppLocalizations.of(context)!.shareMessage} $shareLink');
         },
       ),
     ];
