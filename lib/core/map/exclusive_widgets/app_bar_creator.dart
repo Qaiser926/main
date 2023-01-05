@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
-import 'package:othia/widgets/filter_related/map_filter.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/map_filter.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
 import 'package:provider/provider.dart';
 

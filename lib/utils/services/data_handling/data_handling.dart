@@ -6,6 +6,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
+
 import '../../../modules/models/shared_data_models.dart';
 
 double roundDouble(double value, int places) {
@@ -67,6 +70,13 @@ String getMonthName({required int month, required BuildContext context}) {
     12: AppLocalizations.of(context)!.decemberShort,
   };
   return monthDict[month];
+}
+
+String getTimeText(
+    {required DateTime localDateTime, required BuildContext context}) {
+  final String weekday =
+      getWeekday(weekDayNumber: localDateTime.weekday, context: context)[1];
+  return "$weekday, ${localDateTime.day.toString().padLeft(2, '0')}. ${getMonthName(context: context, month: localDateTime.month)} ${localDateTime.year}, ${localDateTime.hour.toString().padLeft(2, '0')}:${localDateTime.minute.toString().padLeft(2, '0')}";
 }
 
 String getLocalTimeString(
@@ -131,9 +141,13 @@ String languageSensibleOpeningTimeCode(
       .substring(openingTimeCode.toString().indexOf('.') + 1)]!;
 }
 
-String formatTime({required double unformattedTime}) {
-  String formattedTime = unformattedTime.toInt().toString().padLeft(4, '0');
-  return "${formattedTime.substring(0, 2)}:${formattedTime.substring(2, 4)}";
+String formatTime({required double? unformattedTime}) {
+  if (unformattedTime != null) {
+    String formattedTime = unformattedTime.toInt().toString().padLeft(4, '0');
+    return "${formattedTime.substring(0, 2)}:${formattedTime.substring(2, 4)}";
+  } else {
+    return "";
+  }
 }
 
 String getLocationString({required Location location, bool isShort = false}) {

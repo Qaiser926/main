@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/utils/services/rest-api/rest_api_service.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
 import '../../../constants/app_constants.dart';
 
-class SearchNotifier extends AbstractSearchNotifier {
+class SearchNotifier extends AbstractQueryNotifier {
   // Pagecontroller related
   bool isControllerSet = false;
 
@@ -29,5 +30,11 @@ class SearchNotifier extends AbstractSearchNotifier {
   void goToFirstPage() {
     currentIndex = NavigatorConstants.SearchPageIndex;
     pageController.jumpToPage(currentIndex);
+  }
+
+  @override
+  void sendRequest() {
+    searchQueryResult =
+        RestService().getSearchResultIds(searchQuery: getSearchQuery());
   }
 }

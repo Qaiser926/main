@@ -2,16 +2,36 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+import 'package:othia/core/add/add_exclusives/time_selector.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
-class FirstAddPage extends StatelessWidget {
-  GlobalKey<FormState> test2 = GlobalKey();
-  InputNotifier not;
+// TODO give user hints if information are missing
+// TODO categorization, price, ticket link, description, optional: slider for activity lvl
 
-  FirstAddPage(this.not);
+enum DateType {
+  StartDate,
+  EndDate,
+}
+
+class FirstAddPage extends StatefulWidget {
+  AddEANotifier inputNotifier;
+
+  FirstAddPage(this.inputNotifier);
+
+  @override
+  State<FirstAddPage> createState() => _FirstAddPageState(inputNotifier);
+}
+
+class _FirstAddPageState extends State<FirstAddPage> {
+  GlobalKey<FormState> test2 = GlobalKey();
+  AddEANotifier inputNotifier;
+
+  _FirstAddPageState(this.inputNotifier);
 
   @override
   Widget build(BuildContext context) {
@@ -27,34 +47,68 @@ class FirstAddPage extends StatelessWidget {
               onTap: () async {
                 Image? temp = await _getFromGallery();
                 if (temp != null) {
-                  not.addImage = temp;
+                  inputNotifier.addImage = temp;
                 }
               },
               child: Stack(
                 children: [
-                  Consumer<InputNotifier>(builder: (context, model, child) {
+                  Consumer<AddEANotifier>(builder: (context, model, child) {
                     return model.loadedImages.isEmpty
                         ? SizedBox.shrink()
                         : model.loadedImages[0];
                   }),
+                  // TODO dynamic text, after uploading  "change image"
                   Center(child: Text("Hier klicken")),
                 ],
               ),
             ),
           ),
+
+          Consumer<AddEANotifier>(builder: (context, model, child) {
+            return getSwitch(
+                context: context,
+                headline: GestureDetector(
+                  onTap: () => {
+                    getInfoDialog(
+                        info:
+                            "According to whether you set a start/ end date or opening time, we consider your"
+                            " post as event or activity respectively.",
+                        context: context)
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "Do you want to add a start/ end date or opening times?  ",
+                        ),
+                        WidgetSpan(
+                          child: Icon(Icons.info_outline, size: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                onPressed: changeTimeType,
+                isSelected: model.times,
+                children: [
+                  Text("Start/ End time"),
+                  Text('Öffnungszeiten'),
+                ]);
+          }),
+
+          if (Provider.of<AddEANotifier>(context, listen: true).times[0])
+            TimeSelector(context: context, inputNotifier: inputNotifier),
+
+          if (Provider.of<AddEANotifier>(context, listen: true).times[1])
+            OpeningTimesSelector(
+                context: context, inputNotifier: inputNotifier),
+          // TODO informiere user über Unterschied privat/ öffentlich
           getSwitch(
-              headline: "Was möchtest du hinzufügen?",
-              onPressed: onPressedOne,
-              isSelected: Provider.of<InputNotifier>(context, listen: true)
-                  .selectedFruits,
-              children: [
-                Text('Event'),
-                Text('Activity'),
-              ]),
-          getSwitch(
-              headline: "Privat oder Öffentlich?",
+              context: context,
+              headline: Text("Privat oder Öffentlich?"),
               onPressed: onPressedTwo,
-              isSelected: Provider.of<InputNotifier>(context, listen: true)
+              isSelected: Provider.of<AddEANotifier>(context, listen: true)
                   .privateOrPublic,
               children: [
                 Text('Öffentlich'),
@@ -73,6 +127,7 @@ class FirstAddPage extends StatelessWidget {
   }
 
   Future<Image?> _getFromGallery() async {
+    // TODO enable that image can be changed
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
@@ -84,21 +139,22 @@ class FirstAddPage extends StatelessWidget {
     }
   }
 
-  void onPressedOne(int index) {
-    not.selectedFruits = index;
+  void changeTimeType(int index, BuildContext context) {
+    inputNotifier.changeTimeType(index, context);
   }
 
-  void onPressedTwo(int index) {
-    not.privateOrPublic = index;
+  void onPressedTwo(int index, BuildContext context) {
+    inputNotifier.privateOrPublic = index;
   }
 
   Widget getSwitch(
-      {required String headline,
+      {required Widget headline,
       required Function onPressed,
       required isSelected,
-      required children}) {
+      required children,
+      required BuildContext context}) {
     return Column(children: [
-      Text(headline),
+      headline,
       ToggleButtons(
           direction: Axis.horizontal,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -108,12 +164,13 @@ class FirstAddPage extends StatelessWidget {
           ),
           isSelected: isSelected,
           renderBorder: true,
-          onPressed: (index) => onPressed(index),
+          onPressed: (index) => onPressed(index, context),
           children: children),
     ]);
   }
 
   Widget getPadding() {
+    // TODO introduce online option
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Column(
@@ -174,6 +231,25 @@ class FirstAddPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Future getInfoDialog({required String info, required BuildContext context}) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(info),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text("Close"),
+            ),
+          ],
+        );
+      });
 }
 
 class SecondAddPage extends StatelessWidget {

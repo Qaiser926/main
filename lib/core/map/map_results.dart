@@ -3,15 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/config/routes/routes.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/core/map/current_position.dart';
 import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
+import 'package:othia/core/map/exclusive_widgets/current_position.dart';
 import 'package:othia/modules/models/get_map_result_ids/get_map_result_ids.dart';
-import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
@@ -38,19 +35,12 @@ class _MapResultsState extends State<MapResults> {
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
 
-  void backClick() {
-    Get.back();
-  }
 
-  // @override
-  // void didChangeDependencies() {
-  //   mapResults = RestService().getMapResultIds(
-  //       searchQuery: Provider.of<MapNotifier>(context).getSearchQuery());
-  //   super.didChangeDependencies();
-  // }
 
   @override
   void initState() {
+    mapResults =
+        Provider.of<MapNotifier>(context, listen: false).getSearchQueryResult();
     super.initState();
   }
 
@@ -60,8 +50,6 @@ class _MapResultsState extends State<MapResults> {
       userPosition = model.getUserPosition;
       if (userPosition != null) {
         return Consumer<MapNotifier>(builder: (context, model, child) {
-          mapResults = RestService()
-              .getMapResultIds(searchQuery: model.getSearchQuery());
           return FutureBuilder(
               future: mapResults,
               builder: (context, snapshot) {
@@ -184,10 +172,12 @@ class _MapResultsState extends State<MapResults> {
 
   List<Marker> getResultMarkers() {
     List<Marker> markerList = [];
+
+    // TODO: check if user position gets clustered
     markerList.add(Marker(
         width: 50.0,
         height: 500.0,
-        rotate: true,
+        rotate: false,
         point: userPosition!,
         builder: (ctx) => Icon(
               Icons.my_location,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
-import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/search_filter.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
-import 'package:othia/widgets/filter_related/search_filter.dart';
 import 'package:provider/provider.dart';
 
 class InitialSearchPage extends StatelessWidget {

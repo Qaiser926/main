@@ -4,7 +4,7 @@
     "description": "The conventional newborn programmer greeting"
   },
   "map": "Map",
-  "exploreMap": "Click to explore on Map",
+  "exploreMap": "Click on Map to explore",
   "compingUpEvents": "Coming up Events",
   "popularEA": "Popular Events & Activities",
   "universityEvents": "University Events",

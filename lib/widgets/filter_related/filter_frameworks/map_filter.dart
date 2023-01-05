@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/widgets/filter_related/abstract_filter.dart';
 import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_search_notifier.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/abstract_filter.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
 
-import 'price_filter.dart';
-import 'sort_filter.dart';
-import 'time_filter.dart';
-import 'type_filter.dart';
+import '../price_filter.dart';
+import '../sort_filter.dart';
+import '../time_filter.dart';
+import '../type_filter.dart';
 
 class MapFilter extends AbstractFilter<MapNotifier> {
   MapFilter({required super.context, required super.dynamicProvider});
@@ -17,7 +17,7 @@ class MapFilter extends AbstractFilter<MapNotifier> {
   @override
   List<Widget> getFilters(
       {required BuildContext context,
-      required AbstractSearchNotifier dynamicNotifier}) {
+      required AbstractQueryNotifier dynamicNotifier}) {
     List<Widget> filter = [
       getFilter(
           context: context,
@@ -35,11 +35,13 @@ class MapFilter extends AbstractFilter<MapNotifier> {
           caption: getTimeCaption(
               context: context, dynamicProvider: dynamicNotifier),
           coloredBorder: dynamicNotifier.timeFilterActivated,
-          backgroundColor: Colors.grey,
-          onTapFunction: () {
-            return TimeFilterDialog(
-                context: context, dynamicProvider: dynamicNotifier);
-          }),
+          textStyle: getTextStyle(),
+          onTapFunction: isStartPage()
+              ? () => {}
+              : () {
+                  return TimeFilterDialog(
+                      context: context, dynamicProvider: dynamicNotifier);
+                }),
       // index has only effect if it is zero --> all others just 1
       getFilter(
           context: context,
@@ -47,18 +49,24 @@ class MapFilter extends AbstractFilter<MapNotifier> {
           caption: getPriceCaption(
               context: context, dynamicNotifier: dynamicNotifier),
           coloredBorder: dynamicNotifier.priceFilterActivated,
-          onTapFunction: () {
-            return priceFilterDialog(
-                context: context, dynamicProvider: dynamicNotifier);
-          }),
+          textStyle: getTextStyle(),
+          onTapFunction: isStartPage()
+              ? () => {}
+              : () {
+                  return priceFilterDialog(
+                      context: context, dynamicProvider: dynamicNotifier);
+                }),
       getFilter(
           context: context,
           index: 1,
           caption: getTypeCaption(
               context: context, dynamicProvider: dynamicNotifier),
           coloredBorder: dynamicNotifier.typeFilterActivated,
-          onTapFunction: () => typeFilterDialog(
-              context: context, dynamicProvider: dynamicNotifier)),
+          textStyle: getTextStyle(),
+          onTapFunction: isStartPage()
+              ? () => {}
+              : () => typeFilterDialog(
+                  context: context, dynamicProvider: dynamicNotifier)),
       // getFilter(
       //     context: context,
       //     index: 1,
@@ -75,8 +83,10 @@ class MapFilter extends AbstractFilter<MapNotifier> {
             caption: getSortCaption(
                 context: context, dynamicProvider: dynamicNotifier),
             coloredBorder: dynamicNotifier.sortFilterActivated,
-            onTapFunction: () => sortFilterDialog(
-                context: context, dynamicProvider: dynamicNotifier)),
+            onTapFunction: isStartPage()
+                ? () => {}
+                : () => sortFilterDialog(
+                    context: context, dynamicProvider: dynamicNotifier)),
       );
     }
     if (dynamicNotifier.anyFilterActivated()) {
@@ -88,8 +98,15 @@ class MapFilter extends AbstractFilter<MapNotifier> {
     return filter;
   }
 
-  Color getBackgroundColor() {
-    // TODO
-    return Colors.grey;
+  TextStyle getTextStyle() {
+    if (isStartPage()) {
+      return TextStyle(color: Colors.grey);
+    } else {
+      return TextStyle(color: Colors.white);
+    }
+  }
+
+  bool isStartPage() {
+    return dynamicProvider.currentIndex == 0;
   }
 }

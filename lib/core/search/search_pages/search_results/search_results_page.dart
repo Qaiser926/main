@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/search/search_pages/search_results/exclusive_widgets_search_result/search_results.dart';
-import 'package:othia/widgets/filter_related/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/dropdown_appbar.dart';
+import 'package:othia/widgets/filter_related/filter_frameworks/search_filter.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
-import 'package:othia/widgets/filter_related/search_filter.dart';
 import 'package:provider/provider.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -23,17 +23,15 @@ class _SearchResultsPage extends State<SearchResultsPage> {
           appBar: DropDownAppBar(
               filter:
                   Consumer<SearchNotifier>(builder: (context, model, child) {
-                    return SearchFilter(
-                  context: context,
+                return SearchFilter(
+                        context: context,
                         dynamicProvider:
-                            Provider.of<SearchNotifier>(context, listen: false)).buildDropdownBar();
+                            Provider.of<SearchNotifier>(context, listen: false))
+                    .buildDropdownBar();
               }),
               context: context,
               appBarTitle: AppLocalizations.of(context)!.results),
-          body: SearchResults(
-            searchQuery: Provider.of<SearchNotifier>(context, listen: false)
-                .getSearchQuery(),
-          ),
+          body: SearchResults(),
         );
       }),
     ));
