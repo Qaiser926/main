@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/add/add_exclusives/add_first_page.dart';
+import 'package:othia/core/add/add_exclusives/location_time_page.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:provider/provider.dart';
 
