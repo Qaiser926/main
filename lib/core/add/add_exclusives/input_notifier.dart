@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as latLng;
-import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
 
 class AddEANotifier extends ChangeNotifier {
   String? title;
+
+  String? description;
+  String? websiteUrl;
+  String? ticketUrl;
 
   String? mainCategoryId;
   String? categoryId;
@@ -23,7 +26,6 @@ class AddEANotifier extends ChangeNotifier {
   // is needed to indicate if the snackbar giving info about the adding process on the first page was already shown (did not work with stateful widget alone)
   bool snackBarShown = false;
 
-  String? description;
   String? image;
 
   // Level parameters
@@ -41,36 +43,6 @@ class AddEANotifier extends ChangeNotifier {
   bool friendGroupEligibilityLevelActivated = false;
   int professionalEligibilityLevel = 0;
   bool professionalEligibilityLevelActivated = false;
-
-  bool goToNextPage(SwitchAddPageNotifier switchPagesNotifier, int targetPage) {
-    // if (switchPagesNotifier.currentPage == 0) {
-    //   if (basicInformationFormKey.currentState!.validate()) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // }
-    if ((switchPagesNotifier.currentPage == 1) &
-        (targetPage == 2) &
-        (addressFormKey.currentState != null)) {
-      clearPrices();
-      if (addressFormKey.currentState!.validate()) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    if ((targetPage == 2)) {
-      clearPrices();
-    }
-    if ((switchPagesNotifier.currentPage == 2) &
-        (targetPage == 3) &
-        ((image != null) & !copyRightVerified)) {
-      showCopyrightErrorMessage = true;
-      return false;
-    }
-    return true;
-  }
 
   bool showCopyrightErrorMessage = false;
   bool copyRightVerified = false;

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/image_picker.dart';
 import 'package:othia/core/add/add_exclusives/level_picker.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
-// TODO categorization, price, ticket link, description, optional: slider for activity lvl
 
 class DetailsPage extends StatelessWidget {
   AddEANotifier inputNotifier;
@@ -43,9 +41,19 @@ class DetailsPage extends StatelessWidget {
             getHeadlineWithInfoDialog(
                 context: context,
                 infoText:
-                    "Here you have the opportunity to insert your ticket-url or website-url. User will be forwarded from the Othia app to the corresponding url.",
-                caption: "Ticketing or Website (optional)"),
-            buildTicketLink(context),
+                    "Here you have the opportunity to insert your ticket-url. User will be forwarded from the Othia app to the corresponding url.",
+                caption: "Ticketing URL (optional)"),
+            buildTicketingBox(
+              context,
+            ),
+            getHeadlineWithInfoDialog(
+                context: context,
+                infoText:
+                    "Here you have the opportunity to insert the url of a website with more information. User will be forwarded from the Othia app to the corresponding url.",
+                caption: "Website URL (optional)"),
+            buildWebsiteBox(
+              context,
+            ),
             getHeadlineWithInfoDialog(
                 context: context,
                 infoText:
@@ -57,49 +65,84 @@ class DetailsPage extends StatelessWidget {
     // });
   }
 
-  Consumer buildDescriptionBox(BuildContext context) {
+  Consumer buildTextBox(
+      {required BuildContext context,
+      required TextEditingController? textEditingController,
+      int? maxLength,
+      required int minLines,
+      required Function(String) onChanged,
+      required String hintText}) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return TextFormField(
-        controller: inputNotifierConsumer.title == null
-            ? null
-            : TextEditingController(
-                text: inputNotifierConsumer.title,
-              ),
-
-        onChanged: (description) {
-          inputNotifierConsumer.title = description;
-        },
-        // TODO as constant
-        maxLength: 400,
+        controller: textEditingController,
+        onChanged: onChanged,
+        maxLength: maxLength,
+        minLines: minLines,
         maxLines: null,
-        minLines: 3,
         decoration: new InputDecoration(
             contentPadding: EdgeInsets.all(5.h),
             border: OutlineInputBorder(),
-            hintText: 'Enter the description '),
+            hintText: hintText),
       );
     });
   }
 
-  Consumer buildTicketLink(BuildContext context) {
+  Consumer buildDescriptionBox(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-      return TextFormField(
-        controller: inputNotifierConsumer.title == null
+      return buildTextBox(
+        context: context,
+        onChanged: (description) {
+          inputNotifierConsumer.description = description;
+        },
+        hintText: 'Provide a description',
+        minLines: 3,
+        // TODO as constant
+        maxLength: 400,
+        textEditingController: inputNotifierConsumer.description == null
             ? null
             : TextEditingController(
-                text: inputNotifierConsumer.title,
+                text: inputNotifierConsumer.description,
               ),
+      );
+    });
+  }
+
+  Consumer buildTicketingBox(BuildContext context) {
+    return Consumer<AddEANotifier>(
+        builder: (context, inputNotifierConsumer, child) {
+      return buildTextBox(
+        context: context,
         onChanged: (description) {
-          inputNotifierConsumer.title = description;
+          inputNotifierConsumer.ticketUrl = description;
         },
-        maxLines: null,
+        hintText: 'Provide a ticketing url',
         minLines: 3,
-        decoration: new InputDecoration(
-            contentPadding: EdgeInsets.all(5.h),
-            border: OutlineInputBorder(),
-            hintText: 'Provide a ticket link'),
+        textEditingController: inputNotifierConsumer.ticketUrl == null
+            ? null
+            : TextEditingController(
+                text: inputNotifierConsumer.ticketUrl,
+              ),
+      );
+    });
+  }
+
+  Consumer buildWebsiteBox(BuildContext context) {
+    return Consumer<AddEANotifier>(
+        builder: (context, inputNotifierConsumer, child) {
+      return buildTextBox(
+        context: context,
+        onChanged: (description) {
+          inputNotifierConsumer.websiteUrl = description;
+        },
+        hintText: 'Provide a website url',
+        minLines: 3,
+        textEditingController: inputNotifierConsumer.websiteUrl == null
+            ? null
+            : TextEditingController(
+                text: inputNotifierConsumer.websiteUrl,
+              ),
       );
     });
   }

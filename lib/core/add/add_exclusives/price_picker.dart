@@ -18,7 +18,7 @@ class PricePicker extends StatelessWidget {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return Column(
-        // TODO make each price row containing of label, price and cross scorllable
+        // TODO make each price row containing of label, price and cross scrollable
         children: [
           ListView.builder(
               shrinkWrap: true,
@@ -104,8 +104,8 @@ class PricePicker extends StatelessWidget {
                   ],
                   keyboardType: TextInputType.number,
                   onChanged: (price) {
-                    inputNotifierConsumer.prices[index].price = price as double;
-                    inputNotifierConsumer.notifyListeners();
+                    inputNotifierConsumer.prices[index].price =
+                        transformCurrencyString(price);
                   },
                   maxLines: 1,
                   decoration: new InputDecoration(
@@ -124,6 +124,13 @@ class PricePicker extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double transformCurrencyString(String currencyText) {
+    RegExp exp = RegExp(r'([0-9]*)[\,\.]([0-9])*');
+    RegExpMatch? match = exp.firstMatch(currencyText);
+    String? result = match![0]?.replaceAll(",", ".");
+    return double.parse(result!);
   }
 }
 
