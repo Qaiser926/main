@@ -23,7 +23,7 @@ class LevelPicker extends StatelessWidget {
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.socialLevel, LevelType.socialLevel),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.socialLevel,
             onChanged: (double sliderInput) {
               inputNotifier.socialLevel =
                   transformSliderValueToInt(sliderInput, LevelType.socialLevel);
@@ -32,7 +32,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.socialLevel,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.socialLevelInfo,
             resetFunction: () {
               inputNotifier.socialLevelActivated = false;
               inputNotifier.socialLevel = 0;
@@ -42,7 +42,7 @@ class LevelPicker extends StatelessWidget {
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.physicalLevel, LevelType.physicalLevel),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.socialLevel,
             onChanged: (double sliderInput) {
               inputNotifier.physicalLevel = transformSliderValueToInt(
                   sliderInput, LevelType.physicalLevel);
@@ -51,7 +51,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.physicalLevel,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.physicalLevelInfo,
             resetFunction: () {
               inputNotifier.physicalLevelActivated = false;
               inputNotifier.physicalLevel = 0;
@@ -61,7 +61,7 @@ class LevelPicker extends StatelessWidget {
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.cognitiveLevel, LevelType.cognitiveLevel),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.cognitiveLevel,
             onChanged: (double sliderInput) {
               inputNotifier.cognitiveLevel = transformSliderValueToInt(
                   sliderInput, LevelType.cognitiveLevel);
@@ -70,7 +70,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.cognitiveLevel,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.cognitiveLevelInfo,
             resetFunction: () {
               inputNotifier.cognitiveLevelActivated = false;
               inputNotifier.cognitiveLevel = 0;
@@ -81,7 +81,7 @@ class LevelPicker extends StatelessWidget {
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.singlePersonEligibilityLevel,
                 LevelType.personEligibility),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.singlePersonEligibility,
             onChanged: (double sliderInput) {
               inputNotifier.singlePersonEligibilityLevel =
                   transformSliderValueToInt(
@@ -91,7 +91,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.personEligibility,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.singlePersonEligibilityInfo,
             resetFunction: () {
               inputNotifier.singlePersonEligibilityLevelActivated = false;
               inputNotifier.singlePersonEligibilityLevel = 0;
@@ -103,7 +103,7 @@ class LevelPicker extends StatelessWidget {
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.coupleEligibilityLevel,
                 LevelType.personEligibility),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.coupleEligibility,
             onChanged: (double sliderInput) {
               inputNotifier.coupleEligibilityLevel = transformSliderValueToInt(
                   sliderInput, LevelType.personEligibility);
@@ -112,7 +112,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.personEligibility,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.coupleEligibilityInfo,
             resetFunction: () {
               inputNotifier.coupleEligibilityLevelActivated = false;
               inputNotifier.coupleEligibilityLevel = 0;
@@ -124,7 +124,7 @@ class LevelPicker extends StatelessWidget {
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.friendGroupEligibilityLevel,
                 LevelType.personEligibility),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.friendGroupEligibility,
             onChanged: (double sliderInput) {
               inputNotifier.friendGroupEligibilityLevel =
                   transformSliderValueToInt(
@@ -134,7 +134,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.personEligibility,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.friendGroupEligibilityInfo,
             resetFunction: () {
               inputNotifier.friendGroupEligibilityLevelActivated = false;
               inputNotifier.friendGroupEligibilityLevel = 0;
@@ -146,7 +146,7 @@ class LevelPicker extends StatelessWidget {
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.professionalEligibilityLevel,
                 LevelType.personEligibility),
-            caption: "Cognitive Level",
+            caption: AppLocalizations.of(context)!.professionalEligibility,
             onChanged: (double sliderInput) {
               inputNotifier.professionalEligibilityLevel =
                   transformSliderValueToInt(
@@ -156,7 +156,7 @@ class LevelPicker extends StatelessWidget {
             },
             context: context,
             levelType: LevelType.personEligibility,
-            infoText: "test",
+            infoText: AppLocalizations.of(context)!.professionalEligibilityInfo,
             resetFunction: () {
               inputNotifier.professionalEligibilityLevelActivated = false;
               inputNotifier.professionalEligibilityLevel = 0;

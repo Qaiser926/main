@@ -299,21 +299,44 @@
   "home": "Home ",
   "otherDiverse": "Other Diverse",
 
+    "cognitiveLevelInfo": "Gibt an, inwieweit kognitive Anstrengungen Bestandteil des Events oder der Aktivität sind",
   "cognitiveLevelZero": "Keine kognitiven Anstrengungen nötig",
     "cognitiveLevelOne": "Leichte kognitive Anstrengungen nötig",
     "cognitiveLevelTwo": "Verarbeiten neuer Informationen nötig",
     "cognitiveLevelThree": "Lösen von Rätseln oder Ähnliches",
     "cognitiveLevelFour": "Komplexes Denken und Lernen elementar",
 
+         "socialLevelInfo": "Gibt an, inwieweit soziale Interaktionen Bestandteil des Events oder der Aktivität sind",
      "socialLevelZero": "Keine Zwischenmenschlichen Interaktionen",
         "socialLevelOne": "Einige Zwischenmenschlichen Interaktionen",
         "socialLevelTwo": "Konversationen mit anderen Menschen inhärent",
         "socialLevelThree": "Zusammentreffen mit vielen Unbekannten",
         "socialLevelFour": "Große Menschenmengen anzutreffen",
 
+        "physicalLevelInfo": "Gibt an, inwieweit physische Anstrengung Bestandteil des Events oder der Aktivität sind",
+        "physicalLevelZero": "Keine phynische Anstrengung, z.B. Sitzen",
+              "physicalLevelOne": "Geringe physische Anstrengung, z.B. Gehen",
+              "physicalLevelTwo": "Mittlere physische Anstrengung, z.B. GoKart",
+              "physicalLevelThree": "Erhöhte physische Anstrengung, z.B. Yoga",
+              "physicalLevelFour": "Hohe physische Anstrengung, z.B. Fittness",
+
 
    "personEligibilityZero": "Nicht möglich oder sehr ungewöhnlich",
            "personEligibilityOne": "Möglich aber ungewöhnlich",
            "personEligibilityTwo": "Möglich",
-           "coupleOrFriendGroupEligibilityThree": "Sehr gut möglich oder unmöglich in anderen Konstellationen"
+           "personEligibilityThree": "Sehr gut möglich oder unmöglich in anderen Konstellationen",
+
+
+           "cognitiveLevel": "Kognitives Level",
+             "physicalLevel": "Physisches Level",
+             "socialLevel": "Soziales Level",
+       "singlePersonEligibility": "Für eine Person geeignet",
+         "coupleEligibility": "Für Paare geeignet",
+         "friendGroupEligibility": "Für Freundesgruppen geeignet",
+         "professionalEligibility": "Für Arbeitskollegen geeignet",
+
+         "singlePersonEligibilityInfo": "Gibt an wie geeignet das Event oder die Aktivität für eine einzele Person ist",
+           "coupleEligibilityInfo": "Gibt an wie geeignet das Event oder die Aktivität für ein Paar ist",
+           "friendGroupEligibilityInfo": "Gibt an wie geeignet das Event oder die Aktivität für eine Freundesgruppe ist",
+           "professionalEligibilityInfo": "Gibt an wie geeignet das Event oder die Aktivität für eine Arbeitskollegen ist"
 }
