@@ -105,7 +105,6 @@ class AddEANotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-// TODO
   void changeLocationType(index, BuildContext context) {
     changeSwitch(index: index, changingList: locationType);
   }

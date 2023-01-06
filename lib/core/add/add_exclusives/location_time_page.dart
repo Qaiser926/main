@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/address_form.dart';
-import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
-import 'time_selector.dart';
 
 // TODO categorization, price, ticket link, description, optional: slider for activity lvl
 
@@ -78,34 +76,34 @@ class _LocationTimePageState extends State<LocationTimePage> {
                       ]),
                     ),
                   ),
-                  getSwitch(
-                      onPressed: changeTimeType,
-                      isSelected: inputNotifierConsumer.times,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(5.h),
-                          child: Text("Start time & End time"),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(5.h),
-                          child: Text('Opening hours'),
-                        ),
-                      ]),
-                  if (Provider.of<AddEANotifier>(context, listen: true)
-                      .times[0])
-                  // in order for the the global key to have a state, it is necessary to define it here (also for the opening times selector)
-                    Form(
-                        key: widget.inputNotifier.timeFormKey,
-                        child: TimeSelector(
-                            context: context,
-                            inputNotifier: widget.inputNotifier)),
-                  if (Provider.of<AddEANotifier>(context, listen: true)
-                      .times[1])
-                    Form(
-                        key: widget.inputNotifier.timeFormKey,
-                        child: OpeningTimesSelector(
-                            context: context,
-                            inputNotifier: widget.inputNotifier)),
+                  // getSwitch(
+                  //     onPressed: changeTimeType,
+                  //     isSelected: inputNotifierConsumer.times,
+                  //     children: [
+                  //       Padding(
+                  //         padding: EdgeInsets.all(5.h),
+                  //         child: Text("Start time & End time"),
+                  //       ),
+                  //       Padding(
+                  //         padding: EdgeInsets.all(5.h),
+                  //         child: Text('Opening hours'),
+                  //       ),
+                  //     ]),
+                  // if (Provider.of<AddEANotifier>(context, listen: true)
+                  //     .times[0])
+                  // // in order for the the global key to have a state, it is necessary to define it here (also for the opening times selector)
+                  //   Form(
+                  //       key: widget.inputNotifier.timeFormKey,
+                  //       child: TimeSelector(
+                  //           context: context,
+                  //           inputNotifier: widget.inputNotifier)),
+                  // if (Provider.of<AddEANotifier>(context, listen: true)
+                  //     .times[1])
+                  //   Form(
+                  //       key: widget.inputNotifier.timeFormKey,
+                  //       child: OpeningTimesSelector(
+                  //           context: context,
+                  //           inputNotifier: widget.inputNotifier)),
                 ]);
           })),
     );

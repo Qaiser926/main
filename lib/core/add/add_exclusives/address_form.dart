@@ -39,20 +39,18 @@ class _AddressFormState extends State<AddressForm> {
         return null;
       }
 
-      return Form(
-          key: widget.inputNotifier.addressFormKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 5.h),
-                        child: CustomTextFormField(
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 5.h),
+                    child: CustomTextFormField(
                           initialValue: widget.inputNotifier.street,
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(RegExp('[0-9]'))
@@ -118,17 +116,17 @@ class _AddressFormState extends State<AddressForm> {
                       validationFunction: _validateAddress,
                       onChangedFunction: (text) {
                         widget.inputNotifier.postalCode = text;
-                        setState(() => {
-                              this.postalCode = text,
-                            });
-                      },
-                      hintText: "Plz",
-                    ),
-                  ),
-                ],
+                    setState(() => {
+                          this.postalCode = text,
+                        });
+                  },
+                  hintText: "Plz",
+                ),
               ),
             ],
-          ));
+          ),
+        ],
+      );
     });
   }
 }

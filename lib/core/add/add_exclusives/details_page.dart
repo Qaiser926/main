@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add.dart';
+import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/image_picker.dart';
 import 'package:othia/core/add/add_exclusives/level_picker.dart';
-import 'package:othia/core/add/add_exclusives/location_time_page.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -103,23 +103,4 @@ class DetailsPage extends StatelessWidget {
       );
     });
   }
-}
-
-Widget getHeadlineWithInfoDialog(
-    {required BuildContext context,
-    required String infoText,
-    required String caption}) {
-  return getHeadline(
-    context: context,
-    caption: GestureDetector(
-      onTap: () => {getInfoDialog(info: infoText, context: context)},
-      child: Row(children: [
-        Text(caption, style: Theme.of(context).textTheme.headlineLarge),
-        Padding(
-          padding: EdgeInsets.only(left: 5.h),
-          child: Icon(Icons.info_outline, size: 14),
-        )
-      ]),
-    ),
-  );
 }

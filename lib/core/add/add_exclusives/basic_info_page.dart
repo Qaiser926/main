@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add.dart';
+import 'package:othia/core/add/add_exclusives/address_form.dart';
+import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
-
-// TODO categorization, price, ticket link, description, optional: slider for activity lvl
+import 'time_selector.dart';
 
 class BasicInfoPage extends StatefulWidget {
   AddEANotifier inputNotifier;
@@ -48,49 +51,108 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       child: Scaffold(
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            getHeadline(
-                context: context,
-                caption: Text("Title",
-                    style: Theme.of(context).textTheme.headlineLarge)),
-            Padding(
-              padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-              child: buildTitleSection(),
-            ),
-            getHeadline(
-                context: context,
-                caption: Text("Categorization",
-                    style: Theme.of(context).textTheme.headlineLarge)),
-            Padding(
-                padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                child: buildDropDown(
-                    defaultValue: widget.inputNotifier.mainCategoryId,
-                    hintText: "Select the main category",
-                    onValidErrorText: 'Please state a category',
-                    dropDownList: Categories.categoryIds,
-                    notifierFunction: (mainCategoryId) {
-                      widget.inputNotifier.mainCategoryId = mainCategoryId;
-                      widget.inputNotifier.categoryId = null;
-                      //
-                      setState(() => {
-                            this.mainCategoryId = mainCategoryId,
-                            this.categoryId = null
-                          });
-                    })),
-            if (widget.inputNotifier.mainCategoryId != null)
-              new Padding(
-                  padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                  child: buildDropDown(
-                      defaultValue: widget.inputNotifier.categoryId,
-                      hintText: "Select a sub-category",
-                      onValidErrorText: 'Please state a sub-category',
-                      dropDownList: categoryIdToSubcategoryIds[
-                          widget.inputNotifier.mainCategoryId]!,
-                      notifierFunction: (categoryId) {
-                        setState(() => {this.categoryId = categoryId});
-                        widget.inputNotifier.categoryId = categoryId;
-                      })),
-          ]),
+          child: Consumer<AddEANotifier>(
+              builder: (context, inputNotifierConsumer, child) {
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  getHeadline(
+                      context: context,
+                      caption: Text("Title",
+                          style: Theme.of(context).textTheme.headlineLarge)),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+                    child: buildTitleSection(),
+                  ),
+                  getHeadline(
+                      context: context,
+                      caption: Text("Categorization",
+                          style: Theme.of(context).textTheme.headlineLarge)),
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+                      child: buildDropDown(
+                          defaultValue: widget.inputNotifier.mainCategoryId,
+                          hintText: "Select the main category",
+                          onValidErrorText: 'Please state a category',
+                          dropDownList: Categories.categoryIds,
+                          notifierFunction: (mainCategoryId) {
+                            widget.inputNotifier.mainCategoryId =
+                                mainCategoryId;
+                            widget.inputNotifier.categoryId = null;
+                            //
+                            setState(() => {
+                                  this.mainCategoryId = mainCategoryId,
+                                  this.categoryId = null
+                                });
+                          })),
+                  if (widget.inputNotifier.mainCategoryId != null)
+                    new Padding(
+                        padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
+                        child: buildDropDown(
+                            defaultValue: widget.inputNotifier.categoryId,
+                            hintText: "Select a sub-category",
+                            onValidErrorText: 'Please state a sub-category',
+                            dropDownList: categoryIdToSubcategoryIds[
+                                widget.inputNotifier.mainCategoryId]!,
+                            notifierFunction: (categoryId) {
+                              setState(() => {this.categoryId = categoryId});
+                              widget.inputNotifier.categoryId = categoryId;
+                            })),
+                  getHeadline(
+                      context: context,
+                      caption: Text("Location",
+                          style: Theme.of(context).textTheme.headlineLarge)),
+                  getSwitch(
+                      onPressed: changeLocationType,
+                      isSelected: inputNotifierConsumer.locationType,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text("Address"),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text('Online'),
+                        ),
+                      ]),
+                  if (inputNotifierConsumer.locationType[0])
+                    Form(
+                        key: widget.inputNotifier.addressFormKey,
+                        child: AddressForm(
+                            context: context,
+                            inputNotifier: inputNotifierConsumer)),
+                  getVerSpace(10.h),
+                  getHeadlineWithInfoDialog(
+                      context: context,
+                      infoText:
+                          "According to whether you set a start/ end date or opening time, we consider your"
+                          " post as event or activity respectively.",
+                      caption: "Time"),
+                  getSwitch(
+                      onPressed: changeTimeType,
+                      isSelected: inputNotifierConsumer.times,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text("Start time & End time"),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text('Opening hours'),
+                        ),
+                      ]),
+                  Form(
+                      key: widget.inputNotifier.timeFormKey,
+                      child: Provider.of<AddEANotifier>(context, listen: true)
+                              .times[0]
+                          ? TimeSelector(
+                              context: context,
+                              inputNotifier: widget.inputNotifier)
+                          : OpeningTimesSelector(
+                              context: context,
+                              inputNotifier: widget.inputNotifier)),
+                ]);
+          }),
         ),
       ),
     );
@@ -160,5 +222,31 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         );
       }).toList(),
     );
+  }
+
+  void changeLocationType(int index, BuildContext context) {
+    widget.inputNotifier.changeLocationType(index, context);
+  }
+
+  void changeTimeType(int index, BuildContext context) {
+    widget.inputNotifier.changeTimeType(index, context);
+  }
+
+  Widget getSwitch({
+    required Function onPressed,
+    required isSelected,
+    required children,
+  }) {
+    return ToggleButtons(
+        direction: Axis.horizontal,
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+        constraints: const BoxConstraints(
+          minHeight: 40.0,
+          minWidth: 80.0,
+        ),
+        isSelected: isSelected,
+        renderBorder: true,
+        onPressed: (index) => onPressed(index, context),
+        children: children);
   }
 }
