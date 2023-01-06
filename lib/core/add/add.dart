@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
 import 'package:othia/core/add/add_exclusives/details_page.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
@@ -28,35 +29,49 @@ class Add extends StatelessWidget {
   // TODO
   bool isLoggedIn = true;
 
+  void backFunction() {
+    int targetPage = switchPagesNotifier.currentPage - 1;
+    if (targetPage < 0) {
+      Get.back();
+    } else {
+      pageController.jumpToPage(targetPage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SwitchPages switchPages = SwitchPages(
         inputNotifier: inputNotifier,
         pageController: pageController,
         switchPagesNotifier: switchPagesNotifier);
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: switchPagesNotifier,
-          ),
-          ChangeNotifierProvider.value(
-            value: inputNotifier,
-          )
-        ],
-        child: Scaffold(
-            appBar: AppBar(automaticallyImplyLeading: false, actions: [
-              Consumer<SwitchAddPageNotifier>(
-                  builder: (context, switchPageModel, child) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildUpperNavigationElement(
-                        context: context,
-                        index: 0,
-                        switchPageModel: switchPageModel),
-                    getArrowIcon(context),
-                    buildUpperNavigationElement(
-                        context: context,
+    return WillPopScope(
+        onWillPop: () async {
+          backFunction();
+          return false;
+        },
+        child: MultiProvider(
+            providers: [
+              ChangeNotifierProvider.value(
+                value: switchPagesNotifier,
+              ),
+              ChangeNotifierProvider.value(
+                value: inputNotifier,
+              )
+            ],
+            child: Scaffold(
+                appBar: AppBar(automaticallyImplyLeading: false, actions: [
+                  Consumer<SwitchAddPageNotifier>(
+                      builder: (context, switchPageModel, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        buildUpperNavigationElement(
+                            context: context,
+                            index: 0,
+                            switchPageModel: switchPageModel),
+                        getArrowIcon(context),
+                        buildUpperNavigationElement(
+                            context: context,
                             index: 1,
                             switchPageModel: switchPageModel),
                         getArrowIcon(context),
@@ -64,25 +79,20 @@ class Add extends StatelessWidget {
                             context: context,
                             index: 2,
                             switchPageModel: switchPageModel),
-                    getArrowIcon(context),
-                    buildUpperNavigationElement(
-                        context: context,
-                        index: 3,
-                        switchPageModel: switchPageModel),
-                    getHorSpace(16.h)
-                  ],
-                );
-              })
-            ]),
-            persistentFooterButtons: [getFloatingButtons(switchPages)],
-            // bottomNavigationBar: getFloatingButtons(),
-            // floatingActionButton: ,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            body: getLoggedInSensitiveBody(
-                isLoggedIn: isLoggedIn,
-                loggedInWidget: getLoggedInBody(switchPages),
-                context: context)));
+                        getHorSpace(16.h)
+                      ],
+                    );
+                  })
+                ]),
+                persistentFooterButtons: [getFloatingButtons(switchPages)],
+                // bottomNavigationBar: getFloatingButtons(),
+                // floatingActionButton: ,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                body: getLoggedInSensitiveBody(
+                    isLoggedIn: isLoggedIn,
+                    loggedInWidget: getLoggedInBody(switchPages),
+                    context: context))));
   }
 
   Widget getLoggedInBody(SwitchPages switchPages) {
@@ -93,10 +103,9 @@ class Add extends StatelessWidget {
         }),
         controller: pageController,
         children: [
-          PublishPage(inputNotifier),
           BasicInfoPage(inputNotifier),
           DetailsPage(inputNotifier),
-          DetailsPage(inputNotifier),
+          PublishPage(inputNotifier),
         ]);
   }
 
@@ -123,25 +132,31 @@ class Add extends StatelessWidget {
       {required BuildContext context,
       required SwitchAddPageNotifier switchPageModel,
       required int index}) {
+    Map<int, String> navigationCaptions = {
+      0: "Informationen",
+      1: "Details",
+      2: "Publish"
+    };
+
     return Padding(
         padding: EdgeInsets.all(10.h),
         child: GestureDetector(
-          onTap: () => {
-            pageController.jumpToPage(index)},
+          onTap: () => {pageController.jumpToPage(index)},
           child: Container(
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index
                     ? Theme.of(context).colorScheme.primary
                     : null,
-                shape: BoxShape.circle,
                 border:
-                    Border.all(color: Theme.of(context).colorScheme.primary)),
-            width: 40.h,
-            height: 40.h,
+                    Border.all(color: Theme.of(context).colorScheme.primary),
+                borderRadius: BorderRadius.all(Radius.circular(10.h))),
             child: Align(
               alignment: Alignment.center,
-              child: Text(
-                (index + 1).toString(),
+              child: Padding(
+                padding: EdgeInsets.all(5.h),
+                child: Text(
+                  navigationCaptions[index]!,
+                ),
               ),
             ),
           ),
@@ -177,6 +192,4 @@ class Add extends StatelessWidget {
           child: child,
         ));
   }
-
-
 }
