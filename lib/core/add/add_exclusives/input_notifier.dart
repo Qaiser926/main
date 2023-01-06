@@ -42,7 +42,7 @@ class AddEANotifier extends ChangeNotifier {
   int professionalEligibilityLevel = 0;
   bool professionalEligibilityLevelActivated = false;
 
-  bool goToNextPage(AddPageNotifier switchPagesNotifier, int targetPage) {
+  bool goToNextPage(SwitchAddPageNotifier switchPagesNotifier, int targetPage) {
     // if (switchPagesNotifier.currentPage == 0) {
     //   if (basicInformationFormKey.currentState!.validate()) {
     //     return true;
@@ -77,7 +77,7 @@ class AddEANotifier extends ChangeNotifier {
 
   void clearPrices() {
     for (var i = 0; i < prices.length; i++) {
-      if ((prices[i].price == null) & (prices[i].label == null)) {
+      if (prices[i].price == null) {
         prices.removeAt(i);
       }
     }
