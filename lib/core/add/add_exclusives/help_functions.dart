@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
+import 'package:othia/utils/services/rest-api/geocoding.dart';
 
 Column getHeadline({required BuildContext context, required Widget caption}) {
   return Column(
@@ -84,51 +85,99 @@ class SwitchPages {
     pageController.jumpToPage(value);
   }
 
-  void _notSwitchPage(int value) {
+  void _notSwitchPageAddressInvalid() {
     inputNotifier.isAddressInvalid = true;
     inputNotifier.addressFormKey.currentState?.validate();
+    inputNotifier.timeFormKey.currentState?.validate();
+    inputNotifier.basicInformationFormKey.currentState?.validate();
     pageController.jumpToPage(switchPagesNotifier.currentPage);
     inputNotifier.isAddressInvalid = false;
   }
 
-  void switchPageBehaviour(int targetPage) {
-    // // case switching from basic info page to additional info page
-    // if ((switchPagesNotifier.currentPage == 0) & (targetPage == 1)) {
-    //   if (_isTimeCorrect() & _isTitleCategoryCorrect()) {
-    //     // request latitude and longitude for stated address and test if a result was found
-    //     getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
-    //       if (latLong != null) {
-    //         inputNotifier.latLong = latLong; // save requested lat/ long
-    //         _switchPage(targetPage);
-    //       } else {
-    //         _notSwitchPage(targetPage);
-    //       }
-    //     });
-    //   }
-    //
-    //   // per default page is not switched
-    //   _notSwitchPage(targetPage);
-    //   // notSwitchPage(value);
-    // } else {
-    //   // TODO write logic for additional page
-    //   switchPagesNotifier.currentPage = targetPage;
-    // }
+  void _notSwitchPageAddressValid() {
+    inputNotifier.isAddressInvalid = false;
+    inputNotifier.addressFormKey.currentState?.validate();
+    pageController.jumpToPage(switchPagesNotifier.currentPage);
+  }
 
+  void switchPageBehaviour(int targetPage) {
+    // to delete prices with null values on additional page
     if (targetPage == 1) {
-      // clear the added prices without content
       inputNotifier.clearPrices();
     }
-    // case when rights for pictures were not given
-    if ((switchPagesNotifier.currentPage == 1) &
-        (targetPage == 2) &
-        ((inputNotifier.image != null) & !inputNotifier.copyRightVerified)) {
-      inputNotifier.showCopyrightErrorMessage = true;
-      pageController.jumpToPage(switchPagesNotifier.currentPage);
+    // case switching from basic info page to additional info page
+    if ((switchPagesNotifier.currentPage == 0) & (targetPage == 1)) {
+      // request latitude and longitude for stated address and test if a result was found only if not online is selected
+      if (inputNotifier.locationType[0]) {
+        getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
+          if (latLong != null) {
+            inputNotifier.latLong = latLong; // save requested lat/ long
+            if (_isTimeCorrect() & _isTitleCategoryCorrect()) {
+              _switchPage(targetPage);
+            }
+            _notSwitchPageAddressValid();
+          } else {
+            _notSwitchPageAddressInvalid();
+          }
+        });
+      } else {
+        if (_isTimeCorrect() & _isTitleCategoryCorrect()) {
+          _switchPage(targetPage);
+        }
+      }
+      // per default page is not switched
+      _notSwitchPageAddressInvalid();
+      // notSwitchPage(value);
     }
 
-    // default too change page
-    _switchPage(targetPage);
+    // else if ((switchPagesNotifier.currentPage == 1) &
+    //       (targetPage == 2) &
+    //       ((inputNotifier.image != null) & !inputNotifier.copyRightVerified)) {
+    //     inputNotifier.showCopyrightErrorMessage = true;
+    //     pageController.jumpToPage(switchPagesNotifier.currentPage);
+    //   }
+
+    else {
+      // TODO write logic for additional page
+      switchPagesNotifier.currentPage = targetPage;
+    }
   }
+
+  // void switchPageBehaviour(int targetPage) {
+  //   // case switching from basic info page to additional info page
+  //   if ((switchPagesNotifier.currentPage == 0) & (targetPage == 1)) {
+  //     if (_isTimeCorrect() & _isTitleCategoryCorrect()) {
+  //       // request latitude and longitude for stated address and test if a result was found
+  //       getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
+  //         if (latLong != null) {
+  //           inputNotifier.latLong = latLong; // save requested lat/ long
+  //           _switchPage(targetPage);
+  //         } else {
+  //           _notSwitchPage();
+  //         }
+  //       });
+  //     }
+  //
+  //     // per default page is not switched
+  //     _notSwitchPage();
+  //
+  //   }
+  //
+  //   if (targetPage == 1) {
+  //     // clear the added prices without content
+  //     inputNotifier.clearPrices();
+  //   }
+  //   // case when rights for pictures were not given
+  //   if ((switchPagesNotifier.currentPage == 1) &
+  //       (targetPage == 2) &
+  //       ((inputNotifier.image != null) & !inputNotifier.copyRightVerified)) {
+  //     inputNotifier.showCopyrightErrorMessage = true;
+  //     pageController.jumpToPage(switchPagesNotifier.currentPage);
+  //   }
+  //
+  //   // default too change page
+  //   _switchPage(targetPage);
+  // }
 
   void nextPage(BuildContext context) {
     pageController.nextPage(duration: animationDuration, curve: animationCurve);
