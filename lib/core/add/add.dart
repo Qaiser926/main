@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
 import 'package:othia/core/add/add_exclusives/details_page.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/core/add/add_exclusives/publish_page.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class Add extends StatelessWidget {
   Add({super.key});
 
   static const int firstPage = 0;
+  static const int lastPage = 2;
 
   static final PageController pageController =
       PageController(initialPage: firstPage);
@@ -91,6 +93,7 @@ class Add extends StatelessWidget {
         }),
         controller: pageController,
         children: [
+          PublishPage(inputNotifier),
           BasicInfoPage(inputNotifier),
           DetailsPage(inputNotifier),
           DetailsPage(inputNotifier),
@@ -98,16 +101,19 @@ class Add extends StatelessWidget {
   }
 
   Widget getFloatingButtons(SwitchPages switchPages) {
-    return Consumer<SwitchAddPageNotifier>(builder: (context, model, child) {
+    return Consumer<SwitchAddPageNotifier>(
+        builder: (context, switchPageConsumer, child) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          model.currentPage == firstPage
+          switchPageConsumer.currentPage == firstPage
               ? const SizedBox.shrink()
               : getNavigationButton(
-                  Icons.arrow_back, switchPages.previousPage, context),
-          getNavigationButton(
-              Icons.arrow_forward, switchPages.nextPage, context),
+                  Icon(Icons.arrow_back), switchPages.previousPage, context),
+          switchPageConsumer.currentPage == lastPage
+              ? getNavigationButton(Text("Publish"), publishFunction, context)
+              : getNavigationButton(
+                  Icon(Icons.arrow_forward), switchPages.nextPage, context),
         ],
       );
     });
@@ -152,7 +158,7 @@ class Add extends StatelessWidget {
 
   // TODO when switching pages, the left button changes its position
   Widget getNavigationButton(
-      IconData icon,
+      Widget child,
       void Function(BuildContext context) onPressedFunction,
       BuildContext context) {
     return SizedBox(
@@ -168,7 +174,7 @@ class Add extends StatelessWidget {
           // splashColor: Colors.transparent,
 
           onPressed: () => onPressedFunction(context),
-          child: Icon(icon),
+          child: child,
         ));
   }
 

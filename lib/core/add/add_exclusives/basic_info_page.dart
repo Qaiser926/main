@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/categories.dart';
-import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/address_form.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
@@ -103,7 +102,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                       caption: Text("Location",
                           style: Theme.of(context).textTheme.headlineLarge)),
                   getSwitch(
-                      onPressed: changeLocationType,
+                      context: context,
+                      onPressed: inputNotifierConsumer.changeLocationType,
                       isSelected: inputNotifierConsumer.locationType,
                       children: [
                         Padding(
@@ -129,7 +129,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                           " post as event or activity respectively.",
                       caption: "Time"),
                   getSwitch(
-                      onPressed: changeTimeType,
+                      context: context,
+                      onPressed: inputNotifierConsumer.changeTimeType,
                       isSelected: inputNotifierConsumer.times,
                       children: [
                         Padding(
@@ -224,29 +225,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     );
   }
 
-  void changeLocationType(int index, BuildContext context) {
-    widget.inputNotifier.changeLocationType(index, context);
-  }
 
-  void changeTimeType(int index, BuildContext context) {
-    widget.inputNotifier.changeTimeType(index, context);
-  }
 
-  Widget getSwitch({
-    required Function onPressed,
-    required isSelected,
-    required children,
-  }) {
-    return ToggleButtons(
-        direction: Axis.horizontal,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        constraints: const BoxConstraints(
-          minHeight: 40.0,
-          minWidth: 80.0,
-        ),
-        isSelected: isSelected,
-        renderBorder: true,
-        onPressed: (index) => onPressed(index, context),
-        children: children);
-  }
 }

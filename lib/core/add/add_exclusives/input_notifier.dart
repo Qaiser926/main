@@ -47,6 +47,9 @@ class AddEANotifier extends ChangeNotifier {
   bool showCopyrightErrorMessage = false;
   bool copyRightVerified = false;
 
+  bool termsAgreed = false;
+  bool termsAgreedErrorMessage = false;
+
   void clearPrices() {
     for (var i = 0; i < prices.length; i++) {
       if (prices[i].price == null) {
@@ -75,6 +78,10 @@ class AddEANotifier extends ChangeNotifier {
       changingList[i] = i == index;
     }
     notifyListeners();
+  }
+
+  void changePrivatePublic(index, BuildContext context) {
+    changeSwitch(index: index, changingList: privateOrPublic);
   }
 
   void changeLocationType(index, BuildContext context) {
