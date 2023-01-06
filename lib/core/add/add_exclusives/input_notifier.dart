@@ -80,12 +80,36 @@ class AddEANotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  set locationType(index) {
+    changeSwitch(index: index, changingList: locationType);
+  }
+
   void changePrivatePublic(index, BuildContext context) {
     changeSwitch(index: index, changingList: privateOrPublic);
   }
 
-  void changeLocationType(index, BuildContext context) {
-    changeSwitch(index: index, changingList: locationType);
+  void changeLocationType(int index, BuildContext context) {
+    // there can be either an address associated or the event/ activity is online -> make user aware
+    bool isAddressSet = (streetNumber != null) |
+        (street != null) |
+        (city != null) |
+        (postalCode != null);
+
+    bool addressCase = isAddressSet & (index == 1);
+    if (addressCase) {
+      notifyUsers(
+          context: context,
+          showFirstMessage: addressCase,
+          firstText:
+              "Switching will cause that the address will not be shown to users as your event or activity will be considered online",
+          secondText: "",
+          onPressed: () {
+            locationType = index;
+            Navigator.of(context, rootNavigator: true).pop();
+          });
+    } else {
+      locationType = index;
+    }
   }
 
   String getAddressString() {
@@ -181,14 +205,29 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void changeTimeType(int index, BuildContext context) {
-      times = index;
-  }
-
-  void resetOtherType(int index) {
-    if (index == 0) {
-      openingTimes.forEach((k, v) => openingTimes[k] = []);
+    // there can be either opening times or start/ end time associated -> make user aware
+    bool isOpeningTimesModified = false;
+    for (var openingTimesList in openingTimes.values) {
+      if (openingTimesList.isNotEmpty) isOpeningTimesModified = true;
+    }
+    bool isStartTimeModified = startDateTime != null;
+    bool caseOpeningTimesReset = isOpeningTimesModified & (index == 0);
+    bool caseStartTimeReset = isStartTimeModified & (index == 1);
+    if (caseOpeningTimesReset | caseStartTimeReset) {
+      notifyUsers(
+          context: context,
+          showFirstMessage: caseStartTimeReset,
+          firstText:
+              "Switching will cause that opening times instead of start times are considered",
+          secondText:
+              "Switching will cause that a start time is considered and the opening times are neglected",
+          onPressed: () {
+            times = index;
+            // Get.back();
+            Navigator.of(context, rootNavigator: true).pop();
+          });
     } else {
-      startDateTime = endDateTime = null;
+      times = index;
     }
   }
 
@@ -199,8 +238,34 @@ class AddEANotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  set addImage(Image image) {
-    loadedImages.add(image);
-    notifyListeners();
+  void notifyUsers(
+      {required BuildContext context,
+      required bool showFirstMessage,
+      required String firstText,
+      required String secondText,
+      required Function() onPressed}) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              content: showFirstMessage ? Text(firstText) : Text(secondText),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    child: const Text("Cancel"),
+                  ),
+                ),
+                TextButton(
+                  onPressed: onPressed,
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    child: const Text("Continue"),
+                  ),
+                ),
+              ],
+            ));
   }
 }
