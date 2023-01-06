@@ -79,7 +79,7 @@ class _PriceFilterState extends State<PriceFilter> {
           Padding(
               padding: EdgeInsets.all(10),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [CloseButton()])),
           // Padding(
           //     padding: EdgeInsets.fromLTRB(10, 0, 20, 20),

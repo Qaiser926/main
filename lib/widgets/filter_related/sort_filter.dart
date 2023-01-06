@@ -146,7 +146,7 @@ class _SortFilterState extends State<SortFilter> {
           Padding(
               padding: EdgeInsets.all(10),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [CloseButton()])),
           Padding(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),

@@ -76,7 +76,7 @@ class CategoryFilterState extends State<CategoryFilter>
       header = Container(
         // color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [CloseButton()]),
       );
     }
