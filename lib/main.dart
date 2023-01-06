@@ -35,7 +35,11 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return Authenticator(
-          initialStep: AuthenticatorStep.signIn,
+          authenticatorBuilder: (p0, p1) {
+            // p1.changeStep(AuthenticatorStep.);
+            p1.dispose();
+          },
+          // initialStep: AuthenticatorStep.signIn,
           child: MultiProvider(
             providers: [
               ChangeNotifierProvider.value(

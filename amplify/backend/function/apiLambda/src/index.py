@@ -26,7 +26,7 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        #TOdO include attributions and html "attribution": "google"
+        # TOdO include attributions and html "attribution": "google"
         'body': json.dumps(
             {'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'i-am-id',
              'description': 'i am description', "photos": [photo_binary],
