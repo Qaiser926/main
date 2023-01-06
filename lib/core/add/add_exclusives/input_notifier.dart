@@ -70,6 +70,8 @@ class AddEANotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  Status? status;
+
   bool isAddressInvalid = false;
 
   List<Image> loadedImages = [];
@@ -102,6 +104,11 @@ class AddEANotifier extends ChangeNotifier {
     categoryId = detailedEventOrActivity.categoryId;
     mainCategoryId = mapSubcategoryToCategory(
         subCategoryId: detailedEventOrActivity.categoryId);
+    if (detailedEventOrActivity.status != null) {
+      status = detailedEventOrActivity.status;
+    } else {
+      status = Status.LIVE;
+    }
   }
 
   void handleSearchenhancement(SearchEnhancement? searchEnhancement) {
@@ -188,6 +195,11 @@ class AddEANotifier extends ChangeNotifier {
     } else {
       ownedOrForeign = 1;
     }
+  }
+
+  set changeStatus(receivedStatus) {
+    status = receivedStatus;
+    notifyListeners();
   }
 
   void changeSwitch({required int index, required List<bool> changingList}) {

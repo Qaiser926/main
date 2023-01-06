@@ -5,11 +5,11 @@ import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/image_picker.dart';
 import 'package:othia/core/add/add_exclusives/level_picker.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
-
 
 class DetailsPage extends StatelessWidget {
   AddEANotifier inputNotifier;
@@ -54,6 +54,7 @@ class DetailsPage extends StatelessWidget {
             buildWebsiteBox(
               context,
             ),
+            if (inputNotifier.times[0]) buildTicketStatusBox(),
             getHeadlineWithInfoDialog(
                 context: context,
                 infoText:
@@ -145,5 +146,76 @@ class DetailsPage extends StatelessWidget {
               ),
       );
     });
+  }
+
+  Consumer buildTicketStatusBox() {
+    // TODO
+    Map stati = {
+      0: {
+        "function": () {
+          inputNotifier.changeStatus = Status.LIVE;
+        },
+        "caption": "Tickets available"
+      },
+      1: {
+        "function": () {
+          inputNotifier.changeStatus = Status.SOLDOUT;
+        },
+        "caption": "Sold out"
+      },
+      2: {
+        "function": () {
+          inputNotifier.changeStatus = Status.CANCELED;
+        },
+        "caption": "Canceled"
+      },
+    };
+    return Consumer<AddEANotifier>(
+        builder: (context, inputNotifierConsumer, child) {
+      return Column(
+        children: [
+          getHeadline(
+              context: context,
+              caption: Text("Location",
+                  style: Theme.of(context).textTheme.headlineLarge)),
+          Padding(
+              padding: EdgeInsets.only(bottom: 5.h),
+              child: Row(
+                children: [
+                  getStatusButton(
+                      context: context,
+                      caption: stati[0]["caption"],
+                      index: 0,
+                      onPressed: stati[0]["function"]),
+                  getStatusButton(
+                      context: context,
+                      caption: stati[1]["caption"],
+                      index: 1,
+                      onPressed: stati[1]["function"]),
+                  getStatusButton(
+                      context: context,
+                      caption: stati[2]["caption"],
+                      index: 2,
+                      onPressed: stati[2]["function"]),
+                ],
+              ))
+        ],
+      );
+    });
+  }
+
+  Padding getStatusButton(
+      {required int index,
+      required Function onPressed,
+      required String caption,
+      required BuildContext context}) {
+    return Padding(
+        padding: int == 0 ? EdgeInsets.all(0) : EdgeInsets.only(left: 10.h),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.background),
+          onPressed: () => onPressed(),
+          child: Text(caption),
+        ));
   }
 }

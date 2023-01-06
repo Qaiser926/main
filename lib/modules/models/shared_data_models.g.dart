@@ -18,8 +18,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) => Location(
       postalCode: json['postalCode'] as String?,
     );
 
-Map<String, dynamic> _$LocationToJson(Location instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'isOnline': instance.isOnline,
       'streetNumber': instance.streetNumber,
       'street': instance.street,
