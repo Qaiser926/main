@@ -23,12 +23,14 @@ class DetailedEventOrActivity {
   final Location location;
   final Attribution? attribution;
   final SearchEnhancement? searchEnhancement;
+  final bool ownerIsOrganizer;
 
   DetailedEventOrActivity(
       {required this.time,
       required this.location,
       required this.title,
       required this.id,
+      required this.ownerIsOrganizer,
       required this.categoryId,
       required this.ownerId,
       this.searchEnhancement,

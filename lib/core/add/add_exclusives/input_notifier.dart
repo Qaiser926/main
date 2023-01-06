@@ -80,6 +80,7 @@ class AddEANotifier extends ChangeNotifier {
   // TODO when extracting interpret first  bool as real location and second as online
   final List<bool> locationType = <bool>[true, false];
   final List<bool> privateOrPublic = <bool>[true, false];
+  final List<bool> ownedOrForeign = <bool>[true, false];
 
   void initializeWithExistingEA(
       {required DetailedEventOrActivity detailedEventOrActivity}) {
@@ -89,6 +90,7 @@ class AddEANotifier extends ChangeNotifier {
     handleTimes(detailedEventOrActivity.time);
     handleLocation(detailedEventOrActivity.location);
     handleSearchenhancement(detailedEventOrActivity.searchEnhancement);
+    handleOwnerId(detailedEventOrActivity);
   }
 
   void handleSeveral(DetailedEventOrActivity detailedEventOrActivity) {
@@ -180,6 +182,14 @@ class AddEANotifier extends ChangeNotifier {
     }
   }
 
+  void handleOwnerId(DetailedEventOrActivity detailedEventOrActivity) {
+    if (detailedEventOrActivity.ownerIsOrganizer) {
+      ownedOrForeign = 0;
+    } else {
+      ownedOrForeign = 1;
+    }
+  }
+
   void changeSwitch({required int index, required List<bool> changingList}) {
     for (int i = 0; i < changingList.length; i++) {
       changingList[i] = i == index;
@@ -195,12 +205,16 @@ class AddEANotifier extends ChangeNotifier {
     changeSwitch(index: index, changingList: privateOrPublic);
   }
 
+  void changeOwnedOrForeign(index, BuildContext context) {
+    changeSwitch(index: index, changingList: ownedOrForeign);
+  }
+
   void changeLocationType(int index, BuildContext context) {
     // there can be either an address associated or the event/ activity is online -> make user aware
     bool isAddressSet = (streetNumber != null) |
-    (street != null) |
-    (city != null) |
-    (postalCode != null);
+        (street != null) |
+        (city != null) |
+        (postalCode != null);
 
     bool addressCase = isAddressSet & (index == 1);
     if (addressCase) {
@@ -246,6 +260,10 @@ class AddEANotifier extends ChangeNotifier {
     changeSwitch(index: index, changingList: times);
   }
 
+  set ownedOrForeign(index) {
+    changeSwitch(index: index, changingList: ownedOrForeign);
+  }
+
   List getOpeningTimesList() {
     return openingTimes[activatedWeekDay.toString()]!;
   }
@@ -255,7 +273,7 @@ class AddEANotifier extends ChangeNotifier {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
         // first is opening time, the second closing time
         if ((openingTimesList[i][0] == null) |
-        (openingTimesList[i][1] == null)) {
+            (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);
         }
       }

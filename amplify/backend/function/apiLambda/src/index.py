@@ -36,7 +36,8 @@ def handler(event, context):
                             "searchEnhancement": {"cognitiveLevel": 2, "physicalLevel": 0, "socialLevel": None,
                                                   "singlePersonEligibility": None, "coupleEligibility": 3,
                                                   "friendGroupEligibility": 0, "professionalEligibility": None},
-
+                            # states if the user's profile is shown --> add to database
+                            "ownerIsOrganizer": True,
                              "prices": prices,
                             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
                                          "locationTitle": 'Die Pumpe', "street": "abc street", 'locationId': "loc_id", "postalCode": "12345",

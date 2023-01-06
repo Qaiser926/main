@@ -26,7 +26,9 @@ class PublishPage extends StatelessWidget {
                       context: context,
                       infoText:
                           "Public events or activities will be shown on our platform whereas private event or activities can only be accessed via a sharing url",
-                      caption: "Visibility"),
+                      caption: inputNotifierConsumer.times[0]
+                          ? "Event Visibility"
+                          : "Activity Visibility"),
                   getSwitch(
                       context: context,
                       onPressed: inputNotifier.changePrivatePublic,
@@ -39,6 +41,25 @@ class PublishPage extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(5.h),
                           child: Text('Private'),
+                        ),
+                      ]),
+                  getHeadlineWithInfoDialog(
+                      context: context,
+                      infoText:
+                          "If you do not want your profile to be shown at the detail page of the event or activity, for instance, if you are not the organizer, you can change the status here",
+                      caption: "Profile Visibility"),
+                  getSwitch(
+                      context: context,
+                      onPressed: inputNotifier.changeOwnedOrForeign,
+                      isSelected: inputNotifierConsumer.ownedOrForeign,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text("Show Profile"),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5.h),
+                          child: Text('Hide Profile'),
                         ),
                       ]),
                   getHeadlineWithInfoDialog(

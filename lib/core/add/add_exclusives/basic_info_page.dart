@@ -17,23 +17,28 @@ class BasicInfoPage extends StatefulWidget {
   BasicInfoPage(this.inputNotifier);
 
   @override
-  State<BasicInfoPage> createState() => _BasicInfoPageState();
+  State<BasicInfoPage> createState() => _BasicInfoPageState(inputNotifier);
 }
 
 class _BasicInfoPageState extends State<BasicInfoPage> {
   TextEditingController _textController = TextEditingController();
 
+  AddEANotifier inputNotifier;
   String? mainCategoryId;
   String? categoryId;
   String? title;
+
+  _BasicInfoPageState(this.inputNotifier);
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final snackBar = SnackBar(
-        content: const Text(
-            'You can add private and public events and activities, also if you are not the official organizer'),
+        content: inputNotifier.eAId == null
+            ? Text(
+                'You can add private and public events and activities, also if you are not the official organizer')
+            : Text('You can submit your changes in the last process step'),
         duration: Duration(seconds: 7, milliseconds: 500),
       );
       if (!Provider.of<AddEANotifier>(context, listen: false).snackBarShown) {
