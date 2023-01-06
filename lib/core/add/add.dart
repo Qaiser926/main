@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
-import 'package:othia/core/add/add_exclusives/details_page.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
-import 'package:othia/core/add/add_exclusives/publish_page.dart';
+import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/utils/services/rest-api/rest_api_service.dart';
+import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ import 'add_exclusives/input_notifier.dart';
 
 // TODO adjustments for modifying an event
 
-class Add extends StatelessWidget {
+class Add extends StatefulWidget {
   Add({super.key});
 
   static const int firstPage = 0;
@@ -22,28 +23,54 @@ class Add extends StatelessWidget {
 
   static final PageController pageController =
       PageController(initialPage: firstPage);
-  SwitchAddPageNotifier switchPagesNotifier = SwitchAddPageNotifier(firstPage);
+
+  @override
+  State<Add> createState() => _AddState();
+}
+
+class _AddState extends State<Add> {
+  SwitchAddPageNotifier switchPagesNotifier =
+      SwitchAddPageNotifier(Add.firstPage);
 
   AddEANotifier inputNotifier = AddEANotifier();
+  late Future<Object> detailedEventOrActivity;
+  late SwitchPages switchPages;
 
   // TODO
   bool isLoggedIn = true;
+
+  @override
+  void initState() {
+    switchPages = SwitchPages(
+        inputNotifier: inputNotifier,
+        pageController: Add.pageController,
+        switchPagesNotifier: switchPagesNotifier);
+    // ensure that the call is only one time made
+    if (!inputNotifier.snackBarShown) {
+      try {
+        String eAId = Get.arguments[NavigatorConstants.EventActivityId];
+        detailedEventOrActivity =
+            RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
+        inputNotifier.eAId =
+            "proxy"; // is overwritten with real eAId if user is modifying
+      } on NoSuchMethodError catch (e) {
+        // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
+      }
+    }
+    super.initState();
+  }
 
   void backFunction() {
     int targetPage = switchPagesNotifier.currentPage - 1;
     if (targetPage < 0) {
       Get.back();
     } else {
-      pageController.jumpToPage(targetPage);
+      Add.pageController.jumpToPage(targetPage);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    SwitchPages switchPages = SwitchPages(
-        inputNotifier: inputNotifier,
-        pageController: pageController,
-        switchPagesNotifier: switchPagesNotifier);
     return WillPopScope(
         onWillPop: () async {
           backFunction();
@@ -96,17 +123,15 @@ class Add extends StatelessWidget {
   }
 
   Widget getLoggedInBody(SwitchPages switchPages) {
-    return PageView(
-        onPageChanged: ((targetPage) {
-          FocusManager.instance.primaryFocus?.unfocus(); // dismiss keyboard
-          switchPages.switchPageBehaviour(targetPage);
-        }),
-        controller: pageController,
-        children: [
-          BasicInfoPage(inputNotifier),
-          DetailsPage(inputNotifier),
-          PublishPage(inputNotifier),
-        ]);
+    // it is first tested if an existing event or acitvity is modifier or if a new one is added
+    return inputNotifier.eAId != null
+        ? KeepAliveFutureBuilder(
+            future: detailedEventOrActivity,
+            builder: (context, snapshot) {
+              return snapshotHandler(snapshot, getFutureHandlerPageView,
+                  [inputNotifier, switchPages]);
+            })
+        : getFutureHandlerPageView(inputNotifier, switchPages, {});
   }
 
   Widget getFloatingButtons(SwitchPages switchPages) {
@@ -115,11 +140,11 @@ class Add extends StatelessWidget {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          switchPageConsumer.currentPage == firstPage
+          switchPageConsumer.currentPage == Add.firstPage
               ? const SizedBox.shrink()
               : getNavigationButton(
                   Icon(Icons.arrow_back), switchPages.previousPage, context),
-          switchPageConsumer.currentPage == lastPage
+          switchPageConsumer.currentPage == Add.lastPage
               ? getNavigationButton(Text("Publish"), publishFunction, context)
               : getNavigationButton(
                   Icon(Icons.arrow_forward), switchPages.nextPage, context),
@@ -133,6 +158,7 @@ class Add extends StatelessWidget {
       required SwitchAddPageNotifier switchPageModel,
       required int index}) {
     Map<int, String> navigationCaptions = {
+      // TODO
       0: "Informationen",
       1: "Details",
       2: "Publish"
@@ -141,7 +167,7 @@ class Add extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.all(10.h),
         child: GestureDetector(
-          onTap: () => {pageController.jumpToPage(index)},
+          onTap: () => {Add.pageController.jumpToPage(index)},
           child: Container(
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index

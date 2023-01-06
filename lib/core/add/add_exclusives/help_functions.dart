@@ -1,10 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
+import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
+import 'package:othia/core/add/add_exclusives/details_page.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
+import 'package:othia/core/add/add_exclusives/publish_page.dart';
+import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/services/rest-api/geocoding.dart';
 import 'package:provider/provider.dart';
+
+Widget getFutureHandlerPageView(
+  AddEANotifier inputNotifier,
+  SwitchPages switchPages,
+  Map<String, dynamic> jsonResponse,
+) {
+  handleJsonData(jsonResponse: jsonResponse, inputNotifier: inputNotifier);
+  return PageView(
+      onPageChanged: ((targetPage) {
+        FocusManager.instance.primaryFocus?.unfocus(); // dismiss keyboard
+        switchPages.switchPageBehaviour(targetPage);
+      }),
+      controller: Add.pageController,
+      children: [
+        BasicInfoPage(inputNotifier),
+        DetailsPage(inputNotifier),
+        PublishPage(inputNotifier),
+      ]);
+}
+
+void handleJsonData(
+    {required Map<String, dynamic> jsonResponse,
+    required AddEANotifier inputNotifier}) {
+  if (jsonResponse.isNotEmpty) {
+    DetailedEventOrActivity detailedEventOrActivity =
+        DetailedEventOrActivity.fromJson(jsonResponse);
+    inputNotifier.initializeWithExistingEA(
+        detailedEventOrActivity: detailedEventOrActivity);
+  }
+}
 
 Column getHeadline({required BuildContext context, required Widget caption}) {
   return Column(
@@ -138,7 +173,7 @@ class SwitchPages {
     // case switching from basic info page to additional info page
     if ((switchPagesNotifier.currentPage == 0) & (targetPage == 1)) {
       // request latitude and longitude for stated address and test if a result was found only if not online is selected
-      if (inputNotifier.locationType[0]) {
+      if (inputNotifier.locationType[0] & (inputNotifier.latLong == null)) {
         getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
           if (latLong != null) {
             inputNotifier.latLong = latLong; // save requested lat/ long
@@ -166,7 +201,6 @@ class SwitchPages {
       switchPagesNotifier.currentPage = targetPage;
     }
   }
-
 
   void nextPage(BuildContext context) {
     pageController.nextPage(duration: animationDuration, curve: animationCurve);

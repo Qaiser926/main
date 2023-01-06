@@ -15,6 +15,10 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
       id: json['id'] as String,
       categoryId: json['categoryId'] as String,
       ownerId: json['ownerId'] as String,
+      searchEnhancement: json['searchEnhancement'] == null
+          ? null
+          : SearchEnhancement.fromJson(
+              json['searchEnhancement'] as Map<String, dynamic>),
       eventSeriesId: json['eventSeriesId'] as String?,
       photos:
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -48,6 +52,7 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'time': instance.time,
       'location': instance.location,
       'attribution': _$AttributionEnumMap[instance.attribution],
+      'searchEnhancement': instance.searchEnhancement,
     };
 
 const _$StatusEnumMap = {

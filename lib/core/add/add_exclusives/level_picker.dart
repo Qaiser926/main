@@ -79,91 +79,87 @@ class LevelPicker extends StatelessWidget {
             sliderActivated: inputNotifierConsumer.cognitiveLevelActivated),
         buildSlider(
             sliderValue: transformIntToSlider(
-                inputNotifierConsumer.singlePersonEligibilityLevel,
+                inputNotifierConsumer.singlePersonEligibility,
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.singlePersonEligibility,
             onChanged: (double sliderInput) {
-              inputNotifier.singlePersonEligibilityLevel =
-                  transformSliderValueToInt(
-                      sliderInput, LevelType.personEligibility);
-              inputNotifier.singlePersonEligibilityLevelActivated = true;
+              inputNotifier.singlePersonEligibility = transformSliderValueToInt(
+                  sliderInput, LevelType.personEligibility);
+              inputNotifier.singlePersonEligibilityActivated = true;
               inputNotifier.notifyListeners();
             },
             context: context,
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.singlePersonEligibilityInfo,
             resetFunction: () {
-              inputNotifier.singlePersonEligibilityLevelActivated = false;
-              inputNotifier.singlePersonEligibilityLevel = 0;
+              inputNotifier.singlePersonEligibilityActivated = false;
+              inputNotifier.singlePersonEligibility = 0;
               inputNotifier.notifyListeners();
             },
             sliderActivated:
-                inputNotifierConsumer.singlePersonEligibilityLevelActivated),
+                inputNotifierConsumer.singlePersonEligibilityActivated),
         buildSlider(
             sliderValue: transformIntToSlider(
-                inputNotifierConsumer.coupleEligibilityLevel,
+                inputNotifierConsumer.coupleEligibility,
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.coupleEligibility,
             onChanged: (double sliderInput) {
-              inputNotifier.coupleEligibilityLevel = transformSliderValueToInt(
+              inputNotifier.coupleEligibility = transformSliderValueToInt(
                   sliderInput, LevelType.personEligibility);
-              inputNotifier.coupleEligibilityLevelActivated = true;
+              inputNotifier.coupleEligibilityActivated = true;
               inputNotifier.notifyListeners();
             },
             context: context,
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.coupleEligibilityInfo,
             resetFunction: () {
-              inputNotifier.coupleEligibilityLevelActivated = false;
-              inputNotifier.coupleEligibilityLevel = 0;
+              inputNotifier.coupleEligibilityActivated = false;
+              inputNotifier.coupleEligibility = 0;
               inputNotifier.notifyListeners();
             },
-            sliderActivated:
-                inputNotifierConsumer.coupleEligibilityLevelActivated),
+            sliderActivated: inputNotifierConsumer.coupleEligibilityActivated),
         buildSlider(
             sliderValue: transformIntToSlider(
-                inputNotifierConsumer.friendGroupEligibilityLevel,
+                inputNotifierConsumer.friendGroupEligibility,
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.friendGroupEligibility,
             onChanged: (double sliderInput) {
-              inputNotifier.friendGroupEligibilityLevel =
-                  transformSliderValueToInt(
-                      sliderInput, LevelType.personEligibility);
-              inputNotifier.friendGroupEligibilityLevelActivated = true;
+              inputNotifier.friendGroupEligibility = transformSliderValueToInt(
+                  sliderInput, LevelType.personEligibility);
+              inputNotifier.friendGroupEligibilityActivated = true;
               inputNotifier.notifyListeners();
             },
             context: context,
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.friendGroupEligibilityInfo,
             resetFunction: () {
-              inputNotifier.friendGroupEligibilityLevelActivated = false;
-              inputNotifier.friendGroupEligibilityLevel = 0;
+              inputNotifier.friendGroupEligibilityActivated = false;
+              inputNotifier.friendGroupEligibility = 0;
               inputNotifier.notifyListeners();
             },
             sliderActivated:
-                inputNotifierConsumer.friendGroupEligibilityLevelActivated),
+                inputNotifierConsumer.friendGroupEligibilityActivated),
         buildSlider(
             sliderValue: transformIntToSlider(
-                inputNotifierConsumer.professionalEligibilityLevel,
+                inputNotifierConsumer.professionalEligibility,
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.professionalEligibility,
             onChanged: (double sliderInput) {
-              inputNotifier.professionalEligibilityLevel =
-                  transformSliderValueToInt(
-                      sliderInput, LevelType.personEligibility);
-              inputNotifier.professionalEligibilityLevelActivated = true;
+              inputNotifier.professionalEligibility = transformSliderValueToInt(
+                  sliderInput, LevelType.personEligibility);
+              inputNotifier.professionalEligibilityActivated = true;
               inputNotifier.notifyListeners();
             },
             context: context,
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.professionalEligibilityInfo,
             resetFunction: () {
-              inputNotifier.professionalEligibilityLevelActivated = false;
-              inputNotifier.professionalEligibilityLevel = 0;
+              inputNotifier.professionalEligibilityActivated = false;
+              inputNotifier.professionalEligibility = 0;
               inputNotifier.notifyListeners();
             },
             sliderActivated:
-                inputNotifierConsumer.professionalEligibilityLevelActivated),
+                inputNotifierConsumer.professionalEligibilityActivated),
       ]);
     });
   }

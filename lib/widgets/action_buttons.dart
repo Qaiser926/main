@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
+import 'package:othia/constants/app_constants.dart';
+import 'package:othia/core/add/add.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/ui/future_service.dart';
@@ -117,8 +120,10 @@ Widget getSettingsButton({
       eASummary: eASummary,
       functionArguments: {},
       iconColor: Theme.of(context).colorScheme.primary,
-      // TODO forward with event id to add/ modify event
-      onPressedFunction: () => {});
+      onPressedFunction: () => {
+            Get.to(Add(),
+                arguments: {NavigatorConstants.EventActivityId: eASummary.id})
+          });
 }
 
 Widget getSettingsButtonDisabled({

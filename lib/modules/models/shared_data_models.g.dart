@@ -15,15 +15,18 @@ Location _$LocationFromJson(Map<String, dynamic> json) => Location(
       locationTitle: json['locationTitle'] as String?,
       latitude: (json['latitude'] as num?)?.toDouble(),
       longitude: (json['longitude'] as num?)?.toDouble(),
+      postalCode: json['postalCode'] as String?,
     );
 
-Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+Map<String, dynamic> _$LocationToJson(Location instance) =>
+    <String, dynamic>{
       'isOnline': instance.isOnline,
       'streetNumber': instance.streetNumber,
       'street': instance.street,
       'city': instance.city,
       'locationTitle': instance.locationTitle,
       'locationId': instance.locationId,
+      'postalCode': instance.postalCode,
       'longitude': instance.longitude,
       'latitude': instance.latitude,
     };
@@ -49,6 +52,28 @@ const _$OpeningTimeCodeEnumMap = {
   OpeningTimeCode.openSoon: 'openSoon',
   OpeningTimeCode.closedSoon: 'closedSoon',
 };
+
+SearchEnhancement _$SearchEnhancementFromJson(Map<String, dynamic> json) =>
+    SearchEnhancement(
+      cognitiveLevel: json['cognitiveLevel'] as int?,
+      physicalLevel: json['physicalLevel'] as int?,
+      socialLevel: json['socialLevel'] as int?,
+      singlePersonEligibility: json['singlePersonEligibility'] as int?,
+      coupleEligibility: json['coupleEligibility'] as int?,
+      friendGroupEligibility: json['friendGroupEligibility'] as int?,
+      professionalEligibility: json['professionalEligibility'] as int?,
+    );
+
+Map<String, dynamic> _$SearchEnhancementToJson(SearchEnhancement instance) =>
+    <String, dynamic>{
+      'cognitiveLevel': instance.cognitiveLevel,
+      'physicalLevel': instance.physicalLevel,
+      'socialLevel': instance.socialLevel,
+      'singlePersonEligibility': instance.singlePersonEligibility,
+      'coupleEligibility': instance.coupleEligibility,
+      'friendGroupEligibility': instance.friendGroupEligibility,
+      'professionalEligibility': instance.professionalEligibility,
+    };
 
 Coordinates _$CoordinatesFromJson(Map<String, dynamic> json) => Coordinates(
       latitude: (json['latitude'] as num).toDouble(),

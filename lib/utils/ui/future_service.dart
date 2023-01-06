@@ -31,7 +31,7 @@ Widget snapshotHandler(
           return Function.apply(function, functionArguments);
           return function(decodedJson);
         } catch (e) {
-          //TODO catch more specifi and handle accordingly
+          //TODO catch more specific and handle accordingly
           throw e;
         }
       }

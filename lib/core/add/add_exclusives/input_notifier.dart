@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
+import 'package:othia/utils/services/data_handling/data_handling.dart';
+
+import '../../../modules/models/detailed_event/detailed_event.dart';
 
 class AddEANotifier extends ChangeNotifier {
+  // is also proxy for whether an event/ activity is added or modified
+  String? eAId;
+
   String? title;
 
   String? description;
@@ -35,14 +43,14 @@ class AddEANotifier extends ChangeNotifier {
   bool cognitiveLevelActivated = false;
   int socialLevel = 0;
   bool socialLevelActivated = false;
-  int singlePersonEligibilityLevel = 0;
-  bool singlePersonEligibilityLevelActivated = false;
-  int coupleEligibilityLevel = 0;
-  bool coupleEligibilityLevelActivated = false;
-  int friendGroupEligibilityLevel = 0;
-  bool friendGroupEligibilityLevelActivated = false;
-  int professionalEligibilityLevel = 0;
-  bool professionalEligibilityLevelActivated = false;
+  int singlePersonEligibility = 0;
+  bool singlePersonEligibilityActivated = false;
+  int coupleEligibility = 0;
+  bool coupleEligibilityActivated = false;
+  int friendGroupEligibility = 0;
+  bool friendGroupEligibilityActivated = false;
+  int professionalEligibility = 0;
+  bool professionalEligibilityActivated = false;
 
   bool showCopyrightErrorMessage = false;
   bool copyRightVerified = false;
@@ -73,6 +81,105 @@ class AddEANotifier extends ChangeNotifier {
   final List<bool> locationType = <bool>[true, false];
   final List<bool> privateOrPublic = <bool>[true, false];
 
+  void initializeWithExistingEA(
+      {required DetailedEventOrActivity detailedEventOrActivity}) {
+    handleSeveral(detailedEventOrActivity);
+    handleImage(detailedEventOrActivity);
+    handlePrices(detailedEventOrActivity.prices);
+    handleTimes(detailedEventOrActivity.time);
+    handleLocation(detailedEventOrActivity.location);
+    handleSearchenhancement(detailedEventOrActivity.searchEnhancement);
+  }
+
+  void handleSeveral(DetailedEventOrActivity detailedEventOrActivity) {
+    eAId = detailedEventOrActivity.id;
+    description = detailedEventOrActivity.description;
+    websiteUrl = detailedEventOrActivity.websiteUrl;
+    ticketUrl = detailedEventOrActivity.ticketUrl;
+    title = detailedEventOrActivity.title;
+    categoryId = detailedEventOrActivity.categoryId;
+    mainCategoryId = mapSubcategoryToCategory(
+        subCategoryId: detailedEventOrActivity.categoryId);
+  }
+
+  void handleSearchenhancement(SearchEnhancement? searchEnhancement) {
+    if (searchEnhancement != null) {
+      if (searchEnhancement.cognitiveLevel != null) {
+        cognitiveLevel = searchEnhancement.cognitiveLevel!;
+        cognitiveLevelActivated = true;
+      }
+      if (searchEnhancement.socialLevel != null) {
+        socialLevel = searchEnhancement.socialLevel!;
+        socialLevelActivated = true;
+      }
+      if (searchEnhancement.physicalLevel != null) {
+        physicalLevel = searchEnhancement.physicalLevel!;
+        physicalLevelActivated = true;
+      }
+      if (searchEnhancement.singlePersonEligibility != null) {
+        singlePersonEligibility = searchEnhancement.singlePersonEligibility!;
+        singlePersonEligibilityActivated = true;
+      }
+      if (searchEnhancement.coupleEligibility != null) {
+        coupleEligibility = searchEnhancement.coupleEligibility!;
+        coupleEligibilityActivated = true;
+      }
+      if (searchEnhancement.friendGroupEligibility != null) {
+        friendGroupEligibility = searchEnhancement.friendGroupEligibility!;
+        friendGroupEligibilityActivated = true;
+      }
+      if (searchEnhancement.professionalEligibility != null) {
+        professionalEligibility = searchEnhancement.professionalEligibility!;
+        professionalEligibilityActivated = true;
+      }
+    }
+  }
+
+  void handleImage(DetailedEventOrActivity detailedEventOrActivity) {
+    if (detailedEventOrActivity.photos != null) {
+      image = detailedEventOrActivity.photos![0];
+      copyRightVerified = true;
+    }
+  }
+
+  void handlePrices(List<double>? existingPrices) {
+    if (existingPrices != null) {
+      prices = [];
+      for (int i = 0; i < existingPrices.length; i++) {
+        prices.add(InputPrice(price: existingPrices[i]));
+      }
+      if (prices.isEmpty) prices.add(InputPrice());
+    }
+  }
+
+  void handleTimes(Time existingTime) {
+    if (existingTime.openingTime != null) {
+      // set the list with bools
+      times = 1;
+      openingTimes = existingTime.openingTime!;
+    } else {
+      times = 0;
+      startDateTime = getLocalDateTime(dateTimeUtc: existingTime.startTimeUtc!);
+      if (existingTime.endTimeUtc != null) {
+        endDateTime = getLocalDateTime(dateTimeUtc: existingTime.endTimeUtc!);
+      }
+    }
+  }
+
+  void handleLocation(Location existingLocation) {
+    if (existingLocation.isOnline) {
+      locationType = 1;
+    } else {
+      locationType = 0;
+      street = existingLocation.street;
+      city = existingLocation.city;
+      streetNumber = existingLocation.streetNumber;
+      postalCode = existingLocation.postalCode;
+      latLong = latLng.LatLng(
+          existingLocation.latitude!, existingLocation.longitude!);
+    }
+  }
+
   void changeSwitch({required int index, required List<bool> changingList}) {
     for (int i = 0; i < changingList.length; i++) {
       changingList[i] = i == index;
@@ -91,9 +198,9 @@ class AddEANotifier extends ChangeNotifier {
   void changeLocationType(int index, BuildContext context) {
     // there can be either an address associated or the event/ activity is online -> make user aware
     bool isAddressSet = (streetNumber != null) |
-        (street != null) |
-        (city != null) |
-        (postalCode != null);
+    (street != null) |
+    (city != null) |
+    (postalCode != null);
 
     bool addressCase = isAddressSet & (index == 1);
     if (addressCase) {
@@ -101,7 +208,7 @@ class AddEANotifier extends ChangeNotifier {
           context: context,
           showFirstMessage: addressCase,
           firstText:
-              "Switching will cause that the address will not be shown to users as your event or activity will be considered online",
+          "Switching will cause that the address will not be shown to users as your event or activity will be considered online",
           secondText: "",
           onPressed: () {
             locationType = index;
@@ -124,7 +231,7 @@ class AddEANotifier extends ChangeNotifier {
 
 // time related
 
-  Map<String, List<List<double?>>> openingTimes = {
+  Map openingTimes = {
     "1": [],
     "2": [],
     "3": [],
@@ -148,7 +255,7 @@ class AddEANotifier extends ChangeNotifier {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
         // first is opening time, the second closing time
         if ((openingTimesList[i][0] == null) |
-            (openingTimesList[i][1] == null)) {
+        (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);
         }
       }
@@ -181,7 +288,7 @@ class AddEANotifier extends ChangeNotifier {
       return false;
     } else {
       if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
-      (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
+          (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
         return true;
       } else {
         return false;
@@ -208,7 +315,8 @@ class AddEANotifier extends ChangeNotifier {
     // there can be either opening times or start/ end time associated -> make user aware
     bool isOpeningTimesModified = false;
     for (var openingTimesList in openingTimes.values) {
-      if (openingTimesList.isNotEmpty) isOpeningTimesModified = true;
+      if (openingTimesList?.isNotEmpty ?? (openingTimesList != null))
+        isOpeningTimesModified = true;
     }
     bool isStartTimeModified = startDateTime != null;
     bool caseOpeningTimesReset = isOpeningTimesModified & (index == 0);
@@ -218,9 +326,9 @@ class AddEANotifier extends ChangeNotifier {
           context: context,
           showFirstMessage: caseStartTimeReset,
           firstText:
-              "Switching will cause that opening times instead of start times are considered",
+          "Switching will cause that opening times instead of start times are considered",
           secondText:
-              "Switching will cause that a start time is considered and the opening times are neglected",
+          "Switching will cause that a start time is considered and the opening times are neglected",
           onPressed: () {
             times = index;
             // Get.back();
@@ -238,34 +346,33 @@ class AddEANotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void notifyUsers(
-      {required BuildContext context,
-      required bool showFirstMessage,
-      required String firstText,
-      required String secondText,
-      required Function() onPressed}) {
+  void notifyUsers({required BuildContext context,
+    required bool showFirstMessage,
+    required String firstText,
+    required String secondText,
+    required Function() onPressed}) {
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              content: showFirstMessage ? Text(firstText) : Text(secondText),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(14),
-                    child: const Text("Cancel"),
-                  ),
-                ),
-                TextButton(
-                  onPressed: onPressed,
-                  child: Container(
-                    padding: const EdgeInsets.all(14),
-                    child: const Text("Continue"),
-                  ),
-                ),
-              ],
-            ));
+          content: showFirstMessage ? Text(firstText) : Text(secondText),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                child: const Text("Cancel"),
+              ),
+            ),
+            TextButton(
+              onPressed: onPressed,
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                child: const Text("Continue"),
+              ),
+            ),
+          ],
+        ));
   }
 }

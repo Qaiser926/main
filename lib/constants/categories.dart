@@ -18,6 +18,17 @@ final Map<String, List<String>> categoryIdToSubcategoryIds = {
   Categories.diverse: Subcategories.diverse
 };
 
+String? mapSubcategoryToCategory({required String subCategoryId}) {
+  for (var categoryId in categoryIdToSubcategoryIds.keys) {
+    for (var i = 0; i < categoryIdToSubcategoryIds[categoryId]!.length; i++) {
+      if (subCategoryId == categoryIdToSubcategoryIds[categoryId]![i]) {
+        return categoryId;
+      }
+    }
+  }
+  ;
+}
+
 class Categories {
   static final Categories _singleton = Categories._internal();
 

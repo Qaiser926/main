@@ -22,6 +22,7 @@ class DetailedEventOrActivity {
   final Time time;
   final Location location;
   final Attribution? attribution;
+  final SearchEnhancement? searchEnhancement;
 
   DetailedEventOrActivity(
       {required this.time,
@@ -30,15 +31,16 @@ class DetailedEventOrActivity {
       required this.id,
       required this.categoryId,
       required this.ownerId,
+      this.searchEnhancement,
       this.eventSeriesId,
       this.photos,
       this.description,
-    this.prices,
-    this.ticketUrl,
-    this.websiteUrl,// either ticket_url or website_url
-    this.status,
-    required this.isOnline,
-    this.attribution});
+      this.prices,
+      this.ticketUrl,
+      this.websiteUrl, // either ticket_url or website_url
+      this.status,
+      required this.isOnline,
+      this.attribution});
 
   factory DetailedEventOrActivity.fromJson(Map<String, dynamic> json) =>
       _$DetailedEventOrActivityFromJson(json);

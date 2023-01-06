@@ -29,6 +29,7 @@ class EAImagePicker extends StatelessWidget {
                 final bytes = File(path).readAsBytesSync();
                 final userProvidedImage = base64Encode(bytes);
                 inputNotifierConsumer.image = userProvidedImage;
+                inputNotifierConsumer.copyRightVerified = false;
                 inputNotifierConsumer.notifyListeners();
               }
             },
