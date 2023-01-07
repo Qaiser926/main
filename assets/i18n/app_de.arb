@@ -72,6 +72,10 @@
       }
     }
   },
+
+  "statusCancelled": "Abgesagt",
+  "statusSoldOut": "Ausverkauft",
+  "statusLive": "Laufend",
   "cancelled": "ABGESAGT",
   "soldOut": "AUSVERKAUFT",
   "description": "Beschreibung",

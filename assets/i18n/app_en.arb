@@ -74,6 +74,9 @@
       }
     }
   },
+  "statusCancelled": "Cancelled",
+  "statusSoldOut": "Sold Out",
+  "statusLive": "Live",
   "cancelled": "CANCELLED",
   "soldOut": "SOLD OUT",
   "description": "About",

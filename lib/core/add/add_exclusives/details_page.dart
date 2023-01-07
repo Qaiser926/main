@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/image_picker.dart';
@@ -54,7 +55,7 @@ class DetailsPage extends StatelessWidget {
             buildWebsiteBox(
               context,
             ),
-            if (inputNotifier.times[0]) buildTicketStatusBox(),
+            if (inputNotifier.times[0]) buildTicketStatusBox(context),
             getHeadlineWithInfoDialog(
                 context: context,
                 infoText:
@@ -148,26 +149,25 @@ class DetailsPage extends StatelessWidget {
     });
   }
 
-  Consumer buildTicketStatusBox() {
-    // TODO
+  Consumer buildTicketStatusBox(BuildContext context) {
     Map stati = {
       0: {
         "function": () {
           inputNotifier.changeStatus = Status.LIVE;
         },
-        "caption": "Tickets available"
+        "caption": AppLocalizations.of(context)!.statusLive,
       },
       1: {
         "function": () {
           inputNotifier.changeStatus = Status.SOLDOUT;
         },
-        "caption": "Sold out"
+        "caption": AppLocalizations.of(context)!.statusSoldOut,
       },
       2: {
         "function": () {
           inputNotifier.changeStatus = Status.CANCELED;
         },
-        "caption": "Canceled"
+        "caption": AppLocalizations.of(context)!.statusCancelled,
       },
     };
     return Consumer<AddEANotifier>(
@@ -176,24 +176,29 @@ class DetailsPage extends StatelessWidget {
         children: [
           getHeadline(
               context: context,
-              caption: Text("Location",
+              caption: Text("Event Status",
                   style: Theme.of(context).textTheme.headlineLarge)),
           Padding(
               padding: EdgeInsets.only(bottom: 5.h),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   getStatusButton(
                       context: context,
+                      activated: inputNotifierConsumer.status == Status.LIVE,
                       caption: stati[0]["caption"],
                       index: 0,
                       onPressed: stati[0]["function"]),
                   getStatusButton(
                       context: context,
+                      activated: inputNotifierConsumer.status == Status.SOLDOUT,
                       caption: stati[1]["caption"],
                       index: 1,
                       onPressed: stati[1]["function"]),
                   getStatusButton(
                       context: context,
+                      activated:
+                          inputNotifierConsumer.status == Status.CANCELED,
                       caption: stati[2]["caption"],
                       index: 2,
                       onPressed: stati[2]["function"]),
@@ -208,12 +213,21 @@ class DetailsPage extends StatelessWidget {
       {required int index,
       required Function onPressed,
       required String caption,
-      required BuildContext context}) {
+      required BuildContext context,
+      required bool activated}) {
     return Padding(
-        padding: int == 0 ? EdgeInsets.all(0) : EdgeInsets.only(left: 10.h),
+        padding: index == 0 ? EdgeInsets.all(0) : EdgeInsets.only(left: 10.h),
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.background),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(activated
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.background),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.h),
+                // TODO different border color, same as the text form border
+                side: BorderSide(color: Theme.of(context).colorScheme.primary),
+              ))),
           onPressed: () => onPressed(),
           child: Text(caption),
         ));
