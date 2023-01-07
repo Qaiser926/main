@@ -77,7 +77,7 @@ class _AddState extends State<Add> {
               .isDialogOpen) {
             return false;
           } else {
-            Get.back();
+            backFunction();
             return false;
           }
         },

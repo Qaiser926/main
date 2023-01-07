@@ -250,3 +250,14 @@ void termsNotAgreed(BuildContext context) {
       true;
   Provider.of<AddEANotifier>(context, listen: false).notifyListeners();
 }
+
+class DeleteEA {
+  final String userId;
+  final String eAId;
+
+  DeleteEA({required this.userId, required this.eAId});
+
+  Map toJson() {
+    return {"userId": userId, "eAId": eAId};
+  }
+}

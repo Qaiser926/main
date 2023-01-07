@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:othia/core/add/add_exclusives/delete_forwarding_page.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/utils/helpers/builders.dart';
@@ -108,7 +110,7 @@ class ActionBox extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context, rootNavigator: true).pop();
-                          //TODO forward to forwarding page
+                          Get.to(DeleteForwardingPage(inputNotifier));
                         },
                         child: Text(AppLocalizations.of(context)!.confirm),
                       ),

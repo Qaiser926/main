@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
@@ -48,8 +49,6 @@ class RestService {
   Future<Object> addFavouriteEventOrActivity({required eAId}) async {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
-
-    // TODO login
     RestOptions restOptions = RestOptions(
         path: '/addLikedEA-dev/$eAId', headers: {'token': '${token}'});
     final result = await put(restOptions);
@@ -70,7 +69,6 @@ class RestService {
 
   Future<Object> getEAIdsForCategory({required categoryId}) async {
     print('requesting ids for category id: $categoryId');
-
     RestOptions restOptions =
         RestOptions(path: '/getEAIdsForCategory-dev/$categoryId');
     final result = await get(restOptions);
@@ -164,8 +162,22 @@ class RestService {
     return result;
   }
 
+  Future<Object> deleteEA({required DeleteEA deleteEA}) async {
+    String token = await getIdToken();
+    RestOptions restOptions = RestOptions(path: '/getMapResultIds-dev/');
+    // RestOptions restOptions = RestOptions(
+    //   // TODO real path, it is required that the returned body is a map
+    //     path: '/saveprivateuserinformation',
+    //     headers: {'token': '${token}'},
+    //     body: transformClassToBody(deleteEA));
+    // TODO change back to post
+    final result = await get(restOptions);
+    return result;
+  }
+
   void logout() async {
     await signOutCurrentUser();
     return;
   }
 }
+
