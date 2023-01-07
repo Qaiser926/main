@@ -8,6 +8,7 @@ import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dar
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
 
@@ -73,8 +74,13 @@ class _AddState extends State<Add> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          backFunction();
-          return false;
+          if (Provider.of<NavigationBarNotifier>(context, listen: false)
+              .isDialogOpen) {
+            return false;
+          } else {
+            Get.back();
+            return false;
+          }
         },
         child: MultiProvider(
             providers: [

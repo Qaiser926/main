@@ -10,6 +10,7 @@ import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/core/add/add_exclusives/publish_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/services/rest-api/geocoding.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 Widget getFutureHandlerPageView(
@@ -58,6 +59,8 @@ Column getHeadline({required BuildContext context, required Widget caption}) {
 }
 
 Future getInfoDialog({required String info, required BuildContext context}) {
+  Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+      true;
   return showDialog(
       context: context,
       builder: (context) {
@@ -73,7 +76,10 @@ Future getInfoDialog({required String info, required BuildContext context}) {
             ),
           ],
         );
-      });
+      }).then((_) {
+    Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+        false;
+  });
 }
 
 Widget getHeadlineWithInfoDialog(

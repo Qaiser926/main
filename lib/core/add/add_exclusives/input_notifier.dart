@@ -5,6 +5,8 @@ import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
+import 'package:provider/provider.dart';
 
 import '../../../modules/models/detailed_event/detailed_event.dart';
 
@@ -381,30 +383,35 @@ class AddEANotifier extends ChangeNotifier {
     required String firstText,
     required String secondText,
     required Function() onPressed}) {
+    Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+        true;
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          content: showFirstMessage ? Text(firstText) : Text(secondText),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-              child: Container(
-                padding: const EdgeInsets.all(14),
+              content: showFirstMessage ? Text(firstText) : Text(secondText),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
                     child: Text(
                       AppLocalizations.of(context)!.cancel,
                     ),
                   ),
-            ),
-            TextButton(
-              onPressed: onPressed,
-              child: Container(
-                padding: const EdgeInsets.all(14),
+                ),
+                TextButton(
+                  onPressed: onPressed,
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
                     child: Text(AppLocalizations.of(context)!.continueText),
                   ),
-            ),
-          ],
-        ));
+                ),
+              ],
+            )).then((_) {
+      Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+          false;
+    });
   }
 }

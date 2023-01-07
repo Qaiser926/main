@@ -4,6 +4,7 @@ import 'package:othia/core/map/exclusive_widgets/current_position.dart';
 import 'package:othia/core/map/map_initialization.dart';
 import 'package:othia/core/map/map_results.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 class MapPage extends StatefulWidget {
@@ -44,8 +45,13 @@ class _MapPageState extends State<MapPage>
           ChangeNotifierProvider.value(value: userPositionNotifier)
         ],
         child: WillPopScope(
-          onWillPop: () {
-            return closeAppDialog(context, mapNotifier);
+          onWillPop: () async {
+            if (Provider.of<NavigationBarNotifier>(context, listen: false)
+                .isDialogOpen) {
+              return false;
+            } else {
+              return closeAppDialog(context, mapNotifier);
+            }
           },
           child: PageView(
             controller: _pageController,
