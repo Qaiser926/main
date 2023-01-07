@@ -131,7 +131,7 @@
         "searchEnhancement": "Search Enhancement",
         "searchEnhancementInfo": "By stating the different levels, our algorithms can target user preferences better which in return helps promoting your event or activity",
         "eventStatus": "Event Status",
-        "imageDefaultHint": "Click to use the default image",
+        "imageDefaultHint": "Click to upload customized image",
             "changeImageHint": "Click to choose another picture",
             "backToDefaultImage": "Back to default image",
             "imageRightsText": "I own the rights to this image",

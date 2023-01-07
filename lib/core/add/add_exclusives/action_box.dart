@@ -10,9 +10,11 @@ class ActionBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       getHeadline(
+          showDivider: false,
           context: context,
           caption: Text(AppLocalizations.of(context)!.addActions,
               style: Theme.of(context).textTheme.headlineLarge)),
+      getVerSpace(10.h),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -27,7 +29,8 @@ class ActionBox extends StatelessWidget {
               onTap: () {},
               icon: Icons.share),
         ],
-      )
+      ),
+      getVerSpace(10.h),
     ]);
   }
 

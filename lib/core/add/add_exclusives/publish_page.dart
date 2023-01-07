@@ -24,6 +24,7 @@ class PublishPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   getHeadlineWithInfoDialog(
+                    showDivider: false,
                     context: context,
                     infoText: AppLocalizations.of(context)!.visibilityInfoText,
                     caption: inputNotifierConsumer.times[0]

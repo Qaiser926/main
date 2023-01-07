@@ -25,6 +25,7 @@ class DetailsPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             getHeadline(
+                showDivider: false,
                 context: context,
                 caption: Text(
                     "${AppLocalizations.of(context)!.image} (Optional)",

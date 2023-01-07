@@ -10,6 +10,7 @@ import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/core/add/add_exclusives/publish_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/services/rest-api/geocoding.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -43,17 +44,23 @@ void handleJsonData(
   }
 }
 
-Column getHeadline({required BuildContext context, required Widget caption}) {
+Column getHeadline(
+    {required BuildContext context,
+    required Widget caption,
+    bool showDivider = true}) {
   return Column(
     children: [
-      Padding(
-        padding: EdgeInsets.only(bottom: 4.h, top: 10.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [caption],
-        ),
+      showDivider
+          ? Padding(
+              padding: EdgeInsets.only(bottom: 15.h, top: 4.h),
+              child: Divider(thickness: 2.h),
+            )
+          : SizedBox(),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [caption],
       ),
-      Divider(thickness: 2.h),
+      getVerSpace(10.h)
     ],
   );
 }
@@ -85,8 +92,10 @@ Future getInfoDialog({required String info, required BuildContext context}) {
 Widget getHeadlineWithInfoDialog(
     {required BuildContext context,
     required String infoText,
-    required String caption}) {
+    required String caption,
+    bool showDivider = true}) {
   return getHeadline(
+    showDivider: showDivider,
     context: context,
     caption: GestureDetector(
       onTap: () => {getInfoDialog(info: infoText, context: context)},

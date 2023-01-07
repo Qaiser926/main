@@ -65,6 +65,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 children: [
                   if (inputNotifier.isModifyMode) ActionBox(),
                   getHeadline(
+                      showDivider: inputNotifier.isModifyMode,
                       context: context,
                       caption: Text(AppLocalizations.of(context)!.title,
                           style: Theme.of(context).textTheme.headlineLarge)),
