@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -185,13 +186,17 @@ class LevelPicker extends StatelessWidget {
               children: [
                 Text(caption),
                 getHorSpace(5.h),
-                Icon(Icons.info_outline)
+                Icon(
+                  Icons.info_outline,
+                )
               ],
             ),
           ),
           Slider(
             thumbColor: sliderActivated ? null : Theme.of(context).cardColor,
-            divisions: levelType == LevelType.personEligibility ? 3 : 4,
+            divisions: levelType == LevelType.personEligibility
+                ? DataConstants.SearchEnhancementEligibilityScale
+                : DataConstants.SearchEnhancementDimensionScale,
             value: sliderValue,
             onChanged: onChanged,
             label:
@@ -207,12 +212,20 @@ class LevelPicker extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Reset Slider",
+                          AppLocalizations.of(context)!.resetSlider,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                            color: sliderActivated
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).cardColor,
+                          ),
                         ),
                         getHorSpace(5.h),
-                        Icon(Icons.close)
+                        Icon(
+                          Icons.close,
+                          color: sliderActivated
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).cardColor,
+                        )
                       ],
                     )),
               ],

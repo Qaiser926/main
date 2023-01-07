@@ -23,6 +23,15 @@ class OtherConstants {
   static const int maxPasswordLength = 63;
 }
 
+class DataConstants {
+  static const MaxDescriptionLength = 400;
+  static const MaxTitleLength = 100;
+  static const MaxImageWidth = 1800.0;
+  static const MaxImageHeight = 1800.0;
+  static const SearchEnhancementDimensionScale = 4;
+  static const SearchEnhancementEligibilityScale = 3;
+}
+
 class NavigatorConstants {
   static const PriceRangeStart = 0.0;
   static const PriceRangeEnd = 200.0;

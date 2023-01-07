@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
@@ -24,7 +25,7 @@ class TimeSelector extends StatelessWidget {
         builder: (context, inputNotifierConsumer, child) {
       String? _validateStartTime(String? text) {
         if (inputNotifierConsumer.startDateTime == null) {
-          return 'A Start Time is missing';
+          return AppLocalizations.of(context)!.startTimeErrorMessage;
         }
         return null;
       }
@@ -54,8 +55,8 @@ class TimeSelector extends StatelessWidget {
                           TextStyle(color: Theme.of(context).bottomAppBarColor),
                       controller: TextEditingController(
                         text: showStartTime
-                            ? "Start: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.startDateTime!)}"
-                            : "Select Start Time",
+                            ? "${AppLocalizations.of(context)!.startTime}: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.startDateTime!)}"
+                            : AppLocalizations.of(context)!.startTimeHint,
                       ),
                       validator: _validateStartTime,
                       decoration: new InputDecoration(
@@ -73,7 +74,8 @@ class TimeSelector extends StatelessWidget {
                   pickDateTime(DateType.EndDate);
                 } else {
                   getInfoDialog(
-                      info: "Please select a start date before",
+                      info:
+                          "Please select a start time before selecting an end time",
                       context: context);
                 }
               },
@@ -84,8 +86,8 @@ class TimeSelector extends StatelessWidget {
                         TextStyle(color: Theme.of(context).bottomAppBarColor),
                     controller: TextEditingController(
                       text: showEndTime
-                          ? "End: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.endDateTime!)}"
-                          : "Select End Time",
+                          ? "${AppLocalizations.of(context)!.endTime}: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.endDateTime!)}"
+                          : AppLocalizations.of(context)!.endTimeHint,
                     ),
                     decoration: new InputDecoration(
                       contentPadding: EdgeInsets.all(5.h),
@@ -147,7 +149,8 @@ class TimeSelector extends StatelessWidget {
         if (completeDateTime.isBefore(inputNotifier.startDateTime!)) {
           inputNotifier.resetEndDateTime();
           getInfoDialog(
-              info: 'End time cannot be before starting time',
+              info:
+                  AppLocalizations.of(context)!.endTimeBeforeStartErrorMessage,
               context: context);
         } else {
           inputNotifier.endDateTime = completeDateTime;

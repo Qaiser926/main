@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
@@ -233,8 +234,7 @@ class AddEANotifier extends ChangeNotifier {
       notifyUsers(
           context: context,
           showFirstMessage: addressCase,
-          firstText:
-          "Switching will cause that the address will not be shown to users as your event or activity will be considered online",
+          firstText: AppLocalizations.of(context)!.locationSwitchingDialog,
           secondText: "",
           onPressed: () {
             locationType = index;
@@ -356,9 +356,9 @@ class AddEANotifier extends ChangeNotifier {
           context: context,
           showFirstMessage: caseStartTimeReset,
           firstText:
-          "Switching will cause that opening times instead of start times are considered",
+              AppLocalizations.of(context)!.timeSwitchingDialogOpeningHours,
           secondText:
-          "Switching will cause that a start time is considered and the opening times are neglected",
+              AppLocalizations.of(context)!.timeSwitchingDialogStartTime,
           onPressed: () {
             times = index;
             // Get.back();
@@ -392,15 +392,17 @@ class AddEANotifier extends ChangeNotifier {
               },
               child: Container(
                 padding: const EdgeInsets.all(14),
-                child: const Text("Cancel"),
-              ),
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                    ),
+                  ),
             ),
             TextButton(
               onPressed: onPressed,
               child: Container(
                 padding: const EdgeInsets.all(14),
-                child: const Text("Continue"),
-              ),
+                    child: Text(AppLocalizations.of(context)!.continueText),
+                  ),
             ),
           ],
         ));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
@@ -13,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'add_exclusives/add_page_notifier.dart';
 import 'add_exclusives/input_notifier.dart';
 
-// TODO adjustments for modifying an event
 
 class Add extends StatefulWidget {
   Add({super.key});
@@ -89,6 +89,7 @@ class _AddState extends State<Add> {
                 appBar: AppBar(automaticallyImplyLeading: false, actions: [
                   Consumer<SwitchAddPageNotifier>(
                       builder: (context, switchPageModel, child) {
+                        // TODO, align the button row middle
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -145,7 +146,8 @@ class _AddState extends State<Add> {
               : getNavigationButton(
                   Icon(Icons.arrow_back), switchPages.previousPage, context),
           switchPageConsumer.currentPage == Add.lastPage
-              ? getNavigationButton(Text("Publish"), publishFunction, context)
+              ? getNavigationButton(Text(AppLocalizations.of(context)!.publish),
+                  publishFunction, context, 130.h)
               : getNavigationButton(
                   Icon(Icons.arrow_forward), switchPages.nextPage, context),
         ],
@@ -158,17 +160,17 @@ class _AddState extends State<Add> {
       required SwitchAddPageNotifier switchPageModel,
       required int index}) {
     Map<int, String> navigationCaptions = {
-      // TODO
-      0: "Informationen",
-      1: "Details",
-      2: "Publish"
+      0: AppLocalizations.of(context)!.information,
+      1: AppLocalizations.of(context)!.details,
+      2: AppLocalizations.of(context)!.publish,
     };
 
     return Padding(
-        padding: EdgeInsets.all(10.h),
+        padding: EdgeInsets.all(5.h),
         child: GestureDetector(
           onTap: () => {Add.pageController.jumpToPage(index)},
           child: Container(
+            height: 30.h,
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index
                     ? Theme.of(context).colorScheme.primary
@@ -201,9 +203,10 @@ class _AddState extends State<Add> {
   Widget getNavigationButton(
       Widget child,
       void Function(BuildContext context) onPressedFunction,
-      BuildContext context) {
+      BuildContext context,
+      [double? width]) {
     return SizedBox(
-        width: 100,
+        width: width ?? 100,
         child: ElevatedButton(
           style: const ButtonStyle(
             shape: MaterialStatePropertyAll(

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 import '../../../modules/models/shared_data_models.dart';
@@ -217,8 +218,8 @@ String getTicketStatus({required BuildContext context, Status? status}) {
 Future<String?> getFromGallery() async {
   XFile? pickedFile = await ImagePicker().pickImage(
     source: ImageSource.gallery,
-    maxWidth: 1800,
-    maxHeight: 1800,
+    maxWidth: DataConstants.MaxImageWidth,
+    maxHeight: DataConstants.MaxImageHeight,
   );
   if (pickedFile != null) {
     return pickedFile.path;

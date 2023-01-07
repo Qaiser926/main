@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/categories.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +45,8 @@ class EAImagePicker extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.h)),
                       image: DecorationImage(
                         image: getPhotoNullSave(
-                                categoryId: inputNotifierConsumer.categoryId!,
+                            categoryId: inputNotifierConsumer.categoryId ??
+                                    Categories.diverse,
                                 photo: inputNotifierConsumer.image)
                             .image,
                         fit: BoxFit.cover,
@@ -65,8 +68,8 @@ class EAImagePicker extends StatelessWidget {
                           padding: EdgeInsets.all(10.h),
                           child: Text(
                             inputNotifierConsumer.image == null
-                                ? "Click to change the default image"
-                                : "Click to choose another picture",
+                                ? AppLocalizations.of(context)!.imageDefaultHint
+                                : AppLocalizations.of(context)!.changeImageHint,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary),
@@ -98,7 +101,7 @@ class EAImagePicker extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Back to default Image",
+                    AppLocalizations.of(context)!.backToDefaultImage,
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
@@ -110,7 +113,7 @@ class EAImagePicker extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("I own the rights of this image"),
+            Text(AppLocalizations.of(context)!.imageRightsText),
             Switch(
               activeColor: Theme.of(context).colorScheme.primary,
               value: inputNotifierConsumer.copyRightVerified,
@@ -125,7 +128,7 @@ class EAImagePicker extends StatelessWidget {
         ),
         if (inputNotifierConsumer.showCopyrightErrorMessage)
           Text(
-            "You have to have the permission. Otherwise, go back to the default image",
+            AppLocalizations.of(context)!.imageRightsErrorMessage,
             style: TextStyle(color: Theme.of(context).colorScheme.error),
           )
       ],

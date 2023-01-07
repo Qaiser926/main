@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add_exclusives/address_form.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
@@ -35,10 +37,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final snackBar = SnackBar(
+        // TODO improve design
         content: inputNotifier.eAId == null
-            ? Text(
-                'You can add private and public events and activities, also if you are not the official organizer')
-            : Text('You can submit your changes in the last process step'),
+            ? Text(AppLocalizations.of(context)!.snackBarMessageAdding)
+            : Text(AppLocalizations.of(context)!.snackBarMessageModifying),
         duration: Duration(seconds: 7, milliseconds: 500),
       );
       if (!Provider.of<AddEANotifier>(context, listen: false).snackBarShown) {
@@ -62,7 +64,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 children: [
                   getHeadline(
                       context: context,
-                      caption: Text("Title",
+                      caption: Text(AppLocalizations.of(context)!.title,
                           style: Theme.of(context).textTheme.headlineLarge)),
                   Padding(
                     padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
@@ -70,14 +72,17 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                   ),
                   getHeadline(
                       context: context,
-                      caption: Text("Categorization",
+                      caption: Text(
+                          AppLocalizations.of(context)!.categorization,
                           style: Theme.of(context).textTheme.headlineLarge)),
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                       child: buildDropDown(
                           defaultValue: widget.inputNotifier.mainCategoryId,
-                          hintText: "Select the main category",
-                          onValidErrorText: 'Please state a category',
+                          hintText:
+                              AppLocalizations.of(context)!.categorizationHint,
+                          onValidErrorText: AppLocalizations.of(context)!
+                              .categorizationErrorMessage,
                           dropDownList: Categories.categoryIds,
                           notifierFunction: (mainCategoryId) {
                             widget.inputNotifier.mainCategoryId =
@@ -94,8 +99,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                         padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                         child: buildDropDown(
                             defaultValue: widget.inputNotifier.categoryId,
-                            hintText: "Select a sub-category",
-                            onValidErrorText: 'Please state a sub-category',
+                            hintText: AppLocalizations.of(context)!
+                                .subcategorizationHint,
+                            onValidErrorText: AppLocalizations.of(context)!
+                                .subcategorizationErrorMessage,
                             dropDownList: categoryIdToSubcategoryIds[
                                 widget.inputNotifier.mainCategoryId]!,
                             notifierFunction: (categoryId) {
@@ -104,7 +111,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                             })),
                   getHeadline(
                       context: context,
-                      caption: Text("Location",
+                      caption: Text(AppLocalizations.of(context)!.location,
                           style: Theme.of(context).textTheme.headlineLarge)),
                   getSwitch(
                       context: context,
@@ -113,11 +120,15 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text("Address"),
+                          child: Text(
+                            AppLocalizations.of(context)!.address,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text('Online'),
+                          child: Text(
+                            AppLocalizations.of(context)!.online,
+                          ),
                         ),
                       ]),
                   if (inputNotifierConsumer.locationType[0])
@@ -128,11 +139,10 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                             inputNotifier: inputNotifierConsumer)),
                   getVerSpace(10.h),
                   getHeadlineWithInfoDialog(
-                      context: context,
-                      infoText:
-                          "According to whether you set a start/ end date or opening time, we consider your"
-                          " post as event or activity respectively.",
-                      caption: "Time"),
+                    context: context,
+                    infoText: AppLocalizations.of(context)!.timeInfo,
+                    caption: AppLocalizations.of(context)!.time,
+                  ),
                   getSwitch(
                       context: context,
                       onPressed: inputNotifierConsumer.changeTimeType,
@@ -140,11 +150,15 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text("Start time & End time"),
+                          child: Text(
+                            AppLocalizations.of(context)!.startEndTime,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text('Opening hours'),
+                          child: Text(
+                            AppLocalizations.of(context)!.openingHours,
+                          ),
                         ),
                       ]),
                   Form(
@@ -170,13 +184,13 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter some text';
+            return AppLocalizations.of(context)!.titleErrorMessage;
           }
           return null;
         },
         initialValue: Provider.of<AddEANotifier>(context, listen: false).title,
         controller:
-        Provider.of<AddEANotifier>(context, listen: false).title == null
+            Provider.of<AddEANotifier>(context, listen: false).title == null
                 ? _textController
                 : null,
         onChanged: (title) {
@@ -184,12 +198,13 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
           widget.inputNotifier.title = title;
         },
-        maxLength: 100,
+        maxLength: DataConstants.MaxTitleLength,
         maxLines: null,
         decoration: new InputDecoration(
-            contentPadding: EdgeInsets.all(5.h),
-            border: OutlineInputBorder(),
-            hintText: 'Enter the title '),
+          contentPadding: EdgeInsets.all(5.h),
+          border: OutlineInputBorder(),
+          hintText: AppLocalizations.of(context)!.titleHint,
+        ),
       ),
     ]);
   }

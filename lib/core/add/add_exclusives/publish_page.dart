@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
@@ -23,12 +24,12 @@ class PublishPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   getHeadlineWithInfoDialog(
-                      context: context,
-                      infoText:
-                          "Public events or activities will be shown on our platform whereas private event or activities can only be accessed via a sharing url",
-                      caption: inputNotifierConsumer.times[0]
-                          ? "Event Visibility"
-                          : "Activity Visibility"),
+                    context: context,
+                    infoText: AppLocalizations.of(context)!.visibilityInfoText,
+                    caption: inputNotifierConsumer.times[0]
+                        ? "${AppLocalizations.of(context)!.event} ${AppLocalizations.of(context)!.visibility}"
+                        : "${AppLocalizations.of(context)!.activity} ${AppLocalizations.of(context)!.visibility}",
+                  ),
                   getSwitch(
                       context: context,
                       onPressed: inputNotifier.changePrivatePublic,
@@ -36,18 +37,23 @@ class PublishPage extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text("Public"),
+                          child: Text(
+                            AppLocalizations.of(context)!.public,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text('Private'),
+                          child: Text(
+                            AppLocalizations.of(context)!.private,
+                          ),
                         ),
                       ]),
                   getHeadlineWithInfoDialog(
-                      context: context,
-                      infoText:
-                          "If you do not want your profile to be shown at the detail page of the event or activity, for instance, if you are not the organizer, you can change the status here",
-                      caption: "Profile Visibility"),
+                    context: context,
+                    infoText:
+                        AppLocalizations.of(context)!.profileVisibilityInfoText,
+                    caption: AppLocalizations.of(context)!.profileVisibility,
+                  ),
                   getSwitch(
                       context: context,
                       onPressed: inputNotifier.changeOwnedOrForeign,
@@ -55,22 +61,27 @@ class PublishPage extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text("Show Profile"),
+                          child: Text(
+                            AppLocalizations.of(context)!.showProfile,
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.all(5.h),
-                          child: Text('Hide Profile'),
+                          child: Text(
+                            AppLocalizations.of(context)!.hideProfile,
+                          ),
                         ),
                       ]),
                   getHeadlineWithInfoDialog(
-                      context: context,
-                      infoText:
-                          "The provided info are in line with the guidelines",
-                      caption: "Agree to terms"),
+                    context: context,
+                    infoText: AppLocalizations.of(context)!.guidelinesText,
+                    caption:
+                        AppLocalizations.of(context)!.agreeGuidelinesCaption,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("I agree with the terms"),
+                      Text(AppLocalizations.of(context)!.agreeGuidelinesText),
                       Switch(
                         activeColor: Theme.of(context).colorScheme.primary,
                         value: inputNotifierConsumer.termsAgreed,
@@ -89,7 +100,7 @@ class PublishPage extends StatelessWidget {
                   getVerSpace(50.h),
                   ElevatedButton(
                       onPressed: () => publishFunction(context),
-                      child: Text("Publish"))
+                      child: Text(AppLocalizations.of(context)!.publish))
                 ]);
           })),
     );
@@ -100,7 +111,7 @@ class PublishPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          "You have to have to agree with our terms",
+          AppLocalizations.of(context)!.agreeGuidelinesErrorMessage,
           style: TextStyle(color: Theme.of(context).colorScheme.error),
         )
       ],

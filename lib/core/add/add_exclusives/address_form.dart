@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class _AddressFormState extends State<AddressForm> {
         builder: (context, inputNotifierConsumer, child) {
       String? _validateAddress(String? text) {
         if (inputNotifierConsumer.isAddressInvalid) {
-          return 'Could not validate address';
+          return AppLocalizations.of(context)!.addressErrorMessage;
         }
         return null;
       }
@@ -52,33 +53,33 @@ class _AddressFormState extends State<AddressForm> {
                     padding: EdgeInsets.only(right: 5.h),
                     child: CustomTextFormField(
                           initialValue: widget.inputNotifier.street,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp('[0-9]'))
-                          ],
-                          validationFunction: _validateAddress,
-                          onChangedFunction: (text) {
-                            widget.inputNotifier.street = text;
-                            setState(() => {
-                                  this.street = text,
-                                });
-                          },
-                          hintText: "Straße",
-                        ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp('[0-9]'))
+                      ],
+                      validationFunction: _validateAddress,
+                      onChangedFunction: (text) {
+                        widget.inputNotifier.street = text;
+                        setState(() => {
+                              this.street = text,
+                            });
+                      },
+                      hintText: AppLocalizations.of(context)!.street,
+                    ),
                       ),
                     ),
                     Expanded(
                       flex: 1,
                       child: CustomTextFormField(
                         initialValue: widget.inputNotifier.streetNumber,
-                        validationFunction: _validateAddress,
-                        onChangedFunction: (text) {
-                          widget.inputNotifier.streetNumber = text;
-                          setState(() => {
-                                this.streetNumber = text,
-                              });
-                        },
-                        hintText: "Nr",
-                      ),
+                    validationFunction: _validateAddress,
+                    onChangedFunction: (text) {
+                      widget.inputNotifier.streetNumber = text;
+                      setState(() => {
+                            this.streetNumber = text,
+                          });
+                    },
+                    hintText: AppLocalizations.of(context)!.streetNumberShort,
+                  ),
                     ),
                   ],
                 ),
@@ -91,18 +92,18 @@ class _AddressFormState extends State<AddressForm> {
                       padding: EdgeInsets.only(right: 5.h),
                       child: CustomTextFormField(
                         initialValue: widget.inputNotifier.city,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(RegExp('[0-9]'))
-                        ],
-                        validationFunction: _validateAddress,
-                        onChangedFunction: (text) {
-                          widget.inputNotifier.city = text;
-                          setState(() => {
-                                this.city = text,
-                              });
-                        },
-                        hintText: "Stadt",
-                      ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[0-9]'))
+                    ],
+                    validationFunction: _validateAddress,
+                    onChangedFunction: (text) {
+                      widget.inputNotifier.city = text;
+                      setState(() => {
+                            this.city = text,
+                          });
+                    },
+                    hintText: AppLocalizations.of(context)!.city,
+                  ),
                     ),
                   ),
                   Expanded(
@@ -110,17 +111,17 @@ class _AddressFormState extends State<AddressForm> {
                     child: CustomTextFormField(
                       numberInput: true,
                       initialValue: widget.inputNotifier.postalCode,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                      ],
-                      validationFunction: _validateAddress,
-                      onChangedFunction: (text) {
-                        widget.inputNotifier.postalCode = text;
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                  ],
+                  validationFunction: _validateAddress,
+                  onChangedFunction: (text) {
+                    widget.inputNotifier.postalCode = text;
                     setState(() => {
                           this.postalCode = text,
                         });
                   },
-                  hintText: "Plz",
+                  hintText: AppLocalizations.of(context)!.postalCodeShort,
                 ),
               ),
             ],

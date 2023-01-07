@@ -59,11 +59,15 @@ Widget getFavouriteLikeButton({
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton(
-                              onPressed: () => Navigator.pop(context, false),
+                              onPressed: () =>
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(),
                               child: Text(AppLocalizations.of(context)!.cancel),
                             ),
                             TextButton(
-                              onPressed: () => Navigator.pop(context, true),
+                              onPressed: () =>
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(),
                               child:
                                   Text(AppLocalizations.of(context)!.confirm),
                             ),
@@ -234,13 +238,13 @@ class _AddLikeButtonState extends State<AddLikeButton> {
         children: [
           TextButton(
 // FlatButton widget is used to make a text to work like a button
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
 // function used to perform after pressing the button
             child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             // TODO forward to login page
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             child: Text("Login"),
           ),
         ],

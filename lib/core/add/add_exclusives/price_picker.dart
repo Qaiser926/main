@@ -2,6 +2,7 @@ import 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class PricePicker extends StatelessWidget {
               itemBuilder: (context, index) {
                 return buildPriceRow(
                     index: index,
+                    context: context,
                     inputPrice: inputNotifierConsumer.prices[index],
                     inputNotifierConsumer: inputNotifierConsumer);
               }),
@@ -41,7 +43,7 @@ class PricePicker extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 5.h),
                   child: Text(
-                    "Add Price Group",
+                    AppLocalizations.of(context)!.addPriceGroup,
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
@@ -58,7 +60,8 @@ class PricePicker extends StatelessWidget {
   Widget buildPriceRow(
       {required int index,
       required InputPrice inputPrice,
-      required AddEANotifier inputNotifierConsumer}) {
+      required AddEANotifier inputNotifierConsumer,
+      required BuildContext context}) {
     return Padding(
       padding: EdgeInsets.only(top: 5.h),
       child: Row(
@@ -83,7 +86,8 @@ class PricePicker extends StatelessWidget {
                     decoration: new InputDecoration(
                         contentPadding: EdgeInsets.all(5.h),
                         border: OutlineInputBorder(),
-                        hintText: 'Label, e.g. "Student", "Children"'),
+                        hintText:
+                            AppLocalizations.of(context)!.priceLabelHintText),
                   ))),
           Expanded(
             flex: 1,
@@ -111,7 +115,7 @@ class PricePicker extends StatelessWidget {
                   decoration: new InputDecoration(
                       contentPadding: EdgeInsets.all(5.h),
                       border: OutlineInputBorder(),
-                      hintText: 'Price'),
+                      hintText: AppLocalizations.of(context)!.price),
                 )),
           ),
           GestureDetector(

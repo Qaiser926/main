@@ -10,6 +10,7 @@ import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constants/app_constants.dart';
 import 'input_notifier.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -25,42 +26,45 @@ class DetailsPage extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             getHeadline(
                 context: context,
-                caption: Text("Image",
+                caption: Text(
+                    "${AppLocalizations.of(context)!.image} (Optional)",
                     style: Theme.of(context).textTheme.headlineLarge)),
             EAImagePicker(inputNotifier),
             getHeadline(
                 context: context,
-                caption: Text("Description (optional)",
+                caption: Text(
+                    "${AppLocalizations.of(context)!.descriptionAdd} (Optional)",
                     style: Theme.of(context).textTheme.headlineLarge)),
             buildDescriptionBox(context),
             getHeadline(
                 context: context,
-                caption: Text("Price",
+                caption: Text(
+                    "${AppLocalizations.of(context)!.price} (Optional)",
                     style: Theme.of(context).textTheme.headlineLarge)),
             PricePicker(inputNotifier),
             getVerSpace(10.h),
             getHeadlineWithInfoDialog(
                 context: context,
-                infoText:
-                    "Here you have the opportunity to insert your ticket-url. User will be forwarded from the Othia app to the corresponding url.",
-                caption: "Ticketing URL (optional)"),
+                infoText: AppLocalizations.of(context)!.ticketInfo,
+                caption:
+                    "${AppLocalizations.of(context)!.ticketingUrl} (Optional)"),
             buildTicketingBox(
               context,
             ),
             getHeadlineWithInfoDialog(
                 context: context,
-                infoText:
-                    "Here you have the opportunity to insert the url of a website with more information. User will be forwarded from the Othia app to the corresponding url.",
-                caption: "Website URL (optional)"),
+                infoText: AppLocalizations.of(context)!.websiteInfo,
+                caption:
+                    "${AppLocalizations.of(context)!.websiteUrl} (Optional)"),
             buildWebsiteBox(
               context,
             ),
             if (inputNotifier.times[0]) buildTicketStatusBox(context),
             getHeadlineWithInfoDialog(
                 context: context,
-                infoText:
-                    "By stating the different levels, our algorithms can target user preferences better which in return helps promoting your event or activity",
-                caption: "Search Enhancement"),
+                infoText: AppLocalizations.of(context)!.searchEnhancementInfo,
+                caption:
+                    "${AppLocalizations.of(context)!.searchEnhancement} (Optional)"),
             LevelPicker(inputNotifier),
           ])),
     );
@@ -98,10 +102,9 @@ class DetailsPage extends StatelessWidget {
         onChanged: (description) {
           inputNotifierConsumer.description = description;
         },
-        hintText: 'Provide a description',
+        hintText: AppLocalizations.of(context)!.descriptionHint,
         minLines: 3,
-        // TODO as constant
-        maxLength: 400,
+        maxLength: DataConstants.MaxDescriptionLength,
         textEditingController: inputNotifierConsumer.description == null
             ? null
             : TextEditingController(
@@ -119,7 +122,7 @@ class DetailsPage extends StatelessWidget {
         onChanged: (description) {
           inputNotifierConsumer.ticketUrl = description;
         },
-        hintText: 'Provide a ticketing url',
+        hintText: AppLocalizations.of(context)!.ticketingHint,
         minLines: 3,
         textEditingController: inputNotifierConsumer.ticketUrl == null
             ? null
@@ -138,7 +141,7 @@ class DetailsPage extends StatelessWidget {
         onChanged: (description) {
           inputNotifierConsumer.websiteUrl = description;
         },
-        hintText: 'Provide a website url',
+        hintText: AppLocalizations.of(context)!.websiteHint,
         minLines: 3,
         textEditingController: inputNotifierConsumer.websiteUrl == null
             ? null
@@ -176,7 +179,8 @@ class DetailsPage extends StatelessWidget {
         children: [
           getHeadline(
               context: context,
-              caption: Text("Event Status",
+              caption: Text(
+                  "${AppLocalizations.of(context)!.eventStatus} (Optional)",
                   style: Theme.of(context).textTheme.headlineLarge)),
           Padding(
               padding: EdgeInsets.only(bottom: 5.h),

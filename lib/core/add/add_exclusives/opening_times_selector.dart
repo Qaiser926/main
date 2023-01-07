@@ -131,7 +131,8 @@ Future<dynamic> openingTimesDialog(
                               onPressed: () {
                                 inputNotifier.addHours();
                               },
-                              child: Text("Add Hours"),
+                              child:
+                                  Text(AppLocalizations.of(context)!.addHours),
                             )
                           ],
                         ),
@@ -146,7 +147,8 @@ Future<dynamic> openingTimesDialog(
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Text("Confirm"),
+                              child:
+                                  Text(AppLocalizations.of(context)!.confirm),
                             )
                           ],
                         ),
@@ -196,7 +198,6 @@ Widget getSpecialOpeningTimeButton(
 
 Widget buildOpeningTimeBoxes(
     {required BuildContext context, required AddEANotifier inputNotifier}) {
-  // TODO made null robust and when clicking on add hours, add null
   return Container(
     width: double.maxFinite,
     child: ListView.builder(
@@ -230,7 +231,8 @@ Widget buildOpeningTimeBoxes(
                         children: [
                           Padding(
                             padding: EdgeInsets.all(5.h),
-                            child: Text("Open time"),
+                            child:
+                                Text(AppLocalizations.of(context)!.openingTime),
                           ),
                           Padding(
                             padding: EdgeInsets.all(5.h),
@@ -259,7 +261,8 @@ Widget buildOpeningTimeBoxes(
                         children: [
                           Padding(
                             padding: EdgeInsets.all(5.h),
-                            child: Text("Close time"),
+                            child:
+                                Text(AppLocalizations.of(context)!.closingTime),
                           ),
                           Padding(
                             padding: EdgeInsets.all(5.h),
@@ -307,7 +310,8 @@ Future displayTimePicker(
     } else {
       if (inputNotifier.getOpeningTimesList()[listIndex][0] > transformedTime) {
         getInfoDialog(
-            info: 'End time cannot be before starting time', context: context);
+            info: AppLocalizations.of(context)!.openingHoursErrorMessage,
+            context: context);
       } else {
         inputNotifier.getOpeningTimesList()[listIndex][1] = transformedTime;
       }

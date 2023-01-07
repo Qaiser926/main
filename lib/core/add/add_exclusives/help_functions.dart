@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
@@ -68,7 +69,7 @@ Future getInfoDialog({required String info, required BuildContext context}) {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Close"),
+              child: Text(AppLocalizations.of(context)!.close),
             ),
           ],
         );
@@ -171,7 +172,8 @@ class SwitchPages {
       inputNotifier.clearPrices();
     }
     // case switching from basic info page to additional info page
-    if ((switchPagesNotifier.currentPage == 0) & (targetPage == 1)) {
+    if ((switchPagesNotifier.currentPage == 0) &
+        ((targetPage == 1) | (targetPage == 2))) {
       // request latitude and longitude for stated address and test if a result was found only if not online is selected
       if (inputNotifier.locationType[0] & (inputNotifier.latLong == null)) {
         getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
