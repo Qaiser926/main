@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
 import '../../modules/models/detailed_event/detailed_event.dart';
@@ -74,8 +76,13 @@ class _EventDetailState extends State<EventDetail> {
     return SafeArea(
       child: WillPopScope(
         onWillPop: () async {
-          backClick();
-          return false;
+          if (Provider.of<NavigationBarNotifier>(context, listen: false)
+              .isDialogOpen) {
+            return false;
+          } else {
+            backClick();
+            return false;
+          }
         },
         child: Scaffold(
           // TODO include share url
