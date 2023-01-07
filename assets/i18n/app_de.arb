@@ -145,7 +145,7 @@
     "profileVisibilityInfoText": "Wenn du nicht möchtest, dass deine Profil Informationen auf der Detail Seite der Veranstaltung angezeigt werden, hast du hier die Möglichkeit, dies anzugeben.",
     "showProfile": "Profil anzeigen",
     "hideProfile": "Profil verbergen",
-    "guidelinesText": "Lorem ipsum",
+    "guidelinesText": "I agree that the data related to the event or activity will be processed by Othia. I confirm that no extremist or racist content will be distributed.",
     "agreeGuidelinesCaption": "Richtlinien Zustimmung",
     "agreeGuidelinesText": "Ich stimme den Richtlinien zu",
     "agreeGuidelinesErrorMessage": "Um Veranstaltungen hinzufügen zu können, musst du unseren Richtlinien zustimmen.",

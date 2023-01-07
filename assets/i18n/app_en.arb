@@ -144,7 +144,7 @@
     "profileVisibilityInfoText": "If you do not want your profile to be shown at the detail page of the event or activity, for instance, if you are not the organizer, you can change the status here",
     "showProfile": "Show profile",
     "hideProfile": "Hide profile",
-    "guidelinesText": "Lorem ipsum",
+    "guidelinesText": "Ich bin damit einverstanden, dass die mit der Veranstaltung im Zusammenhang stehenden Daten von Othia verarbeitet werden. Ich bestätige, dass keine extremistischen oder rassistischen Inhalte verbreitet werden.",
     "agreeGuidelinesCaption": "Guidelines Consent",
     "agreeGuidelinesText": "I agree to the guidelines",
     "agreeGuidelinesErrorMessage": "To publish, you must agree to our guidelines",
