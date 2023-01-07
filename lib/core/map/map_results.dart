@@ -4,14 +4,17 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart' as latLng;
-import 'package:othia/config/routes/routes.dart';
-import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
+import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_map_result_ids/get_map_result_ids.dart';
+import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
+import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:provider/provider.dart';
 
 class MapResultsInit extends StatelessWidget {
@@ -34,8 +37,7 @@ class _MapResultsState extends State<MapResults> {
   late Future<Object> mapResults;
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
-
-
+  String? eAId;
 
   @override
   void initState() {
@@ -72,6 +74,7 @@ class _MapResultsState extends State<MapResults> {
 
   Widget futureMap(Map<String, dynamic> json) {
     mapResultIds = MapResultIds.fromJson(json);
+
     return FlutterMap(
       options: MapOptions(
         center: userPosition,
@@ -80,13 +83,14 @@ class _MapResultsState extends State<MapResults> {
         minZoom: 3,
       ),
       nonRotatedChildren: [
+        if (eAId != null) buildSummaryCard(),
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
           child: Text('© OpenStreetMap'),
         ),
         // TODO align colors of Event and Activity colored box & introduce background color for the legend or change
-        // font color such that it is readible
+        // font color such that it is readable
         Container(
           alignment: Alignment.bottomLeft,
           padding: const EdgeInsetsDirectional.only(start: 8, bottom: 2),
@@ -156,11 +160,15 @@ class _MapResultsState extends State<MapResults> {
         point: latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
-              onTap: () => {
-                NavigatorConstants.sendToNext(Routes.detailedEventRoute,
-                    arguments: {
-                      NavigatorConstants.EventActivityId: locationData["id"]
-                    })
+              onTap: () =>
+              {
+                setState(() {
+                  eAId = locationData["id"];
+                })
+                // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+                //     arguments: {
+                //       NavigatorConstants.EventActivityId: locationData["id"]
+                //     })
               },
               child: Icon(
                 Icons.location_on,
@@ -197,4 +205,37 @@ class _MapResultsState extends State<MapResults> {
     });
     return markerList;
   }
+
+  KeepAliveFutureBuilder buildSummaryCard() {
+    Future<Object> eASummary = RestService().getEASummary(id: eAId);
+    return KeepAliveFutureBuilder(
+        future: eASummary,
+        builder: (context, snapshot) {
+          return snapshotHandler(snapshot, buildMapSummary, [context]);
+        });
+  }
+}
+
+Widget buildMapSummary(
+  BuildContext context,
+  Map<String, dynamic> decodedJson,
+) {
+  SummaryEventOrActivity eASummary =
+      SummaryEventOrActivity.fromJson(decodedJson);
+  return Align(
+    alignment: Alignment.bottomCenter,
+    child: Padding(
+      padding: EdgeInsets.only(left: 5.h, right: 5.h, bottom: 20.h),
+      child: Container(
+        height: 90.h,
+        child: getFavouriteListItem(
+            eASummary: eASummary,
+            context: context,
+            actionButton: getActionButton(
+                actionButtonType: ActionButtonType.addLikeButton,
+                eASummary: eASummary,
+                context: context)),
+      ),
+    ),
+  );
 }
