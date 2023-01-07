@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
+import 'package:othia/core/add/add_exclusives/action_box.dart';
 import 'package:othia/core/add/add_exclusives/address_form.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
@@ -38,7 +39,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final snackBar = SnackBar(
         // TODO improve design
-        content: inputNotifier.eAId == null
+        content: inputNotifier.isModifyMode
             ? Text(AppLocalizations.of(context)!.snackBarMessageAdding)
             : Text(AppLocalizations.of(context)!.snackBarMessageModifying),
         duration: Duration(seconds: 7, milliseconds: 500),
@@ -62,6 +63,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  if (inputNotifier.isModifyMode) ActionBox(),
                   getHeadline(
                       context: context,
                       caption: Text(AppLocalizations.of(context)!.title,

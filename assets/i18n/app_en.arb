@@ -82,6 +82,7 @@
     "details": "Details",
 "snackBarMessageAdding" : "Add now missing events or activities. You can also post those events or activities where you are not the organizer. Events are characterized by a start time while activities correspond to opening times.",
   "snackBarMessageModifying" : "Your modifications become active once you publish them in the last step.",
+  "addActions": "Delete or Share",
   "title": "Title",
   "titleHint": "State a title",
   "titleErrorMessage": "Titel ist erforderlich",

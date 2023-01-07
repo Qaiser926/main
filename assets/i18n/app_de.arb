@@ -82,6 +82,7 @@
 
   "snackBarMessageAdding" : "Hier hast du die Möglichkeit, fehlende Events und Aktivitäten hinzuzufügen. Du kannst auch Events oder Aktivitäten hinzufügen, bei denen du nicht selbst der Veranstalter bist. Als Events werden diejenigen Veranstaltungen interpretiert, die eine Start- und gegebenfalls Endzeit haben, während Aktivitäten Öffnungszeiten aufweisen.",
   "snackBarMessageModifying" : "Deine Änderungen werden aktiv, wenn du sie im letzten Schritt veröffentlichst.",
+  "addActions": "Löschen oder Teilen",
   "title": "Titel",
   "titleHint": "Gib einen Titel an",
   "titleErrorMessage": "Titel ist erforderlich",

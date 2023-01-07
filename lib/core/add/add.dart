@@ -52,8 +52,7 @@ class _AddState extends State<Add> {
         String eAId = Get.arguments[NavigatorConstants.EventActivityId];
         detailedEventOrActivity =
             RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
-        inputNotifier.eAId =
-            "proxy"; // is overwritten with real eAId if user is modifying
+        inputNotifier.isModifyMode = true;
       } on NoSuchMethodError catch (e) {
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }
@@ -131,7 +130,7 @@ class _AddState extends State<Add> {
 
   Widget getLoggedInBody(SwitchPages switchPages) {
     // it is first tested if an existing event or acitvity is modifier or if a new one is added
-    return inputNotifier.eAId != null
+    return inputNotifier.isModifyMode
         ? KeepAliveFutureBuilder(
             future: detailedEventOrActivity,
             builder: (context, snapshot) {

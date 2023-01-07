@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../modules/models/detailed_event/detailed_event.dart';
 
 class AddEANotifier extends ChangeNotifier {
-  // is also proxy for whether an event/ activity is added or modified
+  bool isModifyMode = false;
   String? eAId;
 
   String? title;
@@ -29,6 +29,7 @@ class AddEANotifier extends ChangeNotifier {
   String? city;
   String? postalCode;
   latLng.LatLng? latLong;
+  bool isAddressInvalid = false;
 
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
@@ -61,23 +62,26 @@ class AddEANotifier extends ChangeNotifier {
   bool termsAgreed = false;
   bool termsAgreedErrorMessage = false;
 
-  void clearPrices() {
-    for (var i = 0; i < prices.length; i++) {
-      if (prices[i].price == null) {
-        prices.removeAt(i);
-      }
-    }
-    if (prices.isEmpty) {
-      prices.add(InputPrice());
-    }
-    notifyListeners();
-  }
-
   Status? status;
 
-  bool isAddressInvalid = false;
-
   List<Image> loadedImages = [];
+
+  // TODO: before sending, transform to UTC
+  DateTime? startDateTime;
+  DateTime? endDateTime;
+
+// time related
+
+  Map openingTimes = {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": []
+  };
+  int activatedWeekDay = 1;
 
   // TODO when extracting interpret first  bool as start/ end time and second as opening times
   final List<bool> times = <bool>[true, false];
@@ -224,6 +228,26 @@ class AddEANotifier extends ChangeNotifier {
     changeSwitch(index: index, changingList: ownedOrForeign);
   }
 
+  set times(index) {
+    changeSwitch(index: index, changingList: times);
+  }
+
+  set ownedOrForeign(index) {
+    changeSwitch(index: index, changingList: ownedOrForeign);
+  }
+
+  void clearPrices() {
+    for (var i = 0; i < prices.length; i++) {
+      if (prices[i].price == null) {
+        prices.removeAt(i);
+      }
+    }
+    if (prices.isEmpty) {
+      prices.add(InputPrice());
+    }
+    notifyListeners();
+  }
+
   void changeLocationType(int index, BuildContext context) {
     // there can be either an address associated or the event/ activity is online -> make user aware
     bool isAddressSet = (streetNumber != null) |
@@ -253,30 +277,9 @@ class AddEANotifier extends ChangeNotifier {
 
   List<InputPrice> prices = [InputPrice()];
 
-  // TODO: before sending, transform to UTC
-  DateTime? startDateTime;
-  DateTime? endDateTime;
 
-// time related
 
-  Map openingTimes = {
-    "1": [],
-    "2": [],
-    "3": [],
-    "4": [],
-    "5": [],
-    "6": [],
-    "7": []
-  };
-  int activatedWeekDay = 1;
 
-  set times(index) {
-    changeSwitch(index: index, changingList: times);
-  }
-
-  set ownedOrForeign(index) {
-    changeSwitch(index: index, changingList: ownedOrForeign);
-  }
 
   List getOpeningTimesList() {
     return openingTimes[activatedWeekDay.toString()]!;
