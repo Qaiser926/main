@@ -8,6 +8,7 @@ import 'package:othia/core/add/add.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/ui/future_service.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -49,6 +50,8 @@ Widget getFavouriteLikeButton({
           Icons.favorite,
         ),
         onPressed: () {
+          Provider.of<NavigationBarNotifier>(context, listen: false)
+              .isDialogOpen = true;
           showDialog<bool>(
               context: context,
               builder: (context) => getDialog(
@@ -61,19 +64,21 @@ Widget getFavouriteLikeButton({
                             TextButton(
                               onPressed: () =>
                                   Navigator.of(context, rootNavigator: true)
-                                      .pop(),
+                                      .pop(false),
                               child: Text(AppLocalizations.of(context)!.cancel),
                             ),
                             TextButton(
                               onPressed: () =>
                                   Navigator.of(context, rootNavigator: true)
-                                      .pop(),
+                                      .pop(true),
                               child:
                                   Text(AppLocalizations.of(context)!.confirm),
                             ),
                           ],
                         ),
                       ])).then((value) {
+            Provider.of<NavigationBarNotifier>(context, listen: false)
+                .isDialogOpen = false;
             if (value!) {
               try {
                 RestService()
@@ -258,13 +263,18 @@ class _AddLikeButtonState extends State<AddLikeButton> {
             color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
+            Provider.of<NavigationBarNotifier>(context, listen: false)
+                .isDialogOpen = true;
             showDialog<bool>(
                 context: context,
                 builder: (context) => getDialog(
                       dialogText:
                           AppLocalizations.of(context)!.notLoggedInMessageLike,
                       actions: actions,
-                    ));
+                    )).then((_) {
+              Provider.of<NavigationBarNotifier>(context, listen: false)
+                  .isDialogOpen = false;
+            });
           }),
     ]);
   }

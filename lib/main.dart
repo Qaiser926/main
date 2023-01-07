@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:provider/provider.dart';
 
 import 'amplifyconfiguration.dart';
@@ -15,6 +16,7 @@ import 'config/routes/pages.dart';
 import 'config/routes/routes.dart';
 import 'config/themes/dark_theme.dart';
 import 'constants/locales_settings.dart';
+import 'widgets/nav_bar/nav_bar_notifier.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -26,7 +28,10 @@ class MyApp extends StatelessWidget {
     _configureAmplify();
   }
 
+  final PageController _pageController = PageController(initialPage: 0);
+
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -41,31 +46,38 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider.value(
                 value: LocaleProvider(),
               ),
+              ChangeNotifierProvider.value(
+                value: NavigationBarNotifier(pageController: _pageController),
+              ),
             ],
-            child: Consumer<LocaleProvider>(
-                builder: (context, localeProvider, child) {
-              return GetMaterialApp(
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                locale: localeProvider.locale,
-                supportedLocales: supportedLocales,
-                builder: Authenticator.builder(),
-                debugShowCheckedModeBanner: false,
-                initialRoute: Routes.homeRoute,
-                // getPages: ,
-                routes: Pages.routes,
-                theme: getDarkThemeData(),
-                onGenerateRoute: (settings) {
-                  if (settings.name == Routes.homeRoute) {
-                    return MaterialPageRoute(
-                        builder: Pages.routes[Routes.homeRoute]!);
-                  }
-                },
-              );
+            child: Consumer2<LocaleProvider, NavigationBarNotifier>(builder:
+                (context, localeProvider, navigationBarNotifier, child) {
+              return WillPopScope(
+                  onWillPop: () {
+                    return closeAppDialog(context, navigationBarNotifier);
+                  },
+                  child: GetMaterialApp(
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    locale: localeProvider.locale,
+                    supportedLocales: supportedLocales,
+                    builder: Authenticator.builder(),
+                    debugShowCheckedModeBanner: false,
+                    initialRoute: Routes.homeRoute,
+                    // getPages: ,
+                    routes: Pages.routes,
+                    theme: getDarkThemeData(),
+                    onGenerateRoute: (settings) {
+                      if (settings.name == Routes.homeRoute) {
+                        return MaterialPageRoute(
+                            builder: Pages.routes[Routes.homeRoute]!);
+                      }
+                    },
+                  ));
             }),
           ),
         );
@@ -94,4 +106,43 @@ Future<void> _configureAmplify() async {
     safePrint(
         "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
   }
+}
+
+Future<bool> closeAppDialog(
+    BuildContext context, NavigationBarNotifier notifier) async {
+  int currentSearchIndex = notifier.getSearchNotifier.currentIndex;
+  bool? shouldPop;
+  if (Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen) {
+    shouldPop = false;
+  } else if (currentSearchIndex != NavigatorConstants.SearchPageIndex) {
+    if (currentSearchIndex - 1 == NavigatorConstants.SearchPageIndex) {
+      notifier.getSearchNotifier.backToDefault();
+    }
+    notifier.getSearchNotifier.setIndex = currentSearchIndex - 1;
+    shouldPop = false;
+  } else {
+    shouldPop = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!.closeAppDialog),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: Text(AppLocalizations.of(context)!.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
+                child: Text(AppLocalizations.of(context)!.confirm),
+              ),
+            ],
+          );
+        });
+  }
+  return shouldPop!;
 }
