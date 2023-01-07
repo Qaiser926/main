@@ -61,7 +61,7 @@
       }
     }
   },
-  "priceRange": "€{firstPrice} - €{secondPrice}",
+  "priceRange": "{firstPrice}€ - {secondPrice}€",
   "@priceRange": {
     "placeholders": {
       "firstPrice": {
@@ -149,6 +149,15 @@
     "agreeGuidelinesCaption": "Guidelines Consent",
     "agreeGuidelinesText": "I agree to the guidelines",
     "agreeGuidelinesErrorMessage": "To publish, you must agree to our guidelines",
+    "deleteDialog": "Are you sure you want to delete this {eA}?",
+      "@deleteDialog": {
+        "placeholders": {
+          "eA": {
+            "type": "String"
+          }
+        }
+      },
+
 
 
 

@@ -28,7 +28,7 @@ class IconRow extends StatelessWidget {
           Icons.share,
         ),
         onPressed: () {
-          final String shareLink = shareLinkBuilder(eAId);
+          final String shareLink = eAShareLinkBuilder(eAId);
 
           Share.share(
               '${AppLocalizations.of(context)!.shareMessage} $shareLink');

@@ -150,6 +150,14 @@
     "agreeGuidelinesCaption": "Richtlinien Zustimmung",
     "agreeGuidelinesText": "Ich stimme den Richtlinien zu",
     "agreeGuidelinesErrorMessage": "Um Veranstaltungen hinzufügen zu können, musst du unseren Richtlinien zustimmen.",
+    "deleteDialog": "Bist du dir sicher, dass du diese(s) {eA} löschen willst?",
+          "@deleteDialog": {
+            "placeholders": {
+              "eA": {
+                "type": "String"
+              }
+            }
+          },
 
 
 

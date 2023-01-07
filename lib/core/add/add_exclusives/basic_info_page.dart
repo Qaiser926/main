@@ -63,7 +63,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (inputNotifier.isModifyMode) ActionBox(),
+                  if (inputNotifier.isModifyMode) ActionBox(inputNotifier),
                   getHeadline(
                       showDivider: inputNotifier.isModifyMode,
                       context: context,

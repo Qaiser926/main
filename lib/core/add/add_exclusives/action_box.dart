@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/core/add/add_exclusives/input_notifier.dart';
+import 'package:othia/utils/helpers/builders.dart';
+import 'package:othia/utils/ui/app_dialogs.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ActionBox extends StatelessWidget {
+  AddEANotifier inputNotifier;
+
+  ActionBox(this.inputNotifier);
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
@@ -21,12 +31,20 @@ class ActionBox extends StatelessWidget {
           buildButton(
               context: context,
               caption: AppLocalizations.of(context)!.delete,
-              onTap: () {},
+              onTap: () {
+                showDeleteDialog(context);
+              },
               icon: Icons.delete),
           buildButton(
               context: context,
               caption: AppLocalizations.of(context)!.share,
-              onTap: () {},
+              onTap: () {
+                final String shareLink =
+                    eAShareLinkBuilder(inputNotifier.eAId!);
+                // TODO include a picture when sharing
+                Share.share(
+                    '${AppLocalizations.of(context)!.shareMessage} $shareLink');
+              },
               icon: Icons.share),
         ],
       ),
@@ -40,7 +58,7 @@ class ActionBox extends StatelessWidget {
       required Function onTap,
       required IconData icon}) {
     return GestureDetector(
-      onTap: onTap(),
+      onTap: () => onTap(),
       child: Container(
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
@@ -66,5 +84,39 @@ class ActionBox extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void showDeleteDialog(BuildContext context) {
+    Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+        true;
+    showDialog(
+        context: context,
+        builder: (context) => getDialog(
+                dialogText: AppLocalizations.of(context)!.deleteDialog(
+                    inputNotifier.times[0]
+                        ? AppLocalizations.of(context)!.event
+                        : AppLocalizations.of(context)!.activity),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () =>
+                            Navigator.of(context, rootNavigator: true).pop(),
+                        child: Text(AppLocalizations.of(context)!.cancel),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          //TODO forward to forwarding page
+                        },
+                        child: Text(AppLocalizations.of(context)!.confirm),
+                      ),
+                    ],
+                  ),
+                ])).then((_) {
+      Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+          false;
+    });
   }
 }

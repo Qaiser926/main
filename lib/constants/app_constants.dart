@@ -10,6 +10,7 @@ class OthiaConstants {
 
   //TODO make this constant together with the link in rest api services
   static const String eventDetailPath = 'events';
+  static const String organizerDetailPath = 'organizer';
 }
 
 class WidgetConstants {
