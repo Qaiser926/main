@@ -58,7 +58,7 @@ DateTime? getLocalDateTime({required String? dateTimeUtc}) {
 
 String getUTCTimeString({required DateTime localDateTime}) {
   final DateTime now = DateTime.now();
-  return localDateTime.add(now.timeZoneOffset).toString();
+  return localDateTime.subtract(now.timeZoneOffset).toString();
 }
 
 String getMonthName({required int month, required BuildContext context}) {

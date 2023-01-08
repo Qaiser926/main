@@ -188,12 +188,14 @@ class TimeSelector extends StatelessWidget {
 
   Future<DateTime?> displayDatePicker(DateType dateType) async {
     DateTime firstDate = DateTime.now();
+    // end date cannot be before start date, thus set end date accordingly
     if (dateType == DateType.EndDate) {
       firstDate = getLocalDateTime(
               dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc) ??
           DateTime.now();
     }
-    DateTime? initialDate = DateTime.now();
+    // initialDate is the highlighted date in the picker. Per default it is set to the first possible date
+    DateTime? initialDate = firstDate;
     if (dateType == DateType.StartDate) {
       initialDate = getLocalDateTime(
           dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc);
@@ -209,7 +211,7 @@ class TimeSelector extends StatelessWidget {
       // locale: const getCurrentLocale(),
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate,
-      lastDate: DateTime(DateTime.now().year + 2),
+      lastDate: DateTime(DateTime.now().year + 5),
     );
 
     if (date != null) {
