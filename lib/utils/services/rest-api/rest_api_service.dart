@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
@@ -170,6 +171,20 @@ class RestService {
     //     path: '/saveprivateuserinformation',
     //     headers: {'token': '${token}'},
     //     body: transformClassToBody(deleteEA));
+    // TODO change back to post
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> addEA(
+      {required DetailedEventOrActivity detailedEventOrActivity}) async {
+    String token = await getIdToken();
+    RestOptions restOptions = RestOptions(path: '/getMapResultIds-dev/');
+    // RestOptions restOptions = RestOptions(
+    //   // TODO real path, it is required that the returned body is a map
+    //     path: '/saveprivateuserinformation',
+    //     headers: {'token': '${token}'},
+    //     body: transformClassToBody(detailedEventOrActivity));
     // TODO change back to post
     final result = await get(restOptions);
     return result;

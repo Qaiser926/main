@@ -61,6 +61,7 @@ class _EventDetailState extends State<EventDetail> {
   Widget getContent(Map<String, dynamic> decodedJson) {
     DetailedEventOrActivity detailedEventOrActivity =
         DetailedEventOrActivity.fromJson(decodedJson);
+
     Event? iCalElement;
     if (detailedEventOrActivity.time.startTimeUtc != null) {
       iCalElement = getIcalElement(

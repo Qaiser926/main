@@ -46,4 +46,6 @@ class DetailedEventOrActivity {
 
   factory DetailedEventOrActivity.fromJson(Map<String, dynamic> json) =>
       _$DetailedEventOrActivityFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DetailedEventOrActivityToJson(this);
 }

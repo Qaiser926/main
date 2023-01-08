@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/main_page.dart';
@@ -7,6 +9,7 @@ import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dar
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -35,7 +38,9 @@ class DeleteForwardingPage extends StatelessWidget {
                 future: response,
                 builder: (context, snapshot) {
                   return snapshotHandler(snapshot, goToProfilePage, [context]);
-                })
+                }),
+            getVerSpace(10.h),
+            Text(AppLocalizations.of(context)!.deleteEAWaitingMessage),
           ],
         )));
   }

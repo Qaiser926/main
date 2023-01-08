@@ -54,6 +54,7 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
 }
 
 @JsonSerializable()
@@ -70,6 +71,8 @@ class Time {
       this.openingTime});
 
   factory Time.fromJson(Map<String, dynamic> json) => _$TimeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TimeToJson(this);
 }
 
 @JsonSerializable()
@@ -94,9 +97,11 @@ class SearchEnhancement {
 
   factory SearchEnhancement.fromJson(Map<String, dynamic> json) =>
       _$SearchEnhancementFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SearchEnhancementToJson(this);
 }
 
-// TODO might not be used
+// TODO might not be used --> delete
 @JsonSerializable()
 class Coordinates {
   final double latitude;
