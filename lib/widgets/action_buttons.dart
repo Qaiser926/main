@@ -7,8 +7,8 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -50,7 +50,7 @@ Widget getFavouriteLikeButton({
           Icons.favorite,
         ),
         onPressed: () {
-          Provider.of<NavigationBarNotifier>(context, listen: false)
+          Provider.of<GlobalNavigationNotifier>(context, listen: false)
               .isDialogOpen = true;
           showDialog<bool>(
               context: context,
@@ -77,7 +77,7 @@ Widget getFavouriteLikeButton({
                           ],
                         ),
                       ])).then((value) {
-            Provider.of<NavigationBarNotifier>(context, listen: false)
+            Provider.of<GlobalNavigationNotifier>(context, listen: false)
                 .isDialogOpen = false;
             if (value!) {
               try {
@@ -263,7 +263,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
             color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
-            Provider.of<NavigationBarNotifier>(context, listen: false)
+            Provider.of<GlobalNavigationNotifier>(context, listen: false)
                 .isDialogOpen = true;
             showDialog<bool>(
                 context: context,
@@ -272,7 +272,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
                           AppLocalizations.of(context)!.notLoggedInMessageLike,
                       actions: actions,
                     )).then((_) {
-              Provider.of<NavigationBarNotifier>(context, listen: false)
+              Provider.of<GlobalNavigationNotifier>(context, listen: false)
                   .isDialogOpen = false;
             });
           }),

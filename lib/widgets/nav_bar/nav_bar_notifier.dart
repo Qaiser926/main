@@ -7,7 +7,6 @@ import '../../core/add/add.dart';
 class NavigationBarNotifier extends ChangeNotifier {
   int index = 0;
   PageController pageController;
-  bool isDialogOpen = false;
   final SearchNotifier _searchNotifier;
 
   //TODO decide if SearchNotifier is initialized here or the fields are non-required

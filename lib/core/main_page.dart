@@ -67,6 +67,9 @@ Future<bool> closeAppDialog(
     }
     notifier.getSearchNotifier.setIndex = currentSearchIndex - 1;
     shouldPop = false;
+  } else if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
+      .isDialogOpen) {
+    shouldPop = false;
   } else {
     shouldPop = await showDialog<bool>(
         context: context,
