@@ -39,10 +39,7 @@ void handleJsonData(
   if (jsonResponse.isNotEmpty) {
     DetailedEventOrActivity detailedEventOrActivity =
         DetailedEventOrActivity.fromJson(jsonResponse);
-    inputNotifier.detailedEA = detailedEventOrActivity;
-    // TODO delete when not needed anymore
-    inputNotifier.initializeWithExistingEA(
-        detailedEventOrActivity: detailedEventOrActivity);
+    inputNotifier.modify(existingDetailedEA: detailedEventOrActivity);
   }
 }
 
@@ -193,7 +190,7 @@ class SwitchPages {
         ((targetPage == 1) | (targetPage == 2))) {
       // request latitude and longitude for stated address and test if a result was found only if not online is selected
       if (inputNotifier.locationType[0] &
-          (inputNotifier.detailedEA.location.longitude == null)) {
+          (inputNotifier.shouldCallGeolocator())) {
         getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
           if (latLong != null) {
             inputNotifier.detailedEA.location.longitude = latLong.longitude;

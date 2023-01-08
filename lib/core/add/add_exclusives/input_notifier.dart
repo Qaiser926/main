@@ -14,6 +14,76 @@ class AddEANotifier extends ChangeNotifier {
       searchEnhancement: SearchEnhancement());
 
   // TODO write function to input detailed event or activity
+
+  void modify({required DetailedEventOrActivity existingDetailedEA}) {
+    detailedEA = existingDetailedEA;
+    handleTimes(existingDetailedEA.time);
+    handleLocation(existingDetailedEA.location);
+    handleOwnerId(detailedEA);
+    mainCategoryId =
+        mapSubcategoryToCategory(subCategoryId: existingDetailedEA.categoryId!);
+    if (existingDetailedEA.status != null) {
+      status = existingDetailedEA.status;
+    } else {
+      status = Status.LIVE;
+    }
+  }
+
+  void handleTimes(Time existingTime) {
+    if (existingTime.openingHours != null) {
+      // set the list with bools
+      times = 1;
+    } else {
+      times = 0;
+    }
+  }
+
+  String? initStreet;
+  String? initCity;
+  String? initStreetNumber;
+  String? initPostalCode;
+  double? initLatitude;
+  double? initLongitude;
+
+  bool isAddressChanged() {
+    return ((initStreet != detailedEA.location.street) |
+        (initCity != detailedEA.location.city) |
+        (initStreetNumber != detailedEA.location.streetNumber) |
+        (initPostalCode != detailedEA.location.postalCode) |
+        (initLongitude != detailedEA.location.longitude) |
+        (initLatitude != detailedEA.location.latitude));
+  }
+
+  bool shouldCallGeolocator() {
+    // only do not call if the address has not changed in modification mode
+    if (!isAddressChanged() & isModifyMode) {
+      return false;
+    }
+    return true;
+  }
+
+  void handleLocation(Location existingLocation) {
+    if (existingLocation.isOnline!) {
+      locationType = 1;
+    } else {
+      locationType = 0;
+      initStreet = existingLocation.street;
+      initCity = existingLocation.city;
+      initPostalCode = existingLocation.postalCode;
+      initStreetNumber = existingLocation.streetNumber;
+      initLatitude = existingLocation.latitude;
+      initLongitude = existingLocation.longitude;
+    }
+  }
+
+  void handleOwnerId(DetailedEventOrActivity detailedEventOrActivity) {
+    if (detailedEventOrActivity.ownerIsOrganizer!) {
+      ownedOrForeign = 0;
+    } else {
+      ownedOrForeign = 1;
+    }
+  }
+
   // TODO write function to export detailed event or activity, special case for location
 
   bool isModifyMode = false;
@@ -61,8 +131,6 @@ class AddEANotifier extends ChangeNotifier {
 
   List<Image> loadedImages = [];
 
-
-
   int activatedWeekDay = 1;
 
   // TODO when extracting interpret first  bool as start/ end time and second as opening times
@@ -73,7 +141,8 @@ class AddEANotifier extends ChangeNotifier {
   final List<bool> privateOrPublic = <bool>[true, false];
   final List<bool> ownedOrForeign = <bool>[true, false];
 
-  void initializeWithExistingEA({required DetailedEventOrActivity detailedEventOrActivity}) {
+  void initializeWithExistingEA(
+      {required DetailedEventOrActivity detailedEventOrActivity}) {
     handleSeveral(detailedEventOrActivity);
     handleImage(detailedEventOrActivity);
     // handlePrices(detailedEventOrActivity.prices);
@@ -87,14 +156,6 @@ class AddEANotifier extends ChangeNotifier {
     description = detailedEventOrActivity.description;
     websiteUrl = detailedEventOrActivity.websiteUrl;
     ticketUrl = detailedEventOrActivity.ticketUrl;
-
-    mainCategoryId = mapSubcategoryToCategory(
-        subCategoryId: detailedEventOrActivity.categoryId!);
-    if (detailedEventOrActivity.status != null) {
-      status = detailedEventOrActivity.status;
-    } else {
-      status = Status.LIVE;
-    }
   }
 
   void handleSearchenhancement(SearchEnhancement? searchEnhancement) {
@@ -146,31 +207,6 @@ class AddEANotifier extends ChangeNotifier {
   //     if (prices.isEmpty) prices.add(Price());
   //   }
   // }
-
-  void handleTimes(Time existingTime) {
-    if (existingTime.openingHours != null) {
-      // set the list with bools
-      times = 1;
-    } else {
-      times = 0;
-    }
-  }
-
-  void handleLocation(Location existingLocation) {
-    if (existingLocation.isOnline!) {
-      locationType = 1;
-    } else {
-      locationType = 0;
-    }
-  }
-
-  void handleOwnerId(DetailedEventOrActivity detailedEventOrActivity) {
-    if (detailedEventOrActivity.ownerIsOrganizer!) {
-      ownedOrForeign = 0;
-    } else {
-      ownedOrForeign = 1;
-    }
-  }
 
   set changeStatus(receivedStatus) {
     status = receivedStatus;
@@ -348,38 +384,39 @@ class AddEANotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void notifyUsers({required BuildContext context,
-    required bool showFirstMessage,
-    required String firstText,
-    required String secondText,
-    required Function() onPressed}) {
+  void notifyUsers(
+      {required BuildContext context,
+      required bool showFirstMessage,
+      required String firstText,
+      required String secondText,
+      required Function() onPressed}) {
     Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
-    true;
+        true;
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          content: showFirstMessage ? Text(firstText) : Text(secondText),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                child: Text(
-                  AppLocalizations.of(context)!.cancel,
+              content: showFirstMessage ? Text(firstText) : Text(secondText),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            TextButton(
-              onPressed: onPressed,
-              child: Container(
-                padding: const EdgeInsets.all(14),
-                child: Text(AppLocalizations.of(context)!.continueText),
-              ),
-            ),
-          ],
-        )).then((_) {
+                TextButton(
+                  onPressed: onPressed,
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    child: Text(AppLocalizations.of(context)!.continueText),
+                  ),
+                ),
+              ],
+            )).then((_) {
       Provider.of<GlobalNavigationNotifier>(context, listen: false)
           .isDialogOpen = false;
     });
