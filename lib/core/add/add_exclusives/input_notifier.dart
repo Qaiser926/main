@@ -1,38 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/constants/categories.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
-import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../../modules/models/detailed_event/detailed_event.dart';
 
 class AddEANotifier extends ChangeNotifier {
-  DetailedEventOrActivity detailedEventOrActivity = DetailedEventOrActivity(
+  DetailedEventOrActivity detailedEA = DetailedEventOrActivity(
       time: Time(),
       location: Location(),
       searchEnhancement: SearchEnhancement());
 
-  bool isModifyMode = false;
-  String? eAId;
+  // TODO write function to input detailed event or activity
+  // TODO write function to export detailed event or activity, special case for location
 
-  String? title;
+  bool isModifyMode = false;
 
   String? description;
   String? websiteUrl;
   String? ticketUrl;
 
   String? mainCategoryId;
-  String? categoryId;
 
-  String? locationTitle;
-  String? street;
-  String? streetNumber;
-  String? city;
-  String? postalCode;
-  latLng.LatLng? latLong;
   bool isAddressInvalid = false;
 
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
@@ -70,21 +61,8 @@ class AddEANotifier extends ChangeNotifier {
 
   List<Image> loadedImages = [];
 
-  // TODO: before sending, transform to UTC
-  DateTime? startDateTime;
-  DateTime? endDateTime;
 
-// time related
 
-  Map openingTimes = {
-    "1": [],
-    "2": [],
-    "3": [],
-    "4": [],
-    "5": [],
-    "6": [],
-    "7": []
-  };
   int activatedWeekDay = 1;
 
   // TODO when extracting interpret first  bool as start/ end time and second as opening times
@@ -106,12 +84,10 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void handleSeveral(DetailedEventOrActivity detailedEventOrActivity) {
-    eAId = detailedEventOrActivity.id;
     description = detailedEventOrActivity.description;
     websiteUrl = detailedEventOrActivity.websiteUrl;
     ticketUrl = detailedEventOrActivity.ticketUrl;
-    title = detailedEventOrActivity.title;
-    categoryId = detailedEventOrActivity.categoryId;
+
     mainCategoryId = mapSubcategoryToCategory(
         subCategoryId: detailedEventOrActivity.categoryId!);
     if (detailedEventOrActivity.status != null) {
@@ -172,16 +148,11 @@ class AddEANotifier extends ChangeNotifier {
   // }
 
   void handleTimes(Time existingTime) {
-    if (existingTime.openingTime != null) {
+    if (existingTime.openingHours != null) {
       // set the list with bools
       times = 1;
-      openingTimes = existingTime.openingTime!;
     } else {
       times = 0;
-      startDateTime = getLocalDateTime(dateTimeUtc: existingTime.startTimeUtc!);
-      if (existingTime.endTimeUtc != null) {
-        endDateTime = getLocalDateTime(dateTimeUtc: existingTime.endTimeUtc!);
-      }
     }
   }
 
@@ -190,12 +161,6 @@ class AddEANotifier extends ChangeNotifier {
       locationType = 1;
     } else {
       locationType = 0;
-      street = existingLocation.street;
-      city = existingLocation.city;
-      streetNumber = existingLocation.streetNumber;
-      postalCode = existingLocation.postalCode;
-      latLong = latLng.LatLng(
-          existingLocation.latitude!, existingLocation.longitude!);
     }
   }
 
@@ -253,10 +218,10 @@ class AddEANotifier extends ChangeNotifier {
 
   void changeLocationType(int index, BuildContext context) {
     // there can be either an address associated or the event/ activity is online -> make user aware
-    bool isAddressSet = (streetNumber != null) |
-    (street != null) |
-    (city != null) |
-    (postalCode != null);
+    bool isAddressSet = (detailedEA.location.streetNumber != null) |
+        (detailedEA.location.street != null) |
+        (detailedEA.location.city != null) |
+        (detailedEA.location.postalCode != null);
 
     bool addressCase = isAddressSet & (index == 1);
     if (addressCase) {
@@ -275,21 +240,21 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   String getAddressString() {
-    return "${locationTitle ?? ""}, ${street ?? ""} ${streetNumber ?? ""}, ${postalCode ?? ""} ${city ?? ""}";
+    return "${detailedEA.location.locationTitle ?? ""}, ${detailedEA.location.street ?? ""} ${detailedEA.location.streetNumber ?? ""}, ${detailedEA.location.postalCode ?? ""} ${detailedEA.location.city ?? ""}";
   }
 
   List<Price> prices = [Price()];
 
   List getOpeningTimesList() {
-    return openingTimes[activatedWeekDay.toString()]!;
+    return detailedEA.time.openingHours![activatedWeekDay.toString()]!;
   }
 
   void deleteNullOpeningTimes() {
-    for (var openingTimesList in openingTimes.values) {
+    for (var openingTimesList in detailedEA.time.openingHours!.values) {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
         // first is opening time, the second closing time
         if ((openingTimesList[i][0] == null) |
-        (openingTimesList[i][1] == null)) {
+            (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);
         }
       }
@@ -298,19 +263,19 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void closedOnWeekDay() {
-    openingTimes[activatedWeekDay.toString()] = [];
+    detailedEA.time.openingHours![activatedWeekDay.toString()] = [];
     notifyListeners();
   }
 
   void alwaysOpenOnWeekDay() {
-    openingTimes[activatedWeekDay.toString()] = [
+    detailedEA.time.openingHours![activatedWeekDay.toString()] = [
       [0, 0]
     ];
     notifyListeners();
   }
 
   bool isClosed() {
-    if (openingTimes[activatedWeekDay.toString()]!.isEmpty) {
+    if (detailedEA.time.openingHours![activatedWeekDay.toString()]!.isEmpty) {
       return true;
     } else {
       return false;
@@ -318,11 +283,13 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   bool isAlwaysOpen() {
-    if (openingTimes[activatedWeekDay.toString()]!.isEmpty) {
+    if (detailedEA.time.openingHours![activatedWeekDay.toString()]!.isEmpty) {
       return false;
     } else {
-      if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
-      (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
+      if ((detailedEA.time.openingHours![activatedWeekDay.toString()]![0][0] ==
+              0) &
+          (detailedEA.time.openingHours![activatedWeekDay.toString()]![0][1] ==
+              0)) {
         return true;
       } else {
         return false;
@@ -331,7 +298,7 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void resetEndDateTime() {
-    endDateTime = null;
+    detailedEA.time.endTimeUtc = null;
     // notifyListeners();
   }
 
@@ -341,18 +308,19 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void addHours() {
-    openingTimes[activatedWeekDay.toString()]!.add([null, null]);
+    detailedEA.time.openingHours![activatedWeekDay.toString()]!
+        .add([null, null]);
     notifyListeners();
   }
 
   void changeTimeType(int index, BuildContext context) {
     // there can be either opening times or start/ end time associated -> make user aware
     bool isOpeningTimesModified = false;
-    for (var openingTimesList in openingTimes.values) {
+    for (var openingTimesList in detailedEA.time.openingHours!.values) {
       if (openingTimesList?.isNotEmpty ?? (openingTimesList != null))
         isOpeningTimesModified = true;
     }
-    bool isStartTimeModified = startDateTime != null;
+    bool isStartTimeModified = detailedEA.time.startTimeUtc != null;
     bool caseOpeningTimesReset = isOpeningTimesModified & (index == 0);
     bool caseStartTimeReset = isStartTimeModified & (index == 1);
     if (caseOpeningTimesReset | caseStartTimeReset) {
@@ -360,9 +328,9 @@ class AddEANotifier extends ChangeNotifier {
           context: context,
           showFirstMessage: caseStartTimeReset,
           firstText:
-          AppLocalizations.of(context)!.timeSwitchingDialogOpeningHours,
+              AppLocalizations.of(context)!.timeSwitchingDialogOpeningHours,
           secondText:
-          AppLocalizations.of(context)!.timeSwitchingDialogStartTime,
+              AppLocalizations.of(context)!.timeSwitchingDialogStartTime,
           onPressed: () {
             times = index;
             // Get.back();

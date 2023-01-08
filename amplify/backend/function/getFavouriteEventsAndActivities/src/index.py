@@ -233,9 +233,10 @@ def handler(event, context):
 
 # TODO: might be beneficial to define functions below that are shared in common model that is shared over all api functions
 
+# TODO make function shareable as it is also used in eADetails, eaSummary
 def getPrices(prices: list):
     if len(prices) > 2:
-        return [min(prices), max(prices)]
+        return [{"label": "minPrice", "price": min(prices)}, {"label": "maxPrice", "price": max(prices)}]
 
 
 def getOpeningTimesDict(openingTimes: list):

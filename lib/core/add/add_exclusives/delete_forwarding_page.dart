@@ -23,7 +23,7 @@ class DeleteForwardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late Future<Object> response = RestService().deleteEA(
-        deleteEA: DeleteEA(eAId: inputNotifier.eAId!, userId: userId));
+        deleteEA: DeleteEA(eAId: inputNotifier.detailedEA.id!, userId: userId));
     return WillPopScope(
         onWillPop: () async {
           return false;

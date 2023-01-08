@@ -45,14 +45,15 @@ Time _$TimeFromJson(Map<String, dynamic> json) => Time(
       openingTimeCode: $enumDecodeNullable(
           _$OpeningTimeCodeEnumMap, json['openingTimeCode']),
       endTimeUtc: json['endTimeUtc'] as String?,
-      openingTime: json['openingTime'] as Map<String, dynamic>?,
+      openingHours: json['openingTime'] as Map<String, dynamic>?,
     );
 
-Map<String, dynamic> _$TimeToJson(Time instance) => <String, dynamic>{
+Map<String, dynamic> _$TimeToJson(Time instance) =>
+    <String, dynamic>{
       'startTimeUtc': instance.startTimeUtc,
       'endTimeUtc': instance.endTimeUtc,
       'openingTimeCode': _$OpeningTimeCodeEnumMap[instance.openingTimeCode],
-      'openingTime': instance.openingTime,
+      'openingTime': instance.openingHours,
     };
 
 const _$OpeningTimeCodeEnumMap = {

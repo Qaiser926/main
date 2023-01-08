@@ -43,7 +43,7 @@ class ActionBox extends StatelessWidget {
               caption: AppLocalizations.of(context)!.share,
               onTap: () {
                 final String shareLink =
-                    eAShareLinkBuilder(inputNotifier.eAId!);
+                    eAShareLinkBuilder(inputNotifier.detailedEA.id!);
                 // TODO include a picture when sharing
                 Share.share(
                     '${AppLocalizations.of(context)!.shareMessage} $shareLink');

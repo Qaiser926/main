@@ -6,7 +6,7 @@ import 'package:othia/constants/app_constants.dart';
 String eAShareLinkBuilder(String eAId) {
   String shareLink = OthiaConstants.othiaDomain;
   shareLink += "/";
-  shareLink += OthiaConstants.eventDetailPath;
+  shareLink += APIConstants.eventDetailPath;
   shareLink += "/";
   shareLink += eAId;
   return shareLink;
@@ -15,7 +15,7 @@ String eAShareLinkBuilder(String eAId) {
 String organizerShareLinkBuilder(String eAId) {
   String shareLink = OthiaConstants.othiaDomain;
   shareLink += "/";
-  shareLink += OthiaConstants.organizerDetailPath;
+  shareLink += APIConstants.organizerDetailPath;
   shareLink += "/";
   shareLink += eAId;
   return shareLink;

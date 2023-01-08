@@ -9,8 +9,8 @@ import 'package:othia/core/add/add_exclusives/details_page.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/core/add/add_exclusives/publish_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
+import 'package:othia/utils/services/geocoding.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
-import 'package:othia/utils/services/rest-api/geocoding.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +39,7 @@ void handleJsonData(
   if (jsonResponse.isNotEmpty) {
     DetailedEventOrActivity detailedEventOrActivity =
         DetailedEventOrActivity.fromJson(jsonResponse);
-    inputNotifier.detailedEventOrActivity = detailedEventOrActivity;
+    inputNotifier.detailedEA = detailedEventOrActivity;
     // TODO delete when not needed anymore
     inputNotifier.initializeWithExistingEA(
         detailedEventOrActivity: detailedEventOrActivity);
@@ -192,10 +192,13 @@ class SwitchPages {
     if ((switchPagesNotifier.currentPage == 0) &
         ((targetPage == 1) | (targetPage == 2))) {
       // request latitude and longitude for stated address and test if a result was found only if not online is selected
-      if (inputNotifier.locationType[0] & (inputNotifier.latLong == null)) {
+      if (inputNotifier.locationType[0] &
+          (inputNotifier.detailedEA.location.longitude == null)) {
         getLatLongFromAddress(inputNotifier.getAddressString()).then((latLong) {
           if (latLong != null) {
-            inputNotifier.latLong = latLong; // save requested lat/ long
+            inputNotifier.detailedEA.location.longitude = latLong.longitude;
+            inputNotifier.detailedEA.location.latitude =
+                latLong.latitude; // save requested lat/ long
             if (_isTimeCorrect() & _isTitleCategoryCorrect()) {
               _switchPage(targetPage);
             }

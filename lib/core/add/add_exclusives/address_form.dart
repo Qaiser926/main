@@ -52,13 +52,14 @@ class _AddressFormState extends State<AddressForm> {
                   child: Padding(
                     padding: EdgeInsets.only(right: 5.h),
                     child: CustomTextFormField(
-                          initialValue: widget.inputNotifier.street,
+                          initialValue:
+                          widget.inputNotifier.detailedEA.location.street,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp('[0-9]'))
                       ],
                       validationFunction: _validateAddress,
                       onChangedFunction: (text) {
-                        widget.inputNotifier.street = text;
+                        widget.inputNotifier.detailedEA.location.street = text;
                         setState(() => {
                               this.street = text,
                             });
@@ -70,10 +71,12 @@ class _AddressFormState extends State<AddressForm> {
                     Expanded(
                       flex: 1,
                       child: CustomTextFormField(
-                        initialValue: widget.inputNotifier.streetNumber,
+                        initialValue:
+                        widget.inputNotifier.detailedEA.location.streetNumber,
                     validationFunction: _validateAddress,
                     onChangedFunction: (text) {
-                      widget.inputNotifier.streetNumber = text;
+                      widget.inputNotifier.detailedEA.location.streetNumber =
+                          text;
                       setState(() => {
                             this.streetNumber = text,
                           });
@@ -91,13 +94,13 @@ class _AddressFormState extends State<AddressForm> {
                     child: Padding(
                       padding: EdgeInsets.only(right: 5.h),
                       child: CustomTextFormField(
-                        initialValue: widget.inputNotifier.city,
+                        initialValue: widget.inputNotifier.detailedEA.location.city,
                     inputFormatters: [
                       FilteringTextInputFormatter.deny(RegExp('[0-9]'))
                     ],
                     validationFunction: _validateAddress,
                     onChangedFunction: (text) {
-                      widget.inputNotifier.city = text;
+                      widget.inputNotifier.detailedEA.location.city = text;
                       setState(() => {
                             this.city = text,
                           });
@@ -110,13 +113,14 @@ class _AddressFormState extends State<AddressForm> {
                     flex: 2,
                     child: CustomTextFormField(
                       numberInput: true,
-                      initialValue: widget.inputNotifier.postalCode,
+                  initialValue:
+                      widget.inputNotifier.detailedEA.location.postalCode,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                   ],
                   validationFunction: _validateAddress,
                   onChangedFunction: (text) {
-                    widget.inputNotifier.postalCode = text;
+                    widget.inputNotifier.detailedEA.location.postalCode = text;
                     setState(() => {
                           this.postalCode = text,
                         });

@@ -19,8 +19,8 @@ class OpeningTimesSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddEANotifier>(builder: (context, model, child) {
-      openingTime = model.openingTimes;
+    return Consumer<AddEANotifier>(builder: (context, inputConsumer, child) {
+      openingTime = inputConsumer.detailedEA.time.openingHours!;
       return OpeningTimes(
         openingTime: openingTime,
         isChangeable: true,
@@ -202,8 +202,8 @@ Widget buildOpeningTimeBoxes(
     width: double.maxFinite,
     child: ListView.builder(
         shrinkWrap: true,
-        itemCount: inputNotifier
-            .openingTimes[inputNotifier.activatedWeekDay.toString()]!.length,
+        itemCount: inputNotifier.detailedEA.time
+            .openingHours![inputNotifier.activatedWeekDay.toString()]!.length,
         itemBuilder: (BuildContext context, int index) {
           List openingTimes = inputNotifier.getOpeningTimesList()[index];
           if ((openingTimes[0] == 0) & (openingTimes[1] == 0)) {

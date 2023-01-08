@@ -45,7 +45,8 @@ class EAImagePicker extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.h)),
                       image: DecorationImage(
                         image: getPhotoNullSave(
-                            categoryId: inputNotifierConsumer.categoryId ??
+                            categoryId: inputNotifierConsumer
+                                        .detailedEA.categoryId ??
                                     Categories.diverse,
                                 photo: inputNotifierConsumer.image)
                             .image,

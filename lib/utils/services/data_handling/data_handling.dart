@@ -44,12 +44,21 @@ String getTimeInformation(
   }
 }
 
-DateTime getLocalDateTime({required String dateTimeUtc}) {
+DateTime? getLocalDateTime({required String? dateTimeUtc}) {
+  if (dateTimeUtc != null) {
+    final DateTime now = DateTime.now();
+    final utcInLocal = DateTime.parse(dateTimeUtc);
+    final datetimeutc = DateTime.utc(utcInLocal.year, utcInLocal.month,
+        utcInLocal.day, utcInLocal.hour, utcInLocal.minute);
+    return datetimeutc.add(now.timeZoneOffset);
+  } else {
+    return null;
+  }
+}
+
+String getUTCTimeString({required DateTime localDateTime}) {
   final DateTime now = DateTime.now();
-  final utcInLocal = DateTime.parse(dateTimeUtc);
-  final datetimeutc = DateTime.utc(utcInLocal.year, utcInLocal.month,
-      utcInLocal.day, utcInLocal.hour, utcInLocal.minute);
-  return datetimeutc.add(now.timeZoneOffset);
+  return localDateTime.add(now.timeZoneOffset).toString();
 }
 
 String getMonthName({required int month, required BuildContext context}) {
@@ -80,7 +89,7 @@ String getTimeText(
 String getLocalTimeString(
     {required String dateTimeUtc, required BuildContext context}) {
   final DateTime now = DateTime.now();
-  final TimeLocal = getLocalDateTime(dateTimeUtc: dateTimeUtc);
+  final TimeLocal = getLocalDateTime(dateTimeUtc: dateTimeUtc)!;
   final String weekday =
       getWeekday(weekDayNumber: TimeLocal.weekday, context: context)[1];
   if (now.year == TimeLocal.year) {

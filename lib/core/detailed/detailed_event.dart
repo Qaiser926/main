@@ -115,15 +115,15 @@ class _EventDetailState extends State<EventDetail> {
                   getVerSpace(25.h),
                   if (detailedEventOrActivity.description != null)
                     DescriptionWidget(
-                        description:
-                        detailedEventOrActivity.description!),
+                        description: detailedEventOrActivity.description!),
                   if (!detailedEventOrActivity.isOnline!)
                     SimpleMap(latLng.LatLng(
                         detailedEventOrActivity.location.latitude!,
                         detailedEventOrActivity.location.longitude!)),
-                  if (detailedEventOrActivity.time.openingTime != null)
+                  if (detailedEventOrActivity.time.openingHours != null)
                     OpeningTimesSection(
-                        openingTime: detailedEventOrActivity.time.openingTime!),
+                        openingTime:
+                            detailedEventOrActivity.time.openingHours!),
                   getVerSpace(25.h),
                   if (detailedEventOrActivity.eventSeriesId != null)
                     ExploreEventSeries(

@@ -24,7 +24,7 @@ class RestService {
     print('fetching event details with id $eventOrActivityId');
 
     RestOptions restOptions = RestOptions(
-        path: '/${OthiaConstants.eventDetailPath}/$eventOrActivityId');
+        path: '/${APIConstants.eventDetailPath}/$eventOrActivityId');
     final result = await get(restOptions);
     return result;
   }
@@ -32,8 +32,8 @@ class RestService {
   Future<Object> fetchFavouriteEventsAndActivities() async {
     print('fetching event details with id');
     //TODO make user specific
-    RestOptions restOptions =
-        RestOptions(path: '/favouriteeventsandactivities/');
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.fetchFavouriteEventsAndActivities}/');
     final result = await get(restOptions);
     return result;
   }
@@ -42,7 +42,8 @@ class RestService {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/removeFavourite-dev/$eAId', headers: {'token': '${token}'});
+        path: '/${APIConstants.removeFavouriteEventOrActivity}/$eAId',
+        headers: {'token': '${token}'});
     final result = await delete(restOptions);
     return result;
   }
@@ -51,7 +52,8 @@ class RestService {
     print('removing favourite event or activity with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/addLikedEA-dev/$eAId', headers: {'token': '${token}'});
+        path: '/${APIConstants.addFavouriteEventOrActivity}/$eAId',
+        headers: {'token': '${token}'});
     final result = await put(restOptions);
     return result;
   }
@@ -63,7 +65,8 @@ class RestService {
     String userId = await getUserId();
     // TODO login
     RestOptions restOptions = RestOptions(
-        path: '/isEALikedByUser-dev/$eAId', headers: {'token': '${token}'});
+        path: '/${APIConstants.isEALikedByUser}/$eAId',
+        headers: {'token': '${token}'});
     final result = await get(restOptions);
     return result;
   }
@@ -71,7 +74,7 @@ class RestService {
   Future<Object> getEAIdsForCategory({required categoryId}) async {
     print('requesting ids for category id: $categoryId');
     RestOptions restOptions =
-        RestOptions(path: '/getEAIdsForCategory-dev/$categoryId');
+        RestOptions(path: '/${APIConstants.getEAIdsForCategory}/$categoryId');
     final result = await get(restOptions);
     return result;
   }
@@ -79,8 +82,8 @@ class RestService {
   Future<Object> getEAIdsForEventSeries({required eventSeriesId}) async {
     print('requesting ids for eventseries id: $eventSeriesId');
 
-    RestOptions restOptions =
-        RestOptions(path: '/getEAIdsForEventSeries-dev/$eventSeriesId');
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEAIdsForEventSeries}/$eventSeriesId');
     final result = await get(restOptions);
     return result;
   }
@@ -89,7 +92,7 @@ class RestService {
     print('requesting ids for location id: $locationId');
 
     RestOptions restOptions =
-        RestOptions(path: '/getEAIdsForLocation-dev/$locationId');
+        RestOptions(path: '/${APIConstants.getEAIdsForLocation}/$locationId');
     final result = await get(restOptions);
     return result;
   }
@@ -97,7 +100,8 @@ class RestService {
   Future<Object> getEASummary({required id}) async {
     print('requesting summary for: $id');
 
-    RestOptions restOptions = RestOptions(path: '/getEASummary-dev/$id');
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getEASummary}/$id');
     final result = await get(restOptions);
     return result;
   }
@@ -106,7 +110,8 @@ class RestService {
     print('requesting ids for: ');
     //
     //TODO define API call for several query parameters
-    RestOptions restOptions = RestOptions(path: '/getSearchResultIds-dev/');
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getSearchResultIds}/');
     final result = await get(restOptions);
     return result;
   }
@@ -114,14 +119,16 @@ class RestService {
   Future<Object> getMapResultIds({required searchQuery}) async {
     print('requesting Map result ids');
     //TODO define API call for several query parameters
-    RestOptions restOptions = RestOptions(path: '/getMapResultIds-dev/');
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getMapResultIds}/');
     final result = await get(restOptions);
     return result;
   }
 
   Future<Object> getPrivateUserInfo({required userId}) async {
     print('requesting user info for for: $userId');
-    RestOptions restOptions = RestOptions(path: '/getUserInfo-dev/');
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getPrivateUserInfo}/');
     final result = await get(restOptions);
     return result;
   }
@@ -129,7 +136,7 @@ class RestService {
   Future<Object> savePrivateUserInfo({required UserInfo userInfo}) async {
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/saveprivateuserinformation',
+        path: '/${APIConstants.savePrivateUserInfo}/',
         headers: {'token': '${token}'},
         body: transformClassToBody(userInfo));
     final result = await post(restOptions);
@@ -138,7 +145,8 @@ class RestService {
 
   Future<Object> getHomePageIds() async {
     print('requesting home page ids');
-    RestOptions restOptions = RestOptions(path: '/getHomePageIds-dev/');
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getHomePageIds}/');
     final result = await get(restOptions);
     return result;
   }
@@ -158,35 +166,30 @@ class RestService {
   Future<Object> deleteAccount(String userId) async {
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/deleteaccount/$userId', headers: {'token': '${token}'});
+        path: '/${APIConstants.deleteAccount}/$userId',
+        headers: {'token': '${token}'});
     final result = await delete(restOptions);
     return result;
   }
 
   Future<Object> deleteEA({required DeleteEA deleteEA}) async {
     String token = await getIdToken();
-    RestOptions restOptions = RestOptions(path: '/getMapResultIds-dev/');
-    // RestOptions restOptions = RestOptions(
-    //   // TODO real path, it is required that the returned body is a map
-    //     path: '/saveprivateuserinformation',
-    //     headers: {'token': '${token}'},
-    //     body: transformClassToBody(deleteEA));
-    // TODO change back to post
-    final result = await get(restOptions);
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.deleteEA}/',
+        headers: {'token': '${token}'},
+        body: transformClassToBody(deleteEA));
+    final result = await post(restOptions);
     return result;
   }
 
-  Future<Object> addEA(
+  Future<Object> crateEA(
       {required DetailedEventOrActivity detailedEventOrActivity}) async {
     String token = await getIdToken();
-    RestOptions restOptions = RestOptions(path: '/getMapResultIds-dev/');
-    // RestOptions restOptions = RestOptions(
-    //   // TODO real path, it is required that the returned body is a map
-    //     path: '/saveprivateuserinformation',
-    //     headers: {'token': '${token}'},
-    //     body: transformClassToBody(detailedEventOrActivity));
-    // TODO change back to post
-    final result = await get(restOptions);
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.createEA}/',
+        headers: {'token': '${token}'},
+        body: transformClassToBody(detailedEventOrActivity));
+    final result = await post(restOptions);
     return result;
   }
 

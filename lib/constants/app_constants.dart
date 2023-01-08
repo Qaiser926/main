@@ -7,16 +7,34 @@ import '../utils/helpers/builders.dart';
 class OthiaConstants {
   static final String awsApiEndpoint = getAwsApiEndpoint();
   static const String othiaDomain = 'www.othia.de';
-
-  //TODO make this constant together with the link in rest api services
-  static const String eventDetailPath = 'events';
-  static const String organizerDetailPath = 'organizer';
 }
 
 class WidgetConstants {
   static const double categoryGridItemHeight = 170;
   static const double categoryGridItemWidth = 192.8;
   static const double categoryGridItemTextWidth = categoryGridItemWidth - 58;
+}
+
+class APIConstants {
+  static const String deleteEA = 'deleteEA-dev';
+  static const String createEA = 'createEA-dev';
+  static const String getPrivateUserInfo = 'getUserInfo-dev';
+  static const String savePrivateUserInfo = 'saveprivateuserinformation';
+  static const String getMapResultIds = 'getMapResultIds-dev';
+  static const String getSearchResultIds = 'getSearchResultIds-dev';
+  static const String getEASummary = 'getEASummary-dev';
+  static const String getEAIdsForLocation = 'getEAIdsForLocation-dev';
+  static const String getEAIdsForEventSeries = 'getMapResultIds-dev';
+  static const String getEAIdsForCategory = 'getEAIdsForCategory-dev';
+  static const String isEALikedByUser = 'isEALikedByUser-dev';
+  static const String addFavouriteEventOrActivity = 'addLikedEA-dev';
+  static const String removeFavouriteEventOrActivity = 'removeFavourite-dev';
+  static const String fetchFavouriteEventsAndActivities =
+      'favouriteeventsandactivities';
+  static const String getHomePageIds = 'getHomePageIds-dev';
+  static const String deleteAccount = 'deleteaccount';
+  static const String organizerDetailPath = 'organizer';
+  static const String eventDetailPath = 'events';
 }
 
 class OtherConstants {

@@ -39,7 +39,7 @@ def handler(event, context):
     }
 
 
-# TODO make function shareable as it is also used in eADetails
+# TODO make function shareable as it is also used in eADetails, favouriteEvent and Activities
 def getPrices(prices: list):
     if len(prices) > 2:
         return [{"label": "minPrice", "price": min(prices)}, {"label": "maxPrice", "price": max(prices)}]

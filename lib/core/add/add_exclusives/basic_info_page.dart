@@ -78,6 +78,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                       caption: Text(
                           AppLocalizations.of(context)!.categorization,
                           style: Theme.of(context).textTheme.headlineLarge)),
+                  // As in detailed event or activity only the subcategory is stored, for the main category the notifier holds a variable
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                       child: buildDropDown(
@@ -90,7 +91,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                           notifierFunction: (mainCategoryId) {
                             widget.inputNotifier.mainCategoryId =
                                 mainCategoryId;
-                            widget.inputNotifier.categoryId = null;
+                            widget.inputNotifier.detailedEA.categoryId = null;
                             //
                             setState(() => {
                                   this.mainCategoryId = mainCategoryId,
@@ -101,7 +102,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                     new Padding(
                         padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                         child: buildDropDown(
-                            defaultValue: widget.inputNotifier.categoryId,
+                            defaultValue:
+                                widget.inputNotifier.detailedEA.categoryId,
                             hintText: AppLocalizations.of(context)!
                                 .subcategorizationHint,
                             onValidErrorText: AppLocalizations.of(context)!
@@ -110,7 +112,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                                 widget.inputNotifier.mainCategoryId]!,
                             notifierFunction: (categoryId) {
                               setState(() => {this.categoryId = categoryId});
-                              widget.inputNotifier.categoryId = categoryId;
+                              widget.inputNotifier.detailedEA.categoryId =
+                                  categoryId;
                             })),
                   getHeadline(
                       context: context,
@@ -191,11 +194,9 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
           }
           return null;
         },
-        initialValue: Provider.of<AddEANotifier>(context, listen: false)
-            .detailedEventOrActivity
-            .title,
+        initialValue: Provider.of<AddEANotifier>(context, listen: false).detailedEA.title,
         controller: Provider.of<AddEANotifier>(context, listen: false)
-                    .detailedEventOrActivity
+                    .detailedEA
                     .title ==
                 null
             ? _textController
@@ -203,7 +204,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         onChanged: (title) {
           setState(() => {this.title = title});
 
-          widget.inputNotifier.detailedEventOrActivity.title = title;
+          widget.inputNotifier.detailedEA.title = title;
         },
         maxLength: DataConstants.MaxTitleLength,
         maxLines: null,
