@@ -51,6 +51,7 @@ dependencies:
   flutter_sticky_header: ^0.6.5
 
 
+
   #os calls
   url_launcher: ^6.1.7
   share_plus: ^6.3.0

@@ -10,8 +10,9 @@ import 'input_notifier.dart';
 
 class PublishPage extends StatelessWidget {
   AddEANotifier inputNotifier;
+  PageController pageController;
 
-  PublishPage(this.inputNotifier);
+  PublishPage(this.inputNotifier, this.pageController);
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ part 'detailed_event.g.dart';
 @JsonSerializable()
 class DetailedEventOrActivity {
   String? title;
-  final String? id;
+  String? id;
   String? categoryId;
   String? ownerId;
   List<String>? photos;

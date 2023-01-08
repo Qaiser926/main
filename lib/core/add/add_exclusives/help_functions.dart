@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/add/add.dart';
+import 'package:get/get.dart';
 import 'package:othia/core/add/add_exclusives/add_page_notifier.dart';
 import 'package:othia/core/add/add_exclusives/basic_info_page.dart';
 import 'package:othia/core/add/add_exclusives/details_page.dart';
@@ -14,23 +14,30 @@ import 'package:othia/utils/services/geocoding.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
+
+import 'save_to_database_forwarding_page.dart';
 
 Widget getFutureHandlerPageView(
   AddEANotifier inputNotifier,
   SwitchPages switchPages,
+  PageController pageController,
   Map<String, dynamic> jsonResponse,
 ) {
-  handleJsonData(jsonResponse: jsonResponse, inputNotifier: inputNotifier);
+  handleJsonData(
+    jsonResponse: jsonResponse,
+    inputNotifier: inputNotifier,
+  );
   return PageView(
       onPageChanged: ((targetPage) {
         FocusManager.instance.primaryFocus?.unfocus(); // dismiss keyboard
         switchPages.switchPageBehaviour(targetPage);
       }),
-      controller: Add.pageController,
+      controller: pageController,
       children: [
         BasicInfoPage(inputNotifier),
         DetailsPage(inputNotifier),
-        PublishPage(inputNotifier),
+        PublishPage(inputNotifier, pageController),
       ]);
 }
 
@@ -245,15 +252,19 @@ void publishFunction(BuildContext context) {
       : termsNotAgreed(context);
 }
 
-void forwardFunction(BuildContext context) {
-  // TODO forward to another screen which sends out the request for adding the event
-  // while the request is processed, a loading screen is shown
-  // on success, the user is forwarded to the event detail
-  // it has to be ensured that the user cannot go back
+DetailedEventOrActivity setEAId(
+    DetailedEventOrActivity detailedEventOrActivity) {
+  if (detailedEventOrActivity.id == null) {
+    detailedEventOrActivity.id = Uuid().v4();
+  }
+  return detailedEventOrActivity;
+}
 
+void forwardFunction(BuildContext context) {
   DetailedEventOrActivity detailedEA =
       Provider.of<AddEANotifier>(context, listen: false).extractToSave();
-  print("");
+  detailedEA = setEAId(detailedEA);
+  Get.to(SaveForwardingPage(detailedEA));
 }
 
 void termsNotAgreed(BuildContext context) {

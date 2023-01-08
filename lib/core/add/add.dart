@@ -22,9 +22,6 @@ class Add extends StatefulWidget {
   static const int firstPage = 0;
   static const int lastPage = 2;
 
-  static final PageController pageController =
-      PageController(initialPage: firstPage);
-
   @override
   State<Add> createState() => _AddState();
 }
@@ -32,6 +29,7 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
   SwitchAddPageNotifier switchPagesNotifier =
       SwitchAddPageNotifier(Add.firstPage);
+  PageController pageController = PageController(initialPage: Add.firstPage);
 
   AddEANotifier inputNotifier = AddEANotifier();
   late Future<Object> detailedEventOrActivity;
@@ -44,7 +42,7 @@ class _AddState extends State<Add> {
   void initState() {
     switchPages = SwitchPages(
         inputNotifier: inputNotifier,
-        pageController: Add.pageController,
+        pageController: pageController,
         switchPagesNotifier: switchPagesNotifier);
     // ensure that the call is only one time made
     if (!inputNotifier.snackBarShown) {
@@ -65,7 +63,7 @@ class _AddState extends State<Add> {
     if (targetPage < 0) {
       Get.back();
     } else {
-      Add.pageController.jumpToPage(targetPage);
+      pageController.jumpToPage(targetPage);
     }
   }
 
@@ -136,9 +134,10 @@ class _AddState extends State<Add> {
             future: detailedEventOrActivity,
             builder: (context, snapshot) {
               return snapshotHandler(snapshot, getFutureHandlerPageView,
-                  [inputNotifier, switchPages]);
+                  [inputNotifier, switchPages, pageController]);
             })
-        : getFutureHandlerPageView(inputNotifier, switchPages, {});
+        : getFutureHandlerPageView(
+            inputNotifier, switchPages, pageController, {});
   }
 
   Widget getFloatingButtons(SwitchPages switchPages) {
@@ -150,7 +149,10 @@ class _AddState extends State<Add> {
           switchPageConsumer.currentPage == Add.firstPage
               ? const SizedBox.shrink()
               : getNavigationButton(
-                  Icon(Icons.arrow_back), switchPages.previousPage, context),
+                  Icon(Icons.arrow_back),
+                  switchPages.previousPage,
+                  context,
+                ),
           switchPageConsumer.currentPage == Add.lastPage
               ? getNavigationButton(Text(AppLocalizations.of(context)!.publish),
                   publishFunction, context, 130.h)
@@ -174,7 +176,7 @@ class _AddState extends State<Add> {
     return Padding(
         padding: EdgeInsets.all(5.h),
         child: GestureDetector(
-          onTap: () => {Add.pageController.jumpToPage(index)},
+          onTap: () => {pageController.jumpToPage(index)},
           child: Container(
             height: 30.h,
             decoration: BoxDecoration(
@@ -208,7 +210,10 @@ class _AddState extends State<Add> {
   // TODO when switching pages, the left button changes its position
   Widget getNavigationButton(
       Widget child,
-      void Function(BuildContext context) onPressedFunction,
+      void Function(
+    BuildContext context,
+  )
+          onPressedFunction,
       BuildContext context,
       [double? width]) {
     return SizedBox(

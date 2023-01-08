@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -23,14 +24,14 @@ import 'exclusive_widgets/map_widget.dart';
 import 'exclusive_widgets/opening_times.dart';
 import 'exclusive_widgets/other.dart';
 
-class EventDetail extends StatefulWidget {
-  const EventDetail({Key? key}) : super(key: key);
+class detailedEA extends StatefulWidget {
+  const detailedEA({Key? key}) : super(key: key);
 
   @override
-  State<EventDetail> createState() => _EventDetailState();
+  State<detailedEA> createState() => _detailedEAState();
 }
 
-class _EventDetailState extends State<EventDetail> {
+class _detailedEAState extends State<detailedEA> {
   late Future<Object> detailedEventOrActivity;
 
   void backClick() {
@@ -86,10 +87,9 @@ class _EventDetailState extends State<EventDetail> {
           }
         },
         child: Scaffold(
-          // TODO include share url
           bottomNavigationBar: ButtonWidget(
               iCalElement: iCalElement,
-              shareUrl: "temp",
+              shareUrl: eAShareLinkBuilder(detailedEventOrActivity.id!),
               websiteUrl: detailedEventOrActivity.websiteUrl,
               ticketUrl: detailedEventOrActivity.ticketUrl),
           body: Container(
