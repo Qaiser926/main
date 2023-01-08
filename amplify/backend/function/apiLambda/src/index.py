@@ -37,7 +37,7 @@ def handler(event, context):
                                                   "singlePersonEligibility": None, "coupleEligibility": 3,
                                                   "friendGroupEligibility": 0, "professionalEligibility": None},
                             # states if the user's profile is shown --> add to database
-                            "ownerIsOrganizer": True,
+                            "ownerIsOrganizer": True, "showOrganizer": True,
                              "prices": prices,
                             "location": {"isOnline": False, "city": "Kiel", "streetNumber": "100",
                                          "locationTitle": 'Die Pumpe', "street": "abc street", 'locationId': "loc_id", "postalCode": "12345",
@@ -46,9 +46,10 @@ def handler(event, context):
     }
 
 
+# TODO make function shareable as it is also used in eADetails
 def getPrices(prices: list):
     if len(prices) > 2:
-        return [min(prices), max(prices)]
+        return [{"label": "minPrice", "price": min(prices)}, {"label": "maxPrice", "price": max(prices)}]
 
 
 def getOpeningTimesDict(openingTimes: list):

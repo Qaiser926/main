@@ -191,15 +191,19 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
           }
           return null;
         },
-        initialValue: Provider.of<AddEANotifier>(context, listen: false).title,
-        controller:
-            Provider.of<AddEANotifier>(context, listen: false).title == null
-                ? _textController
-                : null,
+        initialValue: Provider.of<AddEANotifier>(context, listen: false)
+            .detailedEventOrActivity
+            .title,
+        controller: Provider.of<AddEANotifier>(context, listen: false)
+                    .detailedEventOrActivity
+                    .title ==
+                null
+            ? _textController
+            : null,
         onChanged: (title) {
           setState(() => {this.title = title});
 
-          widget.inputNotifier.title = title;
+          widget.inputNotifier.detailedEventOrActivity.title = title;
         },
         maxLength: DataConstants.MaxTitleLength,
         maxLines: null,

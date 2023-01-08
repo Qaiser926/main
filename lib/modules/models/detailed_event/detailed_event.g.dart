@@ -11,11 +11,12 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
     DetailedEventOrActivity(
       time: Time.fromJson(json['time'] as Map<String, dynamic>),
       location: Location.fromJson(json['location'] as Map<String, dynamic>),
-      title: json['title'] as String,
-      id: json['id'] as String,
-      ownerIsOrganizer: json['ownerIsOrganizer'] as bool,
-      categoryId: json['categoryId'] as String,
-      ownerId: json['ownerId'] as String,
+      showOrganizer: json['showOrganizer'] as bool?,
+      title: json['title'] as String?,
+      id: json['id'] as String?,
+      ownerIsOrganizer: json['ownerIsOrganizer'] as bool?,
+      categoryId: json['categoryId'] as String?,
+      ownerId: json['ownerId'] as String?,
       searchEnhancement: json['searchEnhancement'] == null
           ? null
           : SearchEnhancement.fromJson(
@@ -25,12 +26,12 @@ DetailedEventOrActivity _$DetailedEventOrActivityFromJson(
           (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
       description: json['description'] as String?,
       prices: (json['prices'] as List<dynamic>?)
-          ?.map((e) => (e as num).toDouble())
+          ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
           .toList(),
       ticketUrl: json['ticketUrl'] as String?,
       websiteUrl: json['websiteUrl'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
-      isOnline: json['isOnline'] as bool,
+      isOnline: json['isOnline'] as bool?,
       attribution:
           $enumDecodeNullable(_$AttributionEnumMap, json['attribution']),
     );
@@ -55,6 +56,7 @@ Map<String, dynamic> _$DetailedEventOrActivityToJson(
       'attribution': _$AttributionEnumMap[instance.attribution],
       'searchEnhancement': instance.searchEnhancement,
       'ownerIsOrganizer': instance.ownerIsOrganizer,
+      'showOrganizer': instance.showOrganizer,
     };
 
 const _$StatusEnumMap = {

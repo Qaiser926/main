@@ -15,7 +15,7 @@ class EventSummary extends StatelessWidget {
   final Location location;
   latLng.LatLng? latLong;
   Event? iCalElement;
-  List<double>? prices;
+  List<Price>? prices;
   String? websiteUrl;
   String? ticketUrl;
   Status? status;

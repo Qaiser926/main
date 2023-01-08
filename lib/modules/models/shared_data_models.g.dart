@@ -6,8 +6,18 @@ part of 'shared_data_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Price _$PriceFromJson(Map<String, dynamic> json) => Price(
+      label: json['label'] as String?,
+      price: (json['price'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$PriceToJson(Price instance) => <String, dynamic>{
+      'label': instance.label,
+      'price': instance.price,
+    };
+
 Location _$LocationFromJson(Map<String, dynamic> json) => Location(
-      isOnline: json['isOnline'] as bool,
+      isOnline: json['isOnline'] as bool?,
       locationId: json['locationId'] as String?,
       streetNumber: json['streetNumber'] as String?,
       street: json['street'] as String?,

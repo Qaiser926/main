@@ -29,19 +29,34 @@ enum Attribution {
 }
 
 @JsonSerializable()
+class Price {
+  String? label;
+  double? price;
+
+  Price({
+    this.label,
+    this.price,
+  });
+
+  factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PriceToJson(this);
+}
+
+@JsonSerializable()
 class Location {
-  final bool isOnline;
-  final String? streetNumber;
-  final String? street;
-  final String? city;
-  final String? locationTitle;
+  bool? isOnline;
+  String? streetNumber;
+  String? street;
+  String? city;
+  String? locationTitle;
   final String? locationId;
-  final String? postalCode;
-  final double? longitude;
-  final double? latitude;
+  String? postalCode;
+  double? longitude;
+  double? latitude;
 
   Location({
-    required this.isOnline,
+    this.isOnline,
     this.locationId,
     this.streetNumber,
     this.street,
@@ -59,10 +74,10 @@ class Location {
 
 @JsonSerializable()
 class Time {
-  final String? startTimeUtc;
-  final String? endTimeUtc;
-  final OpeningTimeCode? openingTimeCode;
-  final Map? openingTime;
+  String? startTimeUtc;
+  String? endTimeUtc;
+  OpeningTimeCode? openingTimeCode;
+  Map? openingTime;
 
   Time(
       {this.startTimeUtc,
@@ -77,13 +92,13 @@ class Time {
 
 @JsonSerializable()
 class SearchEnhancement {
-  final int? cognitiveLevel;
-  final int? physicalLevel;
-  final int? socialLevel;
-  final int? singlePersonEligibility;
-  final int? coupleEligibility;
-  final int? friendGroupEligibility;
-  final int? professionalEligibility;
+  int? cognitiveLevel;
+  int? physicalLevel;
+  int? socialLevel;
+  int? singlePersonEligibility;
+  int? coupleEligibility;
+  int? friendGroupEligibility;
+  int? professionalEligibility;
 
   SearchEnhancement({
     this.cognitiveLevel,

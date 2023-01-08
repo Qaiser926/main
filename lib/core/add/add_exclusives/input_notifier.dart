@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/constants/categories.dart';
-import 'package:othia/core/add/add_exclusives/price_picker.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
@@ -11,6 +10,11 @@ import 'package:provider/provider.dart';
 import '../../../modules/models/detailed_event/detailed_event.dart';
 
 class AddEANotifier extends ChangeNotifier {
+  DetailedEventOrActivity detailedEventOrActivity = DetailedEventOrActivity(
+      time: Time(),
+      location: Location(),
+      searchEnhancement: SearchEnhancement());
+
   bool isModifyMode = false;
   String? eAId;
 
@@ -91,11 +95,10 @@ class AddEANotifier extends ChangeNotifier {
   final List<bool> privateOrPublic = <bool>[true, false];
   final List<bool> ownedOrForeign = <bool>[true, false];
 
-  void initializeWithExistingEA(
-      {required DetailedEventOrActivity detailedEventOrActivity}) {
+  void initializeWithExistingEA({required DetailedEventOrActivity detailedEventOrActivity}) {
     handleSeveral(detailedEventOrActivity);
     handleImage(detailedEventOrActivity);
-    handlePrices(detailedEventOrActivity.prices);
+    // handlePrices(detailedEventOrActivity.prices);
     handleTimes(detailedEventOrActivity.time);
     handleLocation(detailedEventOrActivity.location);
     handleSearchenhancement(detailedEventOrActivity.searchEnhancement);
@@ -110,7 +113,7 @@ class AddEANotifier extends ChangeNotifier {
     title = detailedEventOrActivity.title;
     categoryId = detailedEventOrActivity.categoryId;
     mainCategoryId = mapSubcategoryToCategory(
-        subCategoryId: detailedEventOrActivity.categoryId);
+        subCategoryId: detailedEventOrActivity.categoryId!);
     if (detailedEventOrActivity.status != null) {
       status = detailedEventOrActivity.status;
     } else {
@@ -158,15 +161,15 @@ class AddEANotifier extends ChangeNotifier {
     }
   }
 
-  void handlePrices(List<double>? existingPrices) {
-    if (existingPrices != null) {
-      prices = [];
-      for (int i = 0; i < existingPrices.length; i++) {
-        prices.add(InputPrice(price: existingPrices[i]));
-      }
-      if (prices.isEmpty) prices.add(InputPrice());
-    }
-  }
+  // void handlePrices(List<double>? existingPrices) {
+  //   if (existingPrices != null) {
+  //     prices = [];
+  //     for (int i = 0; i < existingPrices.length; i++) {
+  //       prices.add(Price(price: existingPrices[i]));
+  //     }
+  //     if (prices.isEmpty) prices.add(Price());
+  //   }
+  // }
 
   void handleTimes(Time existingTime) {
     if (existingTime.openingTime != null) {
@@ -183,7 +186,7 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void handleLocation(Location existingLocation) {
-    if (existingLocation.isOnline) {
+    if (existingLocation.isOnline!) {
       locationType = 1;
     } else {
       locationType = 0;
@@ -197,7 +200,7 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void handleOwnerId(DetailedEventOrActivity detailedEventOrActivity) {
-    if (detailedEventOrActivity.ownerIsOrganizer) {
+    if (detailedEventOrActivity.ownerIsOrganizer!) {
       ownedOrForeign = 0;
     } else {
       ownedOrForeign = 1;
@@ -243,7 +246,7 @@ class AddEANotifier extends ChangeNotifier {
       }
     }
     if (prices.isEmpty) {
-      prices.add(InputPrice());
+      prices.add(Price());
     }
     notifyListeners();
   }
@@ -251,9 +254,9 @@ class AddEANotifier extends ChangeNotifier {
   void changeLocationType(int index, BuildContext context) {
     // there can be either an address associated or the event/ activity is online -> make user aware
     bool isAddressSet = (streetNumber != null) |
-        (street != null) |
-        (city != null) |
-        (postalCode != null);
+    (street != null) |
+    (city != null) |
+    (postalCode != null);
 
     bool addressCase = isAddressSet & (index == 1);
     if (addressCase) {
@@ -275,11 +278,7 @@ class AddEANotifier extends ChangeNotifier {
     return "${locationTitle ?? ""}, ${street ?? ""} ${streetNumber ?? ""}, ${postalCode ?? ""} ${city ?? ""}";
   }
 
-  List<InputPrice> prices = [InputPrice()];
-
-
-
-
+  List<Price> prices = [Price()];
 
   List getOpeningTimesList() {
     return openingTimes[activatedWeekDay.toString()]!;
@@ -290,7 +289,7 @@ class AddEANotifier extends ChangeNotifier {
       for (var i = openingTimesList.length - 1; i >= 0; i--) {
         // first is opening time, the second closing time
         if ((openingTimesList[i][0] == null) |
-            (openingTimesList[i][1] == null)) {
+        (openingTimesList[i][1] == null)) {
           openingTimesList.removeAt(i);
         }
       }
@@ -323,7 +322,7 @@ class AddEANotifier extends ChangeNotifier {
       return false;
     } else {
       if ((openingTimes[activatedWeekDay.toString()]![0][0] == 0) &
-          (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
+      (openingTimes[activatedWeekDay.toString()]![0][1] == 0)) {
         return true;
       } else {
         return false;
@@ -361,9 +360,9 @@ class AddEANotifier extends ChangeNotifier {
           context: context,
           showFirstMessage: caseStartTimeReset,
           firstText:
-              AppLocalizations.of(context)!.timeSwitchingDialogOpeningHours,
+          AppLocalizations.of(context)!.timeSwitchingDialogOpeningHours,
           secondText:
-              AppLocalizations.of(context)!.timeSwitchingDialogStartTime,
+          AppLocalizations.of(context)!.timeSwitchingDialogStartTime,
           onPressed: () {
             times = index;
             // Get.back();
@@ -387,32 +386,32 @@ class AddEANotifier extends ChangeNotifier {
     required String secondText,
     required Function() onPressed}) {
     Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
-        true;
+    true;
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              content: showFirstMessage ? Text(firstText) : Text(secondText),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(14),
-                    child: Text(
-                      AppLocalizations.of(context)!.cancel,
-                    ),
-                  ),
+          content: showFirstMessage ? Text(firstText) : Text(secondText),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                child: Text(
+                  AppLocalizations.of(context)!.cancel,
                 ),
-                TextButton(
-                  onPressed: onPressed,
-                  child: Container(
-                    padding: const EdgeInsets.all(14),
-                    child: Text(AppLocalizations.of(context)!.continueText),
-                  ),
-                ),
-              ],
-            )).then((_) {
+              ),
+            ),
+            TextButton(
+              onPressed: onPressed,
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                child: Text(AppLocalizations.of(context)!.continueText),
+              ),
+            ),
+          ],
+        )).then((_) {
       Provider.of<GlobalNavigationNotifier>(context, listen: false)
           .isDialogOpen = false;
     });

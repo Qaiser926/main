@@ -149,7 +149,7 @@ String formatTime({required double? unformattedTime}) {
 }
 
 String getLocationString({required Location location, bool isShort = false}) {
-  if (location.isOnline) {
+  if (location.isOnline!) {
     return "Online";
   }
   if ((location.street != null) &
@@ -177,7 +177,7 @@ String getLocationString({required Location location, bool isShort = false}) {
 
 String getPriceText(
     {required BuildContext context,
-    List<double>? prices,
+    List<Price>? prices,
     bool isShort = false}) {
   String priceText = AppLocalizations.of(context)!.noPriceAvailable;
   if (isShort) {
@@ -185,15 +185,15 @@ String getPriceText(
   }
   if (prices != null) {
     if (prices.length == 1) {
-      if (prices[0] == 0) {
+      if (prices[0].price == 0) {
         priceText = AppLocalizations.of(context)!.isFree;
       } else {
         priceText = AppLocalizations.of(context)!
-            .priceStartingAt(roundDouble(prices[0], 2));
+            .priceStartingAt(roundDouble(prices[0].price!, 2));
       }
     } else {
-      priceText = AppLocalizations.of(context)!
-          .priceRange(roundDouble(prices[0], 2), roundDouble(prices[1], 2));
+      priceText = AppLocalizations.of(context)!.priceRange(
+          roundDouble(prices[0].price!, 2), roundDouble(prices[1].price!, 2));
     }
   }
   return priceText;

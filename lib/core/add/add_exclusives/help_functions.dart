@@ -39,6 +39,8 @@ void handleJsonData(
   if (jsonResponse.isNotEmpty) {
     DetailedEventOrActivity detailedEventOrActivity =
         DetailedEventOrActivity.fromJson(jsonResponse);
+    inputNotifier.detailedEventOrActivity = detailedEventOrActivity;
+    // TODO delete when not needed anymore
     inputNotifier.initializeWithExistingEA(
         detailedEventOrActivity: detailedEventOrActivity);
   }

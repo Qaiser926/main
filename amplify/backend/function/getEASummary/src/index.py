@@ -39,9 +39,10 @@ def handler(event, context):
     }
 
 
+# TODO make function shareable as it is also used in eADetails
 def getPrices(prices: list):
     if len(prices) > 2:
-        return [min(prices), max(prices)]
+        return [{"label": "minPrice", "price": min(prices)}, {"label": "maxPrice", "price": max(prices)}]
 
 
 def getOpeningTimesDict(openingTimes: list):

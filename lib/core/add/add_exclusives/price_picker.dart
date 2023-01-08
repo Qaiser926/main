@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class PricePicker extends StatelessWidget {
           getVerSpace(5.h),
           GestureDetector(
             onTap: () {
-              inputNotifierConsumer.prices.add(InputPrice());
+              inputNotifierConsumer.prices.add(Price());
               inputNotifier.notifyListeners();
             },
             child: Row(
@@ -59,7 +60,7 @@ class PricePicker extends StatelessWidget {
 
   Widget buildPriceRow(
       {required int index,
-      required InputPrice inputPrice,
+      required Price inputPrice,
       required AddEANotifier inputNotifierConsumer,
       required BuildContext context}) {
     return Padding(
@@ -138,9 +139,4 @@ class PricePicker extends StatelessWidget {
   }
 }
 
-class InputPrice {
-  String? label;
-  double? price;
 
-  InputPrice({this.price, this.label});
-}

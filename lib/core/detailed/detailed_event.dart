@@ -66,7 +66,7 @@ class _EventDetailState extends State<EventDetail> {
     if (detailedEventOrActivity.time.startTimeUtc != null) {
       iCalElement = getIcalElement(
         startTimeUtc: detailedEventOrActivity.time.startTimeUtc!,
-        title: detailedEventOrActivity.title,
+        title: detailedEventOrActivity.title!,
         locationText:
             getLocationString(location: detailedEventOrActivity.location),
         description: detailedEventOrActivity.description,
@@ -117,25 +117,23 @@ class _EventDetailState extends State<EventDetail> {
                     DescriptionWidget(
                         description:
                         detailedEventOrActivity.description!),
-                  if (!detailedEventOrActivity.isOnline)
+                  if (!detailedEventOrActivity.isOnline!)
                     SimpleMap(latLng.LatLng(
                         detailedEventOrActivity.location.latitude!,
                         detailedEventOrActivity.location.longitude!)),
                   if (detailedEventOrActivity.time.openingTime != null)
                     OpeningTimesSection(
-                        openingTime:
-                        detailedEventOrActivity.time.openingTime!),
+                        openingTime: detailedEventOrActivity.time.openingTime!),
                   getVerSpace(25.h),
                   if (detailedEventOrActivity.eventSeriesId != null)
                     ExploreEventSeries(
-                        eventSeriesId:
-                        detailedEventOrActivity.eventSeriesId!),
+                        eventSeriesId: detailedEventOrActivity.eventSeriesId!),
                   ExploreCategory(
-                      categoryId: detailedEventOrActivity.categoryId),
+                      categoryId: detailedEventOrActivity.categoryId!),
                   if (detailedEventOrActivity.location.locationId != null)
                     ExploreLocation(
                         locationId:
-                        detailedEventOrActivity.location.locationId!),
+                            detailedEventOrActivity.location.locationId!),
                 ],
               ),
 

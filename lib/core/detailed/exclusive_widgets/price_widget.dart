@@ -16,7 +16,7 @@ Future<void> _launchUrl(_url) async {
 class PriceWidget extends StatelessWidget {
   String? websiteUrl;
   String? ticketUrl;
-  List<double>? prices;
+  List<Price>? prices;
   Status? status;
 
   PriceWidget(

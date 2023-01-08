@@ -11,7 +11,7 @@ class SummaryEventOrActivity {
   final String id;
   final String categoryId;
   final String? photo;
-  final List<double>? prices;
+  final List<Price>? prices;
   final bool isOnline;
   final Time time;
   final Location location;
