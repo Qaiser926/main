@@ -6,7 +6,7 @@ import '../../core/add/add.dart';
 
 class NavigationBarNotifier extends ChangeNotifier {
   int index = 0;
-  final PageController pageController;
+  PageController pageController;
   bool isDialogOpen = false;
   final SearchNotifier _searchNotifier;
 

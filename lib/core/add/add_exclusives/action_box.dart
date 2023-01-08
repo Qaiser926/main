@@ -110,6 +110,7 @@ class ActionBox extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context, rootNavigator: true).pop();
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           Get.to(DeleteForwardingPage(inputNotifier));
                         },
                         child: Text(AppLocalizations.of(context)!.confirm),

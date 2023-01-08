@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
@@ -108,8 +110,7 @@ Future<void> _configureAmplify() async {
   }
 }
 
-Future<bool> closeAppDialog(
-    BuildContext context, NavigationBarNotifier notifier) async {
+Future<bool> closeAppDialog(BuildContext context, NavigationBarNotifier notifier) async {
   int currentSearchIndex = notifier.getSearchNotifier.currentIndex;
   bool? shouldPop;
   if (Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen) {
@@ -136,7 +137,7 @@ Future<bool> closeAppDialog(
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context, true);
+                  exit(0);
                 },
                 child: Text(AppLocalizations.of(context)!.confirm),
               ),

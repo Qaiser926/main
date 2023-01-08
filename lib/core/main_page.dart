@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:othia/core/home/home_page.dart';
 import 'package:othia/core/profile/profile.dart';
 import 'package:othia/core/search/search.dart';
+import 'package:othia/main.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';
@@ -25,14 +26,18 @@ class MainPage extends StatelessWidget {
     // navBarNotifier.setPageController(_pageController);
     return Consumer<NavigationBarNotifier>(
         builder: (context, navigationBarNotifier, child) {
-      return Scaffold(
-        bottomNavigationBar: const CustomNavigationBar(),
-        body: PageView(
-          controller: navigationBarNotifier.pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: _pages,
-        ),
-      );
+      return WillPopScope(
+          onWillPop: () {
+            return closeAppDialog(context, navigationBarNotifier);
+          },
+          child: Scaffold(
+            bottomNavigationBar: const CustomNavigationBar(),
+            body: PageView(
+              controller: navigationBarNotifier.pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: _pages,
+            ),
+          ));
     });
   }
 }
