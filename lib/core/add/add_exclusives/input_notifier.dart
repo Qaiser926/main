@@ -64,10 +64,6 @@ class AddEANotifier extends ChangeNotifier {
     setOwnerId();
   }
 
-  Future<void> setOwnerId() async {
-    detailedEA.ownerId = await getUserId();
-  }
-
   DetailedEventOrActivity extractToSave() {
     detailedEA.eventSeriesId = null;
 
@@ -101,6 +97,12 @@ class AddEANotifier extends ChangeNotifier {
     } else {
       detailedEA.isOnline = true;
       detailedEA.location.isOnline = true;
+      detailedEA.location.locationTitle = null;
+      detailedEA.location.locationId = null;
+      detailedEA.location.streetNumber = null;
+      detailedEA.location.street = null;
+      detailedEA.location.city = null;
+      detailedEA.location.postalCode = null;
     }
   }
 
@@ -132,6 +134,7 @@ class AddEANotifier extends ChangeNotifier {
   // to initialize in modification case
   void modify({required DetailedEventOrActivity existingDetailedEA}) {
     detailedEA = existingDetailedEA;
+    setOwnerId();
     handleTimes(existingDetailedEA.time);
     handleLocation(existingDetailedEA.location);
     handleIsPublic(detailedEA);
@@ -147,6 +150,10 @@ class AddEANotifier extends ChangeNotifier {
       copyRightVerified = true;
     }
     handleSearchenhancement(existingDetailedEA.searchEnhancement);
+  }
+
+  Future<void> setOwnerId() async {
+    detailedEA.ownerId = await getUserId();
   }
 
   void handlePrices() {
