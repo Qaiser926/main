@@ -44,6 +44,7 @@ Widget goToProfilePage(
   WidgetsBinding.instance.addPostFrameCallback((_) {
     NavigationBarNotifier navigationBarNotifier =
         Provider.of<NavigationBarNotifier>(context, listen: false);
+    navigationBarNotifier.pageController.dispose();
     navigationBarNotifier.pageController =
         PageController(initialPage: NavigatorConstants.FavouritePageIndex);
     navigationBarNotifier.index = NavigatorConstants.FavouritePageIndex;
