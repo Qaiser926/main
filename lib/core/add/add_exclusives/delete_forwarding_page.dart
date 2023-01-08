@@ -13,9 +13,9 @@ import 'input_notifier.dart';
 
 class DeleteForwardingPage extends StatelessWidget {
   AddEANotifier inputNotifier;
-  String userId = "sfsf";
+  String userId;
 
-  DeleteForwardingPage(this.inputNotifier);
+  DeleteForwardingPage(this.inputNotifier, this.userId);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,11 @@ class DeleteForwardingPage extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-            body: Row(
+            body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // TODO show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
@@ -44,7 +47,6 @@ Widget goToProfilePage(
   WidgetsBinding.instance.addPostFrameCallback((_) {
     Provider.of<GlobalNavigationNotifier>(context, listen: false)
         .navigationBarIndex = NavigatorConstants.ProfilePageIndex;
-
     NavigatorConstants.sendToScreen(MainPage());
   });
   return SizedBox();

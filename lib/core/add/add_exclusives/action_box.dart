@@ -8,6 +8,7 @@ import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
+import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 import 'package:othia/utils/ui/app_dialogs.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -88,9 +89,10 @@ class ActionBox extends StatelessWidget {
     );
   }
 
-  void showDeleteDialog(BuildContext context) {
+  Future<void> showDeleteDialog(BuildContext context) async {
     Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
         true;
+    String userId = await getUserId();
     showDialog(
         context: context,
         builder: (context) => getDialog(
@@ -111,7 +113,7 @@ class ActionBox extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context, rootNavigator: true).pop();
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          Get.to(DeleteForwardingPage(inputNotifier));
+                          Get.to(DeleteForwardingPage(inputNotifier, userId));
                         },
                         child: Text(AppLocalizations.of(context)!.confirm),
                       ),
