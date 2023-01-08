@@ -21,10 +21,8 @@ class NavigationBarNotifier extends ChangeNotifier {
 
   SearchNotifier get getSearchNotifier => _searchNotifier;
 
-  static const int addPageIndex = 2;
-
   void setIndex({required int index, required BuildContext context}) {
-    if (index == addPageIndex) {
+    if (index == NavigatorConstants.AddPageIndex) {
       NavigatorConstants.sendToScreen(Add());
     } else {
       this.index = index;

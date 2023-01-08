@@ -31,19 +31,19 @@ class DataConstants {
   static const MaxImageHeight = 1800.0;
   static const SearchEnhancementDimensionScale = 4;
   static const SearchEnhancementEligibilityScale = 3;
+  static const CategoryNameCutOff = 20;
+
+  static const EventActivityId = 'eAId';
+  static const PriceRangeStart = 0.0;
+  static const PriceRangeEnd = 200.0;
 }
 
 class NavigatorConstants {
-  static const PriceRangeStart = 0.0;
-  static const PriceRangeEnd = 200.0;
-
   static const SearchPageIndex = 0;
   static const ResultPageIndex = 1;
   static const ShowMorePageIndex = 2;
 
-  static const CategoryNameCutOff = 20;
-
-  static const EventActivityId = 'eAId';
+  static const int AddPageIndex = 2;
 
   static const DefaultProfilePicture = "default_profile_image.jpg";
 

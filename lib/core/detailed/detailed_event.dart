@@ -42,7 +42,7 @@ class _EventDetailState extends State<EventDetail> {
   @override
   void initState() {
     // TODO change to only arguments
-    String eventId = Get.arguments[NavigatorConstants.EventActivityId] ?? "1";
+    String eventId = Get.arguments[DataConstants.EventActivityId] ?? "1";
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
 

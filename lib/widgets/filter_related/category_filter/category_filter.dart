@@ -155,7 +155,7 @@ String getCategoryCaption(
   if (dynamicNotifier.currentIndex == NavigatorConstants.ShowMorePageIndex) {
     return getShortCaption(
         caption: dynamicNotifier.showMoreCategoryTitle,
-        cutOff: NavigatorConstants.CategoryNameCutOff);
+        cutOff: DataConstants.CategoryNameCutOff);
   }
   List<String> subcategoryIds = dynamicNotifier.getSelectedSubcategoryIds;
   if (subcategoryIds.length == 0) {
@@ -164,7 +164,7 @@ String getCategoryCaption(
     String tempCategory = CategoryIdToI18nMapper.getCategorySubcategoryName(
         context, subcategoryIds[0]);
     return getShortCaption(
-        caption: tempCategory, cutOff: NavigatorConstants.CategoryNameCutOff);
+        caption: tempCategory, cutOff: DataConstants.CategoryNameCutOff);
   } else {
     Map<String, List<String>> categorySubcategoryMap =
         categoryIdToSubcategoryIds;
@@ -188,7 +188,7 @@ String getCategoryCaption(
       }
     }
     return getShortCaption(
-        cutOff: NavigatorConstants.CategoryNameCutOff, caption: caption);
+        cutOff: DataConstants.CategoryNameCutOff, caption: caption);
   }
 }
 

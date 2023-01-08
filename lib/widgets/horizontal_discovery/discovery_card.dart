@@ -19,7 +19,7 @@ class EASummaryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => {
         NavigatorConstants.sendToNext(Routes.detailedEventRoute,
-            arguments: {NavigatorConstants.EventActivityId: eASummary.id})
+            arguments: {DataConstants.EventActivityId: eASummary.id})
       },
       child: Container(
         width: 160.w,

@@ -131,7 +131,7 @@ Widget getSettingsButton({
       iconColor: Theme.of(context).colorScheme.primary,
       onPressedFunction: () => {
             Get.to(Add(),
-                arguments: {NavigatorConstants.EventActivityId: eASummary.id})
+                arguments: {DataConstants.EventActivityId: eASummary.id})
           });
 }
 

@@ -49,10 +49,13 @@ class DeleteForwardingPage extends StatelessWidget {
   }
 }
 
-void goToProfilePage(
+Widget goToProfilePage(
     BuildContext context,
     NavigationBarNotifier navigationBarNotifier,
     Map<String, dynamic> decodedJson) {
-  // TODO
-  navigationBarNotifier.setIndex(context: context, index: 3);
+  // unteres beeinfluttst nur die Bar
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    navigationBarNotifier.setIndex(index: 2, context: context);
+  });
+  return SizedBox();
 }

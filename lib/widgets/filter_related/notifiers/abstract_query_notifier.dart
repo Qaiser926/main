@@ -12,7 +12,7 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
 
   AbstractQueryNotifier(
       {priceRange = const RangeValues(
-          NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
+          DataConstants.PriceRangeStart, DataConstants.PriceRangeEnd),
       startDate,
       endDate,
       this.sortCriteria = null,

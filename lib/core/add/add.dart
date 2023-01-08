@@ -49,7 +49,7 @@ class _AddState extends State<Add> {
     // ensure that the call is only one time made
     if (!inputNotifier.snackBarShown) {
       try {
-        String eAId = Get.arguments[NavigatorConstants.EventActivityId];
+        String eAId = Get.arguments[DataConstants.EventActivityId];
         detailedEventOrActivity =
             RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
         inputNotifier.isModifyMode = true;
