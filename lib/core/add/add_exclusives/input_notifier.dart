@@ -62,7 +62,7 @@ class AddEANotifier extends ChangeNotifier {
         location: Location(),
         searchEnhancement: SearchEnhancement());
     handlePrices();
-    // TODO init opening times
+    handleTimes(detailedEA.time);
   }
 
   // to initialize in modification case
@@ -99,6 +99,15 @@ class AddEANotifier extends ChangeNotifier {
       times = 1;
     } else {
       times = 0;
+      detailedEA.time.openingTime = {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+      };
     }
   }
 
