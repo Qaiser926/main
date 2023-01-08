@@ -9,6 +9,7 @@ import 'package:othia/core/add/add_exclusives/details_page.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/core/add/add_exclusives/publish_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/geocoding.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
@@ -67,6 +68,7 @@ Column getHeadline(
 Future getInfoDialog({required String info, required BuildContext context}) {
   Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
       true;
+  dismissKeyboard();
   return showDialog(
       context: context,
       builder: (context) {
@@ -123,7 +125,10 @@ Widget getSwitch(
       ),
       isSelected: isSelected,
       renderBorder: true,
-      onPressed: (index) => onPressed(index, context),
+      onPressed: (index) {
+        dismissKeyboard();
+        onPressed(index, context);
+      },
       children: children);
 }
 

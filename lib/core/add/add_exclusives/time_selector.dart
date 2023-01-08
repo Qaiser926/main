@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +48,7 @@ class TimeSelector extends StatelessWidget {
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
+                  dismissKeyboard();
                   inputNotifier.timeFormKey.currentState?.reset();
                   pickDateTime(DateType.StartDate);
                 },
@@ -72,6 +74,7 @@ class TimeSelector extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () async {
+                dismissKeyboard();
                 if (endTimeSelectable) {
                   pickDateTime(DateType.EndDate);
                 } else {
@@ -112,7 +115,6 @@ class TimeSelector extends StatelessWidget {
 
   TimeOfDay getInitialTimeOfDay(DateType dateType) {
     if (dateType == DateType.StartDate) {
-      // TODO directly transform to UTC and always interpret String back to Datetime
       return TimeOfDay(
           hour: getLocalDateTime(
                       dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ class PricePicker extends StatelessWidget {
           getVerSpace(5.h),
           GestureDetector(
             onTap: () {
+              dismissKeyboard();
               inputNotifierConsumer.detailedEA.prices!.add(Price());
               inputNotifier.notifyListeners();
             },

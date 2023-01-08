@@ -7,6 +7,7 @@ import 'package:othia/core/add/add_exclusives/delete_forwarding_page.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/utils/helpers/builders.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 import 'package:othia/utils/ui/app_dialogs.dart';
@@ -35,6 +36,7 @@ class ActionBox extends StatelessWidget {
               context: context,
               caption: AppLocalizations.of(context)!.delete,
               onTap: () {
+                dismissKeyboard();
                 showDeleteDialog(context);
               },
               icon: Icons.delete),
@@ -42,6 +44,7 @@ class ActionBox extends StatelessWidget {
               context: context,
               caption: AppLocalizations.of(context)!.share,
               onTap: () {
+                dismissKeyboard();
                 final String shareLink =
                     eAShareLinkBuilder(inputNotifier.detailedEA.id!);
                 // TODO include a picture when sharing

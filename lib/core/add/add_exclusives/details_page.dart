@@ -4,9 +4,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/image_picker.dart';
-import 'package:othia/core/add/add_exclusives/level_picker.dart';
 import 'package:othia/core/add/add_exclusives/price_picker.dart';
+import 'package:othia/core/add/add_exclusives/search_enhancement_slider.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -66,7 +67,7 @@ class DetailsPage extends StatelessWidget {
                 infoText: AppLocalizations.of(context)!.searchEnhancementInfo,
                 caption:
                     "${AppLocalizations.of(context)!.searchEnhancement} (Optional)"),
-            LevelPicker(inputNotifier),
+            SearchEnhancementSlider(inputNotifier),
           ])),
     );
     // });
@@ -160,18 +161,21 @@ class DetailsPage extends StatelessWidget {
     Map stati = {
       0: {
         "function": () {
+          dismissKeyboard();
           inputNotifier.changeStatus = Status.LIVE;
         },
         "caption": AppLocalizations.of(context)!.statusLive,
       },
       1: {
         "function": () {
+          dismissKeyboard();
           inputNotifier.changeStatus = Status.SOLDOUT;
         },
         "caption": AppLocalizations.of(context)!.statusSoldOut,
       },
       2: {
         "function": () {
+          dismissKeyboard();
           inputNotifier.changeStatus = Status.CANCELED;
         },
         "caption": AppLocalizations.of(context)!.statusCancelled,

@@ -4,15 +4,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
-class LevelPicker extends StatelessWidget {
+class SearchEnhancementSlider extends StatelessWidget {
   AddEANotifier inputNotifier;
 
-  LevelPicker(this.inputNotifier);
+  SearchEnhancementSlider(this.inputNotifier);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class LevelPicker extends StatelessWidget {
                 inputNotifierConsumer.socialLevel, LevelType.socialLevel),
             caption: AppLocalizations.of(context)!.socialLevel,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.socialLevel =
                   transformSliderValueToInt(sliderInput, LevelType.socialLevel);
               inputNotifier.socialLevelActivated = true;
@@ -35,6 +37,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.socialLevel,
             infoText: AppLocalizations.of(context)!.socialLevelInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.socialLevelActivated = false;
               inputNotifier.socialLevel = 0;
               inputNotifier.notifyListeners();
@@ -45,6 +48,7 @@ class LevelPicker extends StatelessWidget {
                 inputNotifierConsumer.physicalLevel, LevelType.physicalLevel),
             caption: AppLocalizations.of(context)!.socialLevel,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.physicalLevel = transformSliderValueToInt(
                   sliderInput, LevelType.physicalLevel);
               inputNotifier.physicalLevelActivated = true;
@@ -54,6 +58,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.physicalLevel,
             infoText: AppLocalizations.of(context)!.physicalLevelInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.physicalLevelActivated = false;
               inputNotifier.physicalLevel = 0;
               inputNotifier.notifyListeners();
@@ -64,6 +69,7 @@ class LevelPicker extends StatelessWidget {
                 inputNotifierConsumer.cognitiveLevel, LevelType.cognitiveLevel),
             caption: AppLocalizations.of(context)!.cognitiveLevel,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.cognitiveLevel = transformSliderValueToInt(
                   sliderInput, LevelType.cognitiveLevel);
               inputNotifier.cognitiveLevelActivated = true;
@@ -73,6 +79,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.cognitiveLevel,
             infoText: AppLocalizations.of(context)!.cognitiveLevelInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.cognitiveLevelActivated = false;
               inputNotifier.cognitiveLevel = 0;
               inputNotifier.notifyListeners();
@@ -84,6 +91,7 @@ class LevelPicker extends StatelessWidget {
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.singlePersonEligibility,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.singlePersonEligibility = transformSliderValueToInt(
                   sliderInput, LevelType.personEligibility);
               inputNotifier.singlePersonEligibilityActivated = true;
@@ -93,6 +101,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.singlePersonEligibilityInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.singlePersonEligibilityActivated = false;
               inputNotifier.singlePersonEligibility = 0;
               inputNotifier.notifyListeners();
@@ -105,6 +114,7 @@ class LevelPicker extends StatelessWidget {
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.coupleEligibility,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.coupleEligibility = transformSliderValueToInt(
                   sliderInput, LevelType.personEligibility);
               inputNotifier.coupleEligibilityActivated = true;
@@ -114,6 +124,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.coupleEligibilityInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.coupleEligibilityActivated = false;
               inputNotifier.coupleEligibility = 0;
               inputNotifier.notifyListeners();
@@ -125,6 +136,7 @@ class LevelPicker extends StatelessWidget {
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.friendGroupEligibility,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.friendGroupEligibility = transformSliderValueToInt(
                   sliderInput, LevelType.personEligibility);
               inputNotifier.friendGroupEligibilityActivated = true;
@@ -134,6 +146,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.friendGroupEligibilityInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.friendGroupEligibilityActivated = false;
               inputNotifier.friendGroupEligibility = 0;
               inputNotifier.notifyListeners();
@@ -146,6 +159,7 @@ class LevelPicker extends StatelessWidget {
                 LevelType.personEligibility),
             caption: AppLocalizations.of(context)!.professionalEligibility,
             onChanged: (double sliderInput) {
+              dismissKeyboard();
               inputNotifier.professionalEligibility = transformSliderValueToInt(
                   sliderInput, LevelType.personEligibility);
               inputNotifier.professionalEligibilityActivated = true;
@@ -155,6 +169,7 @@ class LevelPicker extends StatelessWidget {
             levelType: LevelType.personEligibility,
             infoText: AppLocalizations.of(context)!.professionalEligibilityInfo,
             resetFunction: () {
+              dismissKeyboard();
               inputNotifier.professionalEligibilityActivated = false;
               inputNotifier.professionalEligibility = 0;
               inputNotifier.notifyListeners();
