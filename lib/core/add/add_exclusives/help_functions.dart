@@ -213,7 +213,8 @@ class SwitchPages {
       _notSwitchPageAddressValid();
     } else if ((switchPagesNotifier.currentPage == 1) &
         (targetPage == 2) &
-        ((inputNotifier.image != null) & !inputNotifier.copyRightVerified)) {
+        ((inputNotifier.detailedEA.photos != null) &
+            !inputNotifier.copyRightVerified)) {
       inputNotifier.showCopyrightErrorMessage = true;
       pageController.jumpToPage(switchPagesNotifier.currentPage);
     } else {

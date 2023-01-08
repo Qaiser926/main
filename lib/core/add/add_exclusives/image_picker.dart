@@ -30,7 +30,7 @@ class EAImagePicker extends StatelessWidget {
               if (path != null) {
                 final bytes = File(path).readAsBytesSync();
                 final userProvidedImage = base64Encode(bytes);
-                inputNotifierConsumer.image = userProvidedImage;
+                inputNotifierConsumer.detailedEA.photos = [userProvidedImage];
                 inputNotifierConsumer.copyRightVerified = false;
                 inputNotifierConsumer.notifyListeners();
               }
@@ -45,10 +45,11 @@ class EAImagePicker extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10.h)),
                       image: DecorationImage(
                         image: getPhotoNullSave(
-                            categoryId: inputNotifierConsumer
+                                categoryId: inputNotifierConsumer
                                         .detailedEA.categoryId ??
                                     Categories.diverse,
-                                photo: inputNotifierConsumer.image)
+                                photo:
+                                    inputNotifierConsumer.detailedEA.photos?[0])
                             .image,
                         fit: BoxFit.cover,
                       ),
@@ -68,7 +69,7 @@ class EAImagePicker extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(10.h),
                           child: Text(
-                            inputNotifierConsumer.image == null
+                            inputNotifierConsumer.detailedEA.photos == null
                                 ? AppLocalizations.of(context)!.imageDefaultHint
                                 : AppLocalizations.of(context)!.changeImageHint,
                             textAlign: TextAlign.center,
@@ -81,7 +82,7 @@ class EAImagePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (inputNotifierConsumer.image != null)
+          if (inputNotifierConsumer.detailedEA.photos != null)
             getImagePickerHelpers(inputNotifierConsumer, context),
         ],
       );
@@ -96,7 +97,7 @@ class EAImagePicker extends StatelessWidget {
           padding: EdgeInsets.only(top: 5.h),
           child: GestureDetector(
               onTap: () {
-                inputNotifierConsumer.image = null;
+                inputNotifierConsumer.detailedEA.photos = null;
                 inputNotifierConsumer.notifyListeners();
               },
               child: Row(

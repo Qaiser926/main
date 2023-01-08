@@ -101,16 +101,17 @@ class DetailsPage extends StatelessWidget {
       return buildTextBox(
         context: context,
         onChanged: (description) {
-          inputNotifierConsumer.description = description;
+          inputNotifierConsumer.detailedEA.description = description;
         },
         hintText: AppLocalizations.of(context)!.descriptionHint,
         minLines: 3,
         maxLength: DataConstants.MaxDescriptionLength,
-        textEditingController: inputNotifierConsumer.description == null
-            ? null
-            : TextEditingController(
-                text: inputNotifierConsumer.description,
-              ),
+        textEditingController:
+            inputNotifierConsumer.detailedEA.description == null
+                ? null
+                : TextEditingController(
+                    text: inputNotifierConsumer.detailedEA.description,
+                  ),
       );
     });
   }
@@ -121,15 +122,16 @@ class DetailsPage extends StatelessWidget {
       return buildTextBox(
         context: context,
         onChanged: (description) {
-          inputNotifierConsumer.ticketUrl = description;
+          inputNotifierConsumer.detailedEA.ticketUrl = description;
         },
         hintText: AppLocalizations.of(context)!.ticketingHint,
         minLines: 3,
-        textEditingController: inputNotifierConsumer.ticketUrl == null
-            ? null
-            : TextEditingController(
-                text: inputNotifierConsumer.ticketUrl,
-              ),
+        textEditingController:
+            inputNotifierConsumer.detailedEA.ticketUrl == null
+                ? null
+                : TextEditingController(
+                    text: inputNotifierConsumer.detailedEA.ticketUrl,
+                  ),
       );
     });
   }
@@ -140,15 +142,16 @@ class DetailsPage extends StatelessWidget {
       return buildTextBox(
         context: context,
         onChanged: (description) {
-          inputNotifierConsumer.websiteUrl = description;
+          inputNotifierConsumer.detailedEA.websiteUrl = description;
         },
         hintText: AppLocalizations.of(context)!.websiteHint,
         minLines: 3,
-        textEditingController: inputNotifierConsumer.websiteUrl == null
-            ? null
-            : TextEditingController(
-                text: inputNotifierConsumer.websiteUrl,
-              ),
+        textEditingController:
+            inputNotifierConsumer.detailedEA.websiteUrl == null
+                ? null
+                : TextEditingController(
+                    text: inputNotifierConsumer.detailedEA.websiteUrl,
+                  ),
       );
     });
   }

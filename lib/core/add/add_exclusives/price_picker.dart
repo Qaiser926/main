@@ -24,18 +24,18 @@ class PricePicker extends StatelessWidget {
         children: [
           ListView.builder(
               shrinkWrap: true,
-              itemCount: inputNotifierConsumer.prices.length,
+              itemCount: inputNotifierConsumer.detailedEA.prices!.length,
               itemBuilder: (context, index) {
                 return buildPriceRow(
                     index: index,
                     context: context,
-                    inputPrice: inputNotifierConsumer.prices[index],
+                    inputPrice: inputNotifierConsumer.detailedEA.prices![index],
                     inputNotifierConsumer: inputNotifierConsumer);
               }),
           getVerSpace(5.h),
           GestureDetector(
             onTap: () {
-              inputNotifierConsumer.prices.add(Price());
+              inputNotifierConsumer.detailedEA.prices!.add(Price());
               inputNotifier.notifyListeners();
             },
             child: Row(
@@ -79,7 +79,7 @@ class PricePicker extends StatelessWidget {
                           ),
                     onChanged: (label) {
                       // TODO, define variable globally on how many characters to include
-                      inputNotifierConsumer.prices[index].label =
+                      inputNotifierConsumer.detailedEA.prices![index].label =
                           label.substring(0, 20);
                       inputNotifierConsumer.notifyListeners();
                     },
@@ -109,7 +109,7 @@ class PricePicker extends StatelessWidget {
                   ],
                   keyboardType: TextInputType.number,
                   onChanged: (price) {
-                    inputNotifierConsumer.prices[index].price =
+                    inputNotifierConsumer.detailedEA.prices![index].price =
                         transformCurrencyString(price);
                   },
                   maxLines: 1,
@@ -121,7 +121,7 @@ class PricePicker extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              inputNotifierConsumer.prices.removeAt(index);
+              inputNotifierConsumer.detailedEA.prices!.removeAt(index);
               inputNotifierConsumer.notifyListeners();
             },
             child: Icon(Icons.close),

@@ -154,10 +154,9 @@ class TimeSelector extends StatelessWidget {
     var time = await showTimePicker(
       context: context,
       initialTime: initialTime,
-    ).then((_) {
-      Provider.of<GlobalNavigationNotifier>(context, listen: false)
-          .isDialogOpen = false;
-    });
+    );
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        false;
     if (time != null) {
       DateTime completeDateTime;
       if (dateType == DateType.StartDate) {
@@ -219,10 +218,10 @@ class TimeSelector extends StatelessWidget {
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate,
       lastDate: DateTime(DateTime.now().year + 5),
-    ).then((_) {
-      Provider.of<GlobalNavigationNotifier>(context, listen: false)
-          .isDialogOpen = false;
-    });
+    );
+
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        false;
 
     if (date != null) {
       if (dateType == DateType.StartDate) {

@@ -8,24 +8,88 @@ import 'package:provider/provider.dart';
 import '../../../modules/models/detailed_event/detailed_event.dart';
 
 class AddEANotifier extends ChangeNotifier {
-  DetailedEventOrActivity detailedEA = DetailedEventOrActivity(
-      time: Time(),
-      location: Location(),
-      searchEnhancement: SearchEnhancement());
+  late DetailedEventOrActivity detailedEA;
+  bool isModifyMode = false;
+  bool isAddressInvalid = false;
+  bool snackBarShown =
+      false; // is needed to indicate if the snackbar giving info about the adding process on the first page was already shown (did not work with stateful widget alone) and is used in order not to call the API twice in the modifying case
+  bool showCopyrightErrorMessage = false;
+  bool copyRightVerified = false;
+  bool termsAgreed = false;
+  bool termsAgreedErrorMessage = false;
 
-  // TODO write function to input detailed event or activity
+  GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
+  Status? status;
+  int activatedWeekDay = 1;
+  String? initStreet;
+  String? initCity;
+  String? initStreetNumber;
+  String? initPostalCode;
+  double? initLatitude;
+  double? initLongitude;
+  String? mainCategoryId;
+
+  // Level parameters
+  int physicalLevel = 0;
+  bool physicalLevelActivated = false;
+  int cognitiveLevel = 0;
+  bool cognitiveLevelActivated = false;
+  int socialLevel = 0;
+  bool socialLevelActivated = false;
+  int singlePersonEligibility = 0;
+  bool singlePersonEligibilityActivated = false;
+  int coupleEligibility = 0;
+  bool coupleEligibilityActivated = false;
+  int friendGroupEligibility = 0;
+  bool friendGroupEligibilityActivated = false;
+  int professionalEligibility = 0;
+  bool professionalEligibilityActivated = false;
+
+  // TODO when extracting interpret first  bool as start/ end time and second as opening times
+  final List<bool> times = <bool>[true, false];
+
+  // TODO when extracting interpret first  bool as real location and second as online
+  final List<bool> locationType = <bool>[true, false];
+  final List<bool> privateOrPublic = <bool>[true, false];
+  final List<bool> ownedOrForeign = <bool>[true, false];
+
+  AddEANotifier() {
+    detailedEA = DetailedEventOrActivity(
+        time: Time(),
+        location: Location(),
+        searchEnhancement: SearchEnhancement());
+    handlePrices();
+    // TODO init opening times
+  }
+
+  // to initialize in modification case
   void modify({required DetailedEventOrActivity existingDetailedEA}) {
     detailedEA = existingDetailedEA;
     handleTimes(existingDetailedEA.time);
     handleLocation(existingDetailedEA.location);
     handleOwnerId(detailedEA);
+    handlePrices();
     mainCategoryId =
         mapSubcategoryToCategory(subCategoryId: existingDetailedEA.categoryId!);
     if (existingDetailedEA.status != null) {
       status = existingDetailedEA.status;
     } else {
       status = Status.LIVE;
+    }
+    if (existingDetailedEA.photos != null) {
+      copyRightVerified = true;
+    }
+    handleSearchenhancement(existingDetailedEA.searchEnhancement);
+  }
+
+  void handlePrices() {
+    if (detailedEA.prices == null) {
+      detailedEA.prices = [Price()];
+    } else if (detailedEA.prices!.isEmpty) {
+      detailedEA.prices = [Price()];
     }
   }
 
@@ -36,30 +100,6 @@ class AddEANotifier extends ChangeNotifier {
     } else {
       times = 0;
     }
-  }
-
-  String? initStreet;
-  String? initCity;
-  String? initStreetNumber;
-  String? initPostalCode;
-  double? initLatitude;
-  double? initLongitude;
-
-  bool isAddressChanged() {
-    return ((initStreet != detailedEA.location.street) |
-        (initCity != detailedEA.location.city) |
-        (initStreetNumber != detailedEA.location.streetNumber) |
-        (initPostalCode != detailedEA.location.postalCode) |
-        (initLongitude != detailedEA.location.longitude) |
-        (initLatitude != detailedEA.location.latitude));
-  }
-
-  bool shouldCallGeolocator() {
-    // only do not call if the address has not changed in modification mode
-    if (!isAddressChanged() & isModifyMode) {
-      return false;
-    }
-    return true;
   }
 
   void handleLocation(Location existingLocation) {
@@ -82,80 +122,6 @@ class AddEANotifier extends ChangeNotifier {
     } else {
       ownedOrForeign = 1;
     }
-  }
-
-  // TODO write function to export detailed event or activity, special case for location
-
-  bool isModifyMode = false;
-
-  String? description;
-  String? websiteUrl;
-  String? ticketUrl;
-
-  String? mainCategoryId;
-
-  bool isAddressInvalid = false;
-
-  GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
-
-  // is needed to indicate if the snackbar giving info about the adding process on the first page was already shown (did not work with stateful widget alone)
-  bool snackBarShown = false;
-
-  String? image;
-
-  // Level parameters
-  int physicalLevel = 0;
-  bool physicalLevelActivated = false;
-  int cognitiveLevel = 0;
-  bool cognitiveLevelActivated = false;
-  int socialLevel = 0;
-  bool socialLevelActivated = false;
-  int singlePersonEligibility = 0;
-  bool singlePersonEligibilityActivated = false;
-  int coupleEligibility = 0;
-  bool coupleEligibilityActivated = false;
-  int friendGroupEligibility = 0;
-  bool friendGroupEligibilityActivated = false;
-  int professionalEligibility = 0;
-  bool professionalEligibilityActivated = false;
-
-  bool showCopyrightErrorMessage = false;
-  bool copyRightVerified = false;
-
-  bool termsAgreed = false;
-  bool termsAgreedErrorMessage = false;
-
-  Status? status;
-
-  List<Image> loadedImages = [];
-
-  int activatedWeekDay = 1;
-
-  // TODO when extracting interpret first  bool as start/ end time and second as opening times
-  final List<bool> times = <bool>[true, false];
-
-  // TODO when extracting interpret first  bool as real location and second as online
-  final List<bool> locationType = <bool>[true, false];
-  final List<bool> privateOrPublic = <bool>[true, false];
-  final List<bool> ownedOrForeign = <bool>[true, false];
-
-  void initializeWithExistingEA(
-      {required DetailedEventOrActivity detailedEventOrActivity}) {
-    handleSeveral(detailedEventOrActivity);
-    handleImage(detailedEventOrActivity);
-    // handlePrices(detailedEventOrActivity.prices);
-    handleTimes(detailedEventOrActivity.time);
-    handleLocation(detailedEventOrActivity.location);
-    handleSearchenhancement(detailedEventOrActivity.searchEnhancement);
-    handleOwnerId(detailedEventOrActivity);
-  }
-
-  void handleSeveral(DetailedEventOrActivity detailedEventOrActivity) {
-    description = detailedEventOrActivity.description;
-    websiteUrl = detailedEventOrActivity.websiteUrl;
-    ticketUrl = detailedEventOrActivity.ticketUrl;
   }
 
   void handleSearchenhancement(SearchEnhancement? searchEnhancement) {
@@ -191,25 +157,26 @@ class AddEANotifier extends ChangeNotifier {
     }
   }
 
-  void handleImage(DetailedEventOrActivity detailedEventOrActivity) {
-    if (detailedEventOrActivity.photos != null) {
-      image = detailedEventOrActivity.photos![0];
-      copyRightVerified = true;
-    }
+  bool isAddressChanged() {
+    return ((initStreet != detailedEA.location.street) |
+        (initCity != detailedEA.location.city) |
+        (initStreetNumber != detailedEA.location.streetNumber) |
+        (initPostalCode != detailedEA.location.postalCode) |
+        (initLongitude != detailedEA.location.longitude) |
+        (initLatitude != detailedEA.location.latitude));
   }
 
-  // void handlePrices(List<double>? existingPrices) {
-  //   if (existingPrices != null) {
-  //     prices = [];
-  //     for (int i = 0; i < existingPrices.length; i++) {
-  //       prices.add(Price(price: existingPrices[i]));
-  //     }
-  //     if (prices.isEmpty) prices.add(Price());
-  //   }
-  // }
+  bool shouldCallGeolocator() {
+    // only do not call if the address has not changed in modification mode
+    if (!isAddressChanged() & isModifyMode) {
+      return false;
+    }
+    return true;
+  }
 
   set changeStatus(receivedStatus) {
     status = receivedStatus;
+    detailedEA.status = receivedStatus;
     notifyListeners();
   }
 
@@ -241,15 +208,17 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void clearPrices() {
-    for (var i = 0; i < prices.length; i++) {
-      if (prices[i].price == null) {
-        prices.removeAt(i);
+    if (detailedEA.prices != null) {
+      for (var i = 0; i < detailedEA.prices!.length; i++) {
+        if (detailedEA.prices![i].price == null) {
+          detailedEA.prices!.removeAt(i);
+        }
       }
+      if (detailedEA.prices!.isEmpty) {
+        detailedEA.prices!.add(Price());
+      }
+      notifyListeners();
     }
-    if (prices.isEmpty) {
-      prices.add(Price());
-    }
-    notifyListeners();
   }
 
   void changeLocationType(int index, BuildContext context) {
@@ -279,7 +248,7 @@ class AddEANotifier extends ChangeNotifier {
     return "${detailedEA.location.locationTitle ?? ""}, ${detailedEA.location.street ?? ""} ${detailedEA.location.streetNumber ?? ""}, ${detailedEA.location.postalCode ?? ""} ${detailedEA.location.city ?? ""}";
   }
 
-  List<Price> prices = [Price()];
+  // opening times related
 
   List getOpeningTimesList() {
     return detailedEA.time.openingTime![activatedWeekDay.toString()]!;
@@ -337,11 +306,6 @@ class AddEANotifier extends ChangeNotifier {
     }
   }
 
-  void resetEndDateTime() {
-    detailedEA.time.endTimeUtc = null;
-    // notifyListeners();
-  }
-
   void activeWeekday(int weekday) {
     activatedWeekDay = weekday;
     notifyListeners();
@@ -386,6 +350,10 @@ class AddEANotifier extends ChangeNotifier {
       privateOrPublic[i] = i == index;
     }
     notifyListeners();
+  }
+
+  void resetEndDateTime() {
+    detailedEA.time.endTimeUtc = null;
   }
 
   void notifyUsers(
