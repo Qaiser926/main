@@ -120,10 +120,9 @@ class _EventDetailState extends State<EventDetail> {
                     SimpleMap(latLng.LatLng(
                         detailedEventOrActivity.location.latitude!,
                         detailedEventOrActivity.location.longitude!)),
-                  if (detailedEventOrActivity.time.openingHours != null)
+                  if (detailedEventOrActivity.time.openingTime != null)
                     OpeningTimesSection(
-                        openingTime:
-                            detailedEventOrActivity.time.openingHours!),
+                        openingTime: detailedEventOrActivity.time.openingTime!),
                   getVerSpace(25.h),
                   if (detailedEventOrActivity.eventSeriesId != null)
                     ExploreEventSeries(

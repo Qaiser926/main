@@ -77,13 +77,13 @@ class Time {
   String? startTimeUtc;
   String? endTimeUtc;
   OpeningTimeCode? openingTimeCode;
-  Map? openingHours;
+  Map<String, List<List<double?>?>?>? openingTime;
 
   Time(
       {this.startTimeUtc,
       this.openingTimeCode,
       this.endTimeUtc,
-      this.openingHours});
+      this.openingTime});
 
   factory Time.fromJson(Map<String, dynamic> json) => _$TimeFromJson(json);
 

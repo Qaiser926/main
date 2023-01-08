@@ -7,7 +7,7 @@ import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add_exclusives/action_box.dart';
 import 'package:othia/core/add/add_exclusives/address_form.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
-import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+import 'package:othia/core/add/add_exclusives/opening_hours_selector.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
@@ -174,7 +174,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                           ? TimeSelector(
                               context: context,
                               inputNotifier: widget.inputNotifier)
-                          : OpeningTimesSelector(
+                          : OpeningHoursSelector(
                               context: context,
                               inputNotifier: widget.inputNotifier)),
                 ]);

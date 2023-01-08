@@ -30,7 +30,7 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void handleTimes(Time existingTime) {
-    if (existingTime.openingHours != null) {
+    if (existingTime.openingTime != null) {
       // set the list with bools
       times = 1;
     } else {
@@ -282,15 +282,15 @@ class AddEANotifier extends ChangeNotifier {
   List<Price> prices = [Price()];
 
   List getOpeningTimesList() {
-    return detailedEA.time.openingHours![activatedWeekDay.toString()]!;
+    return detailedEA.time.openingTime![activatedWeekDay.toString()]!;
   }
 
   void deleteNullOpeningTimes() {
-    for (var openingTimesList in detailedEA.time.openingHours!.values) {
-      for (var i = openingTimesList.length - 1; i >= 0; i--) {
+    for (var openingTimesList in detailedEA.time.openingTime!.values) {
+      for (var i = openingTimesList?.length ?? 1 - 1; i >= 0; i--) {
         // first is opening time, the second closing time
-        if ((openingTimesList[i][0] == null) |
-            (openingTimesList[i][1] == null)) {
+        if ((openingTimesList![i]![0] == null) |
+            (openingTimesList[i]![1] == null)) {
           openingTimesList.removeAt(i);
         }
       }
@@ -299,19 +299,20 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void closedOnWeekDay() {
-    detailedEA.time.openingHours![activatedWeekDay.toString()] = [];
+    detailedEA.time.openingTime![activatedWeekDay.toString()] = [];
     notifyListeners();
   }
 
   void alwaysOpenOnWeekDay() {
-    detailedEA.time.openingHours![activatedWeekDay.toString()] = [
+    detailedEA.time.openingTime![activatedWeekDay.toString()] = [
       [0, 0]
     ];
     notifyListeners();
   }
 
   bool isClosed() {
-    if (detailedEA.time.openingHours![activatedWeekDay.toString()]!.isEmpty) {
+    if (detailedEA.time.openingTime![activatedWeekDay.toString()]?.isEmpty ??
+        true) {
       return true;
     } else {
       return false;
@@ -319,12 +320,13 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   bool isAlwaysOpen() {
-    if (detailedEA.time.openingHours![activatedWeekDay.toString()]!.isEmpty) {
+    if (detailedEA.time.openingTime![activatedWeekDay.toString()]?.isEmpty ??
+        true) {
       return false;
     } else {
-      if ((detailedEA.time.openingHours![activatedWeekDay.toString()]![0][0] ==
+      if ((detailedEA.time.openingTime![activatedWeekDay.toString()]![0]![0] ==
               0) &
-          (detailedEA.time.openingHours![activatedWeekDay.toString()]![0][1] ==
+          (detailedEA.time.openingTime![activatedWeekDay.toString()]![0]![1] ==
               0)) {
         return true;
       } else {
@@ -344,7 +346,7 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void addHours() {
-    detailedEA.time.openingHours![activatedWeekDay.toString()]!
+    detailedEA.time.openingTime![activatedWeekDay.toString()]!
         .add([null, null]);
     notifyListeners();
   }
@@ -352,7 +354,7 @@ class AddEANotifier extends ChangeNotifier {
   void changeTimeType(int index, BuildContext context) {
     // there can be either opening times or start/ end time associated -> make user aware
     bool isOpeningTimesModified = false;
-    for (var openingTimesList in detailedEA.time.openingHours!.values) {
+    for (var openingTimesList in detailedEA.time.openingTime!.values) {
       if (openingTimesList?.isNotEmpty ?? (openingTimesList != null))
         isOpeningTimesModified = true;
     }

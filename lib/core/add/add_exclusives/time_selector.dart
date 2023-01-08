@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -148,10 +149,15 @@ class TimeSelector extends StatelessWidget {
 
   Future displayTimePicker(DateType dateType) async {
     TimeOfDay initialTime = getInitialTimeOfDay(dateType);
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        true;
     var time = await showTimePicker(
       context: context,
       initialTime: initialTime,
-    );
+    ).then((_) {
+      Provider.of<GlobalNavigationNotifier>(context, listen: false)
+          .isDialogOpen = false;
+    });
     if (time != null) {
       DateTime completeDateTime;
       if (dateType == DateType.StartDate) {
@@ -204,7 +210,8 @@ class TimeSelector extends StatelessWidget {
               dateTimeUtc: inputNotifier.detailedEA.time.endTimeUtc) ??
           firstDate;
     }
-
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        true;
     var date = await showDatePicker(
       context: context,
       // TODO set locale user specific & align style
@@ -212,7 +219,10 @@ class TimeSelector extends StatelessWidget {
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate,
       lastDate: DateTime(DateTime.now().year + 5),
-    );
+    ).then((_) {
+      Provider.of<GlobalNavigationNotifier>(context, listen: false)
+          .isDialogOpen = false;
+    });
 
     if (date != null) {
       if (dateType == DateType.StartDate) {
