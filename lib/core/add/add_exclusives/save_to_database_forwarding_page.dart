@@ -15,15 +15,13 @@ import 'package:share_plus/share_plus.dart';
 
 class SaveForwardingPage extends StatelessWidget {
   DetailedEventOrActivity detailedEA;
-
   SaveForwardingPage(this.detailedEA);
 
   @override
   Widget build(BuildContext context) {
     late Future<Object> response =
         RestService().crateEA(detailedEventOrActivity: detailedEA);
-    Share.share(
-        '${AppLocalizations.of(context)!.shareMessage} ${eAShareLinkBuilder(detailedEA.id!)}');
+    Share.share('${eAShareLinkBuilder(detailedEA.id!)}');
     return WillPopScope(
         onWillPop: () async {
           return false;
@@ -41,8 +39,10 @@ class SaveForwardingPage extends StatelessWidget {
                       snapshot, getToDetailPage, [context, detailedEA.id!]);
                 }),
             getVerSpace(10.h),
-                // TODO
-            Text(AppLocalizations.of(context)!.deleteEAWaitingMessage),
+            Padding(
+              padding: EdgeInsets.all(10.h),
+              child: Text(AppLocalizations.of(context)!.saveEAWaitingMessage),
+            ),
           ],
         )));
   }

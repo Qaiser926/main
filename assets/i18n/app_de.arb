@@ -160,6 +160,7 @@
           },
 
   "deleteEAWaitingMessage": "Deine Veranstaltung wird aus unserer Datenbank gelöscht",
+  "saveEAWaitingMessage": "Deine Veranstaltung wird zu unserer Datenbank hinzugefügt. Dies kann einen Moment dauern.",
 
 
 

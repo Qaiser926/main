@@ -158,7 +158,8 @@
         }
       },
 
-   "deleteEAWaitingMessage": "Your event or activity is deleted from our data base",
+   "deleteEAWaitingMessage": "Your event or activity is being deleted from our data base.",
+   "saveEAWaitingMessage": "Your event or activity is being added to our data base. This can take a while.",
 
 
 
