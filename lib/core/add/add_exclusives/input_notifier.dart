@@ -287,15 +287,17 @@ class AddEANotifier extends ChangeNotifier {
 
   void deleteNullOpeningTimes() {
     for (var openingTimesList in detailedEA.time.openingTime!.values) {
-      for (var i = openingTimesList?.length ?? 1 - 1; i >= 0; i--) {
-        // first is opening time, the second closing time
-        if ((openingTimesList![i]![0] == null) |
-            (openingTimesList[i]![1] == null)) {
-          openingTimesList.removeAt(i);
+      if (openingTimesList != null) {
+        for (var i = openingTimesList.length - 1; i >= 0; i--) {
+          // first is opening time, the second closing time
+          if ((openingTimesList[i]![0] == null) |
+              (openingTimesList[i]![1] == null)) {
+            openingTimesList.removeAt(i);
+          }
         }
       }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void closedOnWeekDay() {

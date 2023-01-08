@@ -144,10 +144,18 @@ Future<dynamic> openingTimesDialog(
                       Padding(
                         padding: EdgeInsets.all(5.h),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
                               onTap: () {
+                                inputNotifier.deleteNullOpeningTimes();
+                                Navigator.pop(context);
+                              },
+                              child: Text(AppLocalizations.of(context)!.cancel),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                inputNotifier.deleteNullOpeningTimes();
                                 Navigator.pop(context);
                               },
                               child:
