@@ -52,6 +52,8 @@ def getPrices(prices: list):
         return [{"label": "minPrice", "price": min(prices)}, {"label": "maxPrice", "price": max(prices)}]
 
 
+
+# null wird nicht angezeigt, empty list wird als closed interpretiert
 def getOpeningTimesDict(openingTimes: list):
     openingTimesDict = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: []}
     alwaysOpen = True

@@ -23,7 +23,7 @@ class AddEANotifier extends ChangeNotifier {
   GlobalKey<FormState> timeFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> basicInformationFormKey = GlobalKey<FormState>();
 
-  Status? status;
+  Status? status = Status.LIVE;
   int activatedWeekDay = 1;
   String? initStreet;
   String? initCity;
@@ -57,16 +57,18 @@ class AddEANotifier extends ChangeNotifier {
   AddEANotifier() {
     detailedEA = DetailedEventOrActivity(
         time: Time(),
-        location: Location(),
-        searchEnhancement: SearchEnhancement());
+        location: Location(isOnline: false),
+        searchEnhancement: SearchEnhancement(),
+        isOnline: false);
     handlePrices();
     handleTimes(detailedEA.time);
     setOwnerId();
   }
 
   DetailedEventOrActivity extractToSave() {
+    detailedEA.status = status;
     detailedEA.eventSeriesId = null;
-
+    updateSearchEnhancement();
     cleanUpTimes();
     cleanUpLocation();
     cleanUpPrices();
@@ -144,7 +146,7 @@ class AddEANotifier extends ChangeNotifier {
     if (existingDetailedEA.status != null) {
       status = existingDetailedEA.status;
     } else {
-      status = Status.LIVE;
+      status = null;
     }
     if (existingDetailedEA.photos != null) {
       copyRightVerified = true;
