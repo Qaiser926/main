@@ -12,7 +12,8 @@ class NavigationBarNotifier extends ChangeNotifier {
 
   //TODO decide if SearchNotifier is initialized here or the fields are non-required
 
-  NavigationBarNotifier({required this.pageController})
+  NavigationBarNotifier({required this.pageController, required this.index})
+      // the initialized PageController is not the one of the navigationBar in the Main menu, but in the search menu
       : _searchNotifier = SearchNotifier(
           pageController: PageController(initialPage: 0),
         );

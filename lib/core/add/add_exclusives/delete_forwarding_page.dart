@@ -4,9 +4,9 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -42,12 +42,8 @@ Widget goToProfilePage(
     BuildContext context,
     Map<String, dynamic> decodedJson) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    NavigationBarNotifier navigationBarNotifier =
-        Provider.of<NavigationBarNotifier>(context, listen: false);
-    navigationBarNotifier.pageController.dispose();
-    navigationBarNotifier.pageController =
-        PageController(initialPage: NavigatorConstants.FavouritePageIndex);
-    navigationBarNotifier.index = NavigatorConstants.FavouritePageIndex;
+    Provider.of<GlobalNavigationNotifier>(context, listen: false)
+        .navigationBarIndex = NavigatorConstants.ProfilePageIndex;
 
     NavigatorConstants.sendToScreen(MainPage());
   });

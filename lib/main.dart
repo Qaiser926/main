@@ -15,6 +15,7 @@ import 'config/routes/pages.dart';
 import 'config/routes/routes.dart';
 import 'config/themes/dark_theme.dart';
 import 'constants/locales_settings.dart';
+import 'utils/services/global_navigation_notifier.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
             providers: [
               ChangeNotifierProvider.value(
                 value: LocaleProvider(),
+              ),
+              ChangeNotifierProvider.value(
+                value: GlobalNavigationNotifier(),
               ),
             ],
             child: Consumer<LocaleProvider>(

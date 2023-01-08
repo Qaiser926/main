@@ -45,6 +45,7 @@ class NavigatorConstants {
 
   static const int AddPageIndex = 2;
   static const int FavouritePageIndex = 3;
+  static const int ProfilePageIndex = 4;
 
   static const DefaultProfilePicture = "default_profile_image.jpg";
 

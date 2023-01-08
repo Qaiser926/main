@@ -9,8 +9,6 @@ import 'package:othia/core/add/add_exclusives/input_notifier.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/ui/app_dialogs.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
-import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ActionBox extends StatelessWidget {
@@ -89,8 +87,8 @@ class ActionBox extends StatelessWidget {
   }
 
   void showDeleteDialog(BuildContext context) {
-    Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
-        true;
+    // Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+    //     true;
     showDialog(
         context: context,
         builder: (context) => getDialog(
@@ -118,8 +116,8 @@ class ActionBox extends StatelessWidget {
                     ],
                   ),
                 ])).then((_) {
-      Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
-          false;
+      // Provider.of<NavigationBarNotifier>(context, listen: false).isDialogOpen =
+      //     false;
     });
   }
 }
