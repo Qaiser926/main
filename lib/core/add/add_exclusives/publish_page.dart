@@ -34,7 +34,7 @@ class PublishPage extends StatelessWidget {
                   getSwitch(
                       context: context,
                       onPressed: inputNotifier.changePrivatePublic,
-                      isSelected: inputNotifierConsumer.privateOrPublic,
+                      isSelected: inputNotifierConsumer.publicOrPrivate,
                       children: [
                         Padding(
                           padding: EdgeInsets.all(5.h),
@@ -58,7 +58,7 @@ class PublishPage extends StatelessWidget {
                   getSwitch(
                       context: context,
                       onPressed: inputNotifier.changeOwnedOrForeign,
-                      isSelected: inputNotifierConsumer.ownedOrForeign,
+                      isSelected: inputNotifierConsumer.associateProfile,
                       children: [
                         Padding(
                           padding: EdgeInsets.all(5.h),

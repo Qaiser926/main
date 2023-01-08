@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
+import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 import 'package:provider/provider.dart';
 
 import '../../../modules/models/detailed_event/detailed_event.dart';
@@ -48,13 +49,10 @@ class AddEANotifier extends ChangeNotifier {
   int professionalEligibility = 0;
   bool professionalEligibilityActivated = false;
 
-  // TODO when extracting interpret first  bool as start/ end time and second as opening times
   final List<bool> times = <bool>[true, false];
-
-  // TODO when extracting interpret first  bool as real location and second as online
   final List<bool> locationType = <bool>[true, false];
-  final List<bool> privateOrPublic = <bool>[true, false];
-  final List<bool> ownedOrForeign = <bool>[true, false];
+  final List<bool> publicOrPrivate = <bool>[true, false];
+  final List<bool> associateProfile = <bool>[true, false];
 
   AddEANotifier() {
     detailedEA = DetailedEventOrActivity(
@@ -63,6 +61,72 @@ class AddEANotifier extends ChangeNotifier {
         searchEnhancement: SearchEnhancement());
     handlePrices();
     handleTimes(detailedEA.time);
+    setOwnerId();
+  }
+
+  Future<void> setOwnerId() async {
+    detailedEA.ownerId = await getUserId();
+  }
+
+  DetailedEventOrActivity extractToSave() {
+    detailedEA.eventSeriesId = null;
+
+    cleanUpTimes();
+    cleanUpLocation();
+    cleanUpPrices();
+    publicOrPrivate[0]
+        ? detailedEA.isPublic = true
+        : detailedEA.isPublic = false;
+    associateProfile[0]
+        ? detailedEA.showOrganizer = true
+        : detailedEA.showOrganizer = false;
+    return detailedEA;
+  }
+
+  void cleanUpTimes() {
+    if (times[0]) {
+      detailedEA.time.openingTime = null;
+    } else {
+      detailedEA.time.startTimeUtc = null;
+      detailedEA.time.endTimeUtc = null;
+    }
+  }
+
+  void cleanUpLocation() {
+    if (locationType[0]) {
+      if (isAddressChanged()) {
+        detailedEA.location.locationTitle = null;
+        detailedEA.location.locationId = null;
+      }
+    } else {
+      detailedEA.isOnline = true;
+      detailedEA.location.isOnline = true;
+    }
+  }
+
+  void cleanUpPrices() {
+    if (detailedEA.prices != null) {
+      for (var i = 0; i < detailedEA.prices!.length; i++) {
+        if (detailedEA.prices![i].price == null) {
+          detailedEA.prices!.removeAt(i);
+        }
+      }
+    }
+  }
+
+  void updateSearchEnhancement() {
+    detailedEA.searchEnhancement = SearchEnhancement(
+        cognitiveLevel: cognitiveLevelActivated ? cognitiveLevel : null,
+        coupleEligibility:
+            coupleEligibilityActivated ? coupleEligibility : null,
+        friendGroupEligibility:
+            friendGroupEligibilityActivated ? friendGroupEligibility : null,
+        physicalLevel: physicalLevelActivated ? physicalLevel : null,
+        professionalEligibility:
+            professionalEligibilityActivated ? professionalEligibility : null,
+        singlePersonEligibility:
+            singlePersonEligibilityActivated ? singlePersonEligibility : null,
+        socialLevel: socialLevelActivated ? socialLevel : null);
   }
 
   // to initialize in modification case
@@ -70,7 +134,7 @@ class AddEANotifier extends ChangeNotifier {
     detailedEA = existingDetailedEA;
     handleTimes(existingDetailedEA.time);
     handleLocation(existingDetailedEA.location);
-    handleOwnerId(detailedEA);
+    handleIsPublic(detailedEA);
     handlePrices();
     mainCategoryId =
         mapSubcategoryToCategory(subCategoryId: existingDetailedEA.categoryId!);
@@ -125,11 +189,11 @@ class AddEANotifier extends ChangeNotifier {
     }
   }
 
-  void handleOwnerId(DetailedEventOrActivity detailedEventOrActivity) {
-    if (detailedEventOrActivity.ownerIsOrganizer!) {
-      ownedOrForeign = 0;
+  void handleIsPublic(DetailedEventOrActivity detailedEventOrActivity) {
+    if (detailedEventOrActivity.isPublic!) {
+      associateProfile = 0;
     } else {
-      ownedOrForeign = 1;
+      associateProfile = 1;
     }
   }
 
@@ -201,28 +265,24 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   void changePrivatePublic(index, BuildContext context) {
-    changeSwitch(index: index, changingList: privateOrPublic);
+    changeSwitch(index: index, changingList: publicOrPrivate);
   }
 
   void changeOwnedOrForeign(index, BuildContext context) {
-    changeSwitch(index: index, changingList: ownedOrForeign);
+    changeSwitch(index: index, changingList: associateProfile);
   }
 
   set times(index) {
     changeSwitch(index: index, changingList: times);
   }
 
-  set ownedOrForeign(index) {
-    changeSwitch(index: index, changingList: ownedOrForeign);
+  set associateProfile(index) {
+    changeSwitch(index: index, changingList: associateProfile);
   }
 
   void clearPrices() {
     if (detailedEA.prices != null) {
-      for (var i = 0; i < detailedEA.prices!.length; i++) {
-        if (detailedEA.prices![i].price == null) {
-          detailedEA.prices!.removeAt(i);
-        }
-      }
+      cleanUpPrices();
       if (detailedEA.prices!.isEmpty) {
         detailedEA.prices!.add(Price());
       }
@@ -355,8 +415,8 @@ class AddEANotifier extends ChangeNotifier {
   }
 
   set privateOrPublic(index) {
-    for (int i = 0; i < privateOrPublic.length; i++) {
-      privateOrPublic[i] = i == index;
+    for (int i = 0; i < publicOrPrivate.length; i++) {
+      publicOrPrivate[i] = i == index;
     }
     notifyListeners();
   }

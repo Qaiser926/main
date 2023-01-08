@@ -13,7 +13,7 @@ class DetailedEventOrActivity {
   String? ownerId;
   List<String>? photos;
   String? description;
-  final String? eventSeriesId;
+  String? eventSeriesId;
   List<Price>? prices;
   String? ticketUrl;
   String? websiteUrl;
@@ -23,7 +23,7 @@ class DetailedEventOrActivity {
   Location location;
   Attribution? attribution;
   SearchEnhancement? searchEnhancement;
-  bool? ownerIsOrganizer;
+  bool? isPublic;
   bool? showOrganizer;
 
   DetailedEventOrActivity(
@@ -32,7 +32,7 @@ class DetailedEventOrActivity {
       this.showOrganizer,
       this.title,
       this.id,
-      this.ownerIsOrganizer,
+      this.isPublic,
       this.categoryId,
       this.ownerId,
       this.searchEnhancement,

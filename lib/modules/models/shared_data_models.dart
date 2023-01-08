@@ -50,7 +50,7 @@ class Location {
   String? street;
   String? city;
   String? locationTitle;
-  final String? locationId;
+  String? locationId;
   String? postalCode;
   double? longitude;
   double? latitude;

@@ -245,7 +245,10 @@ void forwardFunction(BuildContext context) {
   // while the request is processed, a loading screen is shown
   // on success, the user is forwarded to the event detail
   // it has to be ensured that the user cannot go back
-  () {};
+
+  DetailedEventOrActivity detailedEA =
+      Provider.of<AddEANotifier>(context, listen: false).extractToSave();
+  print("");
 }
 
 void termsNotAgreed(BuildContext context) {
