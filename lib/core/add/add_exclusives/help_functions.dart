@@ -16,7 +16,7 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import 'save_to_database_forwarding_page.dart';
+import 'forwarding_pages.dart';
 
 Widget getFutureHandlerPageView(
   AddEANotifier inputNotifier,
