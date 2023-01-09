@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:othia/core/main_page.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -66,6 +70,14 @@ class Login extends StatelessWidget {
                                   password: passwordController.text,
                                   username: usernameController.text);
                               dynamic bar = await RestService().isSignedIn();
+                              GlobalNavigationNotifier globalNot =
+                                  Provider.of<GlobalNavigationNotifier>(context,
+                                      listen: false);
+                              globalNot.initializeUserId();
+                              globalNot.initializeUserLoggedIn();
+                              if (globalNot.isUserLoggedIn) {
+                                Get.to(MainPage());
+                              }
                               Navigator.of(context).pop();
                             },
                             style: ElevatedButton.styleFrom(

@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ? getLoggedInSensitiveBody(
                       context: context,
                       loggedInWidget: profilePageFutureBuilder(context),
-                      isLoggedIn: userLoggedIn)
+                      )
                   : profilePageFutureBuilder(context));
         },
       ),

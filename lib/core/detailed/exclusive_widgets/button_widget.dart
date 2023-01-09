@@ -12,15 +12,6 @@ Future<void> _launchUrl(_url) async {
   }
 }
 
-// Function() function = () => {};
-// if (iCalElement != null) {
-// function = () =>
-// Add2Calendar.addEvent2Cal(iCalElement!);
-// }
-// return GestureDetector(
-// onTap: () => function(),
-// child: Row(
-
 Widget? getMoreInformationButton({String? websiteUrl, String? ticketUrl, required BuildContext context}) {
   if (ticketUrl != null) {
     return Expanded(

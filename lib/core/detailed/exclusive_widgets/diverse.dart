@@ -51,11 +51,9 @@ class OpeningTimesSection extends StatelessWidget {
 }
 
 class IconRow extends StatelessWidget {
-  String? userId;
   String eAId;
-  bool? isLiked;
 
-  IconRow({super.key, this.userId, required this.eAId, this.isLiked}) {}
+  IconRow({super.key, required this.eAId}) {}
 
   @override
   Widget build(BuildContext context) {
@@ -73,16 +71,17 @@ class IconRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
-              child: const Icon(
-                Icons.share,
-              ),
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 final String shareLink = eAShareLinkBuilder(eAId);
                 openShare(
                     '${AppLocalizations.of(context)!.shareMessage} $shareLink');
               },
+              child: const Icon(
+                Icons.share,
+              ),
             ),
+            getHorSpace(20.h),
             AddLikeButton(context: context, eAId: eAId),
           ],
         )

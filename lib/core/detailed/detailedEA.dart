@@ -35,13 +35,11 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
   late Future<Object> detailedEventOrActivity;
   late bool notGoBack;
 
-  // TODO: link to organizer id
-
   @override
   void initState() {
     // in case the detail page is shown as result of forwarding from adding
     notGoBack = Get.arguments[DataConstants.notGoBack] ?? false;
-    // TODO change to only arguments once backend is ready
+    // TODO (intern) change to only arguments once backend is ready
     String eventId = Get.arguments[DataConstants.EventActivityId] ?? "1";
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
@@ -91,7 +89,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
 
             child: SingleChildScrollView(
               child: Column(
-                // TODO align distances
+                // TODO (extern) align distances
                 children: [
                   // in the image widget, the event details (name, place, time are contained)
                   ImageWidget(

@@ -48,22 +48,23 @@ class RestService {
     return result;
   }
 
-  Future<Object> addFavouriteEventOrActivity({required eAId}) async {
-    print('removing favourite event or activity with id: $eAId');
+  Future<Object> addFavouriteEventOrActivity(
+      {required String eAId, required String userId}) async {
+    print('add favourite event or activity with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.addFavouriteEventOrActivity}/$eAId',
-        headers: {'token': '${token}'});
+        headers: {'token': '${token}'},
+        body: transformCMaptoBody(
+            {"userId": userId, DataConstants.EventActivityId: eAId}));
     final result = await put(restOptions);
     return result;
   }
 
-  Future<Object> isEALikedByUser({required eAId}) async {
+  Future<Object> isEALikedByUser(
+      {required String eAId, required String userId}) async {
     print('requesting whether eA is liked by user with id: $eAId');
     String token = await getIdToken();
-
-    String userId = await getUserId();
-    // TODO login
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.isEALikedByUser}/$eAId',
         headers: {'token': '${token}'});

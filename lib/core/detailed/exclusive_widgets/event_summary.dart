@@ -53,7 +53,7 @@ class EventSummary extends StatelessWidget {
             ),
           ),
 
-          // TODO: solve that title can flow into price information
+          // TODO: (extern) solve that title can flow into price information
           Padding(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
             child: LocationWidget(location: location),

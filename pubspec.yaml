@@ -62,7 +62,6 @@ dependencies:
   gallery_saver: ^2.3.2
 
   #widgets
-  like_button: ^2.0.5
   readmore: ^2.1.0
   carousel_slider: ^4.1.1
   flutter_multiselect: ^1.0.0

@@ -234,6 +234,7 @@
   "to": "Bis",
   "notLoggedInMessageLike": "Log dich ein, um Favoriten hinzufügen zu können",
   "notLoggedInMessage": "Log dich ein, um die Inhalte sehen zu können",
+  "notLoggedInMessageAdd": "Log dich ein, um Events oder Aktivitäten hinzufügen zu können.",
   "profile": "Profil",
   "nextWeekend": "Nächstes Wochenende",
   "thisWeekend": "Dieses Wochenende",

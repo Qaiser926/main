@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:like_button/like_button.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
+import 'package:othia/core/login/login.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
@@ -89,7 +89,7 @@ Widget getFavouriteLikeButton({
                       .removeKey(key: eASummary.id);
                 });
               } on Exception catch (e) {
-                //TODO
+                //TODO (extern)
                 throw e;
               } catch (e) {
                 //TODO
@@ -143,7 +143,6 @@ Widget getSettingsButtonDisabled({
       context: context,
       eASummary: eASummary,
       functionArguments: {},
-      // TODO choose grey color for non-activated items or decide if nothing is shown
       iconColor: Theme.of(context).colorScheme.secondary,
       onPressedFunction: () => {});
 }
@@ -158,7 +157,7 @@ Widget addLikeButton({
   );
 }
 
-// TODO align starting color to our action color
+// TODO (extern) align starting color to our action color
 class AddLikeButton extends StatefulWidget {
   final String eAId;
 
@@ -175,26 +174,23 @@ class _AddLikeButtonState extends State<AddLikeButton> {
   final String eAId;
   late Future<Object> isLiked;
 
-  // TODO change structure
-  bool userLoggedIn = false;
-
   _AddLikeButtonState(this.eAId);
 
   @override
   void initState() {
-    // TODO get userId somehow
-    String userId = "testUserId";
-    if (userId != null) {
-      isLiked = RestService().isEALikedByUser(eAId: eAId);
-    } else {
-      userLoggedIn = false;
+    GlobalNavigationNotifier globalProv =
+        Provider.of<GlobalNavigationNotifier>(context, listen: false);
+    if (globalProv.isUserLoggedIn) {
+      isLiked =
+          RestService().isEALikedByUser(eAId: eAId, userId: globalProv.userId!);
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (userLoggedIn) {
+    if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
+        .isUserLoggedIn) {
       return KeepAliveFutureBuilder(
           future: isLiked,
           builder: (context, snapshot) {
@@ -207,33 +203,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
 
   Widget getLikeButton(Map<String, dynamic> decodedJson) {
     LikedEA isLiked = LikedEA.fromJson(decodedJson);
-    return LikeButton(
-      isLiked: isLiked.isLikedByUser,
-      onTap: onLikeButtonTapped,
-      circleColor: CircleColor(
-          // TODO here the activated color of the heart should be set, but it does not work like we tried
-          end: Theme.of(context).colorScheme.primary,
-          start: Theme.of(context).colorScheme.tertiary),
-    );
-  }
-
-  Future<bool> onLikeButtonTapped(bool isLiked) async {
-    if (isLiked) {
-      try {
-        RestService().removeFavouriteEventOrActivity(eAId: eAId);
-      } on Exception catch (e) {
-        //TODO
-        throw e;
-      }
-    } else {
-      try {
-        RestService().addFavouriteEventOrActivity(eAId: eAId);
-      } on Exception catch (e) {
-        //TODO
-        throw e;
-      }
-    }
-    return !isLiked;
+    return LikeButton(isLiked.isLikedByUser, widget.eAId);
   }
 
   Widget buildNotLoggedInLikeButton() {
@@ -248,8 +218,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
             child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
-            // TODO forward to login page
-            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+            onPressed: () => Get.to(Login()),
             child: Text("Login"),
           ),
         ],
@@ -277,5 +246,55 @@ class _AddLikeButtonState extends State<AddLikeButton> {
             });
           }),
     ]);
+  }
+}
+
+class LikeButton extends StatefulWidget {
+  bool isLiked;
+  String eAId;
+
+  LikeButton(this.isLiked, this.eAId);
+
+  @override
+  State<LikeButton> createState() => _LikeButtonState();
+}
+
+class _LikeButtonState extends State<LikeButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onLikeButtonTapped(),
+      child: Icon(
+        Icons.favorite,
+        color: widget.isLiked
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.tertiary,
+      ),
+    );
+  }
+
+  Future<void> onLikeButtonTapped() async {
+    if (widget.isLiked) {
+      try {
+        RestService().removeFavouriteEventOrActivity(eAId: widget.eAId);
+      } on Exception catch (e) {
+        //TODO (extern) error handling
+        throw e;
+      }
+    } else {
+      try {
+        RestService().addFavouriteEventOrActivity(
+            eAId: widget.eAId,
+            userId:
+                Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                    .userId!);
+      } on Exception catch (e) {
+        //TODO
+        throw e;
+      }
+    }
+    setState(() {
+      widget.isLiked = !widget.isLiked;
+    });
   }
 }

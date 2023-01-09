@@ -36,9 +36,6 @@ class _AddState extends State<Add> {
   late Future<Object> detailedEventOrActivity;
   late SwitchPages switchPages;
 
-  // TODO
-  bool isLoggedIn = true;
-
   @override
   void initState() {
     switchPages = SwitchPages(
@@ -53,6 +50,7 @@ class _AddState extends State<Add> {
             RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
         inputNotifier.isModifyMode = true;
       } on NoSuchMethodError catch (e) {
+        // TODO (extern) get rid of error, just continue here
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }
     }
@@ -123,7 +121,7 @@ class _AddState extends State<Add> {
                 floatingActionButtonLocation:
                     FloatingActionButtonLocation.centerFloat,
                 body: getLoggedInSensitiveBody(
-                    isLoggedIn: isLoggedIn,
+                    notLoggedInMessages: NotLoggedInMessage.addPage,
                     loggedInWidget: getLoggedInBody(switchPages),
                     context: context))));
   }

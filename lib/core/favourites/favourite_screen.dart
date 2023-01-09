@@ -63,7 +63,6 @@ class _FavouritePageState extends State<FavouritePage>
           context: context,
         ),
         body: getLoggedInSensitiveBody(
-            isLoggedIn: isLoggedIn,
             loggedInWidget: getLoggedInBody(),
             context: context),
       ),

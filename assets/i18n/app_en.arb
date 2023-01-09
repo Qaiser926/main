@@ -231,6 +231,7 @@
   "to": "To",
   "notLoggedInMessageLike": "Log in to add favorites",
   "notLoggedInMessage": "Log in to see this page!",
+  "notLoggedInMessageAdd": "Log in to add events or activities.",
   "profile": "Profile",
   "location": "Location",
   "nextWeekend": "Next Weekend",
