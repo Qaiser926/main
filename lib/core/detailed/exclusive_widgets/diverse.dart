@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/openingtimes.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../../utils/helpers/builders.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
@@ -55,15 +55,10 @@ class IconRow extends StatelessWidget {
   String eAId;
   bool? isLiked;
 
-  // TODO include share image to share, change share Image to Othia logo
-  String shareImage = '8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg';
-
   IconRow({super.key, this.userId, required this.eAId, this.isLiked}) {}
 
   @override
   Widget build(BuildContext context) {
-    // Image image = getAssetImage(shareImage);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,8 +79,7 @@ class IconRow extends StatelessWidget {
               ),
               onPressed: () {
                 final String shareLink = eAShareLinkBuilder(eAId);
-
-                Share.share(
+                openShare(
                     '${AppLocalizations.of(context)!.shareMessage} $shareLink');
               },
             ),
@@ -118,14 +112,6 @@ class ImageCarousel extends StatelessWidget {
       // height of picture
       height: 245.h,
       width: double.infinity,
-      //decoration: BoxDecoration(
-      //borderRadius:
-      // radius of the picture
-      //BorderRadius.vertical(bottom: Radius.circular(22.h)),
-      //image: DecorationImage(
-      // image: AssetImage(
-      //    "${Constant.assetImagePath}white.jpg"),
-      //fit: BoxFit.fill)),
       alignment: Alignment.topCenter,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(

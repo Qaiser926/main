@@ -13,7 +13,6 @@ import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 import 'package:othia/utils/ui/app_dialogs.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ActionBox extends StatelessWidget {
   AddEANotifier inputNotifier;
@@ -47,8 +46,7 @@ class ActionBox extends StatelessWidget {
                 dismissKeyboard();
                 final String shareLink =
                     eAShareLinkBuilder(inputNotifier.detailedEA.id!);
-                // TODO include a picture when sharing
-                Share.share(
+                openShare(
                     '${AppLocalizations.of(context)!.shareMessage} $shareLink');
               },
               icon: Icons.share),

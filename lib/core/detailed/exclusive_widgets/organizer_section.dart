@@ -18,15 +18,11 @@ class OrganizerSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          Get.to(() => ProfilePage());
-        },
-        child: KeepAliveFutureBuilder(
-            future: RestService().getPublicUserInfo(organizerId: organizerId),
-            builder: (context, snapshot) {
-              return snapshotHandler(snapshot, getOrganizerWidget, [context]);
-            }));
+    return KeepAliveFutureBuilder(
+        future: RestService().getPublicUserInfo(organizerId: organizerId),
+        builder: (context, snapshot) {
+          return snapshotHandler(snapshot, getOrganizerWidget, [context]);
+        });
   }
 
   Widget getOrganizerWidget(
@@ -78,7 +74,11 @@ class OrganizerSection extends StatelessWidget {
             )),
             getHorSpace(5.h),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Get.to(ProfilePage(
+                  userInfo: userInfo,
+                ));
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
@@ -86,7 +86,7 @@ class OrganizerSection extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(10.h),
-                  child: Text(AppLocalizations.of(context)!.follow),
+                  child: Text(AppLocalizations.of(context)!.more),
                 ),
               ),
             )

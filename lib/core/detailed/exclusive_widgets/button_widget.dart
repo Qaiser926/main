@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> _launchUrl(_url) async {
@@ -51,8 +51,8 @@ Widget? getCalendarButton({required BuildContext context, Event? iCalElement}) {
 Widget? getShareButton({required BuildContext context, String? shareUrl}) {
   if (shareUrl != null) {
     return Expanded(child: Padding(padding: EdgeInsets.all(5), child: ElevatedButton(
-        onPressed: () => Share.share(
-            '${AppLocalizations.of(context)!.shareMessage} $shareUrl'),
+        onPressed: () => openShare(
+                  '${AppLocalizations.of(context)!.shareMessage} $shareUrl'),
         child: Text(AppLocalizations.of(context)!.share))),);
   }
 }

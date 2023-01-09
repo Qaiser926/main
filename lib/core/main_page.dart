@@ -18,7 +18,7 @@ class MainPage extends StatelessWidget {
     SearchPage(),
     Add(),
     const FavouritePage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   MainPage({Key? key}) : super(key: key);

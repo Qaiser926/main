@@ -12,12 +12,12 @@ String eAShareLinkBuilder(String eAId) {
   return shareLink;
 }
 
-String organizerShareLinkBuilder(String eAId) {
+String organizerShareLinkBuilder(String organizerId) {
   String shareLink = OthiaConstants.othiaDomain;
   shareLink += "/";
   shareLink += APIConstants.organizerDetailPath;
   shareLink += "/";
-  shareLink += eAId;
+  shareLink += organizerId;
   return shareLink;
 }
 

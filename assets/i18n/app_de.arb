@@ -8,6 +8,7 @@
   "popularEA": "Populäre Events & Aktivitäten",
   "universityEvents": "Universitäre Events",
   "follow": "Folgen",
+  "more": "Mehr",
   "favourites": "Favoriten",
   "futureEvents": "Bevorstehende Events",
   "pastEvents": "Vergangene Events",
@@ -250,6 +251,9 @@
   "futureHostedEvents": "Von dir erstellte zukünftige Events",
   "pastHostedEvents": "Von dir erstellte vergangene Events",
   "hostedActivities": "Von dir erstellte Aktivitäten",
+  "futureHostedEventsOrganizer": "Zukünftige Events vom Veranstalter",
+    "pastHostedEventsOrganizer": "Vergangene Events vom Veranstalter",
+    "hostedActivitiesOrganizer": "Aktivitäten vom Veranstalter",
   "help": "Hilfe",
   "privacy": "Privatsphäre",
   "preferences": "Präferenzen",
@@ -273,6 +277,7 @@
   "english": "Englisch",
   "helpText": "Wenn du Hilfe benötigst, Fragen hast oder uns Feedback geben möchtest, dann kontaktiere uns: othia@outlook.de",
   "noAssociatedEAMessage": "Du hast noch keine Events oder Aktivitäten erstellt. Füge jetzt ein Event oder eine Aktivität hinzu!",
+  "noAssociatedEAOrganizer": "Der User hat noch keine öffentlichen Events oder Aktivitäten erstellt.",
   "shortPasswordErrorMessage": "Das Passwort muss mindestens {passwordLength} Zeichen lang sein.",
   "@shortPasswordErrorMessage": {
     "placeholders": {
