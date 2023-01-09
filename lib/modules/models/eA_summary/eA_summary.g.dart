@@ -15,7 +15,7 @@ SummaryEventOrActivity _$SummaryEventOrActivityFromJson(
       id: json['id'] as String,
       categoryId: json['categoryId'] as String,
       prices: (json['prices'] as List<dynamic>?)
-          ?.map((e) => (e as num).toDouble())
+          ?.map((e) => Price.fromJson(e as Map<String, dynamic>))
           .toList(),
       photo: json['photo'] as String?,
       isOnline: json['isOnline'] as bool,

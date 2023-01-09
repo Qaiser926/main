@@ -64,6 +64,7 @@ class UserInfoNotifier extends ChangeNotifier {
   }
 
   void _saveToBackend() {
+    //TODO
     RestService().savePrivateUserInfo(userInfo: _newUserInfo);
     return;
   }

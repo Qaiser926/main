@@ -2,25 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/add/add_exclusives/add_first_page.dart';
+import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/openingtimes.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
 
-class OpeningTimesSelector extends StatelessWidget {
+class OpeningHoursSelector extends StatelessWidget {
   AddEANotifier inputNotifier;
   BuildContext context;
   late Map openingTime;
 
-  OpeningTimesSelector({required this.inputNotifier, required this.context});
+  OpeningHoursSelector({required this.inputNotifier, required this.context});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddEANotifier>(builder: (context, model, child) {
-      openingTime = model.openingTimes;
+    return Consumer<AddEANotifier>(builder: (context, inputConsumer, child) {
+      openingTime = inputConsumer.detailedEA.time.openingTime!;
       return OpeningTimes(
         openingTime: openingTime,
         isChangeable: true,
@@ -47,6 +48,8 @@ Future<dynamic> openingTimesDialog(
     {required BuildContext context, required int activatedWeekday}) {
   Provider.of<AddEANotifier>(context, listen: false).activatedWeekDay =
       activatedWeekday;
+  Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+      true;
   return showDialog(
       context: context,
       builder: (_) {
@@ -131,7 +134,8 @@ Future<dynamic> openingTimesDialog(
                               onPressed: () {
                                 inputNotifier.addHours();
                               },
-                              child: Text("Add Hours"),
+                              child:
+                                  Text(AppLocalizations.of(context)!.addHours),
                             )
                           ],
                         ),
@@ -140,13 +144,22 @@ Future<dynamic> openingTimesDialog(
                       Padding(
                         padding: EdgeInsets.all(5.h),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
                               onTap: () {
+                                inputNotifier.deleteNullOpeningTimes();
                                 Navigator.pop(context);
                               },
-                              child: Text("Confirm"),
+                              child: Text(AppLocalizations.of(context)!.cancel),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                inputNotifier.deleteNullOpeningTimes();
+                                Navigator.pop(context);
+                              },
+                              child:
+                                  Text(AppLocalizations.of(context)!.confirm),
                             )
                           ],
                         ),
@@ -160,6 +173,8 @@ Future<dynamic> openingTimesDialog(
         );
       }).then((_) {
     Provider.of<AddEANotifier>(context, listen: false).deleteNullOpeningTimes();
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        false;
   });
 }
 
@@ -196,13 +211,16 @@ Widget getSpecialOpeningTimeButton(
 
 Widget buildOpeningTimeBoxes(
     {required BuildContext context, required AddEANotifier inputNotifier}) {
-  // TODO made null robust and when clicking on add hours, add null
   return Container(
     width: double.maxFinite,
     child: ListView.builder(
         shrinkWrap: true,
         itemCount: inputNotifier
-            .openingTimes[inputNotifier.activatedWeekDay.toString()]!.length,
+                .detailedEA
+                .time
+                .openingTime![inputNotifier.activatedWeekDay.toString()]
+                ?.length ??
+            0,
         itemBuilder: (BuildContext context, int index) {
           List openingTimes = inputNotifier.getOpeningTimesList()[index];
           if ((openingTimes[0] == 0) & (openingTimes[1] == 0)) {
@@ -230,7 +248,8 @@ Widget buildOpeningTimeBoxes(
                         children: [
                           Padding(
                             padding: EdgeInsets.all(5.h),
-                            child: Text("Open time"),
+                            child:
+                                Text(AppLocalizations.of(context)!.openingTime),
                           ),
                           Padding(
                             padding: EdgeInsets.all(5.h),
@@ -259,7 +278,8 @@ Widget buildOpeningTimeBoxes(
                         children: [
                           Padding(
                             padding: EdgeInsets.all(5.h),
-                            child: Text("Close time"),
+                            child:
+                                Text(AppLocalizations.of(context)!.closingTime),
                           ),
                           Padding(
                             padding: EdgeInsets.all(5.h),
@@ -272,7 +292,15 @@ Widget buildOpeningTimeBoxes(
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => {},
+                    onTap: () => {
+                      inputNotifier
+                          .detailedEA
+                          .time
+                          .openingTime![
+                              inputNotifier.activatedWeekDay.toString()]!
+                          .removeAt(index),
+                      inputNotifier.notifyListeners(),
+                    },
                     child: Padding(
                       padding: EdgeInsets.all(10.h),
                       child: Icon(Icons.close),
@@ -307,7 +335,8 @@ Future displayTimePicker(
     } else {
       if (inputNotifier.getOpeningTimesList()[listIndex][0] > transformedTime) {
         getInfoDialog(
-            info: 'End time cannot be before starting time', context: context);
+            info: AppLocalizations.of(context)!.openingHoursErrorMessage,
+            context: context);
       } else {
         inputNotifier.getOpeningTimesList()[listIndex][1] = transformedTime;
       }

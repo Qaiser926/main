@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
 import 'package:othia/core/map/map_initialization.dart';
 import 'package:othia/core/map/map_results.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -44,8 +45,13 @@ class _MapPageState extends State<MapPage>
           ChangeNotifierProvider.value(value: userPositionNotifier)
         ],
         child: WillPopScope(
-          onWillPop: () {
-            return closeAppDialog(context, mapNotifier);
+          onWillPop: () async {
+            if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                .isDialogOpen) {
+              return false;
+            } else {
+              return closeAppDialog(context, mapNotifier);
+            }
           },
           child: PageView(
             controller: _pageController,

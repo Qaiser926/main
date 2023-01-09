@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 import '../shared_data_models.dart';
+
 part 'eA_summary.g.dart';
 
 @JsonSerializable()
@@ -9,7 +11,7 @@ class SummaryEventOrActivity {
   final String id;
   final String categoryId;
   final String? photo;
-  final List<double>? prices;
+  final List<Price>? prices;
   final bool isOnline;
   final Time time;
   final Location location;
@@ -27,4 +29,6 @@ class SummaryEventOrActivity {
 
   factory SummaryEventOrActivity.fromJson(Map<String, dynamic> json) =>
       _$SummaryEventOrActivityFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SummaryEventOrActivityToJson(this);
 }

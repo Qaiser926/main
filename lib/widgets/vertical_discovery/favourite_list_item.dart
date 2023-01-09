@@ -17,7 +17,7 @@ Widget getFavouriteListItem(
   return GestureDetector(
     onTap: () {
       NavigatorConstants.sendToNext(Routes.detailedEventRoute,
-          arguments: {NavigatorConstants.EventActivityId: eASummary.id});
+          arguments: {DataConstants.EventActivityId: eASummary.id});
     },
     child: Container(
       margin: EdgeInsets.only(bottom: 12.h, left: 10.h, right: 10.h),
@@ -106,7 +106,7 @@ Widget getMainPart(BuildContext context, SummaryEventOrActivity eASummary) {
 
 Widget getImage(SummaryEventOrActivity eASummary) {
   return SizedBox(
-    width: 85.h,
+    width: 80.h,
     height: 60.h,
     child: getImageWithBackground(
         categoryId: eASummary.categoryId, photo: eASummary.photo),

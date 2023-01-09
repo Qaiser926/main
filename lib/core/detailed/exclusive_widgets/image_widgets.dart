@@ -4,9 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../modules/models/detailed_event/detailed_event.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
+import 'diverse.dart';
 import 'event_summary.dart';
-import 'get_image_carousel.dart';
-import 'icon_row.dart';
 
 class ImageWidget extends StatelessWidget {
 
@@ -31,7 +30,7 @@ class ImageWidget extends StatelessWidget {
           // first Container is picture
           Positioned(
             child: ImageCarousel(
-                categoryId: detailedEventOrActivity.categoryId,
+                categoryId: detailedEventOrActivity.categoryId!,
                 pictures: detailedEventOrActivity.photos),
           ),
           Positioned(
@@ -46,7 +45,7 @@ class ImageWidget extends StatelessWidget {
                 // idea would be to open a notification window and inform user that she/ he needs to be logged in to perform this action
                 // user can either cancel or is forwarded to login screen
                 child: IconRow(
-                    eAId: detailedEventOrActivity.id,
+                    eAId: detailedEventOrActivity.id!,
                     isLiked: true,
                     userId: "something"),
               ),
@@ -65,13 +64,14 @@ class ImageWidget extends StatelessWidget {
                     startTimeUtc: detailedEventOrActivity.time.startTimeUtc,
                     openingTimeCode:
                         detailedEventOrActivity.time.openingTimeCode),
-                title: detailedEventOrActivity.title,
+                title: detailedEventOrActivity.title!,
                 location: detailedEventOrActivity.location,
                 iCalElement: iCalElement,
                 prices: detailedEventOrActivity.prices,
                 ticketUrl: detailedEventOrActivity.ticketUrl,
                 websiteUrl: detailedEventOrActivity.websiteUrl,
-                status: detailedEventOrActivity.status,)),
+                status: detailedEventOrActivity.status,
+              )),
         ],
       ),
     );

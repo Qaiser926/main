@@ -4,9 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:othia/utils/ui/ui_utils.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 import '../../../modules/models/shared_data_models.dart';
@@ -46,12 +44,21 @@ String getTimeInformation(
   }
 }
 
-DateTime getLocalDateTime({required String dateTimeUtc}) {
+DateTime? getLocalDateTime({required String? dateTimeUtc}) {
+  if (dateTimeUtc != null) {
+    final DateTime now = DateTime.now();
+    final utcInLocal = DateTime.parse(dateTimeUtc);
+    final datetimeutc = DateTime.utc(utcInLocal.year, utcInLocal.month,
+        utcInLocal.day, utcInLocal.hour, utcInLocal.minute);
+    return datetimeutc.add(now.timeZoneOffset);
+  } else {
+    return null;
+  }
+}
+
+String getUTCTimeString({required DateTime localDateTime}) {
   final DateTime now = DateTime.now();
-  final utcInLocal = DateTime.parse(dateTimeUtc);
-  final datetimeutc = DateTime.utc(utcInLocal.year, utcInLocal.month,
-      utcInLocal.day, utcInLocal.hour, utcInLocal.minute);
-  return datetimeutc.add(now.timeZoneOffset);
+  return localDateTime.subtract(now.timeZoneOffset).toString();
 }
 
 String getMonthName({required int month, required BuildContext context}) {
@@ -82,7 +89,7 @@ String getTimeText(
 String getLocalTimeString(
     {required String dateTimeUtc, required BuildContext context}) {
   final DateTime now = DateTime.now();
-  final TimeLocal = getLocalDateTime(dateTimeUtc: dateTimeUtc);
+  final TimeLocal = getLocalDateTime(dateTimeUtc: dateTimeUtc)!;
   final String weekday =
       getWeekday(weekDayNumber: TimeLocal.weekday, context: context)[1];
   if (now.year == TimeLocal.year) {
@@ -151,7 +158,7 @@ String formatTime({required double? unformattedTime}) {
 }
 
 String getLocationString({required Location location, bool isShort = false}) {
-  if (location.isOnline) {
+  if (location.isOnline!) {
     return "Online";
   }
   if ((location.street != null) &
@@ -179,7 +186,7 @@ String getLocationString({required Location location, bool isShort = false}) {
 
 String getPriceText(
     {required BuildContext context,
-    List<double>? prices,
+    List<Price>? prices,
     bool isShort = false}) {
   String priceText = AppLocalizations.of(context)!.noPriceAvailable;
   if (isShort) {
@@ -187,15 +194,15 @@ String getPriceText(
   }
   if (prices != null) {
     if (prices.length == 1) {
-      if (prices[0] == 0) {
+      if (prices[0].price == 0) {
         priceText = AppLocalizations.of(context)!.isFree;
       } else {
         priceText = AppLocalizations.of(context)!
-            .priceStartingAt(roundDouble(prices[0], 2));
+            .priceStartingAt(roundDouble(prices[0].price!, 2));
       }
     } else {
-      priceText = AppLocalizations.of(context)!
-          .priceRange(roundDouble(prices[0], 2), roundDouble(prices[1], 2));
+      priceText = AppLocalizations.of(context)!.priceRange(
+          roundDouble(prices[0].price!, 2), roundDouble(prices[1].price!, 2));
     }
   }
   return priceText;
@@ -220,8 +227,8 @@ String getTicketStatus({required BuildContext context, Status? status}) {
 Future<String?> getFromGallery() async {
   XFile? pickedFile = await ImagePicker().pickImage(
     source: ImageSource.gallery,
-    maxWidth: 1800,
-    maxHeight: 1800,
+    maxWidth: DataConstants.MaxImageWidth,
+    maxHeight: DataConstants.MaxImageHeight,
   );
   if (pickedFile != null) {
     return pickedFile.path;

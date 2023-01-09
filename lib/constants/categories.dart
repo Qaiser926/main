@@ -18,6 +18,17 @@ final Map<String, List<String>> categoryIdToSubcategoryIds = {
   Categories.diverse: Subcategories.diverse
 };
 
+String? mapSubcategoryToCategory({required String subCategoryId}) {
+  for (var categoryId in categoryIdToSubcategoryIds.keys) {
+    for (var i = 0; i < categoryIdToSubcategoryIds[categoryId]!.length; i++) {
+      if (subCategoryId == categoryIdToSubcategoryIds[categoryId]![i]) {
+        return categoryId;
+      }
+    }
+  }
+  ;
+}
+
 class Categories {
   static final Categories _singleton = Categories._internal();
 
@@ -603,7 +614,7 @@ class CategoryIdToI18nMapper {
         break;
       case "8063ce0b-3645-4fcb-8445-f9ea23243e84":
         {
-          return AppLocalizations.of(context)!.otherExhibitonCommunityWorkshops;
+          return AppLocalizations.of(context)!.otherCommunityWorkshops;
         }
         break;
       case "8063ce0b-3645-4fcb-8445-f9ea23243e85":
@@ -713,7 +724,7 @@ class CategoryIdToI18nMapper {
     "8063ce0b-3645-4fcb-8445-f9ea23243e75": "conferencesCareerEvents",
     "8063ce0b-3645-4fcb-8445-f9ea23243e76": "charity",
     "8063ce0b-3645-4fcb-8445-f9ea23243e77": "garden",
-    "8063ce0b-3645-4fcb-8445-f9ea23243e80": "otherExhibitonCommunityWorkshops",
+    "8063ce0b-3645-4fcb-8445-f9ea23243e80": "otherCommunityWorkshops",
     "8063ce0b-3645-4fcb-8445-f9ea23243e81": "dating",
     "8063ce0b-3645-4fcb-8445-f9ea23243e82": "shopping",
     "8063ce0b-3645-4fcb-8445-f9ea23243e83": "home",

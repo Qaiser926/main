@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:othia/core/add/add_exclusives/opening_times_selector.dart';
+import 'package:othia/core/add/add_exclusives/opening_hours_selector.dart';
 
 import '../utils/services/data_handling/data_handling.dart';
 import '../utils/ui/ui_utils.dart';

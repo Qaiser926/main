@@ -7,9 +7,9 @@ class UserInfo {
   final String profileName;
   final String profileEMail;
   final String? profilePhoto;
-  final String gender;
-  final String birthdate;
-  final String userId;
+  final String? gender;
+  final String? birthdate;
+  final String? userId;
 
   final List<String?> upcomingEventIds;
   final List<String?> pastEventIds;

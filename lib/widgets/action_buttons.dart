@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
+import 'package:othia/constants/app_constants.dart';
+import 'package:othia/core/add/add.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:provider/provider.dart';
 
@@ -46,6 +50,8 @@ Widget getFavouriteLikeButton({
           Icons.favorite,
         ),
         onPressed: () {
+          Provider.of<GlobalNavigationNotifier>(context, listen: false)
+              .isDialogOpen = true;
           showDialog<bool>(
               context: context,
               builder: (context) => getDialog(
@@ -56,17 +62,23 @@ Widget getFavouriteLikeButton({
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton(
-                              onPressed: () => Navigator.pop(context, false),
+                              onPressed: () =>
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(false),
                               child: Text(AppLocalizations.of(context)!.cancel),
                             ),
                             TextButton(
-                              onPressed: () => Navigator.pop(context, true),
+                              onPressed: () =>
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(true),
                               child:
                                   Text(AppLocalizations.of(context)!.confirm),
                             ),
                           ],
                         ),
                       ])).then((value) {
+            Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                .isDialogOpen = false;
             if (value!) {
               try {
                 RestService()
@@ -117,8 +129,10 @@ Widget getSettingsButton({
       eASummary: eASummary,
       functionArguments: {},
       iconColor: Theme.of(context).colorScheme.primary,
-      // TODO forward with event id to add/ modify event
-      onPressedFunction: () => {});
+      onPressedFunction: () => {
+            Get.to(Add(),
+                arguments: {DataConstants.EventActivityId: eASummary.id})
+          });
 }
 
 Widget getSettingsButtonDisabled({
@@ -229,13 +243,13 @@ class _AddLikeButtonState extends State<AddLikeButton> {
         children: [
           TextButton(
 // FlatButton widget is used to make a text to work like a button
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
 // function used to perform after pressing the button
             child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             // TODO forward to login page
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
             child: Text("Login"),
           ),
         ],
@@ -249,13 +263,18 @@ class _AddLikeButtonState extends State<AddLikeButton> {
             color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
+            Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                .isDialogOpen = true;
             showDialog<bool>(
                 context: context,
                 builder: (context) => getDialog(
                       dialogText:
                           AppLocalizations.of(context)!.notLoggedInMessageLike,
                       actions: actions,
-                    ));
+                    )).then((_) {
+              Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                  .isDialogOpen = false;
+            });
           }),
     ]);
   }

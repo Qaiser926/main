@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:othia/core/add/add_exclusives/add_first_page.dart';
+import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -23,19 +26,20 @@ class TimeSelector extends StatelessWidget {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       String? _validateStartTime(String? text) {
-        if (inputNotifierConsumer.startDateTime == null) {
-          return 'A Start Time is missing';
+        if (inputNotifierConsumer.detailedEA.time.startTimeUtc == null) {
+          return AppLocalizations.of(context)!.startTimeErrorMessage;
         }
         return null;
       }
 
       bool showStartTime = false;
-      if (inputNotifierConsumer.startDateTime != null) {
+      if (inputNotifierConsumer.detailedEA.time.startTimeUtc != null) {
         showStartTime = true;
       }
       bool showEndTime = false;
-      if (inputNotifier.endDateTime != null) showEndTime = true;
-      bool endTimeSelectable = inputNotifier.startDateTime != null;
+      if (inputNotifier.detailedEA.time.endTimeUtc != null) showEndTime = true;
+      bool endTimeSelectable =
+          inputNotifier.detailedEA.time.startTimeUtc != null;
 
       return Column(
         children: [
@@ -44,6 +48,7 @@ class TimeSelector extends StatelessWidget {
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
+                  dismissKeyboard();
                   inputNotifier.timeFormKey.currentState?.reset();
                   pickDateTime(DateType.StartDate);
                 },
@@ -54,8 +59,8 @@ class TimeSelector extends StatelessWidget {
                           TextStyle(color: Theme.of(context).bottomAppBarColor),
                       controller: TextEditingController(
                         text: showStartTime
-                            ? "Start: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.startDateTime!)}"
-                            : "Select Start Time",
+                            ? "${AppLocalizations.of(context)!.startTime}: ${getLocalTimeString(context: context, dateTimeUtc: inputNotifierConsumer.detailedEA.time.startTimeUtc!)}"
+                            : AppLocalizations.of(context)!.startTimeHint,
                       ),
                       validator: _validateStartTime,
                       decoration: new InputDecoration(
@@ -69,11 +74,13 @@ class TimeSelector extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () async {
+                dismissKeyboard();
                 if (endTimeSelectable) {
                   pickDateTime(DateType.EndDate);
                 } else {
                   getInfoDialog(
-                      info: "Please select a start date before",
+                      info:
+                          "Please select a start time before selecting an end time",
                       context: context);
                 }
               },
@@ -84,8 +91,8 @@ class TimeSelector extends StatelessWidget {
                         TextStyle(color: Theme.of(context).bottomAppBarColor),
                     controller: TextEditingController(
                       text: showEndTime
-                          ? "End: ${getTimeText(context: context, localDateTime: inputNotifierConsumer.endDateTime!)}"
-                          : "Select End Time",
+                          ? "${AppLocalizations.of(context)!.endTime}: ${getLocalTimeString(context: context, dateTimeUtc: inputNotifierConsumer.detailedEA.time.endTimeUtc!)}"
+                          : AppLocalizations.of(context)!.endTimeHint,
                     ),
                     decoration: new InputDecoration(
                       contentPadding: EdgeInsets.all(5.h),
@@ -109,48 +116,77 @@ class TimeSelector extends StatelessWidget {
   TimeOfDay getInitialTimeOfDay(DateType dateType) {
     if (dateType == DateType.StartDate) {
       return TimeOfDay(
-          hour: inputNotifier.startDateTime?.hour ?? DateTime.now().hour,
-          minute: inputNotifier.startDateTime?.minute ?? DateTime.now().minute);
+          hour: getLocalDateTime(
+                      dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)
+                  ?.hour ??
+              DateTime.now().hour,
+          minute: getLocalDateTime(
+                      dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)
+                  ?.minute ??
+              DateTime.now().minute);
     } else {
-      if (inputNotifier.endDateTime != null) {
+      if (inputNotifier.detailedEA.time.endTimeUtc != null) {
         return TimeOfDay(
-            hour: inputNotifier.endDateTime?.hour ?? DateTime.now().hour,
-            minute: inputNotifier.endDateTime?.minute ?? DateTime.now().minute);
+            hour: getLocalDateTime(
+                        dateTimeUtc: inputNotifier.detailedEA.time.endTimeUtc)
+                    ?.hour ??
+                DateTime.now().hour,
+            minute: getLocalDateTime(
+                        dateTimeUtc: inputNotifier.detailedEA.time.endTimeUtc)
+                    ?.minute ??
+                DateTime.now().minute);
       } else {
         return TimeOfDay(
-            hour: inputNotifier.startDateTime?.hour ?? DateTime.now().hour,
-            minute:
-                inputNotifier.startDateTime?.minute ?? DateTime.now().minute);
+            hour: getLocalDateTime(
+                        dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)
+                    ?.hour ??
+                DateTime.now().hour,
+            minute: getLocalDateTime(
+                        dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)
+                    ?.minute ??
+                DateTime.now().minute);
       }
     }
   }
 
   Future displayTimePicker(DateType dateType) async {
     TimeOfDay initialTime = getInitialTimeOfDay(dateType);
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        true;
     var time = await showTimePicker(
       context: context,
       initialTime: initialTime,
     );
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        false;
     if (time != null) {
       DateTime completeDateTime;
       if (dateType == DateType.StartDate) {
-        completeDateTime = inputNotifier.startDateTime!;
+        completeDateTime = getLocalDateTime(
+            dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)!;
       } else {
-        completeDateTime = inputNotifier.endDateTime!;
+        completeDateTime = getLocalDateTime(
+            dateTimeUtc: inputNotifier.detailedEA.time.endTimeUtc)!;
       }
       completeDateTime = completeDateTime
           .add(Duration(hours: time.hour, minutes: time.minute));
       if (dateType == DateType.StartDate) {
-        inputNotifier.startDateTime = completeDateTime;
+        // here the local set time is transformed to UTC and then toString via the getUTCTimeString function
+        inputNotifier.detailedEA.time.startTimeUtc =
+            getUTCTimeString(localDateTime: completeDateTime);
         inputNotifier.resetEndDateTime();
       } else {
-        if (completeDateTime.isBefore(inputNotifier.startDateTime!)) {
+        // case when end time is set, user always sets local time
+        if (completeDateTime.isBefore(getLocalDateTime(
+            dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)!)) {
           inputNotifier.resetEndDateTime();
           getInfoDialog(
-              info: 'End time cannot be before starting time',
+              info:
+                  AppLocalizations.of(context)!.endTimeBeforeStartErrorMessage,
               context: context);
         } else {
-          inputNotifier.endDateTime = completeDateTime;
+          inputNotifier.detailedEA.time.endTimeUtc =
+              getUTCTimeString(localDateTime: completeDateTime);
         }
       }
       inputNotifier.notifyListeners();
@@ -159,30 +195,43 @@ class TimeSelector extends StatelessWidget {
 
   Future<DateTime?> displayDatePicker(DateType dateType) async {
     DateTime firstDate = DateTime.now();
+    // end date cannot be before start date, thus set end date accordingly
     if (dateType == DateType.EndDate) {
-      firstDate = inputNotifier.startDateTime ?? DateTime.now();
+      firstDate = getLocalDateTime(
+              dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc) ??
+          DateTime.now();
     }
-    DateTime? initialDate = DateTime.now();
+    // initialDate is the highlighted date in the picker. Per default it is set to the first possible date
+    DateTime? initialDate = firstDate;
     if (dateType == DateType.StartDate) {
-      initialDate = inputNotifier.startDateTime;
+      initialDate = getLocalDateTime(
+          dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc);
     } else {
-      initialDate = inputNotifier.endDateTime ?? firstDate;
+      initialDate = getLocalDateTime(
+              dateTimeUtc: inputNotifier.detailedEA.time.endTimeUtc) ??
+          firstDate;
     }
-
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        true;
     var date = await showDatePicker(
       context: context,
       // TODO set locale user specific & align style
       // locale: const getCurrentLocale(),
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate,
-      lastDate: DateTime(DateTime.now().year + 2),
+      lastDate: DateTime(DateTime.now().year + 5),
     );
+
+    Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
+        false;
 
     if (date != null) {
       if (dateType == DateType.StartDate) {
-        inputNotifier.startDateTime = date;
+        inputNotifier.detailedEA.time.startTimeUtc =
+            getUTCTimeString(localDateTime: date);
       } else {
-        inputNotifier.endDateTime = date;
+        inputNotifier.detailedEA.time.endTimeUtc =
+            getUTCTimeString(localDateTime: date);
       }
       return date;
     } else {

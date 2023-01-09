@@ -3,17 +3,19 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
+  "explanationEA": "We define two categories of leisure activities. \"Events\" are characterized by a start time and end time while \"Activities\" are associated with opening hours.",
   "map": "Map",
   "exploreMap": "Click on Map to explore",
   "compingUpEvents": "Coming up Events",
   "popularEA": "Popular Events & Activities",
   "universityEvents": "University Events",
   "follow": "Follow",
+  "more": "More",
   "favourites": "Favourites",
   "futureEvents": "Future Events",
   "pastEvents": "Past Events",
-  "openActivities": "Currently open activities",
-  "closedActivities": "Currently closed activities",
+  "openActivities": "Currently open Activities",
+  "closedActivities": "Currently closed Activities",
   "activity": "Activity",
   "event": "Event",
   "activities": "Activities",
@@ -51,6 +53,7 @@
   "noLikedActivities": "No liked Activities yet",
   "shareMessage": "I have found an event on Othia that you might like",
   "noPriceAvailable": "No price information available",
+  "attributions": "Attributions",
   "isFree": "Free entry",
   "priceStartingAt": "from €{price}",
   "@priceStartingAt": {
@@ -61,7 +64,7 @@
       }
     }
   },
-  "priceRange": "€{firstPrice} - €{secondPrice}",
+  "priceRange": "{firstPrice}€ - {secondPrice}€",
   "@priceRange": {
     "placeholders": {
       "firstPrice": {
@@ -74,6 +77,109 @@
       }
     }
   },
+  "statusCancelled": "Cancelled",
+  "statusSoldOut": "Sold Out",
+  "statusLive": "Live",
+  "publish": "Publish",
+    "information": "Information",
+    "details": "Details",
+"snackBarMessageAdding" : "Add now missing events or activities. You can also post those events or activities where you are not the organizer. Events are characterized by a start time while activities correspond to opening times.",
+  "snackBarMessageModifying" : "Your modifications become active once you publish them in the last step.",
+  "addActions": "Delete or Share",
+  "title": "Title",
+  "titleHint": "State a title",
+  "titleErrorMessage": "Titel ist erforderlich",
+    "categorization": "Categorization",
+    "categorizationHint": "Choose a main category",
+    "categorizationErrorMessage": "A category is required",
+     "subcategorizationHint": "Choose a subcategory",
+  "subcategorizationErrorMessage": "A subcategory is required",
+  "location": "Location",
+      "address": "Address",
+  "addressErrorMessage": "Address could not be verified",
+      "street": "Street",
+      "streetNumberShort": "No",
+      "city": "City",
+      "postalCodeShort": "PC",
+      "online": "Online",
+       "locationSwitchingDialog": "Switching will cause that the address will not be shown to users as your event or activity will be considered online.",
+      "timeInfo": "If you choose a start time, your post will be interpreted as event, if you select opening hours it will be interpreted as activity.",
+"time": "Time",
+"addHours": "Add Hours",
+    "openingTime": "Opening time",
+    "closingTime": "Closing time",
+    "openingHoursErrorMessage": "Closing time cannot be earlier than opening time",
+    "startEndTime": "Start time & End time",
+   "startTime": "Start time",
+       "startTimeHint": "Select a start time",
+       "startTimeErrorMessage": "Start time is required",
+       "endTime": "End time",
+       "endTimeHint": "Select an end time",
+   "endTimeBeforeStartErrorMessage": "End time cannot be earlier than stated start time",
+    "openingHours": "Opening hours",
+    "timeSwitchingDialogOpeningHours": "There can be either a start time and end time stated or opening hours. Switching will cause that opening times instead of start times are considered.",
+        "timeSwitchingDialogStartTime":  "There can be either a start time and end time stated or opening hours. Switching will cause that a start time is considered and the opening times are neglected.",
+    "image": "Image",
+    "descriptionAdd": "Description",
+        "descriptionHint": "State a description",
+        "price": "Price",
+        "addPriceGroup": "Add price group",
+            "priceLabelHintText": "Label, e.g. \"Regular\", \"Students\"",
+        "ticketingUrl": "Ticketing",
+        "ticketingHint": "State a ticketing-url",
+        "ticketInfo": "Here you have the opportunity to insert your ticket-url. User will be forwarded from the Othia app to the corresponding url.",
+        "websiteUrl": "Website",
+        "websiteHint": "State the url of a website",
+        "websiteInfo": "Here you have the opportunity to insert the url of a website stating more information. User will be forwarded from the Othia app to the corresponding url.",
+        "searchEnhancement": "Search Enhancement",
+        "searchEnhancementInfo": "By stating the different levels, our algorithms can target user preferences better which in return helps promoting your event or activity",
+        "eventStatus": "Event Status",
+        "imageDefaultHint": "Click to upload customized image",
+            "changeImageHint": "Click to choose another picture",
+            "backToDefaultImage": "Back to default image",
+            "imageRightsText": "I own the rights to this image",
+            "imageRightsErrorMessage": "You have to have the permission. Alternatively, go back to the default image.",
+            "resetSlider": "Reset slider",
+             "public": "Public",
+    "private": "Private",
+    "visibility": "Visibility",
+    "visibilityInfoText": "Public events or activities will be shown on our platform to users whereas private event or activities can only be accessed via a shared url",
+    "profileVisibility": "Profile Visibility",
+    "profileVisibilityInfoText": "If you do not want your profile to be shown at the detail page of the event or activity, for instance, if you are not the organizer, you can change the status here",
+    "showProfile": "Show profile",
+    "hideProfile": "Hide profile",
+    "guidelinesText": "I agree that the data related to the event or activity will be processed by Othia. I confirm that no extremist or racist content will be distributed.",
+    "agreeGuidelinesCaption": "Guidelines Consent",
+    "agreeGuidelinesText": "I agree to the guidelines",
+    "agreeGuidelinesErrorMessage": "To publish, you must agree to our guidelines",
+    "deleteDialog": "Are you sure you want to delete this {eA}?",
+      "@deleteDialog": {
+        "placeholders": {
+          "eA": {
+            "type": "String"
+          }
+        }
+      },
+
+   "deleteEAWaitingMessage": "Your event or activity is being deleted from our data base.",
+   "saveEAWaitingMessage": "Your event or activity is being added to our data base. This can take a while.",
+   "navigation": "Navigation",
+   "shareLink": "Share Link",
+   "storeQRCode": "Store QR code",
+   "goToCreatedEA": "View created post",
+     "gotToHome": "Go back to app",
+     "storedQRCodeMessage": "QR Code was stored in gallery",
+
+
+
+
+
+
+
+
+
+
+
   "cancelled": "CANCELLED",
   "soldOut": "SOLD OUT",
   "description": "About",
@@ -142,12 +248,17 @@
   "deleteAccountDialogContent": "all your data will be deleted. this is permanent",
   "delete": "Delete",
   "confirm": "Confirm",
+  "continueText": "Continue",
   "cancel": "Cancel",
+  "close": "Close",
   "save": "Save",
   "showMore": "Show More",
   "futureHostedEvents": "Upcoming events created by you",
   "pastHostedEvents": "Past events created by you",
   "hostedActivities": "Activities created by you",
+  "futureHostedEventsOrganizer": "Future events published by organizer",
+      "pastHostedEventsOrganizer": "Past events published by organizer",
+      "hostedActivitiesOrganizer": "Activities published by organizer",
   "help": "Help",
   "privacy": "Privacy",
   "preferences": "Preferences",
@@ -171,6 +282,7 @@
   "logout": "Logout",
   "helpText": "If you need help or you want to give us feeback, feel free to contact us: othia@outlook.de",
   "noAssociatedEAMessage": "You have not created any Events or Activities yet. Add an event or activity now!",
+  "noAssociatedEAOrganizer": "The user has not posted any public events or activities yet.",
   "shortPasswordErrorMessage": "The password must have at least {passwordLength} characters.",
   "@shortPasswordErrorMessage": {
     "placeholders": {
@@ -236,7 +348,7 @@
   "circus": "Circus",
   "fairAmusementPark": "Fair & Amusement Park",
   "gaming": "Gaming",
-  "carnival": "Carnival",
+  "carnival": "Carneval",
   "otherEntertainment": "Other Entertainment",
   "rave": "Rave",
   "chartsParty": "Charts Party",
@@ -295,9 +407,55 @@
   "conferencesCareerEvents": "Conferences & Career Events",
   "charity": "Charity",
   "garden": "Garden",
-  "otherExhibitonCommunityWorkshops": "Other Exhibiton, Community & Workshops",
+  "otherCommunityWorkshops": "Other Community & Workshops",
   "dating": "Dating",
   "shopping": "Shopping",
   "home": "Home ",
-  "otherDiverse": "Other Diverse"
+  "otherDiverse": "Other Diverse",
+
+    "cognitiveLevelInfo": "Degree of required cognitive performance",
+  "cognitiveLevelZero": "0: No cognitive performance required",
+  "cognitiveLevelOne": "1: Some thinking required",
+  "cognitiveLevelTwo": "2: Processing of new information required",
+  "cognitiveLevelThree": "3: Solving quizzes and comparable",
+  "cognitiveLevelFour": "4: Complex thinking and memorizing elementary",
+
+    "socialLevelInfo": "Degree of required social interactions",
+  "socialLevelZero": "0: No human interaction",
+    "socialLevelOne": "1: Some human interaction",
+    "socialLevelTwo": "2: Interactions with other people inherent",
+    "socialLevelThree": "3: Meeting many new people",
+    "socialLevelFour": "4: Large crowds involved",
+
+    "physicalLevelInfo": "Degree of required physical effort",
+  "physicalLevelZero": "0: No physical effort, e.g. sitting",
+      "physicalLevelOne": "1: Low physical effort, e.g. walking",
+      "physicalLevelTwo": "2: Medium physical effort, e.g. GoKart",
+      "physicalLevelThree": "3: Increased physical effort, e.g. Yoga",
+      "physicalLevelFour": "4: High physical effort, e.g. Gym",
+
+
+
+  "personEligibilityZero": "0: Not possible or very uncommon",
+          "personEligibilityOne": "1: Possible but rather uncommon",
+          "personEligibilityTwo": "2: Possible",
+          "personEligibilityThree": "3: Perfectly possible",
+
+  "cognitiveLevel": "Cognitive Level",
+  "physicalLevel": "Physical Level",
+  "socialLevel": "Social Level",
+
+  "singlePersonEligibility": "Single Person Eligibility",
+  "coupleEligibility": "Couple Eligibility",
+  "friendGroupEligibility": "Friend Group Eligibility",
+  "professionalEligibility": "Work Colleagues Eligibility",
+
+  "singlePersonEligibilityInfo": "States how suitable the event or activity is to be visited by a single person",
+  "coupleEligibilityInfo": "States how suitable the event or activity is to be visited by a couple",
+  "friendGroupEligibilityInfo": "States how suitable the event or activity is to be visited by a group of friends",
+  "professionalEligibilityInfo": "States how suitable the event or activity is to be visited by work colleagues"
+
+
+
+
 }

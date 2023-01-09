@@ -8,6 +8,8 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/profile/settings.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
+import 'package:othia/utils/helpers/builders.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
@@ -21,20 +23,23 @@ import '../../utils/ui/ui_utils.dart';
 import '../add/add.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key, this.userInfo}) : super(key: key);
+  UserInfo? userInfo;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late Future<Object> userInfo;
+  late Future<Object> userInfoFuture;
+  late bool isProfileView;
 
   // TODO
   bool userLoggedIn = true;
 
   @override
   void initState() {
+    isProfileView = widget.userInfo == null;
     // TODO how to receive the user id?
     // String userId = Get.arguments[NavigatorConstants.EventActivityId] ?? "1";
     // if (userId != null) {
@@ -42,7 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
     //   userInfo =
     //       RestService().fetchEventOrActivityDetails(eventOrActivityId: userId);
     // }
-    userInfo = RestService().getPrivateUserInfo(userId: "123");
+    // it could be improved that the already requested information is utilized instead of a
+    userInfoFuture = isProfileView
+        ? RestService().getPrivateUserInfo(userId: "123")
+        : RestService().getPublicUserInfo(organizerId: widget.userInfo!.userId);
     super.initState();
   }
 
@@ -67,21 +75,33 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   centerTitle: true,
                   actions: [
-                    GestureDetector(
-                        onTap: () {
-                          Get.to(SettingsScreen(userInfoNotifier));
-                        },
-                        child: Icon(
-                          Icons.settings,
-                          size: 24.h,
-                        )),
+                    widget.userInfo == null
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.to(SettingsScreen(userInfoNotifier));
+                            },
+                            child: Icon(
+                              Icons.settings,
+                              size: 24.h,
+                            ))
+                        : GestureDetector(
+                            onTap: () {
+                              openShare(organizerShareLinkBuilder(
+                                  widget.userInfo!.userId!));
+                            },
+                            child: Icon(
+                              Icons.share,
+                              size: 24.h,
+                            )),
                     getHorSpace(20.h)
                   ],
                   automaticallyImplyLeading: false),
-              body: getLoggedInSensitiveBody(
-                  context: context,
-                  loggedInWidget: profilePageFutureBuilder(context),
-                  isLoggedIn: userLoggedIn));
+              body: isProfileView
+                  ? getLoggedInSensitiveBody(
+                      context: context,
+                      loggedInWidget: profilePageFutureBuilder(context),
+                      isLoggedIn: userLoggedIn)
+                  : profilePageFutureBuilder(context));
         },
       ),
     );
@@ -91,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
     UserInfoNotifier userInfoNotifier =
         Provider.of<UserInfoNotifier>(context, listen: false);
     return KeepAliveFutureBuilder(
-        future: userInfo,
+        future: userInfoFuture,
         builder: (context, snapshot) {
           return MultiProvider(providers: [
             ChangeNotifierProvider.value(
@@ -116,15 +136,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 context: context, userInfo: model.newUserInfo),
           ),
           buildVerticalDiscovery(
-              caption: AppLocalizations.of(context)!.futureHostedEvents,
+              caption: isProfileView
+                  ? AppLocalizations.of(context)!.futureHostedEvents
+                  : AppLocalizations.of(context)!.futureHostedEventsOrganizer,
               Ids: model.newUserInfo.upcomingEventIds,
               actionButtonType: ActionButtonType.settingsButton),
           buildVerticalDiscovery(
-              caption: AppLocalizations.of(context)!.hostedActivities,
+              caption: isProfileView
+                  ? AppLocalizations.of(context)!.hostedActivities
+                  : AppLocalizations.of(context)!.pastHostedEventsOrganizer,
               Ids: model.newUserInfo.activityIds,
               actionButtonType: ActionButtonType.settingsButton),
           buildVerticalDiscovery(
-              caption: AppLocalizations.of(context)!.pastHostedEvents,
+              caption: isProfileView
+                  ? AppLocalizations.of(context)!.pastHostedEvents
+                  : AppLocalizations.of(context)!.hostedActivitiesOrganizer,
               Ids: model.newUserInfo.pastEventIds,
               actionButtonType: ActionButtonType.settingsButtonDisabled)
         ];
@@ -141,18 +167,21 @@ class _ProfilePageState extends State<ProfilePage> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.h),
           child: Text(
-            AppLocalizations.of(context)!.noAssociatedEAMessage,
+            isProfileView
+                ? AppLocalizations.of(context)!.noAssociatedEAMessage
+                : AppLocalizations.of(context)!.noAssociatedEAOrganizer,
             textAlign: TextAlign.center,
           ),
         ),
         getVerSpace(3.h),
-        ElevatedButton(
-            onPressed: () => {Get.to(Add())},
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(5.h),
-            ),
-            child: Icon(Icons.add))
+        if (widget.userInfo == null)
+          ElevatedButton(
+              onPressed: () => {Get.to(Add())},
+              style: ElevatedButton.styleFrom(
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(5.h),
+              ),
+              child: Icon(Icons.add))
       ],
     );
   }

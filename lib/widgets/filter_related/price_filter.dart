@@ -37,8 +37,8 @@ Future<dynamic> priceFilterDialog(
 }
 
 class PriceFilter extends StatefulWidget {
-  final double startValue = NavigatorConstants.PriceRangeStart;
-  final double endValue = NavigatorConstants.PriceRangeEnd;
+  final double startValue = DataConstants.PriceRangeStart;
+  final double endValue = DataConstants.PriceRangeEnd;
   AbstractQueryNotifier dynamicProvider;
   BuildContext context;
 
@@ -71,7 +71,7 @@ class _PriceFilterState extends State<PriceFilter> {
       ;
 
       String endValue = _values.end.round().toString();
-      if (_values.end.round() == NavigatorConstants.PriceRangeEnd) {
+      if (_values.end.round() == DataConstants.PriceRangeEnd) {
         endValue = AppLocalizations.of(context)!.unlimited;
       }
       return Column(
@@ -79,7 +79,7 @@ class _PriceFilterState extends State<PriceFilter> {
           Padding(
               padding: EdgeInsets.all(10),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [CloseButton()])),
           // Padding(
           //     padding: EdgeInsets.fromLTRB(10, 0, 20, 20),
@@ -183,7 +183,7 @@ String getPriceCaption(
         return "€${range.start}";
       }
     }
-    if (range.end.round() == NavigatorConstants.PriceRangeEnd) {
+    if (range.end.round() == DataConstants.PriceRangeEnd) {
       return "€${range.start.round()} - Max.";
     }
     return "€${range.start.round()} - €${range.end.round()}";

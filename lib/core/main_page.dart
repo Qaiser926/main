@@ -4,6 +4,7 @@ import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/home/home_page.dart';
 import 'package:othia/core/profile/profile.dart';
 import 'package:othia/core/search/search.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';
@@ -17,19 +18,23 @@ class MainPage extends StatelessWidget {
     SearchPage(),
     Add(),
     const FavouritePage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
-  final PageController _pageController = PageController(initialPage: 0);
 
   MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // navBarNotifier.setPageController(_pageController);
+    int initialPage =
+        Provider.of<GlobalNavigationNotifier>(context, listen: false)
+            .navigationBarIndex;
+    final PageController _pageController =
+        PageController(initialPage: initialPage);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: NavigationBarNotifier(pageController: _pageController),
+          value: NavigationBarNotifier(
+              pageController: _pageController, index: initialPage),
         ),
       ],
       child: Consumer<NavigationBarNotifier>(
@@ -61,6 +66,9 @@ Future<bool> closeAppDialog(
       notifier.getSearchNotifier.backToDefault();
     }
     notifier.getSearchNotifier.setIndex = currentSearchIndex - 1;
+    shouldPop = false;
+  } else if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
+      .isDialogOpen) {
     shouldPop = false;
   } else {
     shouldPop = await showDialog<bool>(

@@ -1,4 +1,5 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
+
 import 'data_handling.dart';
 
 //TODO include the following permissions in order to not open the calendar app when adding, instructions on https://pub.dev/packages/add_2_calendar
@@ -20,7 +21,7 @@ import 'data_handling.dart';
 
 
 Event getIcalElement({required String title, String? description, String? locationText, required String startTimeUtc, String? endTimeUtc }){
-  DateTime startDate = getLocalDateTime(dateTimeUtc: startTimeUtc);
+  DateTime startDate = getLocalDateTime(dateTimeUtc: startTimeUtc)!;
   var endDate = null;
   if (endTimeUtc != null) {
     endDate = getLocalDateTime(dateTimeUtc: endTimeUtc);

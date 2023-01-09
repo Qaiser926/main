@@ -57,11 +57,15 @@ class _HomePageState extends State<HomePage> {
           caption: AppLocalizations.of(context)!.compingUpEvents,
           Ids: homePageIds.compingUpEvents,
           showMore: false,
+          isInfoButtonActivated: true,
         ),
-        BaseDiscoveryClass(
-          caption: AppLocalizations.of(context)!.openActivities,
-          Ids: homePageIds.openActivities,
-          showMore: false,
+        GestureDetector(
+          onTap: () {},
+          child: BaseDiscoveryClass(
+              caption: AppLocalizations.of(context)!.openActivities,
+              Ids: homePageIds.openActivities,
+              showMore: false,
+              isInfoButtonActivated: true),
         ),
         BaseDiscoveryClass(
           caption: AppLocalizations.of(context)!.popularEA,

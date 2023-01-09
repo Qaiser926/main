@@ -12,7 +12,7 @@ class SearchNotifier extends AbstractQueryNotifier {
 
   SearchNotifier(
       {priceRange = const RangeValues(
-          NavigatorConstants.PriceRangeStart, NavigatorConstants.PriceRangeEnd),
+          DataConstants.PriceRangeStart, DataConstants.PriceRangeEnd),
       startDate,
       endDate,
       super.sortCriteria = null,

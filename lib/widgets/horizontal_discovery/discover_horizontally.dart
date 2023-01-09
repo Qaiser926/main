@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:othia/widgets/horizontal_discovery/discovery_card.dart';
+import 'package:othia/widgets/info_snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/services/rest-api/rest_api_service.dart';
@@ -18,13 +19,15 @@ class BaseDiscoveryClass extends StatelessWidget {
 
   bool showDivider;
   bool showMore;
+  bool isInfoButtonActivated;
 
   BaseDiscoveryClass(
       {super.key,
       required this.Ids,
       required this.caption,
       this.showDivider = true,
-      this.showMore = true});
+      this.showMore = true,
+      this.isInfoButtonActivated = false});
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +50,31 @@ class BaseDiscoveryClass extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  caption,
-                  style: Theme.of(context).textTheme.headlineLarge,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    isInfoButtonActivated
+                        ? launchInfoSnackBarButton(context)
+                        : () => {};
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        caption,
+                        style: Theme.of(context).textTheme.headlineLarge,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      getHorSpace(5.h),
+                      isInfoButtonActivated
+                          ? Icon(
+                              Icons.info_outline,
+                              size: 15.h,
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
                 ),
                 if (showMore & Ids.isNotEmpty)
                   TextButton(

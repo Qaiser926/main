@@ -7,39 +7,47 @@ part 'detailed_event.g.dart';
 
 @JsonSerializable()
 class DetailedEventOrActivity {
-  final String title;
-  final String id;
-  final String categoryId;
-  final String ownerId;
-  final List<String>? photos;
-  final String? description;
-  final String? eventSeriesId;
-  final List<double>? prices;
-  final String? ticketUrl;
-  final String? websiteUrl;
-  final Status? status;
-  final bool isOnline;
-  final Time time;
-  final Location location;
-  final Attribution? attribution;
+  String? title;
+  String? id;
+  String? categoryId;
+  String? ownerId;
+  List<String>? photos;
+  String? description;
+  String? eventSeriesId;
+  List<Price>? prices;
+  String? ticketUrl;
+  String? websiteUrl;
+  Status? status;
+  bool? isOnline;
+  Time time;
+  Location location;
+  SearchEnhancement? searchEnhancement;
+  bool? isPublic;
+  bool? showOrganizer;
+  String? htmlAttributions;
 
   DetailedEventOrActivity(
       {required this.time,
       required this.location,
-      required this.title,
-      required this.id,
-      required this.categoryId,
-      required this.ownerId,
+      this.showOrganizer,
+      this.title,
+      this.id,
+      this.isPublic,
+      this.categoryId,
+      this.ownerId,
+      this.searchEnhancement,
       this.eventSeriesId,
       this.photos,
       this.description,
-    this.prices,
-    this.ticketUrl,
-    this.websiteUrl,// either ticket_url or website_url
-    this.status,
-    required this.isOnline,
-    this.attribution});
+      this.prices,
+      this.ticketUrl,
+      this.websiteUrl, // either ticket_url or website_url
+      this.status,
+      this.isOnline,
+      this.htmlAttributions});
 
   factory DetailedEventOrActivity.fromJson(Map<String, dynamic> json) =>
       _$DetailedEventOrActivityFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DetailedEventOrActivityToJson(this);
 }

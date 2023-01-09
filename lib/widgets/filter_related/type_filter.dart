@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/widgets/info_snackbar.dart';
 import 'package:provider/provider.dart';
 
 import 'get_reset_apply_filter.dart';
@@ -18,20 +19,24 @@ Future<dynamic> typeFilterDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       context: context,
       builder: (_) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider.value(
-              value: dynamicProvider,
-            )
-          ],
-          child: Wrap(
-            children: [
-              TypeFilter(
-                dynamicProvider: dynamicProvider,
-              )
-            ],
-          ),
-        );
+        // Scaffold is required to allow the snackbar to be showed
+        return ClipRRect(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20.0.h),
+                topLeft: Radius.circular(20.0.h)),
+            child: Container(
+              height: 183.h,
+              child: Scaffold(
+                  body: MultiProvider(
+                      providers: [
+                    ChangeNotifierProvider.value(
+                      value: dynamicProvider,
+                    )
+                  ],
+                      child: TypeFilter(
+                        dynamicProvider: dynamicProvider,
+                      ))),
+            ));
       });
 }
 
@@ -148,24 +153,28 @@ class _TypeFilterState<T> extends State<TypeFilter> {
           Padding(
               padding: EdgeInsets.all(10),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [CloseButton()])),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.h),
+                      child: eAInfoButton(context),
+                    ),
+                    CloseButton()
+                  ])),
           Padding(
             padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: getTypeButtons(context: context, model: model),
             ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(20),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
             child: getShowResultsButton(
                 context: context,
-                functionAccept:
-                dynamicProvider.changeEAType,
+                functionAccept: dynamicProvider.changeEAType,
                 functionArgumentsAccept: {#eAType: eAType},
-                functionReset:
-                dynamicProvider.resetEAType,
+                functionReset: dynamicProvider.resetEAType,
                 functionArgumentsReset: {},
                 closeDialog: true),
           )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/widgets/status_bar.dart';
 
 import '../config/routes/routes.dart';
@@ -32,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
           alignment: Alignment.center,
           width: double.infinity,
-          child: getAssetImage("splash_logo.png", width: 220, height: 107),
+          child: getAssetImage(OthiaConstants.logoName,
+              width: 200.h, height: 200.h),
         ),
       ),
     );

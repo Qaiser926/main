@@ -3,9 +3,7 @@ import 'dart:typed_data';
 
 Uint8List transformClassToBody(dynamic obj) {
   dynamic json = obj.toJson();
-  final jsonAsString = JsonEncoder().convert(json);
-  final bytes = utf8.encode(jsonAsString);
-  final base64 = base64Encode(bytes);
+  final String jsonAsString = JsonEncoder().convert(json);
   Uint8List result = Uint8List.fromList(jsonAsString.codeUnits);
   return result;
 }

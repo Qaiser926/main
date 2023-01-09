@@ -421,7 +421,7 @@ class _TimeFilterState extends State<TimeFilter> {
         Padding(
             padding: EdgeInsets.all(10),
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [CloseButton()])),
         Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),

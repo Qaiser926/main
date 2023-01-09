@@ -91,7 +91,7 @@ class _MapInitializationState extends State<MapInitialization> {
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
-                      // TODO align color
+                      // TODO align color and overall experience
                       decoration:
                           BoxDecoration(color: Theme.of(context).primaryColor),
                     ),

@@ -6,13 +6,13 @@ import '../../core/add/add.dart';
 
 class NavigationBarNotifier extends ChangeNotifier {
   int index = 0;
-  final PageController pageController;
-
+  PageController pageController;
   final SearchNotifier _searchNotifier;
 
   //TODO decide if SearchNotifier is initialized here or the fields are non-required
 
-  NavigationBarNotifier({required this.pageController})
+  NavigationBarNotifier({required this.pageController, required this.index})
+      // the initialized PageController is not the one of the navigationBar in the Main menu, but in the search menu
       : _searchNotifier = SearchNotifier(
           pageController: PageController(initialPage: 0),
         );
@@ -21,10 +21,8 @@ class NavigationBarNotifier extends ChangeNotifier {
 
   SearchNotifier get getSearchNotifier => _searchNotifier;
 
-  static const int addPageIndex = 2;
-
   void setIndex({required int index, required BuildContext context}) {
-    if (index == addPageIndex) {
+    if (index == NavigatorConstants.AddPageIndex) {
       NavigatorConstants.sendToScreen(Add());
     } else {
       this.index = index;
