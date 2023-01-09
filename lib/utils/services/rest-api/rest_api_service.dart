@@ -212,9 +212,13 @@ class RestService {
     final result = await amplifySignIn(password: password, username: username);
   }
 
+  Future<void> signUp(
+      {required String username, required String password}) async {
+    final result = await amplifySignUp(password: password, username: username);
+  }
+
   Future<bool> isSignedIn() async {
     final result = await amplifyIsUserSignedIn();
     return result;
   }
 }
-

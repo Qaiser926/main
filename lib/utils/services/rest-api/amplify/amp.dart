@@ -77,6 +77,16 @@ Future<void> amplifySignIn(
   }
 }
 
+Future<void> amplifySignUp(
+    {required String username, required String password}) async {
+  try {
+    await Amplify.Auth.signUp(username: username, password: password);
+  } on AmplifyException catch (e) {
+    //TODO
+    throw Exception(e);
+  }
+}
+
 Future<String> getIdToken() async {
   final CognitoAuthSession user = await Amplify.Auth.fetchAuthSession(
           options: CognitoSessionOptions(getAWSCredentials: true))
