@@ -1,6 +1,7 @@
 {
   "helloWorld": "Hallo Welt!",
   "home": "Startseite",
+  "explanationEA": "Wir definieren zwei Kategorien von Freizeitaktivitäten. \"Events\" sind durch eine Startzeit und eine Endzeit charakterisiert, während \"Aktivitäten\" mit Öffnungszeiten assoziert sind.",
   "map": "Karte",
   "exploreMap": "Klicke, um die Karte zu öffnen",
   "compingUpEvents": "Bald beginnende Events",

@@ -3,6 +3,7 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
+  "explanationEA": "We define two categories of leisure activities. \"Events\" are characterized by a start time and end time while \"Activities\" are associated with opening hours.",
   "map": "Map",
   "exploreMap": "Click on Map to explore",
   "compingUpEvents": "Coming up Events",
@@ -12,8 +13,8 @@
   "favourites": "Favourites",
   "futureEvents": "Future Events",
   "pastEvents": "Past Events",
-  "openActivities": "Currently open activities",
-  "closedActivities": "Currently closed activities",
+  "openActivities": "Currently open Activities",
+  "closedActivities": "Currently closed Activities",
   "activity": "Activity",
   "event": "Event",
   "activities": "Activities",
