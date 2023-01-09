@@ -168,4 +168,14 @@ class RestService {
     await signOutCurrentUser();
     return;
   }
+
+  Future<void> signIn(
+      {required String username, required String password}) async {
+    final result = await amplifySignIn(password: password, username: username);
+  }
+
+  Future<bool> isSignedIn() async {
+    final result = await amplifyIsUserSignedIn();
+    return result;
+  }
 }

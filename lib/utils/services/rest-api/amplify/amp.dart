@@ -33,7 +33,7 @@ Future<void> signOutCurrentUser() async {
   }
 }
 
-Future<bool> isUserSignedIn() async {
+Future<bool> amplifyIsUserSignedIn() async {
   final result = await Amplify.Auth.fetchAuthSession();
   return result.isSignedIn;
 }
@@ -61,6 +61,16 @@ Future<void> amplifyUpdatePassword(
   try {
     await Amplify.Auth.updatePassword(
         newPassword: newPassword, oldPassword: oldPassword);
+  } on AmplifyException catch (e) {
+    //TODO
+    throw Exception(e);
+  }
+}
+
+Future<void> amplifySignIn(
+    {required String username, required String password}) async {
+  try {
+    await Amplify.Auth.signIn(username: username, password: password);
   } on AmplifyException catch (e) {
     //TODO
     throw Exception(e);
