@@ -15,7 +15,7 @@ class Pages {
     Routes.homeRoute: (context) => const SplashScreen(),
     Routes.mainScreenRoute: (context) => MainPage(),
     Routes.homeScreenRoute: (context) => const HomePage(),
-    Routes.detailedEventRoute: (context) => const detailedEA(),
+    Routes.detailedEventRoute: (context) => const DetailedEAPage(),
     Routes.favouriteRoute: (context) => const FavouritePage(),
     Routes.searchRoute: (context) => SearchPage(),
     Routes.addScreenRoute: (context) => Add(),

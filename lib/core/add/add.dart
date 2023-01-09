@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
@@ -75,7 +76,7 @@ class _AddState extends State<Add> {
               .isDialogOpen) {
             return false;
           } else {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            closeSnackBar(context);
             backFunction();
             return false;
           }
@@ -176,7 +177,8 @@ class _AddState extends State<Add> {
     return Padding(
         padding: EdgeInsets.all(5.h),
         child: GestureDetector(
-          onTap: () => {pageController.jumpToPage(index)},
+          onTap: () =>
+              {pageController.jumpToPage(index), closeSnackBar(context)},
           child: Container(
             height: 30.h,
             decoration: BoxDecoration(

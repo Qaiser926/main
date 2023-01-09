@@ -24,14 +24,14 @@ import 'exclusive_widgets/image_widgets.dart';
 import 'exclusive_widgets/map_widget.dart';
 import 'exclusive_widgets/organizer_section.dart';
 
-class detailedEA extends StatefulWidget {
-  const detailedEA({Key? key}) : super(key: key);
+class DetailedEAPage extends StatefulWidget {
+  const DetailedEAPage({Key? key}) : super(key: key);
 
   @override
-  State<detailedEA> createState() => _detailedEAState();
+  State<DetailedEAPage> createState() => _DetailedEAPageState();
 }
 
-class _detailedEAState extends State<detailedEA> {
+class _DetailedEAPageState extends State<DetailedEAPage> {
   late Future<Object> detailedEventOrActivity;
   late bool notGoBack;
 

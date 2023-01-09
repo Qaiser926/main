@@ -167,6 +167,13 @@
 
   "deleteEAWaitingMessage": "Deine Veranstaltung wird aus unserer Datenbank gelöscht",
   "saveEAWaitingMessage": "Deine Veranstaltung wird zu unserer Datenbank hinzugefügt. Dies kann einen Moment dauern.",
+  "navigation": "Navigation",
+  "shareLink": "Teile Link",
+  "storeQRCode": "QR Code speichern",
+  "goToCreatedEA": "Veranstaltung ansehen",
+  "gotToHome": "Zurück zur App",
+  "storedQRCodeMessage": "QR Code in Gallerie gespeichert",
+
 
 
 
