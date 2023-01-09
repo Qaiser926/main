@@ -28,7 +28,7 @@ def handler(event, context):
         },
         #TOdO include attributions and html "attribution": "google"
         'body': json.dumps({'title': 'Hello from your new Amplify Python lambda no no no no!', 'id': 'i-am-id',
-                            'description': 'i am description', "photos" : [photo_binary],
+                            'description': 'i am description', "photos" : [photo_binary], "htmlAttributions": "<p>I am html attribution</p>",
 
                             'categoryId': '8063ce0b-3645-4fcb-8445-f9ea23243e85', "ownerId": "ownerId",
                             "isOnline": False,

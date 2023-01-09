@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants/asset_constants.dart';
 import '../../../utils/ui/ui_utils.dart';
 
 Widget getFollowWidget(BuildContext context) {
@@ -45,14 +44,24 @@ Widget getFollowWidget(BuildContext context) {
   );
 }
 
-Container getLocationWidget() {
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 20.h),
-    height: 116.h,
-    decoration: BoxDecoration(
-        image: const DecorationImage(
-            image: AssetImage("${AssetConstants.imagePath}location_image.png"),
-            fit: BoxFit.fill),
-        borderRadius: BorderRadius.circular(22.h)),
-  );
+Widget getSection(
+    {required BuildContext context,
+    required String caption,
+    required Widget contentWidget}) {
+  return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Divider(thickness: 3.h),
+          getVerSpace(25),
+          Text(
+            caption,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          getVerSpace(25),
+          contentWidget,
+          getVerSpace(25.h),
+        ],
+      ));
 }

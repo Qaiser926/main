@@ -24,10 +24,6 @@ enum Status {
   SOLDOUT,
 }
 
-enum Attribution {
-  google,
-}
-
 @JsonSerializable()
 class Price {
   String? label;

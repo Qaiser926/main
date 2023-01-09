@@ -34,11 +34,11 @@ class AddEANotifier extends ChangeNotifier {
   String? mainCategoryId;
 
   // Level parameters
-  int physicalLevel = 0;
+  int physicalLevel = 2;
   bool physicalLevelActivated = false;
-  int cognitiveLevel = 0;
+  int cognitiveLevel = 2;
   bool cognitiveLevelActivated = false;
-  int socialLevel = 0;
+  int socialLevel = 2;
   bool socialLevelActivated = false;
   int singlePersonEligibility = 0;
   bool singlePersonEligibilityActivated = false;
@@ -68,6 +68,7 @@ class AddEANotifier extends ChangeNotifier {
   DetailedEventOrActivity extractToSave() {
     detailedEA.status = status;
     detailedEA.eventSeriesId = null;
+    detailedEA.htmlAttributions = null;
     updateSearchEnhancement();
     cleanUpTimes();
     cleanUpLocation();

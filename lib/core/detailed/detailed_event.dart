@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:othia/core/detailed/exclusive_widgets/html_attributions.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
@@ -36,10 +37,6 @@ class _detailedEAState extends State<detailedEA> {
   late Future<Object> detailedEventOrActivity;
   late bool notGoBack;
 
-  void backClick() {
-    NavigatorConstants.backToPrev();
-  }
-
   // TODO: link to organizer id
 
   @override
@@ -64,43 +61,29 @@ class _detailedEAState extends State<detailedEA> {
   }
 
   Widget getContent(Map<String, dynamic> decodedJson) {
-    DetailedEventOrActivity detailedEventOrActivity =
+    DetailedEventOrActivity detailedEA =
         DetailedEventOrActivity.fromJson(decodedJson);
 
     Event? iCalElement;
-    if (detailedEventOrActivity.time.startTimeUtc != null) {
+    if (detailedEA.time.startTimeUtc != null) {
       iCalElement = getIcalElement(
-        startTimeUtc: detailedEventOrActivity.time.startTimeUtc!,
-        title: detailedEventOrActivity.title!,
-        locationText:
-            getLocationString(location: detailedEventOrActivity.location),
-        description: detailedEventOrActivity.description,
-        endTimeUtc: detailedEventOrActivity.time.endTimeUtc,
+        startTimeUtc: detailedEA.time.startTimeUtc!,
+        title: detailedEA.title!,
+        locationText: getLocationString(location: detailedEA.location),
+        description: detailedEA.description,
+        endTimeUtc: detailedEA.time.endTimeUtc,
       );
     }
 
     return SafeArea(
       child: WillPopScope(
-        onWillPop: () async {
-          if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
-              .isDialogOpen) {
-          } else {
-            if (notGoBack) {
-              Provider.of<GlobalNavigationNotifier>(context, listen: false)
-                  .navigationBarIndex = NavigatorConstants.HomePageIndex;
-              NavigatorConstants.sendToScreen(MainPage());
-            } else {
-              backClick();
-            }
-          }
-          return false;
-        },
+        onWillPop: () => onWillPop(),
         child: Scaffold(
           bottomNavigationBar: ButtonWidget(
               iCalElement: iCalElement,
-              shareUrl: eAShareLinkBuilder(detailedEventOrActivity.id!),
-              websiteUrl: detailedEventOrActivity.websiteUrl,
-              ticketUrl: detailedEventOrActivity.ticketUrl),
+              shareUrl: eAShareLinkBuilder(detailedEA.id!),
+              websiteUrl: detailedEA.websiteUrl,
+              ticketUrl: detailedEA.ticketUrl),
           body: Container(
             //in diesem container sind sind alle attribute nacheinander enthalten, beim hinzufügen
             // wird durch die infinity characteristik der container erweitert (scrollbar)
@@ -114,7 +97,7 @@ class _detailedEAState extends State<detailedEA> {
                 children: [
                   // in the image widget, the event details (name, place, time are contained)
                   ImageWidget(
-                    detailedEventOrActivity: detailedEventOrActivity,
+                    detailedEventOrActivity: detailedEA,
                     iCalElement: iCalElement,
                   ),
                   // space between ImageWidget and ticket price
@@ -122,26 +105,26 @@ class _detailedEAState extends State<detailedEA> {
                   // TODO follower only if not Othia scraped
                   getFollowWidget(context),
                   getVerSpace(25.h),
-                  if (detailedEventOrActivity.description != null)
-                    DescriptionWidget(
-                        description: detailedEventOrActivity.description!),
-                  if (!detailedEventOrActivity.isOnline!)
-                    SimpleMap(latLng.LatLng(
-                        detailedEventOrActivity.location.latitude!,
-                        detailedEventOrActivity.location.longitude!)),
-                  if (detailedEventOrActivity.time.openingTime != null)
+                  if (detailedEA.description != null)
+                    DescriptionWidget(description: detailedEA.description!),
+                  if (!detailedEA.isOnline!)
+                    SimpleMap(latLng.LatLng(detailedEA.location.latitude!,
+                        detailedEA.location.longitude!)),
+                  if (detailedEA.time.openingTime != null)
                     OpeningTimesSection(
-                        openingTime: detailedEventOrActivity.time.openingTime!),
+                        openingTime: detailedEA.time.openingTime!),
                   getVerSpace(25.h),
-                  if (detailedEventOrActivity.eventSeriesId != null)
+                  if (detailedEA.eventSeriesId != null)
                     ExploreEventSeries(
-                        eventSeriesId: detailedEventOrActivity.eventSeriesId!),
-                  ExploreCategory(
-                      categoryId: detailedEventOrActivity.categoryId!),
-                  if (detailedEventOrActivity.location.locationId != null)
+                        eventSeriesId: detailedEA.eventSeriesId!),
+                  ExploreCategory(categoryId: detailedEA.categoryId!),
+                  if (detailedEA.location.locationId != null)
                     ExploreLocation(
-                        locationId:
-                            detailedEventOrActivity.location.locationId!),
+                        locationId: detailedEA.location.locationId!),
+                  if (detailedEA.htmlAttributions != null)
+                    HTMLAttributions(
+                      htmlAttributions: detailedEA.htmlAttributions!,
+                    ),
                 ],
               ),
 
@@ -151,5 +134,20 @@ class _detailedEAState extends State<detailedEA> {
         ),
       ),
     );
+  }
+
+  Future<bool> onWillPop() {
+    if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
+        .isDialogOpen) {
+    } else {
+      if (notGoBack) {
+        Provider.of<GlobalNavigationNotifier>(context, listen: false)
+            .navigationBarIndex = NavigatorConstants.HomePageIndex;
+        NavigatorConstants.sendToScreen(MainPage());
+      } else {
+        NavigatorConstants.backToPrev();
+      }
+    }
+    return Future.value(false);
   }
 }

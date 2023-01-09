@@ -21,10 +21,10 @@ class DetailedEventOrActivity {
   bool? isOnline;
   Time time;
   Location location;
-  Attribution? attribution;
   SearchEnhancement? searchEnhancement;
   bool? isPublic;
   bool? showOrganizer;
+  String? htmlAttributions;
 
   DetailedEventOrActivity(
       {required this.time,
@@ -44,7 +44,7 @@ class DetailedEventOrActivity {
       this.websiteUrl, // either ticket_url or website_url
       this.status,
       this.isOnline,
-      this.attribution});
+      this.htmlAttributions});
 
   factory DetailedEventOrActivity.fromJson(Map<String, dynamic> json) =>
       _$DetailedEventOrActivityFromJson(json);

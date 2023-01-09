@@ -59,7 +59,7 @@ class RestService {
   }
 
   Future<Object> isEALikedByUser({required eAId}) async {
-    print('removing favourite event or activity with id: $eAId');
+    print('requesting whether eA is liked by user with id: $eAId');
     String token = await getIdToken();
 
     String userId = await getUserId();
