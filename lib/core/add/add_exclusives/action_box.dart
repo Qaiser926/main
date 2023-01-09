@@ -67,7 +67,7 @@ class ActionBox extends StatelessWidget {
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             border: Border.all(color: Theme.of(context).colorScheme.primary),
-            borderRadius: BorderRadius.all(Radius.circular(20.h.h))),
+            borderRadius: BorderRadius.all(Radius.circular(10.h))),
         child: Align(
           alignment: Alignment.center,
           child: Padding(
