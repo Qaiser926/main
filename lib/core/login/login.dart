@@ -5,6 +5,8 @@ import '../../utils/services/rest-api/rest_api_service.dart';
 import 'anim.dart';
 
 class Login extends StatelessWidget {
+  const Login({super.key});
+
   @override
   Widget build(BuildContext context) {
     TextEditingController usernameController = TextEditingController();
@@ -39,7 +41,7 @@ class Login extends StatelessWidget {
                           height: 50,
                         ),
                         Container(
-                            // color: Colors.red,
+                          // color: Colors.red,
                             alignment: Alignment.topLeft,
                             margin: const EdgeInsets.only(left: 22, bottom: 20),
                             child: FadeAnimation(
@@ -133,8 +135,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  Widget getSome(
-      String hintText, IconData iconData, TextEditingController controller) {
+  Widget getSome(String hintText, IconData iconData, TextEditingController controller) {
     return FadeAnimation(
       2,
       Container(
