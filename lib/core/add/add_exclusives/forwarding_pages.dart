@@ -43,6 +43,11 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
   late Future<Object> response;
   late String eAId;
   GlobalKey _globalKey = new GlobalKey();
+  ButtonStyle _buttonStyle = ButtonStyle(
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10.h),
+  )));
 
   @override
   void initState() {
@@ -187,7 +192,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
             ],
           )
         : Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
                   onPressed: () {
@@ -196,8 +201,8 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
                       DataConstants.notGoBack: true
                     });
                   },
+                  style: _buttonStyle,
                   child: Text(AppLocalizations.of(context)!.goToCreatedEA)),
-              getHorSpace(20.h),
               ElevatedButton(
                   onPressed: () {
                     Provider.of<GlobalNavigationNotifier>(context,
@@ -205,6 +210,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
                         .navigationBarIndex = NavigatorConstants.HomePageIndex;
                     NavigatorConstants.sendToScreen(MainPage());
                   },
+                  style: _buttonStyle,
                   child: Text(
                     AppLocalizations.of(context)!.gotToHome,
                   ))
@@ -234,6 +240,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       final file = await new File('${tempDir.path}/image.png').create();
       await file.writeAsBytes(pngBytes);
       await GallerySaver.saveImage('${tempDir.path}/image.png');
+      // TODO design of snackbar
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
         duration: Duration(seconds: 2),

@@ -166,8 +166,8 @@
    "navigation": "Navigation",
    "shareLink": "Share Link",
    "storeQRCode": "Store QR code",
-   "goToCreatedEA": "View post",
-     "gotToHome": "Back to app",
+   "goToCreatedEA": "View created post",
+     "gotToHome": "Go back to app",
      "storedQRCodeMessage": "QR Code was stored in gallery",
 
 
