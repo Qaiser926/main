@@ -52,6 +52,7 @@ class DataConstants {
   static const CategoryNameCutOff = 20;
 
   static const EventActivityId = 'eAId';
+  static const notGoBack = 'notGoBack';
   static const PriceRangeStart = 0.0;
   static const PriceRangeEnd = 200.0;
 }
@@ -61,6 +62,7 @@ class NavigatorConstants {
   static const ResultPageIndex = 1;
   static const ShowMorePageIndex = 2;
 
+  static const int HomePageIndex = 0;
   static const int AddPageIndex = 2;
   static const int FavouritePageIndex = 3;
   static const int ProfilePageIndex = 4;

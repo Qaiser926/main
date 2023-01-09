@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class detailedEA extends StatefulWidget {
 
 class _detailedEAState extends State<detailedEA> {
   late Future<Object> detailedEventOrActivity;
+  late bool notGoBack;
 
   void backClick() {
     NavigatorConstants.backToPrev();
@@ -42,7 +44,9 @@ class _detailedEAState extends State<detailedEA> {
 
   @override
   void initState() {
-    // TODO change to only arguments
+    // in case the detail page is shown as result of forwarding from adding
+    notGoBack = Get.arguments[DataConstants.notGoBack] ?? false;
+    // TODO change to only arguments once backend is ready
     String eventId = Get.arguments[DataConstants.EventActivityId] ?? "1";
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
@@ -80,11 +84,16 @@ class _detailedEAState extends State<detailedEA> {
         onWillPop: () async {
           if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
               .isDialogOpen) {
-            return false;
           } else {
-            backClick();
-            return false;
+            if (notGoBack) {
+              Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                  .navigationBarIndex = NavigatorConstants.HomePageIndex;
+              NavigatorConstants.sendToScreen(MainPage());
+            } else {
+              backClick();
+            }
           }
+          return false;
         },
         child: Scaffold(
           bottomNavigationBar: ButtonWidget(

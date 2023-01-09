@@ -69,7 +69,10 @@ class SaveForwardingPage extends StatelessWidget {
 Widget getToDetailPage(
     BuildContext context, String eAId, Map<String, dynamic> decodedJson) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    Get.to(detailedEA(), arguments: {DataConstants.EventActivityId: eAId});
+    Get.to(detailedEA(), arguments: {
+      DataConstants.EventActivityId: eAId,
+      DataConstants.notGoBack: true
+    });
   });
   return SizedBox();
 }

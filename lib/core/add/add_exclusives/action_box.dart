@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:othia/core/add/add_exclusives/delete_forwarding_page.dart';
 import 'package:othia/core/add/add_exclusives/forwarding_pages.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/input_notifier.dart';
