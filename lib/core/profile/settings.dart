@@ -7,9 +7,12 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:othia/core/profile/settings/change_password.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
+import 'package:othia/utils/services/rest-api/rest_api_service.dart';
+import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 import '../../utils/helpers/logout.dart';
+import '../login/login.dart';
 import 'settings/help_settings.dart';
 import 'settings/language_settings.dart';
 import 'settings/privacy.dart';
@@ -88,22 +91,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           const Icon(Icons.translate)),
                     ],
                   )),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.h),
-                child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity,
-                              35.h), // <--- this line helped me
-                        ),
-                        onPressed:
-                            // TODO write logout logic
-                            () => logout(),
-                        child: Text(
-                          AppLocalizations.of(context)!.logout,
-                        ))),
-              ),
+              //TODO make this stateful so than the button changes after the login / logout
+              FutureBuilder(
+                  future: RestService().isSignedIn(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return CircularProgressIndicator();
+                      case ConnectionState.done:
+                        if (snapshot.hasError) {
+                          return defaultErrorWidget;
+                          //TODO implement rest error handling
+                          // throw Exception(snapshot.error);
+                        } else {
+                          if (snapshot.data != null) {
+                            if (snapshot.data as bool) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.h),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: Size(double.infinity,
+                                              35.h), // <--- this line helped me
+                                        ),
+                                        onPressed: () => logout(),
+                                        child: Text(
+                                          AppLocalizations.of(context)!.logout,
+                                        ))),
+                              );
+                            } else {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.h),
+                                child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          minimumSize: Size(double.infinity,
+                                              35.h), // <--- this line helped me
+                                        ),
+                                        onPressed: () => Get.to(Login()),
+                                        child: Text(
+                                          "Login",
+                                        ))),
+                              );
+                            }
+                          }
+                        }
+                    }
+                    return Text("BOB");
+                  }),
               getVerSpace(30.h)
             ],
           ),

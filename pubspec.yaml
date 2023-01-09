@@ -49,6 +49,7 @@ dependencies:
   instant: ^0.4.1
   provider: ^6.0.4
   flutter_sticky_header: ^0.6.5
+  simple_animations: ^4.0.0
 
 
   #os calls
