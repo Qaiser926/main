@@ -32,6 +32,7 @@ class SaveForwardingPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // TODO show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
+            // TODO after error navigation
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
