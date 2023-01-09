@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
-import 'package:othia/core/detailed/detailed_event.dart';
+import 'package:othia/core/detailed/detailedEA.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/helpers/builders.dart';

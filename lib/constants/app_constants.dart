@@ -19,6 +19,7 @@ class APIConstants {
   static const String deleteEA = 'deleteEA-dev';
   static const String createEA = 'createEA-dev';
   static const String getPrivateUserInfo = 'getUserInfo-dev';
+  static const String getPublicUserInfo = 'getPublicUserInfo-dev';
   static const String savePrivateUserInfo = 'saveprivateuserinformation';
   static const String getMapResultIds = 'getMapResultIds-dev';
   static const String getSearchResultIds = 'getSearchResultIds-dev';

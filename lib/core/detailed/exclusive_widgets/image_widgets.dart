@@ -4,9 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../modules/models/detailed_event/detailed_event.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
+import 'diverse.dart';
 import 'event_summary.dart';
-import 'get_image_carousel.dart';
-import 'icon_row.dart';
 
 class ImageWidget extends StatelessWidget {
 

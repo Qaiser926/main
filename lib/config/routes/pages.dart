@@ -3,7 +3,7 @@ import 'package:othia/config/routes/routes.dart';
 import 'package:othia/core/favourites/favourite_screen.dart';
 
 import '../../core/add/add.dart';
-import '../../core/detailed/detailed_event.dart';
+import '../../core/detailed/detailedEA.dart';
 import '../../core/home/home_page.dart';
 import '../../core/main_page.dart';
 import '../../core/search/search.dart';

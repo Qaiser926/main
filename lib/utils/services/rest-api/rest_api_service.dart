@@ -126,9 +126,17 @@ class RestService {
   }
 
   Future<Object> getPrivateUserInfo({required userId}) async {
-    print('requesting user info for for: $userId');
+    print('requesting private user info for for: $userId');
     RestOptions restOptions =
         RestOptions(path: '/${APIConstants.getPrivateUserInfo}/');
+    final result = await get(restOptions);
+    return result;
+  }
+
+  Future<Object> getPublicUserInfo({required organizerId}) async {
+    print('requesting public user info for for: $organizerId');
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getPublicUserInfo}/');
     final result = await get(restOptions);
     return result;
   }

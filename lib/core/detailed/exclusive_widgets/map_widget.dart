@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:othia/core/detailed/exclusive_widgets/other.dart';
+import 'package:othia/core/detailed/exclusive_widgets/diverse.dart';
 
 class SimpleMap extends StatefulWidget {
   final latLng.LatLng latlong;

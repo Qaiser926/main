@@ -106,7 +106,7 @@ Widget getMainPart(BuildContext context, SummaryEventOrActivity eASummary) {
 
 Widget getImage(SummaryEventOrActivity eASummary) {
   return SizedBox(
-    width: 85.h,
+    width: 80.h,
     height: 60.h,
     child: getImageWithBackground(
         categoryId: eASummary.categoryId, photo: eASummary.photo),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
-import 'package:othia/core/detailed/exclusive_widgets/html_attributions.dart';
+import 'package:othia/core/detailed/exclusive_widgets/diverse.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
@@ -19,12 +19,10 @@ import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/future_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import 'exclusive_widgets/button_widget.dart';
-import 'exclusive_widgets/description_widget.dart';
 import 'exclusive_widgets/horizontal_exploration_detail.dart';
 import 'exclusive_widgets/image_widgets.dart';
 import 'exclusive_widgets/map_widget.dart';
-import 'exclusive_widgets/opening_times.dart';
-import 'exclusive_widgets/other.dart';
+import 'exclusive_widgets/organizer_section.dart';
 
 class detailedEA extends StatefulWidget {
   const detailedEA({Key? key}) : super(key: key);
@@ -102,8 +100,8 @@ class _detailedEAState extends State<detailedEA> {
                   ),
                   // space between ImageWidget and ticket price
                   getVerSpace(10.h),
-                  // TODO follower only if not Othia scraped
-                  getFollowWidget(context),
+                  if (detailedEA.showOrganizer ?? false)
+                    OrganizerSection(detailedEA.ownerId!),
                   getVerSpace(25.h),
                   if (detailedEA.description != null)
                     DescriptionWidget(description: detailedEA.description!),
