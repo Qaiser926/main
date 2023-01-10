@@ -5,9 +5,7 @@ void dismissKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
 
-// TODO include share image to share, change share Image to Othia logo
-String shareImage = '8063ce0b-3645-4fcb-8445-f9ea23243e16.jpg';
-
+// TODO (extern) when sharing, also include the Othia logo in the share message
 void openShare(String shareString) {
   Share.share(shareString);
 }

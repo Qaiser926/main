@@ -31,7 +31,7 @@ class RestService {
 
   Future<Object> fetchFavouriteEventsAndActivities() async {
     print('fetching event details with id');
-    //TODO make user specific
+    //TODO (intern) make user specific
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.fetchFavouriteEventsAndActivities}/');
     final result = await get(restOptions);
@@ -119,7 +119,7 @@ class RestService {
 
   Future<Object> getMapResultIds({required searchQuery}) async {
     print('requesting Map result ids');
-    //TODO define API call for several query parameters
+    //TODO (intern) define API call for several query parameters
     RestOptions restOptions =
         RestOptions(path: '/${APIConstants.getMapResultIds}/');
     final result = await get(restOptions);

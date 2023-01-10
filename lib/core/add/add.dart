@@ -92,7 +92,7 @@ class _AddState extends State<Add> {
                 appBar: AppBar(automaticallyImplyLeading: false, actions: [
                   Consumer<SwitchAddPageNotifier>(
                       builder: (context, switchPageModel, child) {
-                        // TODO, align the button row middle
+                        // TODO (extern) align that this button row is always aligned central for both languages
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -207,7 +207,7 @@ class _AddState extends State<Add> {
     );
   }
 
-  // TODO when switching pages, the left button changes its position
+  // TODO (extern) when switching pages, the left button changes its position. This should be fixed.
   Widget getNavigationButton(
       Widget child,
       void Function(
