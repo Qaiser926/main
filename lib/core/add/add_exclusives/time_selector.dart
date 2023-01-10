@@ -215,7 +215,7 @@ class TimeSelector extends StatelessWidget {
         true;
     var date = await showDatePicker(
       context: context,
-      // TODO set locale user specific & align style
+      // TODO (extern) set locale user specific & align style
       // locale: const getCurrentLocale(),
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate,

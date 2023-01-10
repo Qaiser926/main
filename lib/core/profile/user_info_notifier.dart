@@ -30,11 +30,6 @@ class UserInfoNotifier extends ChangeNotifier {
           birthdate = value;
         }
         break;
-      case FieldType.eMail:
-        {
-          profileEMail = value;
-        }
-        break;
       case FieldType.gender:
         {
           gender = value;

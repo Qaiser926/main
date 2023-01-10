@@ -17,7 +17,7 @@ import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../profile.dart';
 import '../user_info_notifier.dart';
 
-enum FieldType { name, eMail, birthdate, gender }
+enum FieldType { name, birthdate, gender }
 
 enum WidgetTypes {
   icon,
@@ -232,7 +232,7 @@ class _EditProfileState extends State<EditProfile> {
     return val;
   }
 
-  String? _validateAddress(String? text) {
+  String? _validateName(String? text) {
     if (text?.length == 0) {
       return AppLocalizations.of(context)!.editNameErrorMessage;
     }
@@ -248,13 +248,16 @@ class _EditProfileState extends State<EditProfile> {
 
     return InkWell(
       onTap: () async {
-        Future dialogReturn = getDialog(
-            context: context,
-            initValue: controller.text,
-            hint: dynamicWidgets[WidgetTypes.title]!,
-            formKey: dynamicWidgets[WidgetTypes.formKey]!,
-            validationFunction: dynamicWidgets[WidgetTypes.validationFunction],
-            fieldType: fieldType);
+        Future dialogReturn = fieldType != FieldType.birthdate
+            ? getDialog(
+                context: context,
+                initValue: controller.text,
+                hint: dynamicWidgets[WidgetTypes.title]!,
+                formKey: dynamicWidgets[WidgetTypes.formKey]!,
+                validationFunction:
+                    dynamicWidgets[WidgetTypes.validationFunction],
+                fieldType: fieldType)
+            : pickBirthDate(controller.value.text);
         Provider.of<UserInfoNotifier>(context, listen: false).updateUserInfo(
             profileField: fieldType,
             value: fieldType == FieldType.gender
@@ -273,7 +276,9 @@ class _EditProfileState extends State<EditProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 dynamicWidgets[WidgetTypes.title]!,
-                Text(controller.text),
+                Text(fieldType != FieldType.birthdate
+                    ? controller.text
+                    : getTimeString(controller.text)),
               ],
             ),
           ),
@@ -282,6 +287,15 @@ class _EditProfileState extends State<EditProfile> {
         ]),
       ),
     );
+  }
+
+  String getTimeString(String? birthday) {
+    if (birthday != null) {
+      DateTime birthdayDateTime = DateTime.parse(birthday);
+      return '${birthdayDateTime.day.toString().padLeft(2, '0')}.${birthdayDateTime.month.toString().padLeft(2, '0')}.${birthdayDateTime.year}';
+    } else {
+      return "";
+    }
   }
 
   Stack getProfilePhotoStack(UserInfo userInfo, BuildContext context) {
@@ -335,7 +349,7 @@ class _EditProfileState extends State<EditProfile> {
             WidgetTypes.title: getTitle(title),
             WidgetTypes.icon: Icon(Icons.date_range),
             WidgetTypes.formKey: GlobalKey<FormState>(),
-            WidgetTypes.validationFunction: _validateAddress
+            WidgetTypes.validationFunction: (_) {}
           };
         }
 
@@ -347,19 +361,7 @@ class _EditProfileState extends State<EditProfile> {
             WidgetTypes.title: getTitle(title),
             WidgetTypes.icon: Icon(Icons.accessibility_new),
             WidgetTypes.formKey: GlobalKey<FormState>(),
-            WidgetTypes.validationFunction: _validateAddress
-          };
-        }
-
-      case FieldType.eMail:
-        {
-          String title =
-              AppLocalizations.of(localizationAndThemeContext)!.eMail;
-          return {
-            WidgetTypes.title: getTitle(title),
-            WidgetTypes.icon: Icon(Icons.alternate_email_outlined),
-            WidgetTypes.formKey: GlobalKey<FormState>(),
-            WidgetTypes.validationFunction: _validateAddress
+            WidgetTypes.validationFunction: (_) {}
           };
         }
 
@@ -370,7 +372,7 @@ class _EditProfileState extends State<EditProfile> {
             WidgetTypes.title: getTitle(title),
             WidgetTypes.icon: Icon(Icons.person),
             WidgetTypes.formKey: GlobalKey<FormState>(),
-            WidgetTypes.validationFunction: _validateAddress
+            WidgetTypes.validationFunction: _validateName
           };
         }
     }
@@ -379,6 +381,23 @@ class _EditProfileState extends State<EditProfile> {
   Text getTitle(String headlineText) {
     return Text(headlineText,
         style:
-        Theme.of(localizationAndThemeContext).primaryTextTheme.labelMedium);
+            Theme.of(localizationAndThemeContext).primaryTextTheme.labelMedium);
+  }
+
+  Future<String?> pickBirthDate(String? initialDate) async {
+    var date = await showDatePicker(
+      context: context,
+      // TODO (extern) set locale user specific & align style
+      // locale: const getCurrentLocale(),
+      initialDate:
+          initialDate != null ? DateTime.parse(initialDate) : DateTime.now(),
+      firstDate: DateTime.now().subtract(Duration(days: 36500)),
+      lastDate: DateTime.now(),
+    );
+    if (date != null) {
+      return date.toString();
+    } else {
+      return null;
+    }
   }
 }

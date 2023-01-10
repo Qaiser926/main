@@ -41,8 +41,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       final snackBar = SnackBar(
         // TODO (extern) improve design of snackbar
         content: inputNotifier.isModifyMode
-            ? Text(AppLocalizations.of(context)!.snackBarMessageAdding)
-            : Text(AppLocalizations.of(context)!.snackBarMessageModifying),
+            ? Text(AppLocalizations.of(context)!.snackBarMessageModifying)
+            : Text(AppLocalizations.of(context)!.snackBarMessageAdding),
         duration: Duration(seconds: 7, milliseconds: 500),
       );
       if (!Provider.of<AddEANotifier>(context, listen: false).snackBarShown) {
