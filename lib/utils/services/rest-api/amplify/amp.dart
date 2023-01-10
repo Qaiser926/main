@@ -52,7 +52,7 @@ Future<AuthUser> getCurrentUser() async {
 //     return result;
 //   } on AuthException catch (e) {
 //     safePrint(e.message);
-//     throw Exception("TODO");
+//     throw Exception();
 //   }
 // }
 
@@ -62,7 +62,7 @@ Future<void> amplifyUpdatePassword(
     await Amplify.Auth.updatePassword(
         newPassword: newPassword, oldPassword: oldPassword);
   } on AmplifyException catch (e) {
-    //TODO
+    //TODO (intern)
     throw Exception(e);
   }
 }
@@ -72,7 +72,7 @@ Future<void> amplifySignIn(
   try {
     await Amplify.Auth.signIn(username: username, password: password);
   } on AmplifyException catch (e) {
-    //TODO
+    //TODO (intern)
     throw Exception(e);
   }
 }
@@ -82,7 +82,7 @@ Future<void> amplifySignUp(
   try {
     await Amplify.Auth.signUp(username: username, password: password);
   } on AmplifyException catch (e) {
-    //TODO
+    //TODO (intern)
     throw Exception(e);
   }
 }

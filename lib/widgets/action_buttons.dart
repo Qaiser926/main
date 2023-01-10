@@ -89,10 +89,9 @@ Widget getFavouriteLikeButton({
                       .removeKey(key: eASummary.id);
                 });
               } on Exception catch (e) {
-                //TODO (extern)
+                //TODO (extern) Error handling
                 throw e;
               } catch (e) {
-                //TODO
                 throw e;
               }
             }
@@ -289,7 +288,6 @@ class _LikeButtonState extends State<LikeButton> {
                 Provider.of<GlobalNavigationNotifier>(context, listen: false)
                     .userId!);
       } on Exception catch (e) {
-        //TODO
         throw e;
       }
     }

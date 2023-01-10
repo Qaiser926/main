@@ -26,7 +26,7 @@ Future<dynamic> getCategoryFilterDialog(
             )
           ],
           child:
-          // TODO make container height dynamic & align height of container
+          // TODO (extern) make container height dynamic if needed & align height of container
               Container(
             height: 675,
             child: CategoryFilter(

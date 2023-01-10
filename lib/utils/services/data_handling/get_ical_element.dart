@@ -2,7 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 
 import 'data_handling.dart';
 
-//TODO include the following permissions in order to not open the calendar app when adding, instructions on https://pub.dev/packages/add_2_calendar
+// instructions for not opening calendar app, more information on https://pub.dev/packages/add_2_calendar
 // <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 // <uses-permission android:name="android.permission.READ_CALENDAR" />
 //

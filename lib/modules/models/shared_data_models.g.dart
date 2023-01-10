@@ -91,14 +91,3 @@ Map<String, dynamic> _$SearchEnhancementToJson(SearchEnhancement instance) =>
       'friendGroupEligibility': instance.friendGroupEligibility,
       'professionalEligibility': instance.professionalEligibility,
     };
-
-Coordinates _$CoordinatesFromJson(Map<String, dynamic> json) => Coordinates(
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
-    );
-
-Map<String, dynamic> _$CoordinatesToJson(Coordinates instance) =>
-    <String, dynamic>{
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
-    };

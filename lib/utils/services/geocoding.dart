@@ -8,7 +8,7 @@ Future<latLng.LatLng?> getLatLongFromAddress(String addressQuery) async {
     // in validation check also that lat/ long are set
     latLong = latLng.LatLng(locations[0].latitude, locations[0].longitude);
   } on NoResultFoundException catch (e) {
-    // TODO more precise error catch
+    // TODO (extern) more precise error catch
   } catch (e) {
     print("catch errors more precisely");
   }

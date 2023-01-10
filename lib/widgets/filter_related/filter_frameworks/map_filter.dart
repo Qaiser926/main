@@ -13,7 +13,6 @@ import '../type_filter.dart';
 class MapFilter extends AbstractFilter<MapNotifier> {
   MapFilter({required super.context, required super.dynamicProvider});
 
-  // TODO disable buttons on first page, change behaviour
   @override
   List<Widget> getFilters(
       {required BuildContext context,

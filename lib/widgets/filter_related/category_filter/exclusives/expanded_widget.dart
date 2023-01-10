@@ -98,8 +98,8 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
               : const SizedBox.shrink(),
         );
       } else {
-        //TODO
-        return const Text("Es ist ein unerwarteter Fehler aufgetreten");
+        //TODO (extern) Error handling
+        return const Text("An error occured");
       }
     });
   }
