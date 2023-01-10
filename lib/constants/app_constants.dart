@@ -52,6 +52,7 @@ class DataConstants {
   static const SearchEnhancementDimensionScale = 4;
   static const SearchEnhancementEligibilityScale = 3;
   static const CategoryNameCutOff = 20;
+  static const MaxPriceLength = 20;
 
   static const EventActivityId = 'eAId';
   static const notGoBack = 'notGoBack';

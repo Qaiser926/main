@@ -26,6 +26,8 @@ enum WidgetTypes {
   formKey,
 }
 
+// TODO (extern) when opening the dialogs, the bottom overflows. Please solve this. It is not required that the "Delete Account" button stays in a bottom app bar.
+
 class EditProfile extends StatefulWidget {
   final UserInfoNotifier userInfoNotifier;
 

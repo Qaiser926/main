@@ -54,7 +54,7 @@ class TimeSelector extends StatelessWidget {
                 },
                 child: IgnorePointer(
                   child: TextFormField(
-                      // TODO align color such that it has the same color as the other TextFormFields
+                      // TODO (extern) align color such that it has the same color as the other TextFormFields. The reason for the color difference is that we use a TextController here, whereas we just use the text form field elsewhere.
                       style:
                           TextStyle(color: Theme.of(context).bottomAppBarColor),
                       controller: TextEditingController(
@@ -86,7 +86,7 @@ class TimeSelector extends StatelessWidget {
               },
               child: IgnorePointer(
                 child: TextFormField(
-                    // TODO align color such that it has the same color as the other TextFormFields
+                  // TODO (extern) align color such that it has the same color as the other TextFormFields
                     style:
                         TextStyle(color: Theme.of(context).bottomAppBarColor),
                     controller: TextEditingController(

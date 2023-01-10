@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/constants/app_constants.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
@@ -21,7 +22,7 @@ class PricePicker extends StatelessWidget {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return Column(
-        // TODO make each price row containing of label, price and cross scrollable
+        // TODO (extern) make each price row (containing of label, price and cross) scrollable
         children: [
           ListView.builder(
               shrinkWrap: true,
@@ -80,9 +81,8 @@ class PricePicker extends StatelessWidget {
                             text: inputPrice.label,
                           ),
                     onChanged: (label) {
-                      // TODO, define variable globally on how many characters to include
                       inputNotifierConsumer.detailedEA.prices![index].label =
-                          label.substring(0, 20);
+                          label.substring(0, DataConstants.MaxPriceLength);
                       inputNotifierConsumer.notifyListeners();
                     },
                     maxLines: 1,

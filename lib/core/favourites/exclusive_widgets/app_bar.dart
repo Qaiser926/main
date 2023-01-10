@@ -34,8 +34,7 @@ class FavouriteAppBar extends AppBar {
               ),
               child: TabBar(
                   // labelStyle: TextStyle(fontSize: 8),
-                  //TODO align optical appearance of tabbar, e.g. color and fontsize preferrably via style
-
+                  //TODO (extern) align optical appearance of tabbar,
                   padding: EdgeInsets.all(5.h),
                   controller: tabController,
                   onTap: (index) {

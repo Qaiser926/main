@@ -20,8 +20,8 @@ class SearchEnhancementSlider extends StatelessWidget {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return Column(children: [
-        // TODO transform code such that it is less repetitive
-        // TODO align distances such that it becomes clearer to which slider the reset belongs
+        // TODO (extern) transform code such that it is less repetitive
+        // TODO (extern) align distances such that it becomes clearer to which slider the reset belongs
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.socialLevel, LevelType.socialLevel),

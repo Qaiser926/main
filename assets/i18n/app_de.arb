@@ -4,6 +4,7 @@
   "explanationEA": "Wir definieren zwei Kategorien von Freizeitaktivitäten. \"Events\" sind durch eine Startzeit und eine Endzeit charakterisiert, während \"Aktivitäten\" mit Öffnungszeiten assoziert sind.",
   "map": "Karte",
   "exploreMap": "Klicke, um die Karte zu öffnen",
+  "mapCategoryInfo": "Bitte wähle zunächst eine Kategorie in den Filtern aus, um Veranstaltungen auf der Karte zu sehen.",
   "compingUpEvents": "Bald beginnende Events",
   "popularEA": "Populäre Events & Aktivitäten",
   "universityEvents": "Universitäre Events",

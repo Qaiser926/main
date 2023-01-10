@@ -237,7 +237,7 @@ class DetailsPage extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.h),
-                // TODO different border color, same as the text form border
+                // TODO (extern) apply different border color, same as the text form border
                 side: BorderSide(color: Theme.of(context).colorScheme.primary),
               ))),
           onPressed: () => onPressed(),

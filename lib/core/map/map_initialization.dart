@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
@@ -91,7 +92,7 @@ class _MapInitializationState extends State<MapInitialization> {
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,
-                      // TODO align color and overall experience
+                      // TODO (extern) align color and overall experience
                       decoration:
                           BoxDecoration(color: Theme.of(context).primaryColor),
                     ),
@@ -101,9 +102,9 @@ class _MapInitializationState extends State<MapInitialization> {
                     padding: EdgeInsets.all(20),
                     child: Align(
                       alignment: Alignment.center,
-                      // TODO align text size
+                      // TODO (extern) align text size or find other solution to make optic more appealing. If you have a better idea on how to show the map, please let us know
                       child: Text(
-                        "Please select a category to show results from the filters",
+                        AppLocalizations.of(context)!.mapCategoryInfo,
                         textAlign: TextAlign.center,
                       ),
                     ),

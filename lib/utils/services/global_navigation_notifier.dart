@@ -28,5 +28,6 @@ class GlobalNavigationNotifier extends ChangeNotifier {
     userId = null;
     isUserLoggedIn = false;
     notifyListeners();
+    // TODO (extern) update the other screens such that show their logged out behaviour, e.g. initialize them anew
   }
 }

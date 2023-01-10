@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/not_logged_in.dart';
+import 'package:provider/provider.dart';
 
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -21,9 +23,6 @@ class _FavouritePageState extends State<FavouritePage>
   late final TabController _tabController;
   late Future<Object> favouriteEA;
 
-  //TODO once we can get account from amazon
-  bool isLoggedIn = true;
-
   @override
   bool get wantKeepAlive => true;
 
@@ -31,8 +30,9 @@ class _FavouritePageState extends State<FavouritePage>
 
   @override
   void initState() {
-    // TODO decide if logged in or not
-    favouriteEA = RestService().fetchFavouriteEventsAndActivities();
+    if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
+        .isUserLoggedIn)
+      favouriteEA = RestService().fetchFavouriteEventsAndActivities();
     super.initState();
     _tabController = TabController(
       length: 2,
@@ -51,11 +51,7 @@ class _FavouritePageState extends State<FavouritePage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return
-        // KeepAlive(
-        //   keepAlive: true,
-        //   child:
-        SafeArea(
+    return SafeArea(
       child: Scaffold(
         primary: true,
         appBar: FavouriteAppBar(

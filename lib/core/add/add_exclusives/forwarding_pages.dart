@@ -175,8 +175,8 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
     return showWaitingMessage
         ? Column(
             children: [
-              // TODO show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
-              // TODO: routing after error navigation, e.g. to Home page or add page
+              // TODO (extern) show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
+              // TODO: (extern) routing after error navigation, e.g. to Home page or add page
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
@@ -240,7 +240,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       final file = await new File('${tempDir.path}/image.png').create();
       await file.writeAsBytes(pngBytes);
       await GallerySaver.saveImage('${tempDir.path}/image.png');
-      // TODO design of snackbar
+      // TODO (extern) design of snackbar
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
         duration: Duration(seconds: 2),
@@ -270,8 +270,8 @@ class DeleteForwardingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // TODO show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
-            // TODO: routing after error navigation, e.g. to Home page or add page
+            // TODO (extern) show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
+            // TODO: (extern) routing after error navigation, e.g. to Home page or add page
 
             KeepAliveFutureBuilder(
                 future: response,

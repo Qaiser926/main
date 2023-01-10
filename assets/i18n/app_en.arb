@@ -6,6 +6,7 @@
   "explanationEA": "We define two categories of leisure activities. \"Events\" are characterized by a start time and end time while \"Activities\" are associated with opening hours.",
   "map": "Map",
   "exploreMap": "Click on Map to explore",
+  "mapCategoryInfo": "Please select a category to show results from the filters.",
   "compingUpEvents": "Coming up Events",
   "popularEA": "Popular Events & Activities",
   "universityEvents": "University Events",
