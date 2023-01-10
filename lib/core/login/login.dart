@@ -66,7 +66,7 @@ class Login extends StatelessWidget {
                           2,
                           ElevatedButton(
                             onPressed: () async {
-                              //TODO this whole function is temporary
+                              //TODO (intern) this whole function is temporary, put function in notifier like logout?
                               dynamic foo = await RestService().isSignedIn();
                               await RestService().signIn(
                                   password: passwordController.text,
@@ -77,6 +77,7 @@ class Login extends StatelessWidget {
                                       listen: false);
                               globalNot.initializeUserId();
                               globalNot.initializeUserLoggedIn();
+                              globalNot.notifyListeners();
                               if (globalNot.isUserLoggedIn) {
                                 Get.to(MainPage());
                               }

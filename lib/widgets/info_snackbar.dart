@@ -13,7 +13,7 @@ GestureDetector eAInfoButton(BuildContext context) {
 
 void launchInfoSnackBarButton(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    // TODO improve design
+    // TODO (extern) improve design
 
     content: Text(AppLocalizations.of(context)!.explanationEA,
         textAlign: TextAlign.center),

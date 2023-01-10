@@ -263,12 +263,14 @@
     "pastHostedEventsOrganizer": "Vergangene Events vom Veranstalter",
     "hostedActivitiesOrganizer": "Aktivitäten vom Veranstalter",
   "help": "Hilfe",
+  "help": "Hilfe",
   "privacy": "Privatsphäre",
   "preferences": "Präferenzen",
   "settings": "Einstellungen",
   "changePassword": "Passwort ändern",
   "editProfile": "Profil bearbeiten",
   "accountSettings": "Account Einstellungen",
+  "successfulLogoutMessage": "Du wurdest erfolgreich ausgeloggt.",
   "gender": "Geschlecht",
   "birthdate": "Geburtsdatum",
   "eMail": "E-Mail",
@@ -298,9 +300,9 @@
       "passwordLength": {}
     }
   },
-  "matchingPasswordErrorMessage": "Die beiden Passwörter müssen übereinstimmen.",
-  "oldPassword": "aktuelles Passwort",
-  "newPassword": "neues Passwort",
+  "matchingPasswordErrorMessage": "Die angegebenen Passwörter stimmen nicht überein.",
+  "oldPassword": "Aktuelles Passwort",
+  "newPassword": "Neues Passwort",
   "confirmPassword": "Passwort bestätigen",
   "entertainment": "Unterhaltung",
   "@entertainment": {

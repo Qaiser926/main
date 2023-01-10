@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 
-import 'rest-api/rest_api_service.dart';
+import '../services/rest-api/rest_api_service.dart';
 
 class GlobalNavigationNotifier extends ChangeNotifier {
   int navigationBarIndex = 0;
@@ -20,5 +20,13 @@ class GlobalNavigationNotifier extends ChangeNotifier {
 
   Future<void> initializeUserId() async {
     userId = await getUserId();
+  }
+
+  Future<void> logout() async {
+    RestService().logout();
+    // TODO (extern) error handling
+    userId = null;
+    isUserLoggedIn = false;
+    notifyListeners();
   }
 }

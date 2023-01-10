@@ -53,7 +53,8 @@ class SearchScrollView extends StatelessWidget {
     for (MapEntry<String, List> item
         in searchResultIds.searchResultIds.entries) {
       slivers.add(buildVerticalDiscovery(
-          actionButtonType: ActionButtonType.addLikeButton, Ids: item.value));
+          actionButtonType: ActionButtonType.favouriteLikeButton,
+          Ids: item.value));
     }
 
     return CustomScrollView(slivers: slivers);

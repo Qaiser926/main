@@ -7,11 +7,10 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:othia/core/profile/settings/change_password.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
-import 'package:othia/utils/services/rest-api/rest_api_service.dart';
-import 'package:othia/utils/ui/future_service.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:provider/provider.dart';
 
-import '../../utils/helpers/logout.dart';
 import '../login/login.dart';
 import 'settings/help_settings.dart';
 import 'settings/language_settings.dart';
@@ -40,9 +39,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO align colors
-        // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
+        // TODO (extern) align color of appbar
+        // TODO (extern) align buttons left at height of caption
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.settings),
         ),
@@ -57,19 +55,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     shrinkWrap: true,
                     children: [
                       getVerSpace(20.h),
-                      Text(AppLocalizations.of(context)!.accountSettings),
-                      getVerSpace(12.h),
-                      getSettingContainer(() {
-                        Get.to(EditProfile(widget.userInfoNotifier));
-                      }, AppLocalizations.of(context)!.editProfile,
-                          const Icon(FontAwesomeIcons.userPen)),
-                      getVerSpace(20.h),
-                      getSettingContainer(() {
-                        Get.to(ChangePasswordScreen());
-                      }, AppLocalizations.of(context)!.changePassword,
-                          const Icon(FontAwesomeIcons.key)),
-                      getVerSpace(30.h),
-                      Text(AppLocalizations.of(context)!.preferences),
+                      buildAccountSettings(),
+                      Text(AppLocalizations.of(context)!.preferences,
+                          style: Theme.of(context).textTheme.headlineLarge),
                       getVerSpace(12.h),
                       getSettingContainer(() {
                         Get.to(const PrivacyScreen());
@@ -91,62 +79,84 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           const Icon(Icons.translate)),
                     ],
                   )),
-              //TODO make this stateful so than the button changes after the login / logout
-              FutureBuilder(
-                  future: RestService().isSignedIn(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return CircularProgressIndicator();
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return defaultErrorWidget;
-                          //TODO implement rest error handling
-                          // throw Exception(snapshot.error);
-                        } else {
-                          if (snapshot.data != null) {
-                            if (snapshot.data as bool) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.h),
-                                child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(double.infinity,
-                                              35.h), // <--- this line helped me
-                                        ),
-                                        onPressed: () => logout(),
-                                        child: Text(
-                                          AppLocalizations.of(context)!.logout,
-                                        ))),
-                              );
-                            } else {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.h),
-                                child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(double.infinity,
-                                              35.h), // <--- this line helped me
-                                        ),
-                                        onPressed: () => Get.to(Login()),
-                                        child: Text(
-                                          "Login",
-                                        ))),
-                              );
-                            }
-                          }
-                        }
-                    }
-                    return Text("BOB");
-                  }),
+              Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                      .isUserLoggedIn
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.h),
+                      child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(double.infinity,
+                                    35.h), // <--- this line helped me
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  Provider.of<GlobalNavigationNotifier>(context,
+                                          listen: false)
+                                      .logout();
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    // TODO (extern) improve design, only show this if logout was indeed successful
+                                    content: Text(
+                                        AppLocalizations.of(context)!
+                                            .successfulLogoutMessage,
+                                        textAlign: TextAlign.center),
+                                    duration:
+                                        Duration(seconds: 1, milliseconds: 500),
+                                  ));
+                                });
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!.logout,
+                              ))),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.h),
+                      child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(double.infinity,
+                                    35.h), // <--- this line helped me
+                              ),
+                              onPressed: () => Get.to(Login()),
+                              child: Text(
+                                "Login",
+                              ))),
+                    ),
               getVerSpace(30.h)
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget buildAccountSettings() {
+    return Provider.of<GlobalNavigationNotifier>(context, listen: false)
+            .isUserLoggedIn
+        ? Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(AppLocalizations.of(context)!.accountSettings,
+                    style: Theme.of(context).textTheme.headlineLarge),
+              ),
+              getVerSpace(12.h),
+              getSettingContainer(() {
+                Get.to(EditProfile(widget.userInfoNotifier));
+              }, AppLocalizations.of(context)!.editProfile,
+                  const Icon(FontAwesomeIcons.userPen)),
+              getVerSpace(20.h),
+              getSettingContainer(() {
+                Get.to(ChangePasswordScreen());
+              }, AppLocalizations.of(context)!.changePassword,
+                  const Icon(FontAwesomeIcons.key)),
+              getVerSpace(30.h),
+            ],
+          )
+        : SizedBox();
   }
 }
 

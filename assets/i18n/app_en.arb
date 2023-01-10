@@ -232,6 +232,7 @@
   "notLoggedInMessageLike": "Log in to add favorites",
   "notLoggedInMessage": "Log in to see this page!",
   "notLoggedInMessageAdd": "Log in to add events or activities.",
+
   "profile": "Profile",
   "location": "Location",
   "nextWeekend": "Next Weekend",
@@ -267,6 +268,7 @@
   "changePassword": "Change Password",
   "editProfile": "Edit Profile",
   "accountSettings": "Account Settings",
+  "successfulLogoutMessage": "You have been successfully logged out.",
   "gender": "Gender",
   "birthdate": "Girthdate",
   "eMail": "E-Mail",
@@ -296,10 +298,10 @@
       "passwordLength": {}
     }
   },
-  "matchingPasswordErrorMessage": "matching",
-  "oldPassword": "current Password",
-  "newPassword": "new Password",
-  "confirmPassword": "confirm Password",
+  "matchingPasswordErrorMessage": "Passwords are not matching",
+  "oldPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm Password",
   "entertainment": "Entertainment",
   "@entertainment": {
     "description": "entertainment"
