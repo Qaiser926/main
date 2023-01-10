@@ -54,7 +54,7 @@
         },
         "getUserInfo": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
-          "s3Key": "amplify-builds/getUserInfo-572f626d584e57475969-build.zip"
+          "s3Key": "amplify-builds/getUserInfo-756c503778575334704a-build.zip"
         },
         "addLikedEA": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",

@@ -1,4 +1,5 @@
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -22,6 +23,27 @@ enum Status {
   COMPLETED,
   CANCELED,
   SOLDOUT,
+}
+
+enum Gender { male, female, diverse }
+
+String? genderToString(Gender? gender, BuildContext context) {
+  Map<Gender?, String?> mapGenderToString = {
+    Gender.male: AppLocalizations.of(context)!.male,
+    Gender.female: AppLocalizations.of(context)!.female,
+    Gender.diverse: AppLocalizations.of(context)!.diverse,
+    null: null,
+  };
+  return mapGenderToString[gender];
+}
+
+Gender? stringToGender(String? genderInput, BuildContext context) {
+  Map<String?, Gender?> mapStringToGender = {
+    AppLocalizations.of(context)!.male: Gender.male,
+    AppLocalizations.of(context)!.female: Gender.female,
+    AppLocalizations.of(context)!.diverse: Gender.diverse,
+  };
+  return mapStringToGender[genderInput];
 }
 
 @JsonSerializable()

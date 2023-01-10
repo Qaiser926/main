@@ -9,7 +9,7 @@ part of 'user_info.dart';
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       profileName: json['profileName'] as String,
       profileEMail: json['profileEMail'] as String,
-      gender: json['gender'] as String?,
+      gender: $enumDecodeNullable(_$GenderEnumMap, json['gender']),
       birthdate: json['birthdate'] as String?,
       userId: json['userId'] as String?,
       profilePhoto: json['profilePhoto'] as String?,
@@ -24,14 +24,21 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
           .toList(),
     );
 
-Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
+    <String, dynamic>{
       'profileName': instance.profileName,
       'profileEMail': instance.profileEMail,
       'profilePhoto': instance.profilePhoto,
-      'gender': instance.gender,
+      'gender': _$GenderEnumMap[instance.gender],
       'birthdate': instance.birthdate,
       'userId': instance.userId,
       'upcomingEventIds': instance.upcomingEventIds,
       'pastEventIds': instance.pastEventIds,
       'activityIds': instance.activityIds,
     };
+
+const _$GenderEnumMap = {
+  Gender.male: 'male',
+  Gender.female: 'female',
+  Gender.diverse: 'diverse',
+};

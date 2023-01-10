@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/form_fields.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/colors.dart';
@@ -14,15 +17,25 @@ import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../profile.dart';
 import '../user_info_notifier.dart';
 
-enum ProfileFields { name, eMail, birthdate, gender }
+enum FieldType { name, eMail, birthdate, gender }
 
-enum WidgetTypes { icon, title, dialogTitle }
+enum WidgetTypes {
+  icon,
+  title,
+  validationFunction,
+  formKey,
+}
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
   final UserInfoNotifier userInfoNotifier;
 
   EditProfile(UserInfoNotifier this.userInfoNotifier, {super.key});
 
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
   late final BuildContext localizationAndThemeContext;
 
   @override
@@ -32,7 +45,7 @@ class EditProfile extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider.value(
-            value: userInfoNotifier,
+            value: widget.userInfoNotifier,
           )
         ],
         builder: (context, child) {
@@ -41,57 +54,11 @@ class EditProfile extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 1000,
               child: Scaffold(
-                bottomNavigationBar: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.h),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: primaryColor,
-                        backgroundColor: listItemColor,
-                        minimumSize: Size(
-                            double.infinity, 35.h), // <--- this line helped me
-                      ),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(AppLocalizations.of(
-                                        localizationAndThemeContext)!
-                                    .deleteAccountDialogTitle),
-                                content: Text(AppLocalizations.of(
-                                        localizationAndThemeContext)!
-                                    .deleteAccountDialogContent),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(AppLocalizations.of(
-                                              localizationAndThemeContext)!
-                                          .cancel)),
-                                  TextButton(
-                                      onPressed: () {
-                                        RestService().deleteAccount("as"
-                                            // userInfoNotifier.userInfo.userId
-                                            );
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(AppLocalizations.of(
-                                              localizationAndThemeContext)!
-                                          .delete)),
-                                ],
-                              );
-                            });
-                      },
-                      child: Text(
-                        // TODO
-                        "Delete Account",
-                      ),
-                    ),
-                  ),
+                appBar: AppBar(
+                  // TODO (extern) align design
+                  title: Text(AppLocalizations.of(context)!.editProfile),
                 ),
+                bottomNavigationBar: getDeleteButton(context),
                 body: Consumer<UserInfoNotifier>(
                     builder: (context, model, child) {
                   TextEditingController nameController = TextEditingController(
@@ -101,36 +68,42 @@ class EditProfile extends StatelessWidget {
                   TextEditingController birthdateController =
                       TextEditingController(text: model.newUserInfo.birthdate);
                   TextEditingController genderController =
-                      TextEditingController(text: model.newUserInfo.gender);
-                  return Column(children: [
-                    getProfilePhotoStack(model.newUserInfo, context),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    getItem(
-                      context,
-                      profileField: ProfileFields.name,
-                      controller: nameController,
-                    ),
-                    // Divider(),
-                    // getItem(
-                    //   context,
-                    //   profileField: ProfileFields.eMail,
-                    //   controller: emailController,
-                    // ),
-                    Divider(),
-                    getItem(
-                      context,
-                      profileField: ProfileFields.gender,
-                      controller: genderController,
-                    ),
-                    Divider(),
-                    getItem(
-                      context,
-                      profileField: ProfileFields.birthdate,
-                      controller: birthdateController,
-                    ),
-                  ]);
+                      TextEditingController(
+                          text: genderToString(
+                              model.newUserInfo.gender, context));
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.h),
+                    child: Column(children: [
+                      getVerSpace(20.h),
+                      getProfilePhotoStack(model.newUserInfo, context),
+                      getVerSpace(40.h),
+                      getItem(
+                        context,
+                        fieldType: FieldType.name,
+                        controller: nameController,
+                      ),
+                      getVerSpace(5.h),
+                      Divider(
+                        thickness: 2.h,
+                      ),
+                      getVerSpace(15.h),
+                      getItem(
+                        context,
+                        fieldType: FieldType.gender,
+                        controller: genderController,
+                      ),
+                      getVerSpace(5.h),
+                      Divider(
+                        thickness: 2.h,
+                      ),
+                      getVerSpace(15.h),
+                      getItem(
+                        context,
+                        fieldType: FieldType.birthdate,
+                        controller: birthdateController,
+                      ),
+                    ]),
+                  );
                 }),
               ),
             ),
@@ -138,8 +111,66 @@ class EditProfile extends StatelessWidget {
         });
   }
 
-  Future getDialog(BuildContext context, String initValue, Widget title,
-      ProfileFields profileField) {
+  Widget getDeleteButton(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20.h),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: primaryColor,
+            backgroundColor: listItemColor,
+            minimumSize:
+                Size(double.infinity, 35.h), // <--- this line helped me
+          ),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text(
+                        AppLocalizations.of(localizationAndThemeContext)!
+                            .deleteAccountDialogTitle),
+                    content: Text(
+                        AppLocalizations.of(localizationAndThemeContext)!
+                            .deleteAccountDialogContent),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                              AppLocalizations.of(localizationAndThemeContext)!
+                                  .cancel)),
+                      TextButton(
+                          onPressed: () {
+                            RestService().deleteAccount("as"
+                                // userInfoNotifier.userInfo.userId
+                                );
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                              AppLocalizations.of(localizationAndThemeContext)!
+                                  .delete)),
+                    ],
+                  );
+                });
+          },
+          child: Text(
+            AppLocalizations.of(localizationAndThemeContext)!.deleteAccount,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future getDialog(
+      {required BuildContext context,
+      required dynamic initValue,
+      required Text hint,
+      required GlobalKey<FormState> formKey,
+      required String? Function(String?) validationFunction,
+      required FieldType fieldType}) {
     TextEditingController controller = TextEditingController(text: initValue);
     controller.selection =
         TextSelection(baseOffset: 0, extentOffset: controller.text.length);
@@ -148,19 +179,49 @@ class EditProfile extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: title,
           actions: [
-            TextFormField(
-              autofocus: true,
-              controller: controller,
+            getVerSpace(10.h),
+            Form(
+              key: formKey,
+              child: fieldType == FieldType.name
+                  ? TextFormField(
+                      autofocus: true,
+                      decoration: new InputDecoration(
+                          contentPadding: EdgeInsets.all(5.h),
+                          border: OutlineInputBorder(),
+                          hintText: hint.data),
+                      controller: controller,
+                      validator: validationFunction,
+                    )
+                  : buildDropDownFormField(
+                      context: context,
+                      hintText: hint.data!,
+                      dropDownList: [
+                        AppLocalizations.of(localizationAndThemeContext)!
+                            .female,
+                        AppLocalizations.of(localizationAndThemeContext)!.male,
+                        AppLocalizations.of(localizationAndThemeContext)!
+                            .diverse
+                      ],
+                      defaultValue: initValue,
+                      onInvalidErrorText: "cannot be empty",
+                      onChangedFunction: (value) {
+                        controller.value = TextEditingValue(text: value);
+                      },
+                    ),
             ),
+            getVerSpace(10.h),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               ElevatedButton(
                   onPressed: () => Navigator.pop(context, null),
                   child: Text(AppLocalizations.of(localizationAndThemeContext)!
                       .cancel)),
               ElevatedButton(
-                  onPressed: () => Navigator.pop(context, controller.text),
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      Navigator.pop(context, controller.text);
+                    }
+                  },
                   child: Text(
                       AppLocalizations.of(localizationAndThemeContext)!.save)),
             ]),
@@ -171,19 +232,34 @@ class EditProfile extends StatelessWidget {
     return val;
   }
 
+  String? _validateAddress(String? text) {
+    if (text?.length == 0) {
+      return AppLocalizations.of(context)!.editNameErrorMessage;
+    }
+    return null;
+  }
+
   Widget getItem(
     BuildContext context, {
-    required ProfileFields profileField,
+    required FieldType fieldType,
     required TextEditingController controller,
   }) {
-    Map<WidgetTypes, Widget> dynamicWidgets = getFieldValues(profileField);
+    Map<WidgetTypes, dynamic> dynamicWidgets = getFieldValues(fieldType);
 
     return InkWell(
       onTap: () async {
-        Future val = getDialog(context, controller.text,
-            dynamicWidgets[WidgetTypes.dialogTitle]!, profileField);
-        Provider.of<UserInfoNotifier>(context, listen: false)
-            .updateUserInfo(profileField: profileField, value: await val);
+        Future dialogReturn = getDialog(
+            context: context,
+            initValue: controller.text,
+            hint: dynamicWidgets[WidgetTypes.title]!,
+            formKey: dynamicWidgets[WidgetTypes.formKey]!,
+            validationFunction: dynamicWidgets[WidgetTypes.validationFunction],
+            fieldType: fieldType);
+        Provider.of<UserInfoNotifier>(context, listen: false).updateUserInfo(
+            profileField: fieldType,
+            value: fieldType == FieldType.gender
+                ? stringToGender(await dialogReturn, context)
+                : await dialogReturn);
       },
       child: Container(
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -234,7 +310,7 @@ class EditProfile extends StatelessWidget {
                 if (path != null) {
                   final bytes = File(path).readAsBytesSync();
                   final img64 = base64Encode(bytes);
-                  userInfoNotifier.updateUserInfo(image: img64);
+                  widget.userInfoNotifier.updateUserInfo(image: img64);
                 }
               },
               child: Icon(
@@ -249,77 +325,60 @@ class EditProfile extends StatelessWidget {
     );
   }
 
-  Map<WidgetTypes, Widget> getFieldValues(ProfileFields profileFields) {
+  Map<WidgetTypes, dynamic> getFieldValues(FieldType profileFields) {
     switch (profileFields) {
-      case ProfileFields.birthdate:
+      case FieldType.birthdate:
         {
           String title =
               AppLocalizations.of(localizationAndThemeContext)!.birthdate;
           return {
             WidgetTypes.title: getTitle(title),
-            WidgetTypes.icon: getIcon(Icons.date_range),
-            WidgetTypes.dialogTitle: getDialogTitle(
-                AppLocalizations.of(localizationAndThemeContext)!
-                    .profileDialogTitle(title)),
+            WidgetTypes.icon: Icon(Icons.date_range),
+            WidgetTypes.formKey: GlobalKey<FormState>(),
+            WidgetTypes.validationFunction: _validateAddress
           };
         }
 
-      case ProfileFields.gender:
+      case FieldType.gender:
         {
           String title =
               AppLocalizations.of(localizationAndThemeContext)!.gender;
           return {
             WidgetTypes.title: getTitle(title),
-            WidgetTypes.icon: getIcon(Icons.accessibility_new),
-            WidgetTypes.dialogTitle: getDialogTitle(
-                AppLocalizations.of(localizationAndThemeContext)!
-                    .profileDialogTitle(title)),
+            WidgetTypes.icon: Icon(Icons.accessibility_new),
+            WidgetTypes.formKey: GlobalKey<FormState>(),
+            WidgetTypes.validationFunction: _validateAddress
           };
         }
 
-      case ProfileFields.eMail:
+      case FieldType.eMail:
         {
           String title =
               AppLocalizations.of(localizationAndThemeContext)!.eMail;
           return {
             WidgetTypes.title: getTitle(title),
-            WidgetTypes.icon: getIcon(Icons.alternate_email_outlined),
-            WidgetTypes.dialogTitle: getDialogTitle(
-                AppLocalizations.of(localizationAndThemeContext)!
-                    .profileDialogTitle(title)),
+            WidgetTypes.icon: Icon(Icons.alternate_email_outlined),
+            WidgetTypes.formKey: GlobalKey<FormState>(),
+            WidgetTypes.validationFunction: _validateAddress
           };
         }
 
-      case ProfileFields.name:
+      case FieldType.name:
         {
-          return getWidgetMap(
-              AppLocalizations.of(localizationAndThemeContext)!.name,
-              Icons.account_circle);
+          String title = AppLocalizations.of(localizationAndThemeContext)!.name;
+          return {
+            WidgetTypes.title: getTitle(title),
+            WidgetTypes.icon: Icon(Icons.person),
+            WidgetTypes.formKey: GlobalKey<FormState>(),
+            WidgetTypes.validationFunction: _validateAddress
+          };
         }
     }
-  }
-
-  Map<WidgetTypes, Widget> getWidgetMap(String title, IconData iconData) {
-    return {
-      WidgetTypes.title: getTitle(title),
-      WidgetTypes.icon: getIcon(iconData),
-      WidgetTypes.dialogTitle: getDialogTitle(
-          AppLocalizations.of(localizationAndThemeContext)!
-              .profileDialogTitle(title)),
-    };
-  }
-
-  Icon getIcon(IconData iconData) {
-    return Icon(iconData);
   }
 
   Text getTitle(String headlineText) {
     return Text(headlineText,
         style:
-            Theme.of(localizationAndThemeContext).primaryTextTheme.labelMedium);
-  }
-
-  Text getDialogTitle(String title) {
-    return Text(title);
+        Theme.of(localizationAndThemeContext).primaryTextTheme.labelMedium);
   }
 }

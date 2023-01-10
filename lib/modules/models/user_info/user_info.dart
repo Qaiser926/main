@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
 
 part 'user_info.g.dart';
 
@@ -7,7 +8,7 @@ class UserInfo {
   final String profileName;
   final String profileEMail;
   final String? profilePhoto;
-  final String? gender;
+  final Gender? gender;
   final String? birthdate;
   final String? userId;
 

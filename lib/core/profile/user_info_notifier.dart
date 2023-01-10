@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
 
 import '../../modules/models/user_info/user_info.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -17,30 +18,29 @@ class UserInfoNotifier extends ChangeNotifier {
 
   UserInfo get newUserInfo => _newUserInfo;
 
-  void updateUserInfo(
-      {String? image, ProfileFields? profileField, dynamic value}) {
+  void updateUserInfo({String? image, FieldType? profileField, dynamic value}) {
     String? profileName = null;
     String? profileEMail = null;
-    String? gender = null;
+    Gender? gender = null;
     String? birthdate = null;
 
     switch (profileField) {
-      case ProfileFields.birthdate:
+      case FieldType.birthdate:
         {
           birthdate = value;
         }
         break;
-      case ProfileFields.eMail:
+      case FieldType.eMail:
         {
           profileEMail = value;
         }
         break;
-      case ProfileFields.gender:
+      case FieldType.gender:
         {
           gender = value;
         }
         break;
-      case ProfileFields.name:
+      case FieldType.name:
         {
           profileName = value;
         }

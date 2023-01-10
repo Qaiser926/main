@@ -9,6 +9,7 @@ import 'package:othia/core/add/add_exclusives/address_form.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/add/add_exclusives/opening_hours_selector.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/form_fields.dart';
 import 'package:provider/provider.dart';
 
 import 'input_notifier.dart';
@@ -38,7 +39,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final snackBar = SnackBar(
-        // TODO improve design
+        // TODO (extern) improve design of snackbar
         content: inputNotifier.isModifyMode
             ? Text(AppLocalizations.of(context)!.snackBarMessageAdding)
             : Text(AppLocalizations.of(context)!.snackBarMessageModifying),
@@ -81,14 +82,14 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                   // As in detailed event or activity only the subcategory is stored, for the main category the notifier holds a variable
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                      child: buildDropDown(
+                      child: buildDropDownFormField(
                           defaultValue: widget.inputNotifier.mainCategoryId,
                           hintText:
                               AppLocalizations.of(context)!.categorizationHint,
-                          onValidErrorText: AppLocalizations.of(context)!
+                          onInvalidErrorText: AppLocalizations.of(context)!
                               .categorizationErrorMessage,
                           dropDownList: Categories.categoryIds,
-                          notifierFunction: (mainCategoryId) {
+                          onChangedFunction: (mainCategoryId) {
                             widget.inputNotifier.mainCategoryId =
                                 mainCategoryId;
                             widget.inputNotifier.detailedEA.categoryId = null;
@@ -97,24 +98,30 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                                   this.mainCategoryId = mainCategoryId,
                                   this.categoryId = null
                                 });
-                          })),
+                          },
+                          context: context,
+                          valueTransformer: CategoryIdToI18nMapper
+                              .getCategorySubcategoryName)),
                   if (widget.inputNotifier.mainCategoryId != null)
                     new Padding(
                         padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                        child: buildDropDown(
+                        child: buildDropDownFormField(
                             defaultValue:
                                 widget.inputNotifier.detailedEA.categoryId,
                             hintText: AppLocalizations.of(context)!
                                 .subcategorizationHint,
-                            onValidErrorText: AppLocalizations.of(context)!
+                            onInvalidErrorText: AppLocalizations.of(context)!
                                 .subcategorizationErrorMessage,
                             dropDownList: categoryIdToSubcategoryIds[
                                 widget.inputNotifier.mainCategoryId]!,
-                            notifierFunction: (categoryId) {
+                            onChangedFunction: (categoryId) {
                               setState(() => {this.categoryId = categoryId});
                               widget.inputNotifier.detailedEA.categoryId =
                                   categoryId;
-                            })),
+                            },
+                            context: context,
+                            valueTransformer: CategoryIdToI18nMapper
+                                .getCategorySubcategoryName)),
                   getHeadline(
                       context: context,
                       caption: Text(AppLocalizations.of(context)!.location,
@@ -194,7 +201,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
           }
           return null;
         },
-        initialValue: Provider.of<AddEANotifier>(context, listen: false).detailedEA.title,
+        initialValue:
+            Provider.of<AddEANotifier>(context, listen: false).detailedEA.title,
         controller: Provider.of<AddEANotifier>(context, listen: false)
                     .detailedEA
                     .title ==
@@ -216,43 +224,4 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
       ),
     ]);
   }
-
-  DropdownButtonFormField buildDropDown({
-    required String hintText,
-    required String onValidErrorText,
-    required List<String> dropDownList,
-    required Function(dynamic val) notifierFunction,
-    required String? defaultValue,
-  }) {
-    return DropdownButtonFormField(
-      hint: Text(hintText),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return onValidErrorText;
-        }
-        return null;
-      },
-      value: defaultValue,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(5.h),
-          focusedBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).colorScheme.primary),
-          ),
-          border: OutlineInputBorder()),
-      onChanged: notifierFunction,
-      items: dropDownList.map<DropdownMenuItem<String>>((String categoryId) {
-        return DropdownMenuItem<String>(
-          value: categoryId,
-          child: Text(
-            CategoryIdToI18nMapper.getCategorySubcategoryName(
-                context, categoryId),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-
-
 }
