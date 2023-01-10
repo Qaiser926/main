@@ -33,7 +33,8 @@ Widget getFavouriteListItem(
                 getImage(eASummary),
                 getHorSpace(10.h),
                 getMainPart(context, eASummary),
-                actionButton
+                actionButton,
+                getHorSpace(5.h)
               ],
             ),
           ),

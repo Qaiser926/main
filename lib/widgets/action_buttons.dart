@@ -267,7 +267,7 @@ class _LikeButtonState extends State<LikeButton> {
         Icons.favorite,
         color: widget.isLiked
             ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.tertiary,
+            : Theme.of(context).colorScheme.secondary,
       ),
     );
   }
