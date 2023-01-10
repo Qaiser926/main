@@ -7,10 +7,12 @@ import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/profile/settings.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
+import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/action_buttons.dart';
@@ -34,22 +36,24 @@ class _ProfilePageState extends State<ProfilePage> {
   late Future<Object> userInfoFuture;
   late bool isProfileView;
 
-  // TODO
-  bool userLoggedIn = true;
-
   @override
   void initState() {
     isProfileView = widget.userInfo == null;
-    // TODO how to receive the user id?
-    // String userId = Get.arguments[NavigatorConstants.EventActivityId] ?? "1";
-    // if (userId != null) {
-    //   // TODO get user info
-    //   userInfo =
-    //       RestService().fetchEventOrActivityDetails(eventOrActivityId: userId);
-    // }
-    // it could be improved that the already requested information is utilized instead of a
+    GlobalNavigationNotifier globalNot =
+        Provider.of<GlobalNavigationNotifier>(context, listen: false);
     userInfoFuture = isProfileView
-        ? RestService().getPrivateUserInfo(userId: "123")
+        ? globalNot.isUserLoggedIn
+            ? RestService().getPrivateUserInfo(userId: globalNot.userId)
+            : Future.value(UserInfo(
+                activityIds: [],
+                pastEventIds: [],
+                upcomingEventIds: [],
+                profileEMail: "",
+                profileName: "",
+                userId: "",
+                birthdate: "",
+                profilePhoto: "",
+                gender: Gender.male))
         : RestService().getPublicUserInfo(organizerId: widget.userInfo!.userId);
     super.initState();
   }

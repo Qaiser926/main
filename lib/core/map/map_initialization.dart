@@ -115,13 +115,12 @@ class _MapInitializationState extends State<MapInitialization> {
           ],
         );
       } else {
-        // TODO implement other text during waiting for user permission
-        // TODO align style
-        // TODO introduce loading screen or message if declined
+        // TODO (extern) align style
+        // TODO (extern) introduce loading screen or message if declined
         return Align(
           alignment: Alignment.center,
           child: Text(
-            "Waiting for location permission",
+            AppLocalizations.of(context)!.waitingLocationPermission,
             textAlign: TextAlign.center,
           ),
         );

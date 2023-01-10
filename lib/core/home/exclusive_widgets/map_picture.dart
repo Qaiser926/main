@@ -11,7 +11,7 @@ import 'package:othia/utils/ui/ui_utils.dart';
 class MapPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //TODO align distances between caption and content
+    //TODO (extern) align distances between caption and content
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

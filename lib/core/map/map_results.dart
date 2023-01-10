@@ -59,12 +59,12 @@ class _MapResultsState extends State<MapResults> {
               });
         });
       } else {
-        // TODO implement exception handling and messages for user permission, e.g. implement loading when map is not shown
-        // TODO align style
+        // TODO (extern) implement exception handling and messages for user permission, e.g. implement loading when map is not shown
+        // TODO (extern) align style
         return Align(
           alignment: Alignment.center,
           child: Text(
-            "Waiting for location permission",
+            AppLocalizations.of(context)!.waitingLocationPermission,
             textAlign: TextAlign.center,
           ),
         );
@@ -89,8 +89,8 @@ class _MapResultsState extends State<MapResults> {
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
           child: Text('© OpenStreetMap'),
         ),
-        // TODO align colors of Event and Activity colored box & introduce background color for the legend or change
-        // font color such that it is readable
+        // TODO (extern) align colors, font size of Event and Activity colored box & introduce background color for the legend in order to make it better visible. We highly appreciate your input if you have better ideas.
+
         Container(
           alignment: Alignment.bottomLeft,
           padding: const EdgeInsetsDirectional.only(start: 8, bottom: 2),
@@ -181,7 +181,7 @@ class _MapResultsState extends State<MapResults> {
   List<Marker> getResultMarkers() {
     List<Marker> markerList = [];
 
-    // TODO: check if user position gets clustered
+    // TODO (extern) check if user position icon gots clustered with the other icons and if so, modify code such that the user location icon is never part of a cluster
     markerList.add(Marker(
         width: 50.0,
         height: 500.0,
@@ -193,7 +193,7 @@ class _MapResultsState extends State<MapResults> {
               color: Colors.blue,
             )));
     // for activities
-    //TODO align color scheme
+    //TODO (extern) align color scheme for event and activity icons.
     mapResultIds.activityResults.forEach((element) {
       markerList.add(getMarker(
           locationData: element!, markerColor: Theme.of(context).primaryColor));
