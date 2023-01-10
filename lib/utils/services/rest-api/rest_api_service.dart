@@ -110,7 +110,7 @@ class RestService {
   Future<Object> getSearchResultIds({required searchQuery}) async {
     print('requesting ids for: ');
     //
-    //TODO define API call for several query parameters
+    //TODO (intern) define API call for several query parameters
     RestOptions restOptions =
         RestOptions(path: '/${APIConstants.getSearchResultIds}/');
     final result = await get(restOptions);

@@ -27,7 +27,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO align colors
+        // TODO (extern)  align colors
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.privacy),

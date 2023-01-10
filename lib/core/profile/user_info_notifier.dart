@@ -59,7 +59,7 @@ class UserInfoNotifier extends ChangeNotifier {
   }
 
   void _saveToBackend() {
-    //TODO
+    //TODO (extern) error handling
     RestService().savePrivateUserInfo(userInfo: _newUserInfo);
     return;
   }

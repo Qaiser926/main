@@ -31,8 +31,12 @@ class _FavouritePageState extends State<FavouritePage>
   @override
   void initState() {
     if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
-        .isUserLoggedIn)
+        .isUserLoggedIn) {
       favouriteEA = RestService().fetchFavouriteEventsAndActivities();
+    } else {
+      favouriteEA = getNotLoggedIn();
+    }
+
     super.initState();
     _tabController = TabController(
       length: 2,
@@ -79,5 +83,15 @@ class _FavouritePageState extends State<FavouritePage>
       tabController: _tabController,
       favouriteEventAndActivity: favouriteEventAndActivity,
     );
+  }
+
+  // find a better approach in the future than this
+  Future<Object> getNotLoggedIn() {
+    // SummaryEventOrActivity summary = SummaryEventOrActivity(time: Time(), location: Location(), title: "", id: "", categoryId: "", isOnline: false);
+    return Future.value(FavouriteEventsAndActivities(
+        futureEvents: {},
+        pastEvents: {},
+        openActivities: {},
+        closedActivities: {}));
   }
 }

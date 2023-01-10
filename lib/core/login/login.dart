@@ -81,7 +81,7 @@ class Login extends StatelessWidget {
                               if (globalNot.isUserLoggedIn) {
                                 Get.to(MainPage());
                               }
-                              Navigator.of(context).pop();
+                              //Navigator.of(context).pop();
                             },
                             style: ElevatedButton.styleFrom(
                                 shadowColor: primaryColor,
