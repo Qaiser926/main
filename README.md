@@ -19,6 +19,5 @@ samples, guidance on mobile development, and a full API reference.
 
 The folder Structure is inspired by this artictle https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd
 
-## Contact me for meetings and smooth communication on whatsAPP +92 331-3409955 (Couldn't share my info on Fiverr because it's not allowed there)
-# PS Please don't react in the chat 
+
 
