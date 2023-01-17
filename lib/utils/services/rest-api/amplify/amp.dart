@@ -69,18 +69,53 @@ Future<void> amplifyUpdatePassword(
 
 Future<void> amplifySignIn(
     {required String username, required String password}) async {
+  await Amplify.Auth.signIn(username: username, password: password);
+}
+
+class SignupOptionsImpl extends SignUpOptions {
+  SignupOptionsImpl({required super.userAttributes});
+
+  // String? email;
+
+  // SignupOptionsImpl({String? this.email});
+
+  @override
+  Map<String, Object?> serializeAsMap() {
+    return super.userAttributes;
+  }
+}
+
+Future<void> amplifySignUp(
+    {required String username,
+    required String password,
+    required String email}) async {
   try {
-    await Amplify.Auth.signIn(username: username, password: password);
+    await Amplify.Auth.signUp(
+      username: username,
+      password: password,
+      options: CognitoSignUpOptions(
+          userAttributes: {CognitoUserAttributeKey.email: email}),
+    );
   } on AmplifyException catch (e) {
     //TODO (intern)
     throw Exception(e);
   }
 }
 
-Future<void> amplifySignUp(
-    {required String username, required String password}) async {
+Future<void> amplifyConfirm(
+    {required String username, required String confirmationCode}) async {
   try {
-    await Amplify.Auth.signUp(username: username, password: password);
+    await Amplify.Auth.confirmSignUp(
+        username: username, confirmationCode: confirmationCode);
+  } on AmplifyException catch (e) {
+    //TODO (intern)
+    throw Exception(e);
+  }
+}
+
+Future<void> amplifyResend({required String username}) async {
+  try {
+    await Amplify.Auth.resendSignUpCode(username: username);
   } on AmplifyException catch (e) {
     //TODO (intern)
     throw Exception(e);

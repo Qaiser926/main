@@ -1,0 +1,1 @@
+class CustomUserNotFoundException implements Exception {}

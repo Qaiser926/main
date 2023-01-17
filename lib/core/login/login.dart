@@ -9,11 +9,13 @@ import '../../utils/services/global_navigation_notifier.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../main_page.dart';
 import 'exclusives.dart';
+import 'notifier.dart';
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextEditingController usernameController = TextEditingController();
+    TextEditingController usernameController = TextEditingController(
+        text: Provider.of<LoginSignUpNotifier>(context, listen: false).number);
     TextEditingController passwordController = TextEditingController();
     return Expanded(
       child: Container(
@@ -42,25 +44,27 @@ class Login extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-
                 ElevatedButton(
                   onPressed: () async {
-                    //TODO (intern) this whole function is temporary, put function in notifier like logout?
-                    dynamic foo = await RestService().isSignedIn();
-                    await RestService().signIn(
-                        password: passwordController.text,
-                        username: usernameController.text);
-                    dynamic bar = await RestService().isSignedIn();
-                    GlobalNavigationNotifier globalNot =
-                        Provider.of<GlobalNavigationNotifier>(context,
-                            listen: false);
-                    globalNot.initializeUserId();
-                    globalNot.initializeUserLoggedIn();
-                    globalNot.notifyListeners();
-                    if (globalNot.isUserLoggedIn) {
-                      Get.to(MainPage());
+                    try {
+                      await RestService().signIn(
+                          password: passwordController.text,
+                          username: usernameController.text);
+                      GlobalNavigationNotifier globalNot =
+                          Provider.of<GlobalNavigationNotifier>(context,
+                              listen: false);
+                      //TODO perfomance
+                      await globalNot.initializeUserLoggedIn();
+                      await globalNot.initializeUserId();
+                      globalNot.notifyListeners();
+                      if (globalNot.isUserLoggedIn) {
+                        //TODO maybe forward to where the user was. probably very conplicated cause of state management.
+                        Get.to(MainPage());
+                      }
+                    } on Exception catch (e) {
+                      //TODO show feedback here
+                      //TODO log unexpected behaviour
                     }
-                    //Navigator.of(context).pop();
                   },
                   style: ElevatedButton.styleFrom(
                       elevation: 18,
@@ -88,32 +92,6 @@ class Login extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                // FadeAnimation(
-                //   2,
-                //   Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       Image.asset(
-                //         "images/Facebook.png",
-                //         width: 80,
-                //       ),
-                //       const SizedBox(
-                //         width: 15,
-                //       ),
-                //       Image.asset(
-                //         "images/Instagram.png",
-                //         width: 80,
-                //       ),
-                //       const SizedBox(
-                //         width: 15,
-                //       ),
-                //       Image.asset(
-                //         "images/Tiktok.png",
-                //         width: 80,
-                //       ),
-                //     ],
-                //   ),
-                // )
               ],
             ),
           )),
