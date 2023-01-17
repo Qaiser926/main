@@ -121,6 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     35.h), // <--- this line helped me
                               ),
                               onPressed: () => Get.to(LoginSignup()),
+                              //TODO internationalization
                               child: Text(
                                 "Login",
                               ))),

@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "othia67631076": {}
+        "userPoolGroups": {},
+        "othia74325d1e": {}
       },
       "function": {
         "apiLambda": {

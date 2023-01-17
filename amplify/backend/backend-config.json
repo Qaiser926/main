@@ -1,13 +1,15 @@
 {
   "auth": {
-    "othia67631076": {
+    "othia74325d1e": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "PHONE_NUMBER"
+        ],
         "signupAttributes": [
           "EMAIL"
         ],
@@ -20,24 +22,9 @@
           "SMS"
         ],
         "verificationMechanisms": [
-          "PHONE_NUMBER"
+          "EMAIL"
         ]
       }
-    },
-    "userPoolGroups": {
-      "service": "Cognito-UserPool-Groups",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "othia67631076",
-          "attributes": [
-            "UserPoolId",
-            "AppClientIDWeb",
-            "AppClientID"
-          ]
-        }
-      ]
     }
   },
   "function": {

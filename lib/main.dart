@@ -16,20 +16,20 @@ import 'config/themes/dark_theme.dart';
 import 'constants/locales_settings.dart';
 import 'utils/services/global_navigation_notifier.dart';
 
+late final GlobalNavigationNotifier _globalNavigationNotifier;
+
 void main() async {
   await ScreenUtil.ensureScreenSize();
   await _configureAmplify();
+  _globalNavigationNotifier = GlobalNavigationNotifier();
+  await _globalNavigationNotifier.initializeUserLoggedIn();
+  await _globalNavigationNotifier.initializeUserId();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  late final GlobalNavigationNotifier _globalNavigationNotifier;
+  MyApp({super.key});
 
-  MyApp({super.key}) {
-    _globalNavigationNotifier = GlobalNavigationNotifier();
-  }
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

@@ -7,12 +7,9 @@ class GlobalNavigationNotifier extends ChangeNotifier {
   int navigationBarIndex = 0;
   bool isDialogOpen = false;
   late bool isUserLoggedIn;
-  late String? userId;
+  String? userId;
 
-  GlobalNavigationNotifier() {
-    initializeUserLoggedIn();
-    initializeUserId();
-  }
+  GlobalNavigationNotifier();
 
   Future<void> initializeUserLoggedIn() async {
     isUserLoggedIn = await RestService().isSignedIn();
