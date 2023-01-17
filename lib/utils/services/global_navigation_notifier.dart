@@ -19,7 +19,9 @@ class GlobalNavigationNotifier extends ChangeNotifier {
   }
 
   Future<void> initializeUserId() async {
-    userId = await getUserId();
+    if (isUserLoggedIn) {
+      userId = await getUserId();
+    }
   }
 
   Future<void> logout() async {

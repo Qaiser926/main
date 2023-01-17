@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add.dart';
 import 'package:othia/core/favourites/exclusive_widgets/list_change_notifier.dart';
-import 'package:othia/core/login/login.dart';
+import 'package:othia/core/login/login_signup.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
@@ -217,7 +217,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
             child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
-            onPressed: () => Get.to(Login()),
+            onPressed: () => Get.to(LoginSignup()),
             child: Text("Login"),
           ),
         ],

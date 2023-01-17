@@ -1,12 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "othia67631076_identitypool_67631076",
-    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "othia67631076",
     "userPoolName": "othia67631076_userpool_67631076",
     "autoVerifiedAttributes": [
-      "email"
+      "phone_number"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
@@ -16,7 +14,7 @@
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "verification",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": true,
+    "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
@@ -32,12 +30,14 @@
       "email"
     ],
     "userpoolClientLambdaRole": "othia667631076_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": true,
+    "userpoolClientSetAttributes": false,
     "sharedId": "67631076",
     "resourceName": "othia67631076",
-    "authSelections": "identityPoolAndUserPool",
+    "authSelections": "userPoolOnly",
     "useDefault": "manual",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+      "basicothia"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
@@ -55,15 +55,14 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "thirdPartyAuth": true,
-    "userPoolGroups": false,
+    "userPoolGroups": true,
     "adminQueries": false,
     "triggers": {},
     "hostedUI": false,
-    "authProviders": [],
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "permissions": []
+    "permissions": [],
+    "authProviders": []
   }
 }

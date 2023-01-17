@@ -1,13 +1,12 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
         "othia67631076": {
-            "IdentityPoolId": "string",
-            "IdentityPoolName": "string",
             "UserPoolId": "string",
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string"
+            "AppClientID": "string",
+            "CreatedSNSRole": "string"
         }
     },
     "function": {

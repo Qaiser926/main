@@ -18,12 +18,15 @@ import 'utils/services/global_navigation_notifier.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
+  await _configureAmplify();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  late final GlobalNavigationNotifier _globalNavigationNotifier;
+
   MyApp({super.key}) {
-    _configureAmplify();
+    _globalNavigationNotifier = GlobalNavigationNotifier();
   }
 
   // This widget is the root of your application.
@@ -39,9 +42,10 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider.value(
               value: LocaleProvider(),
             ),
-          ChangeNotifierProvider.value(
-                value: GlobalNavigationNotifier(),
-              ),],
+            ChangeNotifierProvider.value(
+              value: _globalNavigationNotifier,
+            ),
+          ],
           child: Consumer<LocaleProvider>(
               builder: (context, localeProvider, child) {
             return GetMaterialApp(
@@ -53,20 +57,20 @@ class MyApp extends StatelessWidget {
               ],
               locale: localeProvider.locale,
               supportedLocales: supportedLocales,
-              // builder: Authenticator.builder(),
-              debugShowCheckedModeBanner: false,
-              initialRoute: Routes.homeRoute,
-              // getPages: ,
-              routes: Pages.routes,
-              theme: getDarkThemeData(),
-              onGenerateRoute: (settings) {
-                if (settings.name == Routes.homeRoute) {
-                  return MaterialPageRoute(
-                      builder: Pages.routes[Routes.homeRoute]!);
-                }
-              },
-            );
-          }),
+                  // builder: Authenticator.builder(),
+                  debugShowCheckedModeBanner: false,
+                  initialRoute: Routes.homeRoute,
+                  // getPages: ,
+                  routes: Pages.routes,
+                  theme: getDarkThemeData(),
+                  onGenerateRoute: (settings) {
+                    if (settings.name == Routes.homeRoute) {
+                      return MaterialPageRoute(
+                          builder: Pages.routes[Routes.homeRoute]!);
+                    }
+                  },
+                );
+              }),
         );
       },
     );

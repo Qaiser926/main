@@ -290,6 +290,9 @@
     }
   },
   "logout": "Ausloggen",
+  "signup": "Account erstellen",
+  "login": "Einloggen",
+  "password": "Passwort",
   "language": "Sprachen",
   "german": "Deutsch",
   "english": "Englisch",

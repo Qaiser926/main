@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
@@ -10,18 +11,24 @@ import '../../utils/services/rest-api/rest_api_service.dart';
 import '../main_page.dart';
 import 'exclusives.dart';
 
-class Login extends StatelessWidget {
+class Signup extends StatelessWidget {
+  const Signup({super.key});
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController usernameController = TextEditingController();
+    TextEditingController phoneNumberController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
     return Expanded(
       child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: listItemColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50), topRight: Radius.circular(50))),
+            color: listItemColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(50),
+              topRight: Radius.circular(50),
+            ),
+          ),
           margin: const EdgeInsets.only(top: 30),
           child: SingleChildScrollView(
             child: Column(
@@ -34,11 +41,17 @@ class Login extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     margin: const EdgeInsets.only(left: 22, bottom: 20),
                     child: Text(
-                      "Login",
+                      AppLocalizations.of(context)!.signup,
                       style: Theme.of(context).primaryTextTheme.displayMedium,
                     )),
-                getSome("Username", Icons.phone, usernameController),
-                getSome("Password", Icons.password, passwordController),
+                getSome(AppLocalizations.of(context)!.name, Icons.phone,
+                    phoneNumberController),
+                getSome(AppLocalizations.of(context)!.eMail, Icons.mail,
+                    emailController),
+                getSome(AppLocalizations.of(context)!.birthdate,
+                    Icons.date_range, emailController),
+                getSome(AppLocalizations.of(context)!.password, Icons.password,
+                    passwordController),
                 const SizedBox(
                   height: 20,
                 ),
@@ -49,7 +62,7 @@ class Login extends StatelessWidget {
                     dynamic foo = await RestService().isSignedIn();
                     await RestService().signIn(
                         password: passwordController.text,
-                        username: usernameController.text);
+                        username: phoneNumberController.text);
                     dynamic bar = await RestService().isSignedIn();
                     GlobalNavigationNotifier globalNot =
                         Provider.of<GlobalNavigationNotifier>(context,
@@ -63,20 +76,22 @@ class Login extends StatelessWidget {
                     //Navigator.of(context).pop();
                   },
                   style: ElevatedButton.styleFrom(
-                      elevation: 18,
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
+                    elevation: 18,
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
                   child: Ink(
                     decoration: BoxDecoration(
-                        color: listItemColor,
+                        color: bgColor,
                         borderRadius: BorderRadius.circular(20)),
                     child: Container(
                       width: 200,
                       height: 50,
                       alignment: Alignment.center,
-                      child: const Text(
-                        'Login',
+                      child: Text(
+                        AppLocalizations.of(context)!.signup,
                         style: TextStyle(
                           fontSize: 30,
                           color: Colors.white,

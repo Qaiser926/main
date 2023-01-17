@@ -11,7 +11,7 @@ import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
 
-import '../login/login.dart';
+import '../login/login_signup.dart';
 import 'settings/help_settings.dart';
 import 'settings/language_settings.dart';
 import 'settings/privacy.dart';
@@ -120,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 minimumSize: Size(double.infinity,
                                     35.h), // <--- this line helped me
                               ),
-                              onPressed: () => Get.to(Login()),
+                              onPressed: () => Get.to(LoginSignup()),
                               child: Text(
                                 "Login",
                               ))),

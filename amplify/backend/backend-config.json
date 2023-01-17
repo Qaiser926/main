@@ -20,9 +20,24 @@
           "SMS"
         ],
         "verificationMechanisms": [
-          "EMAIL"
+          "PHONE_NUMBER"
         ]
       }
+    },
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "othia67631076",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID"
+          ]
+        }
+      ]
     }
   },
   "function": {
