@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "othia74325d1e_identitypool_74325d1e",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "othia74325d1e",
-    "userPoolName": "othia74325d1e_userpool_74325d1e",
+    "identityPoolName": "othia2a4d7587_identitypool_2a4d7587",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "othia2a4d7587",
+    "userPoolName": "othia2a4d7587_userpool_2a4d7587",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,23 +31,39 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "othia774325d1e_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "othia22a4d7587_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "74325d1e",
-    "resourceName": "othia74325d1e",
+    "sharedId": "2a4d7587",
+    "resourceName": "othia2a4d7587",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "defaultSocial",
-    "hostedUI": true,
-    "usernameAttributes": [
-      "phone_number"
-    ],
-    "hostedUIDomainName": "othia-auth",
-    "authProvidersUserPool": [],
-    "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"othia://\"],\"LogoutURLs\":[\"othia://\"]}",
+    "useDefault": "manual",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [],
+    "thirdPartyAuth": true,
+    "authProviders": [],
+    "userPoolGroups": false,
+    "adminQueries": false,
+    "triggers": {},
+    "hostedUI": false,
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "permissions": []
   }
-} 
+}
