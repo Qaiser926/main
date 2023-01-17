@@ -14,7 +14,9 @@ import 'notifier.dart';
 class Pre extends StatelessWidget {
   final PageController pageController;
 
-  const Pre(this.pageController, {super.key});
+  final Login login;
+
+  const Pre(this.pageController, this.login, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,16 +71,21 @@ class Pre extends StatelessWidget {
                   notifier.isSignup = true;
 
                   //forward to sign in
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder:
-                            ((context, animation, secondaryAnimation) =>
-                                Login()),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero),
-                  );
-                  Get.to(Login());
+                  // Navigator.push(
+                  //   context,
+                  //   PageRouteBuilder(
+                  //       pageBuilder: ((context, animation, secondaryAnimation) {
+                  //         return MultiProvider(providers: [
+                  //           ChangeNotifierProvider.value(
+                  //             value: Provider.of<LoginSignUpNotifier>(context,
+                  //                 listen: false),
+                  //           )
+                  //         ], child: Login());
+                  //       }),
+                  //       transitionDuration: Duration.zero,
+                  //       reverseTransitionDuration: Duration.zero),
+                  // );
+                  Get.to(login, duration: Duration.zero);
                 } on UserNotConfirmedException catch (e) {
                   //TODO forward to confirmation page
                   //TODO maybe show snackbar or sth

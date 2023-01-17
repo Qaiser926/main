@@ -95,32 +95,33 @@ class ActionBox extends StatelessWidget {
         true;
     String userId = await getUserId();
     showDialog(
-        context: context,
-        builder: (context) => getDialog(
-                dialogText: AppLocalizations.of(context)!.deleteDialog(
-                    inputNotifier.times[0]
-                        ? AppLocalizations.of(context)!.event
-                        : AppLocalizations.of(context)!.activity),
-                actions: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () =>
-                            Navigator.of(context, rootNavigator: true).pop(),
-                        child: Text(AppLocalizations.of(context)!.cancel),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                          closeSnackBar(context);
-                          Get.to(DeleteForwardingPage(inputNotifier, userId));
-                        },
-                        child: Text(AppLocalizations.of(context)!.confirm),
-                      ),
-                    ],
-                  ),
-                ])).then((_) {
+      context: context,
+      builder: (context) => getDialog(
+          dialogText: AppLocalizations.of(context)!.deleteDialog(
+              inputNotifier.times[0]
+                  ? AppLocalizations.of(context)!.event
+                  : AppLocalizations.of(context)!.activity),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () =>
+                      Navigator.of(context, rootNavigator: true).pop(),
+                  child: Text(AppLocalizations.of(context)!.cancel),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    closeSnackBar(context);
+                    Get.to(DeleteForwardingPage(inputNotifier, userId));
+                  },
+                  child: Text(AppLocalizations.of(context)!.confirm),
+                ),
+              ],
+            ),
+          ]),
+    ).then((_) {
       Provider.of<GlobalNavigationNotifier>(context, listen: false)
           .isDialogOpen = false;
     });

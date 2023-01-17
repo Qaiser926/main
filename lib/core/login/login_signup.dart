@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:othia/core/login/pre.dart';
 import 'package:othia/core/login/signup.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
 import '../../utils/ui/ui_utils.dart';
@@ -34,23 +33,15 @@ class LoginSignup extends StatelessWidget {
           ),
         ]),
       ),
-      body: MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(
-            value: loginSignUpNotifier,
-          )
-        ],
-        child: PageView(
+      body: PageView(
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            Pre(_pageController),
+            Pre(_pageController, Login()),
             Login(),
             Signup(_pageController),
             ConfirmationScreen(),
-          ],
-        ),
-      ),
+          ]),
     );
   }
 }

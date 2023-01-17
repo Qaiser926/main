@@ -12,6 +12,7 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/form_fields.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/forms.dart';
 import 'input_notifier.dart';
 import 'time_selector.dart';
 
@@ -103,7 +104,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                           valueTransformer: CategoryIdToI18nMapper
                               .getCategorySubcategoryName)),
                   if (widget.inputNotifier.mainCategoryId != null)
-                    new Padding(
+                    Padding(
                         padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
                         child: buildDropDownFormField(
                             defaultValue:
@@ -194,7 +195,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
   Column buildTitleSection() {
     return Column(children: <Widget>[
-      TextFormField(
+      CustomTextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
             return AppLocalizations.of(context)!.titleErrorMessage;
@@ -215,12 +216,6 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
           widget.inputNotifier.detailedEA.title = title;
         },
         maxLength: DataConstants.MaxTitleLength,
-        maxLines: null,
-        decoration: new InputDecoration(
-          contentPadding: EdgeInsets.all(5.h),
-          border: OutlineInputBorder(),
-          hintText: AppLocalizations.of(context)!.titleHint,
-        ),
       ),
     ]);
   }
