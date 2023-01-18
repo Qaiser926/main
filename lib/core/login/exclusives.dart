@@ -121,14 +121,15 @@ class BaseLoginSignupContainer extends Container {
 class LoginSignUp extends StatelessWidget {
   Column textFields;
   String topText;
-
   Function onPressed;
+  String buttonText;
 
   LoginSignUp({
     super.key,
     required this.topText,
     required this.textFields,
     required this.onPressed,
+    required this.buttonText,
   });
 
   @override
@@ -158,21 +159,16 @@ class LoginSignUp extends StatelessWidget {
                 elevation: 18,
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20))),
-            child: Ink(
-              decoration: BoxDecoration(
-                  color: listItemColor,
-                  borderRadius: BorderRadius.circular(20)),
-              child: Container(
-                width: 200,
-                height: 50,
-                alignment: Alignment.center,
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                  ),
+                    borderRadius: BorderRadius.circular(5))),
+            child: Container(
+              width: 180,
+              height: 45,
+              alignment: Alignment.center,
+              child: Text(
+                buttonText,
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
                 ),
               ),
             ),
