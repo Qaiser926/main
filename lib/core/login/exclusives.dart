@@ -49,7 +49,7 @@ PreferredSizeWidget getLoginAppBar() {
 void signIn(LoginSignupData loginSignupData, BuildContext context) async {
   try {
     await RestService().signIn(
-      username: loginSignupData.number!,
+      phoneNumber: loginSignupData.phoneNumber!,
       password: loginSignupData.password!,
     );
     GlobalNavigationNotifier globalNot =
@@ -70,9 +70,9 @@ void signIn(LoginSignupData loginSignupData, BuildContext context) async {
 
 void confirm(LoginSignupData loginSignupData, BuildContext context) async {
   try {
-    await RestService().confirm(
+    await RestService().confirmSignUp(
         confirmationCode: loginSignupData.confirmCode!,
-        username: loginSignupData.number!);
+        phoneNumber: loginSignupData.phoneNumber!);
     signIn(loginSignupData, context);
   } on CodeMismatchException catch (e) {
     //TODO show feedback here
@@ -88,7 +88,7 @@ void signUp(LoginSignupData loginSignupData) async {
     await RestService().signUp(
         password: loginSignupData.password!,
         email: loginSignupData.email!,
-        username: loginSignupData.username!);
+        phoneNumber: loginSignupData.phoneNumber!);
     //sign up was successfull. forward user to confirmation
     Get.to(ConfirmationScreen(loginSignupData));
   } on Exception catch (e) {

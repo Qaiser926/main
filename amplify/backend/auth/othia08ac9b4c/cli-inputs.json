@@ -1,12 +1,12 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "othia2a4d7587_identitypool_2a4d7587",
+    "identityPoolName": "othia08ac9b4c_identitypool_08ac9b4c",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "othia2a4d7587",
-    "userPoolName": "othia2a4d7587_userpool_2a4d7587",
+    "resourceNameTruncated": "othia08ac9b4c",
+    "userPoolName": "othia08ac9b4c_userpool_08ac9b4c",
     "autoVerifiedAttributes": [
-      "email"
+      "phone_number"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
@@ -31,12 +31,15 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "othia22a4d7587_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "othia008ac9b4c_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "2a4d7587",
-    "resourceName": "othia2a4d7587",
+    "sharedId": "08ac9b4c",
+    "resourceName": "othia08ac9b4c",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
+    "usernameAttributes": [
+      "phone_number"
+    ],
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,

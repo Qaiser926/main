@@ -68,8 +68,9 @@ Future<void> amplifyUpdatePassword(
 }
 
 Future<void> amplifySignIn(
-    {required String username, required String password}) async {
-  await Amplify.Auth.signIn(username: username, password: password);
+    {required String phoneNumber, required String password}) async {
+  //username is a phone number based on amplify requirements
+  await Amplify.Auth.signIn(username: phoneNumber, password: password);
 }
 
 class SignupOptionsImpl extends SignUpOptions {
@@ -86,12 +87,13 @@ class SignupOptionsImpl extends SignUpOptions {
 }
 
 Future<void> amplifySignUp(
-    {required String username,
+    {required String phoneNumber,
     required String password,
     required String email}) async {
   try {
+    //username is a phone number based on amplify requirements
     await Amplify.Auth.signUp(
-      username: username,
+      username: phoneNumber,
       password: password,
       options: CognitoSignUpOptions(
           userAttributes: {CognitoUserAttributeKey.email: email}),
@@ -102,20 +104,23 @@ Future<void> amplifySignUp(
   }
 }
 
-Future<void> amplifyConfirm(
-    {required String username, required String confirmationCode}) async {
+Future<void> amplifyConfirmSignUp(
+    {required String phoneNumber, required String confirmationCode}) async {
   try {
+    //username is a phone number based on amplify requirements
     await Amplify.Auth.confirmSignUp(
-        username: username, confirmationCode: confirmationCode);
+        username: phoneNumber, confirmationCode: confirmationCode);
   } on AmplifyException catch (e) {
     //TODO (intern)
     throw Exception(e);
   }
 }
 
-Future<void> amplifyResend({required String username}) async {
+Future<void> amplifyResendConfirmationCode(
+    {required String phoneNumber}) async {
   try {
-    await Amplify.Auth.resendSignUpCode(username: username);
+    //username is a phone number based on amplify requirements
+    await Amplify.Auth.resendSignUpCode(username: phoneNumber);
   } on AmplifyException catch (e) {
     //TODO (intern)
     throw Exception(e);

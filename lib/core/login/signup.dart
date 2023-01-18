@@ -13,7 +13,7 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController phoneNumberController =
-        TextEditingController(text: data.number);
+        TextEditingController(text: data.phoneNumber);
     TextEditingController passwordController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     return Scaffold(
@@ -24,7 +24,7 @@ class Signup extends StatelessWidget {
           onPressed: () {
             data.password = passwordController.text;
             data.email = emailController.text;
-            data.username = phoneNumberController.text;
+            data.phoneNumber = phoneNumberController.text;
             signUp(data);
           },
           textFields: [

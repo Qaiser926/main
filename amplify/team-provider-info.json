@@ -14,7 +14,8 @@
     "categories": {
       "auth": {
         "userPoolGroups": {},
-        "othia2a4d7587": {}
+        "othia834d26ce": {},
+        "othia08ac9b4c": {}
       },
       "function": {
         "apiLambda": {

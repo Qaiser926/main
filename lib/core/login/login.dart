@@ -11,8 +11,8 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController usernameController =
-        TextEditingController(text: data.number);
+    TextEditingController phoneNumberController =
+        TextEditingController(text: data.phoneNumber);
     TextEditingController passwordController = TextEditingController();
     return Scaffold(
       appBar: getLoginAppBar(),
@@ -20,12 +20,12 @@ class Login extends StatelessWidget {
           buttonText: 'Login',
           onPressed: () {
             data.password = passwordController.text;
-            data.number = usernameController.text;
+            data.phoneNumber = phoneNumberController.text;
             signIn(data, context);
           },
           textFields: [
             getCustomTextFormFieldWithPadding(
-              controller: usernameController,
+              controller: phoneNumberController,
               iconData: Icons.phone,
               hintText: "Username",
             ),

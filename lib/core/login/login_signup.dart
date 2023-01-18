@@ -26,10 +26,10 @@ class LoginSignup extends StatelessWidget {
         topText: "Login",
         onPressed: () async {
           LoginSignupData data = LoginSignupData();
-          data.number = numberController.text;
+          data.phoneNumber = numberController.text;
           try {
             await RestService()
-                .signIn(password: "1", username: numberController.text);
+                .signIn(password: "1", phoneNumber: numberController.text);
           } on UserNotFoundException catch (e) {
             //forward to sign in
             Get.to(Signup(data), duration: Duration.zero);

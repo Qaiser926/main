@@ -1,13 +1,15 @@
 {
   "auth": {
-    "othia2a4d7587": {
+    "othia08ac9b4c": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
-        "usernameAttributes": [],
+        "usernameAttributes": [
+          "PHONE_NUMBER"
+        ],
         "signupAttributes": [
           "EMAIL"
         ],
@@ -20,7 +22,7 @@
           "SMS"
         ],
         "verificationMechanisms": [
-          "EMAIL"
+          "PHONE_NUMBER"
         ]
       }
     }

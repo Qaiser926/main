@@ -207,26 +207,28 @@ class RestService {
   }
 
   Future<void> signIn(
-      {required String username, required String password}) async {
-    final result = await amplifySignIn(password: password, username: username);
+      {required String phoneNumber, required String password}) async {
+    final result =
+        await amplifySignIn(password: password, phoneNumber: phoneNumber);
   }
 
   Future<void> signUp(
-      {required String username,
+      {required String phoneNumber,
       required String password,
       required String email}) async {
     final result = await amplifySignUp(
-        password: password, username: username, email: email);
+        password: password, phoneNumber: phoneNumber, email: email);
   }
 
-  Future<void> confirm(
-      {required String confirmationCode, required String username}) async {
-    final result = await amplifyConfirm(
-        username: username, confirmationCode: confirmationCode);
+  Future<void> confirmSignUp(
+      {required String confirmationCode, required String phoneNumber}) async {
+    final result = await amplifyConfirmSignUp(
+        phoneNumber: phoneNumber, confirmationCode: confirmationCode);
   }
 
-  Future<void> resend({required String username}) async {
-    final result = await amplifyResend(username: username);
+  Future<void> resendConfirmationCode({required String phoneNumber}) async {
+    final result =
+        await amplifyResendConfirmationCode(phoneNumber: phoneNumber);
   }
 
   Future<bool> isSignedIn() async {

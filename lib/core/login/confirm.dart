@@ -35,7 +35,8 @@ class ConfirmationScreen extends StatelessWidget {
           belowButton: ElevatedButton(
               onPressed: () {
                 try {
-                  RestService().resend(username: data.number!);
+                  RestService()
+                      .resendConfirmationCode(phoneNumber: data.phoneNumber!);
                 } on Exception catch (e) {
                   //WRONG Code
                 }
