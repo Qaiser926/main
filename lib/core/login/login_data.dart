@@ -1,4 +1,6 @@
 class LoginSignupData {
+  String? password;
+
   String? number;
   String? username;
   String? userName;
@@ -6,4 +8,5 @@ class LoginSignupData {
   String? firstname;
   String? birthdate;
   String? email;
+  String? confirmCode;
 }

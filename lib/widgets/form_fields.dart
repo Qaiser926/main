@@ -46,12 +46,13 @@ DropdownButtonFormField buildDropDownFormField(
 class CustomTextFormField extends TextFormField {
   CustomTextFormField(
       {super.key,
-      required Function(dynamic val) onChanged,
-      required String? Function(String?) validator,
-      required dynamic initialValue,
+      Function(dynamic val)? onChanged,
+      String? Function(String?)? validator,
+      dynamic initialValue,
       String? hintText,
       List<FilteringTextInputFormatter>? inputFormatters,
       TextEditingController? controller,
+      IconData? iconData,
       int? maxLines,
       int? maxLength,
       bool numberInput = false})
@@ -61,6 +62,9 @@ class CustomTextFormField extends TextFormField {
             controller: controller,
             keyboardType: numberInput ? TextInputType.number : null,
             decoration: InputDecoration(
+                prefixIcon: Icon(
+                  iconData,
+                ),
                 contentPadding: EdgeInsets.all(5.h),
                 border: const OutlineInputBorder(),
                 hintText: hintText),
