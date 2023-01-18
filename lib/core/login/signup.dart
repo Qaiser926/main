@@ -19,37 +19,36 @@ class Signup extends StatelessWidget {
     return Scaffold(
       appBar: getLoginAppBar(),
       body: LoginSignUp(
-        topText: AppLocalizations.of(context)!.signup,
-        buttonText: AppLocalizations.of(context)!.signup,
-        onPressed: () {
-          data.password = passwordController.text;
-          data.email = emailController.text;
-          data.username = phoneNumberController.text;
-          signUp(data);
-        },
-        textFields: Column(children: [
-          getCustomTextFormFieldWithPadding(
-            hintText: "Phone Number",
-            iconData: Icons.phone,
-            controller: phoneNumberController,
-          ),
-          getCustomTextFormFieldWithPadding(
-            hintText: AppLocalizations.of(context)!.eMail,
-            iconData: Icons.mail,
-            controller: emailController,
-          ),
-          getCustomTextFormFieldWithPadding(
-            hintText: AppLocalizations.of(context)!.birthdate,
-            iconData: Icons.date_range,
-            controller: emailController,
-          ),
-          getCustomTextFormFieldWithPadding(
-            hintText: AppLocalizations.of(context)!.password,
-            iconData: Icons.password,
-            controller: passwordController,
-          ),
-        ]),
-      ),
+          topText: AppLocalizations.of(context)!.signup,
+          buttonText: AppLocalizations.of(context)!.signup,
+          onPressed: () {
+            data.password = passwordController.text;
+            data.email = emailController.text;
+            data.username = phoneNumberController.text;
+            signUp(data);
+          },
+          textFields: [
+            getCustomTextFormFieldWithPadding(
+              hintText: "Phone Number",
+              iconData: Icons.phone,
+              controller: phoneNumberController,
+            ),
+            getCustomTextFormFieldWithPadding(
+              hintText: AppLocalizations.of(context)!.eMail,
+              iconData: Icons.mail,
+              controller: emailController,
+            ),
+            getCustomTextFormFieldWithPadding(
+              hintText: AppLocalizations.of(context)!.birthdate,
+              iconData: Icons.date_range,
+              controller: emailController,
+            ),
+            getCustomTextFormFieldWithPadding(
+              hintText: AppLocalizations.of(context)!.password,
+              iconData: Icons.password,
+              controller: passwordController,
+            ),
+          ]),
     );
   }
 }

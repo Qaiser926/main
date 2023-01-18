@@ -119,18 +119,19 @@ class BaseLoginSignupContainer extends Container {
 }
 
 class LoginSignUp extends StatelessWidget {
-  Column textFields;
-  String topText;
+  List<Widget> textFields;
+  String? topText;
   Function onPressed;
   String buttonText;
+  Widget? belowButton;
 
-  LoginSignUp({
-    super.key,
-    required this.topText,
-    required this.textFields,
-    required this.onPressed,
-    required this.buttonText,
-  });
+  LoginSignUp(
+      {super.key,
+      this.topText,
+      required this.textFields,
+      required this.onPressed,
+      required this.buttonText,
+      this.belowButton});
 
   @override
   Widget build(BuildContext context) {
@@ -141,15 +142,19 @@ class LoginSignUp extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          Container(
-              // color: Colors.red,
-              alignment: Alignment.topLeft,
-              margin: const EdgeInsets.only(left: 22, bottom: 20),
-              child: Text(
-                topText,
-                style: Theme.of(context).primaryTextTheme.displayMedium,
-              )),
-          textFields,
+          topText != null
+              ? Container(
+                  // color: Colors.red,
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.only(left: 22, bottom: 20),
+                  child: Text(
+                    topText!,
+                    style: Theme.of(context).primaryTextTheme.displayMedium,
+                  ))
+              : SizedBox.shrink(),
+          Column(
+            children: textFields,
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -176,6 +181,7 @@ class LoginSignUp extends StatelessWidget {
           SizedBox(
             height: 50,
           ),
+          belowButton ?? const SizedBox.shrink(),
         ],
       ),
     ));
