@@ -44,24 +44,25 @@ DropdownButtonFormField buildDropDownFormField(
 }
 
 class CustomTextFormField extends TextFormField {
-  CustomTextFormField(
-      {super.key,
-      Function(dynamic val)? onChanged,
-      String? Function(String?)? validator,
-      dynamic initialValue,
-      String? hintText,
-      List<FilteringTextInputFormatter>? inputFormatters,
-      TextEditingController? controller,
-      IconData? iconData,
-      int? maxLines,
-      int? maxLength,
-      bool numberInput = false})
+  CustomTextFormField({super.key,
+    Function(dynamic val)? onChanged,
+    String? Function(String?)? validator,
+    dynamic initialValue,
+    String? hintText,
+    List<FilteringTextInputFormatter>? inputFormatters,
+    TextEditingController? controller,
+    IconData? iconData,
+    int? maxLines,
+    int? maxLength,
+    bool numberInput = false,
+    Widget? suffixIcon})
       : super(
             maxLines: maxLines,
             maxLength: maxLength,
             controller: controller,
             keyboardType: numberInput ? TextInputType.number : null,
             decoration: InputDecoration(
+                suffixIcon: suffixIcon,
                 prefixIcon: Icon(
                   iconData,
                 ),

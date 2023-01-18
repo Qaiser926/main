@@ -15,35 +15,32 @@ class ConfirmationScreen extends StatelessWidget {
     TextEditingController confirmController = TextEditingController();
 
     return Scaffold(
-      appBar: getLoginAppBar(),
-      body: BaseLoginSignupContainer(
-        child: Container(
-          child: Column(
-            children: [
-              CustomTextFormField(
-                controller: confirmController,
-                iconData: Icons.mail,
-                hintText: "Confirm Code",
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    try {
-                      RestService().resend(username: data.number!);
-                    } on Exception catch (e) {
-                      //WRONG Code
-                    }
-                  },
+        appBar: getLoginAppBar(),
+        body: LoginSignUp(
+          buttonText: "Confirm",
+          onPressed: () async {
+            data.confirmCode = confirmController.text;
+            confirm(data, context);
+          },
+          textFields: [
+            CustomTextFormField(
+              suffixIcon: TextButton(
+                  onPressed: () => print("icon Pressed"),
                   child: Text("Resend")),
-              ElevatedButton(
-                  onPressed: () async {
-                    data.confirmCode = confirmController.text;
-                    confirm(data, context);
-                  },
-                  child: Text("Confirm"))
-            ],
-          ),
-        ),
-      ),
-    );
+              controller: confirmController,
+              iconData: Icons.mail,
+              hintText: "Confirm Code",
+            ),
+          ],
+          belowButton: ElevatedButton(
+              onPressed: () {
+                try {
+                  RestService().resend(username: data.number!);
+                } on Exception catch (e) {
+                  //WRONG Code
+                }
+              },
+              child: Text("Resend")),
+        ));
   }
 }

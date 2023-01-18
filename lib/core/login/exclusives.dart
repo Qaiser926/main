@@ -159,7 +159,7 @@ class LoginSignUp extends StatelessWidget {
             height: 20,
           ),
           ElevatedButton(
-            onPressed: () => onPressed,
+            onPressed: () => onPressed(),
             style: ElevatedButton.styleFrom(
                 elevation: 18,
                 padding: EdgeInsets.zero,
