@@ -11,23 +11,27 @@ import 'exclusives.dart';
 import 'login.dart';
 import 'login_data.dart';
 
+//TODO overall sigup and sign in steps: provide feeback for the user after wrong inputs
+
 class LoginSignup extends StatelessWidget {
   LoginSignup({super.key});
 
   @override
   Widget build(BuildContext context) {
     TextEditingController numberController = TextEditingController();
-    // RestService().signIn(username: "mattistest", password: "12345678");
 
     return Scaffold(
       appBar: getLoginAppBar(),
       body: LoginSignUp(
+        //TODO i10n
         buttonText: 'Login',
+        //TODO i10n
         topText: "Login",
         onPressed: () async {
           LoginSignupData data = LoginSignupData();
           data.phoneNumber = numberController.text;
           try {
+            //TODO can we have a nicer workaround here?
             await RestService()
                 .signIn(password: "1", phoneNumber: numberController.text);
           } on UserNotFoundException catch (e) {
@@ -51,10 +55,12 @@ class LoginSignup extends StatelessWidget {
           getCustomTextFormFieldWithPadding(
             controller: numberController,
             iconData: Icons.phone,
+            //TODO i10n
             hintText: "Number",
           ),
         ],
         belowButton: Column(
+          //TODO implement auth provider. make buttons from these icons
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             getAssetImage("signinfacebook.png", width: 220),
@@ -64,13 +70,7 @@ class LoginSignup extends StatelessWidget {
             ),
             getAssetImage("applesignin.png", width: 180),
 
-            // const SizedBox(
-            //   width: 15,
-            // ),
-            // Image.asset(
-            //   "images/Tiktok.png",
-            //   width: 80,
-            // ),
+            //TODO add missing auth providers
           ],
         ),
       ),

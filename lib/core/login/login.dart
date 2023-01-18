@@ -17,6 +17,7 @@ class Login extends StatelessWidget {
     return Scaffold(
       appBar: getLoginAppBar(),
       body: LoginSignUp(
+        //TODO i10n
           buttonText: 'Login',
           onPressed: () {
             data.password = passwordController.text;
@@ -27,11 +28,13 @@ class Login extends StatelessWidget {
             getCustomTextFormFieldWithPadding(
               controller: phoneNumberController,
               iconData: Icons.phone,
+              //TODO i10n
               hintText: "Username",
             ),
             getCustomTextFormFieldWithPadding(
               controller: passwordController,
               iconData: Icons.password,
+              //TODO i10n
               hintText: "Password",
             )
           ]),

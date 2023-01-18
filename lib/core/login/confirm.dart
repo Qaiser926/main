@@ -17,31 +17,26 @@ class ConfirmationScreen extends StatelessWidget {
     return Scaffold(
         appBar: getLoginAppBar(),
         body: LoginSignUp(
+          //TODO i10n
           buttonText: "Confirm",
           onPressed: () async {
             data.confirmCode = confirmController.text;
             confirm(data, context);
           },
           textFields: [
+            //TODO extern only number keyboard should open here
             CustomTextFormField(
               suffixIcon: TextButton(
-                  onPressed: () => print("icon Pressed"),
+                  onPressed: () => RestService()
+                      .resendConfirmationCode(phoneNumber: data.phoneNumber!),
+                  //TODO i10n
                   child: Text("Resend")),
               controller: confirmController,
               iconData: Icons.mail,
+              //TODO i10n
               hintText: "Confirm Code",
             ),
           ],
-          belowButton: ElevatedButton(
-              onPressed: () {
-                try {
-                  RestService()
-                      .resendConfirmationCode(phoneNumber: data.phoneNumber!);
-                } on Exception catch (e) {
-                  //WRONG Code
-                }
-              },
-              child: Text("Resend")),
         ));
   }
 }

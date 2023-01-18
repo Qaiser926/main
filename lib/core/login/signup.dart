@@ -28,22 +28,30 @@ class Signup extends StatelessWidget {
             signUp(data);
           },
           textFields: [
+            //TODO these are not all the fields we want from the user.
+            //TODO we also need: gender, liked categories, and more (see ppp)
             getCustomTextFormFieldWithPadding(
+              //TODO i10n
+              //TODO validation or maybe let aws handle validation?
               hintText: "Phone Number",
               iconData: Icons.phone,
               controller: phoneNumberController,
             ),
             getCustomTextFormFieldWithPadding(
+              //TODO validation or maybe let aws handle validation?
               hintText: AppLocalizations.of(context)!.eMail,
               iconData: Icons.mail,
               controller: emailController,
             ),
             getCustomTextFormFieldWithPadding(
+              //TODO date picker instead of text input
+              //TODO validation or maybe let aws handle validation?
               hintText: AppLocalizations.of(context)!.birthdate,
               iconData: Icons.date_range,
               controller: emailController,
             ),
             getCustomTextFormFieldWithPadding(
+              //TODO hide input chars.
               hintText: AppLocalizations.of(context)!.password,
               iconData: Icons.password,
               controller: passwordController,
