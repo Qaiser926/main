@@ -12,50 +12,121 @@ class Signup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController phoneNumberController =
-        TextEditingController(text: data.phoneNumber);
+    TextEditingController emailController =
+        TextEditingController(text: data.email);
     TextEditingController passwordController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
+    TextEditingController repeatPasswordController = TextEditingController();
+    TextEditingController genderController = TextEditingController();
+    TextEditingController birthdateController = TextEditingController();
+    TextEditingController nameController = TextEditingController();
+
+    List<DropdownMenuItem<Object>> items = [
+      DropdownMenuItem(
+        child: Text(AppLocalizations.of(context)!.female),
+        value: 1,
+      ),
+      DropdownMenuItem(
+        child: Text(AppLocalizations.of(context)!.male),
+        value: 2,
+      ),
+      DropdownMenuItem(
+        child: Text(AppLocalizations.of(context)!.diverseGender),
+        value: 2,
+      ),
+    ];
     return Scaffold(
-      appBar: getLoginAppBar(),
+      appBar: AppBar(),
       body: LoginSignUp(
           topText: AppLocalizations.of(context)!.signup,
           buttonText: AppLocalizations.of(context)!.signup,
-          onPressed: () {
-            data.password = passwordController.text;
-            data.email = emailController.text;
-            data.phoneNumber = phoneNumberController.text;
-            signUp(data);
+          onPressed: (GlobalKey<FormState> key) {
+            if (key.currentState!.validate()) {
+              //TODO intern save all provided data
+              data.password = passwordController.text;
+              data.email = emailController.text;
+              signUp(data);
+            }
           },
           textFields: [
-            //TODO these are not all the fields we want from the user.
-            //TODO we also need: gender, liked categories, and more (see ppp)
             getCustomTextFormFieldWithPadding(
-              //TODO i10n
-              //TODO validation or maybe let aws handle validation?
-              hintText: "Phone Number",
-              iconData: Icons.phone,
-              controller: phoneNumberController,
-            ),
-            getCustomTextFormFieldWithPadding(
-              //TODO validation or maybe let aws handle validation?
+              //TODO intern email validation
               hintText: AppLocalizations.of(context)!.eMail,
               iconData: Icons.mail,
               controller: emailController,
             ),
             getCustomTextFormFieldWithPadding(
-              //TODO date picker instead of text input
-              //TODO validation or maybe let aws handle validation?
-              hintText: AppLocalizations.of(context)!.birthdate,
-              iconData: Icons.date_range,
-              controller: emailController,
+              validator: (p0) {
+                if (p0 != null) {
+                  if (p0.isEmpty) {
+                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  }
+                }
+              },
+              hintText: AppLocalizations.of(context)!.name,
+              iconData: Icons.person,
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          AppLocalizations.of(context)!.signupNameHintText),
+                    ));
+                  },
+                  icon: Icon(Icons.info_outline)),
+              controller: nameController,
             ),
             getCustomTextFormFieldWithPadding(
-              //TODO hide input chars.
+              validator: (p0) {
+                if (p0 != null) {
+                  if (p0.isEmpty) {
+                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  }
+                }
+              },
+              //TODO date picker instead of text input
+              //TODO date validation
+              hintText: AppLocalizations.of(context)!.birthdate,
+              iconData: Icons.date_range,
+              controller: birthdateController,
+            ),
+            getCustomDropdownButtonFormFieldWithPadding(
+                validator: (p0) {
+                  if (p0 != null) {
+                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  }
+                },
+                context: context,
+                iconData: Icons.accessibility_new,
+                hintText: AppLocalizations.of(context)!.gender,
+                items: items),
+            getCustomTextFormFieldWithPadding(
+              obscureText: true,
               hintText: AppLocalizations.of(context)!.password,
               iconData: Icons.password,
               controller: passwordController,
+              validator: (p0) {
+                passwordValidator(p0);
+                if (p0 != null) {
+                  if (p0.isEmpty) {
+                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  }
+                }
+              },
             ),
+            getCustomTextFormFieldWithPadding(
+                obscureText: true,
+                hintText: AppLocalizations.of(context)!.repeatPassword,
+                iconData: Icons.password,
+                controller: repeatPasswordController,
+                validator: (String? val) {
+                  if (val != null) {
+                    if (val.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
+                  }
+                  if (val != passwordController.text) {
+                    return AppLocalizations.of(context)!.repeatPasswordError;
+                  }
+                }),
           ]),
     );
   }

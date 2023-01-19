@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/login/login_data.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 
@@ -15,26 +16,32 @@ class ConfirmationScreen extends StatelessWidget {
     TextEditingController confirmController = TextEditingController();
 
     return Scaffold(
-        appBar: getLoginAppBar(),
+        appBar: AppBar(),
         body: LoginSignUp(
-          //TODO i10n
-          buttonText: "Confirm",
-          onPressed: () async {
-            data.confirmCode = confirmController.text;
-            confirm(data, context);
+          buttonText: AppLocalizations.of(context)!.confirm,
+          onPressed: (GlobalKey<FormState> key) async {
+            if (key.currentState!.validate()) {
+              data.confirmCode = confirmController.text;
+              confirm(data, context);
+            }
           },
           textFields: [
             //TODO extern only number keyboard should open here
             CustomTextFormField(
+              validator: (p0) {
+                if (p0 != null) {
+                  if (p0.isEmpty) {
+                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  }
+                }
+              },
               suffixIcon: TextButton(
-                  onPressed: () => RestService()
-                      .resendConfirmationCode(phoneNumber: data.phoneNumber!),
-                  //TODO i10n
-                  child: Text("Resend")),
+                  onPressed: () =>
+                      RestService().resendConfirmationCode(email: data.email!),
+                  child: Text(AppLocalizations.of(context)!.resend)),
               controller: confirmController,
               iconData: Icons.mail,
-              //TODO i10n
-              hintText: "Confirm Code",
+              hintText: AppLocalizations.of(context)!.confirmationCode,
             ),
           ],
         ));
