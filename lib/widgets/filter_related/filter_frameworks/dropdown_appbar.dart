@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
 class DropDownAppBar extends AppBar {
@@ -13,9 +14,17 @@ class DropDownAppBar extends AppBar {
       super.key,
       bool automaticallyImplyLeading = true})
       : super(
-            title: Text(appBarTitle),
+      title: Text(appBarTitle),
             elevation: 0,
             automaticallyImplyLeading: automaticallyImplyLeading,
+            leading: automaticallyImplyLeading
+                ? IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(Icons.arrow_back,
+                        color: Theme.of(context).colorScheme.primary))
+                : null,
             bottom: PreferredSize(
               preferredSize: const Size(double.infinity, 50),
               child: Column(
@@ -23,4 +32,3 @@ class DropDownAppBar extends AppBar {
               ),
             ));
 }
-

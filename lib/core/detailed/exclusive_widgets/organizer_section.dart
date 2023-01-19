@@ -67,6 +67,7 @@ class OrganizerSection extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
+                  // TODO (extern) email must be copyable
                   userInfo.profileEMail,
                   overflow: TextOverflow.ellipsis,
                 ),
