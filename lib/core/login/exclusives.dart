@@ -27,10 +27,16 @@ Widget getCustomTextFormFieldWithPadding(
     List<FilteringTextInputFormatter>? inputFormatters,
     String? counterText,
     Widget? suffixIcon,
+    void Function()? onTap,
+    Key? key,
+    bool enabled = true,
     dynamic initialValue}) {
   return Padding(
     padding: edgeInsets,
     child: CustomTextFormField(
+      key: key,
+      onTap: onTap,
+      enabled: enabled,
       inputFormatters: inputFormatters,
       suffixIcon: suffixIcon,
       counterText: counterText,

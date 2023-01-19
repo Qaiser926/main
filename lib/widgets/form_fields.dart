@@ -58,8 +58,12 @@ class CustomTextFormField extends TextFormField {
       bool numberInput = false,
       bool obscureText = false,
       String? counterText,
+      void Function()? onTap,
+      bool enabled = true,
       Widget? suffixIcon})
       : super(
+            onTap: onTap,
+            enabled: enabled,
             obscureText: obscureText,
             maxLines: maxLines,
             maxLength: maxLength,
@@ -74,8 +78,28 @@ class CustomTextFormField extends TextFormField {
                 contentPadding: EdgeInsets.all(5.h),
                 border: const OutlineInputBorder(),
                 hintText: hintText),
-      validator: validator,
-      onChanged: onChanged,
-      inputFormatters: inputFormatters,
-      initialValue: initialValue);
+            validator: validator,
+            onChanged: onChanged,
+            inputFormatters: inputFormatters,
+            initialValue: initialValue);
+}
+
+Future<DateTime?> pickBirthDate({
+  required BuildContext context,
+  String? initialDate,
+}) async {
+  var date = await showDatePicker(
+    context: context,
+    // TODO (extern) set locale user specific & align style
+    // locale: const getCurrentLocale(),
+    initialDate:
+        initialDate != null ? DateTime.parse(initialDate) : DateTime.now(),
+    firstDate: DateTime.now().subtract(Duration(days: 36500)),
+    lastDate: DateTime.now(),
+  );
+  if (date != null) {
+    return date;
+  } else {
+    return null;
+  }
 }

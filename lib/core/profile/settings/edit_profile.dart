@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../constants/colors.dart';
 import '../../../modules/models/user_info/user_info.dart';
+import '../../../utils/helpers/formatters.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../profile.dart';
@@ -63,12 +64,13 @@ class _EditProfileState extends State<EditProfile> {
                 bottomNavigationBar: getDeleteButton(context),
                 body: Consumer<UserInfoNotifier>(
                     builder: (context, model, child) {
-                  TextEditingController nameController = TextEditingController(
+                      TextEditingController nameController = TextEditingController(
                       text: model.newUserInfo.profileName);
                   TextEditingController emailController = TextEditingController(
                       text: model.newUserInfo.profileEMail);
                   TextEditingController birthdateController =
-                      TextEditingController(text: model.newUserInfo.birthdate);
+                      TextEditingController(
+                          text: model.newUserInfo.birthdate.toString());
                   TextEditingController genderController =
                       TextEditingController(
                           text: genderToString(
@@ -250,7 +252,7 @@ class _EditProfileState extends State<EditProfile> {
 
     return InkWell(
       onTap: () async {
-        Future dialogReturn = fieldType != FieldType.birthdate
+        Future<dynamic> dialogReturn = fieldType != FieldType.birthdate
             ? getDialog(
                 context: context,
                 initValue: controller.text,
@@ -259,7 +261,8 @@ class _EditProfileState extends State<EditProfile> {
                 validationFunction:
                     dynamicWidgets[WidgetTypes.validationFunction],
                 fieldType: fieldType)
-            : pickBirthDate(controller.value.text);
+            : pickBirthDate(
+                initialDate: controller.value.text, context: context);
         Provider.of<UserInfoNotifier>(context, listen: false).updateUserInfo(
             profileField: fieldType,
             value: fieldType == FieldType.gender
@@ -280,7 +283,8 @@ class _EditProfileState extends State<EditProfile> {
                 dynamicWidgets[WidgetTypes.title]!,
                 Text(fieldType != FieldType.birthdate
                     ? controller.text
-                    : getTimeString(controller.text)),
+                    : parseDateTimeToDDMMYYYFormat(
+                        DateTime.parse(controller.text))),
               ],
             ),
           ),
@@ -289,15 +293,6 @@ class _EditProfileState extends State<EditProfile> {
         ]),
       ),
     );
-  }
-
-  String getTimeString(String? birthday) {
-    if (birthday != null) {
-      DateTime birthdayDateTime = DateTime.parse(birthday);
-      return '${birthdayDateTime.day.toString().padLeft(2, '0')}.${birthdayDateTime.month.toString().padLeft(2, '0')}.${birthdayDateTime.year}';
-    } else {
-      return "";
-    }
   }
 
   Stack getProfilePhotoStack(UserInfo userInfo, BuildContext context) {
@@ -384,22 +379,5 @@ class _EditProfileState extends State<EditProfile> {
     return Text(headlineText,
         style:
             Theme.of(localizationAndThemeContext).primaryTextTheme.labelMedium);
-  }
-
-  Future<String?> pickBirthDate(String? initialDate) async {
-    var date = await showDatePicker(
-      context: context,
-      // TODO (extern) set locale user specific & align style
-      // locale: const getCurrentLocale(),
-      initialDate:
-          initialDate != null ? DateTime.parse(initialDate) : DateTime.now(),
-      firstDate: DateTime.now().subtract(Duration(days: 36500)),
-      lastDate: DateTime.now(),
-    );
-    if (date != null) {
-      return date.toString();
-    } else {
-      return null;
-    }
   }
 }

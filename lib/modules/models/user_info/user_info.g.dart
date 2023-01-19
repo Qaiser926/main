@@ -10,7 +10,9 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       profileName: json['profileName'] as String,
       profileEMail: json['profileEMail'] as String,
       gender: $enumDecodeNullable(_$GenderEnumMap, json['gender']),
-      birthdate: json['birthdate'] as String?,
+      birthdate: json['birthdate'] == null
+          ? null
+          : DateTime.parse(json['birthdate'] as String),
       userId: json['userId'] as String?,
       profilePhoto: json['profilePhoto'] as String?,
       activityIds: (json['activityIds'] as List<dynamic>)
@@ -24,12 +26,13 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
           .toList(),
     );
 
-Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
+    <String, dynamic>{
       'profileName': instance.profileName,
       'profileEMail': instance.profileEMail,
       'profilePhoto': instance.profilePhoto,
       'gender': _$GenderEnumMap[instance.gender],
-      'birthdate': instance.birthdate,
+      'birthdate': instance.birthdate?.toIso8601String(),
       'userId': instance.userId,
       'upcomingEventIds': instance.upcomingEventIds,
       'pastEventIds': instance.pastEventIds,

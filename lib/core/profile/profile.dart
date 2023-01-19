@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 profileEMail: "",
                 profileName: "",
                 userId: "",
-                birthdate: "",
+                birthdate: null,
                 profilePhoto: "",
                 gender: Gender.male))
         : RestService().getPublicUserInfo(organizerId: widget.userInfo!.userId);

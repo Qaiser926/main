@@ -2,21 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/login/login_data.dart';
+import 'package:othia/widgets/form_fields.dart';
 
+import '../../utils/helpers/formatters.dart';
 import 'exclusives.dart';
 
 class Signup extends StatelessWidget {
-  LoginSignupData data;
+  LoginSignupData loginSignupData;
 
-  Signup(this.data, {super.key});
+  Signup(this.loginSignupData, {super.key});
 
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController =
-        TextEditingController(text: data.email);
+        TextEditingController(text: loginSignupData.email);
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
     TextEditingController genderController = TextEditingController();
+    //the birthdate Controller just holds the value that will be shown to the user. The Value that will be parsed to the backend is saved in loginSignupData
     TextEditingController birthdateController = TextEditingController();
     TextEditingController nameController = TextEditingController();
 
@@ -31,7 +34,7 @@ class Signup extends StatelessWidget {
       ),
       DropdownMenuItem(
         child: Text(AppLocalizations.of(context)!.diverseGender),
-        value: 2,
+        value: 3,
       ),
     ];
     return Scaffold(
@@ -42,9 +45,9 @@ class Signup extends StatelessWidget {
           onPressed: (GlobalKey<FormState> key) {
             if (key.currentState!.validate()) {
               //TODO intern save all provided data
-              data.password = passwordController.text;
-              data.email = emailController.text;
-              signUp(data);
+              loginSignupData.password = passwordController.text;
+              loginSignupData.email = emailController.text;
+              signUp(loginSignupData);
             }
           },
           textFields: [
@@ -74,19 +77,32 @@ class Signup extends StatelessWidget {
                   icon: Icon(Icons.info_outline)),
               controller: nameController,
             ),
-            getCustomTextFormFieldWithPadding(
-              validator: (p0) {
-                if (p0 != null) {
-                  if (p0.isEmpty) {
-                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
-                  }
-                }
+            GestureDetector(
+              onTap: () async {
+                DateTime? foo = await pickBirthDate(context: context);
+
+                birthdateController.text = foo != null
+                    ? parseDateTimeToDDMMYYYFormat(foo)
+                    : birthdateController.text;
+                loginSignupData.birthdate = foo;
               },
-              //TODO date picker instead of text input
-              //TODO date validation
-              hintText: AppLocalizations.of(context)!.birthdate,
-              iconData: Icons.date_range,
-              controller: birthdateController,
+              behavior: HitTestBehavior.translucent,
+              child: IgnorePointer(
+                ignoring: true,
+                child: getCustomTextFormFieldWithPadding(
+                  validator: (p0) {
+                    if (p0 != null) {
+                      if (p0.isEmpty) {
+                        return AppLocalizations.of(context)!
+                            .notEmptyErrorMessage;
+                      }
+                    }
+                  },
+                  hintText: AppLocalizations.of(context)!.birthdate,
+                  iconData: Icons.date_range,
+                  controller: birthdateController,
+                ),
+              ),
             ),
             getCustomDropdownButtonFormFieldWithPadding(
                 validator: (p0) {

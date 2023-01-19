@@ -22,7 +22,7 @@ class UserInfoNotifier extends ChangeNotifier {
     String? profileName = null;
     String? profileEMail = null;
     Gender? gender = null;
-    String? birthdate = null;
+    DateTime? birthdate = null;
 
     switch (profileField) {
       case FieldType.birthdate:
