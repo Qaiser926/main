@@ -8,8 +8,6 @@ import 'package:othia/core/login/signup.dart';
 import 'exclusives.dart';
 import 'login_data.dart';
 
-//TODO overall sigup and sign in steps: provide feeback for the user after wrong inputs
-
 late BuildContext loginContext;
 
 class Login extends StatelessWidget {
