@@ -297,6 +297,8 @@
   "signup": "Sign Up",
   "login": "Login",
   "password": "Password",
+  "notYetConfirmed": "Your Mail was not yet confirmed",
+  "wrongCredentialsError": "Login failed. Check your Email and Password",
   "recoverPassword": "Recover Password",
   "repeatPassword": "Repeat Password",
   "repeatPasswordError": "Password does not match",

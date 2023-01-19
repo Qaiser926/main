@@ -94,27 +94,32 @@ void signIn(LoginSignupData loginSignupData, BuildContext context) async {
     );
     GlobalNavigationNotifier globalNot =
         Provider.of<GlobalNavigationNotifier>(context, listen: false);
-    //TODO perfomance
+    //TODO intern perfomance
     await globalNot.initializeUserLoggedIn();
     await globalNot.initializeUserId();
     globalNot.notifyListeners();
     if (globalNot.isUserLoggedIn) {
-      //TODO maybe forward to where the user was. probably very conplicated cause of state management.
+      //TODO intern maybe forward to where the user was. probably very complicated cause of state management.
       Get.to(MainPage());
     }
   } on UserNotConfirmedException catch (e) {
-    //TODO maybe show snackbar or sth
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.notYetConfirmed),
+    ));
     //forward user to confirmation page
     Get.to(ConfirmationScreen(loginSignupData), duration: Duration.zero);
   } on InvalidParameterException catch (e) {
-    //TODO somethings wrong. give feedback to the user.
-    //TODO log this OT-29
+    //TODO intern log this OT-29
   } on UserNotFoundException catch (e) {
-    //wrong email/phoneNumber
-    //TODO send feedback to the user (snackbar)
+    //wrong email
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.wrongCredentialsError),
+    ));
   } on NotAuthorizedException catch (e) {
     //wrong password
-    //TODO send feedback to the user (snackbar)
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.wrongCredentialsError),
+    ));
   } catch (e) {
     //TODO (intern) log unexpected exeption. OT-29
     print(e);
@@ -157,8 +162,7 @@ void signUp(LoginSignupData loginSignupData) async {
     //sign up was successfull. forward user to confirmation
     Get.to(ConfirmationScreen(loginSignupData));
   } on Exception catch (e) {
-    //TODO catch specific
-    //todo forward to code confirmation page
+    //TODO (intern) log unexpected exeption. OT-29
   }
 }
 
