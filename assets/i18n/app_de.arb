@@ -296,6 +296,8 @@
   "signup": "Account erstellen",
   "login": "Einloggen",
   "password": "Passwort",
+  "notYetConfirmed": "Deine Email wurde noch nicht bestätigt.",
+  "wrongCredentialsError": "Login fehlgeschlagen. Überprüfe deine Email und dein Passwort",
   "noEmailError": "Nachricht konnte nicht gesendet werden. Überprüfe deine Eingabe",
   "recoverPassword": "Passwort vergessen",
   "repeatPassword": "Passwort Wiederholen",
