@@ -38,35 +38,44 @@ class Signup extends StatelessWidget {
       ),
     ];
     bool resetError = false;
+    String? emailErrorMessage;
+    GlobalKey<EditableTextState> emailKey = GlobalKey();
     return Scaffold(
       appBar: AppBar(),
       body: LoginSignUp(
           topText: AppLocalizations.of(context)!.signup,
           buttonText: AppLocalizations.of(context)!.signup,
-          onPressed: (GlobalKey<FormState> key) {
+          onPressed: (GlobalKey<FormState> key) async {
             if (key.currentState!.validate()) {
               //TODO intern save all provided data
               loginSignupData.password = passwordController.text;
               loginSignupData.email = emailController.text;
-              signUp(loginSignupData);
+              //at the time of coding the function signUp only returns error Messages for the Email inout. if we want to add error messages for other input fields it will get a lot more complicated
+              emailErrorMessage = await signUp(loginSignupData, context);
+              key.currentState!.validate();
+              emailErrorMessage = null;
             } else {
-              Future.delayed(Duration(seconds: 3))
-                  .then((value) => key.currentState?.setState(() {
-                        resetError = true;
-                        key.currentState?.validate();
-                        resetError = false;
-                      }));
+              Future.delayed(Duration(seconds: 3)).then(
+                (value) => key.currentState?.setState(() {
+                  resetError = true;
+                  key.currentState?.validate();
+                  resetError = false;
+                }),
+              );
             }
           },
           textFields: [
             getCustomTextFormFieldWithPadding(
-              //TODO intern email validation
+              key: emailKey,
+              //TODO extern remove spaces after email
               hintText: AppLocalizations.of(context)!.eMail,
               iconData: Icons.mail,
               controller: emailController,
               validator: (p0) {
                 if (resetError) {
                   return null;
+                } else if (emailErrorMessage != null) {
+                  return emailErrorMessage;
                 } else {
                   if (p0 != null) {
                     if (p0.isEmpty) {
@@ -154,7 +163,10 @@ class Signup extends StatelessWidget {
                 if (resetError) {
                   return null;
                 } else {
-                  passwordValidator(p0);
+                  String? result = passwordValidator(p0);
+                  if (result != null) {
+                    return result;
+                  }
                   if (p0 != null) {
                     if (p0.isEmpty) {
                       return AppLocalizations.of(context)!.notEmptyErrorMessage;

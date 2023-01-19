@@ -20,7 +20,7 @@ class Login extends StatelessWidget {
     loginContext = context;
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-
+    String? errorMessage;
     return Scaffold(
       appBar: AppBar(),
       body: LoginSignUp(
@@ -31,21 +31,53 @@ class Login extends StatelessWidget {
               LoginSignupData data = LoginSignupData();
               data.email = emailController.text;
               data.password = passwordController.text;
-              signIn(data, context);
+              String? result = await signIn(data, context);
+              if (result != null) {
+                errorMessage = result;
+                key.currentState?.validate();
+                errorMessage = null;
+              }
             }
           },
           textFields: [
             getCustomTextFormFieldWithPadding(
+              //TODO extern remove spaces after email
               controller: emailController,
               iconData: Icons.mail,
               hintText: AppLocalizations.of(context)!.eMail,
+              validator: (p0) {
+                if (errorMessage != null) {
+                  return errorMessage;
+                } else {
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
+                  }
+                }
+              },
             ),
             getCustomTextFormFieldWithPadding(
-                obscureText: true,
-                controller: passwordController,
-                iconData: Icons.key,
-                hintText: AppLocalizations.of(context)!.password,
-                validator: passwordValidator)
+              obscureText: true,
+              controller: passwordController,
+              iconData: Icons.key,
+              hintText: AppLocalizations.of(context)!.password,
+              validator: (p0) {
+                if (errorMessage != null) {
+                  return errorMessage;
+                } else {
+                  String? result = passwordValidator(p0);
+                  if (result != null) {
+                    return result;
+                  }
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
+                  }
+                }
+              },
+            )
           ],
           betweenButtonAndTextFields: SizedBox(
             height: 30,
@@ -57,7 +89,6 @@ class Login extends StatelessWidget {
           belowButton: Column(
             children: [
               const Divider(),
-
               getLoginSignupButton(
                   buttonText: AppLocalizations.of(context)!.signup,
                   onPressed: (key) {

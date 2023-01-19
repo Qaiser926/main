@@ -79,28 +79,18 @@ Future<void> amplifySignIn(
 
 Future<void> amplifySignUp(
     {required String password, required String email}) async {
-  try {
-    //username is a phone number based on amplify requirements
-    await Amplify.Auth.signUp(
-      username: email,
-      password: password,
-    );
-  } on AmplifyException catch (e) {
-    //TODO (intern)
-    throw Exception(e);
-  }
+  //username is a phone number based on amplify requirements
+  await Amplify.Auth.signUp(
+    username: email,
+    password: password,
+  );
 }
 
 Future<void> amplifyConfirmSignUp(
     {required String phoneNumber, required String confirmationCode}) async {
-  try {
-    //username is a phone number based on amplify requirements
-    await Amplify.Auth.confirmSignUp(
-        username: phoneNumber, confirmationCode: confirmationCode);
-  } on AmplifyException catch (e) {
-    //TODO (intern)
-    throw Exception(e);
-  }
+  //username is a phone number based on amplify requirements
+  await Amplify.Auth.confirmSignUp(
+      username: phoneNumber, confirmationCode: confirmationCode);
 }
 
 Future<void> amplifyResendConfirmationCode({required String email}) async {
