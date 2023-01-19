@@ -82,7 +82,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                   // As in detailed event or activity only the subcategory is stored, for the main category the notifier holds a variable
                   Padding(
                       padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                      child: buildDropDownFormField(
+                      child: getDropDownFormField(
                           defaultValue: widget.inputNotifier.mainCategoryId,
                           hintText:
                               AppLocalizations.of(context)!.categorizationHint,
@@ -105,7 +105,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                   if (widget.inputNotifier.mainCategoryId != null)
                     Padding(
                         padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-                        child: buildDropDownFormField(
+                        child: getDropDownFormField(
                             defaultValue:
                                 widget.inputNotifier.detailedEA.categoryId,
                             hintText: AppLocalizations.of(context)!

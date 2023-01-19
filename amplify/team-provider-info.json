@@ -15,7 +15,7 @@
       "auth": {
         "userPoolGroups": {},
         "othia834d26ce": {},
-        "othia08ac9b4c": {}
+        "othiaAuth": {}
       },
       "function": {
         "apiLambda": {

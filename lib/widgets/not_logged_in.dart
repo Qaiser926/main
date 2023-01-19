@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:othia/core/login/login_signup.dart';
+import 'package:othia/core/login/login.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +28,7 @@ Widget getNotLoggedIn(
                   child: Padding(
                       padding: EdgeInsets.all(5),
                       child: ElevatedButton(
-                          onPressed: () => Get.to(LoginSignup()),
+                          onPressed: () => Get.to(Login()),
                           child: Text("Login"))),
                 ),
               ),

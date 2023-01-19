@@ -1,7 +1,6 @@
 class LoginSignupData {
   String? password;
 
-  String? phoneNumber;
   String? userName;
   String? surname;
   String? firstname;

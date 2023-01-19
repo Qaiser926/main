@@ -68,35 +68,22 @@ Future<void> amplifyUpdatePassword(
 }
 
 Future<void> amplifySignIn(
-    {required String phoneNumber, required String password}) async {
+    {required String email, required String password}) async {
   //username is a phone number based on amplify requirements
-  await Amplify.Auth.signIn(username: phoneNumber, password: password);
-}
 
-class SignupOptionsImpl extends SignUpOptions {
-  SignupOptionsImpl({required super.userAttributes});
-
-  // String? email;
-
-  // SignupOptionsImpl({String? this.email});
-
-  @override
-  Map<String, Object?> serializeAsMap() {
-    return super.userAttributes;
-  }
+  await Amplify.Auth.signIn(
+    username: email,
+    password: password,
+  );
 }
 
 Future<void> amplifySignUp(
-    {required String phoneNumber,
-    required String password,
-    required String email}) async {
+    {required String password, required String email}) async {
   try {
     //username is a phone number based on amplify requirements
     await Amplify.Auth.signUp(
-      username: phoneNumber,
+      username: email,
       password: password,
-      options: CognitoSignUpOptions(
-          userAttributes: {CognitoUserAttributeKey.email: email}),
     );
   } on AmplifyException catch (e) {
     //TODO (intern)
@@ -116,11 +103,36 @@ Future<void> amplifyConfirmSignUp(
   }
 }
 
-Future<void> amplifyResendConfirmationCode(
-    {required String phoneNumber}) async {
+Future<void> amplifyResendConfirmationCode({required String email}) async {
   try {
     //username is a phone number based on amplify requirements
-    await Amplify.Auth.resendSignUpCode(username: phoneNumber);
+    await Amplify.Auth.resendSignUpCode(username: email);
+  } on AmplifyException catch (e) {
+    //TODO (intern)
+    throw Exception(e);
+  }
+}
+
+Future<void> amplifyResetPassword({required String email}) async {
+  try {
+    //username is a phone number based on amplify requirements
+    await Amplify.Auth.resetPassword(username: email);
+  } on AmplifyException catch (e) {
+    //TODO (intern)
+    throw Exception(e);
+  }
+}
+
+Future<void> amplifyConfirmResetPassword(
+    {required String email,
+    required String newPassword,
+    required String confirmationCode}) async {
+  try {
+    //username is a phone number based on amplify requirements
+    await Amplify.Auth.confirmResetPassword(
+        username: email,
+        confirmationCode: confirmationCode,
+        newPassword: newPassword);
   } on AmplifyException catch (e) {
     //TODO (intern)
     throw Exception(e);

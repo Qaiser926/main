@@ -195,7 +195,7 @@ class _EditProfileState extends State<EditProfile> {
                       controller: controller,
                       validator: validationFunction,
                     )
-                  : buildDropDownFormField(
+                  : getDropDownFormField(
                       context: context,
                       hintText: hint.data!,
                       dropDownList: [
