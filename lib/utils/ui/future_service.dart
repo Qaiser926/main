@@ -24,7 +24,7 @@ Widget snapshotHandler(
         //TODO (extern) implement rest error handling, please document your expected behaviour
         // throw Exception(snapshot.error);
       } else {
-        RestResponse data = snapshot.loginSignupData as RestResponse;
+        RestResponse data = snapshot.data as RestResponse;
         try {
           Map<String, dynamic> decodedJson = jsonDecode(data.body);
           functionArguments.add(decodedJson);

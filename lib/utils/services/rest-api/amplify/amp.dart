@@ -114,13 +114,8 @@ Future<void> amplifyResendConfirmationCode({required String email}) async {
 }
 
 Future<void> amplifyResetPassword({required String email}) async {
-  try {
-    //username is a phone number based on amplify requirements
-    await Amplify.Auth.resetPassword(username: email);
-  } on AmplifyException catch (e) {
-    //TODO (intern)
-    throw Exception(e);
-  }
+  //username is a phone number based on amplify requirements
+  await Amplify.Auth.resetPassword(username: email);
 }
 
 Future<void> amplifyConfirmResetPassword(

@@ -296,6 +296,7 @@
   "signup": "Account erstellen",
   "login": "Einloggen",
   "password": "Passwort",
+  "noEmailError": "Nachricht konnte nicht gesendet werden. Überprüfe deine Eingabe",
   "recoverPassword": "Passwort vergessen",
   "repeatPassword": "Passwort Wiederholen",
   "repeatPasswordError": "Passwörter stimmen nicht überein",

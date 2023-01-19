@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get/get.dart';
 
-import 'confirm_reset_password.dart';
 import 'exclusives.dart';
 import 'login_data.dart';
 
 class ResetPassword extends StatelessWidget {
   @override
+  String? errorMessage;
+
   Widget build(BuildContext context) {
     TextEditingController recoverController = TextEditingController();
     return Scaffold(
@@ -15,6 +15,17 @@ class ResetPassword extends StatelessWidget {
         body: LoginSignUp(
           textFields: [
             getCustomTextFormFieldWithPadding(
+              validator: (p0) {
+                if (errorMessage != null) {
+                  return errorMessage;
+                } else {
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
+                  }
+                }
+              },
               controller: recoverController,
               iconData: Icons.mail,
               //TODO i10n
@@ -23,12 +34,19 @@ class ResetPassword extends StatelessWidget {
           ],
           buttonText: AppLocalizations.of(context)!.recoverPassword,
           topText: AppLocalizations.of(context)!.recoverPassword,
-          onPressed: (key) {
-            LoginSignupData loginSignupData = LoginSignupData();
-            loginSignupData.email = recoverController.text;
-            resetPassword(loginSignupData);
-            Get.to(ConfirmResetPassword(loginSignupData),
-                duration: Duration.zero);
+          onPressed: (key) async {
+            if (key.currentState!.validate()) {
+              LoginSignupData loginSignupData = LoginSignupData();
+              loginSignupData.email = recoverController.text;
+              String? result = await resetPassword(loginSignupData);
+              if (result != null) {
+                key.currentState?.setState(() {
+                  errorMessage = result;
+                  key.currentState?.validate();
+                  errorMessage = null;
+                });
+              }
+            }
           },
         ));
   }

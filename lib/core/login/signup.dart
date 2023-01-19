@@ -37,6 +37,7 @@ class Signup extends StatelessWidget {
         value: 3,
       ),
     ];
+    bool resetError = false;
     return Scaffold(
       appBar: AppBar(),
       body: LoginSignUp(
@@ -48,6 +49,13 @@ class Signup extends StatelessWidget {
               loginSignupData.password = passwordController.text;
               loginSignupData.email = emailController.text;
               signUp(loginSignupData);
+            } else {
+              Future.delayed(Duration(seconds: 3))
+                  .then((value) => key.currentState?.setState(() {
+                        resetError = true;
+                        key.currentState?.validate();
+                        resetError = false;
+                      }));
             }
           },
           textFields: [
@@ -56,12 +64,27 @@ class Signup extends StatelessWidget {
               hintText: AppLocalizations.of(context)!.eMail,
               iconData: Icons.mail,
               controller: emailController,
+              validator: (p0) {
+                if (resetError) {
+                  return null;
+                } else {
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
+                  }
+                }
+              },
             ),
             getCustomTextFormFieldWithPadding(
               validator: (p0) {
-                if (p0 != null) {
-                  if (p0.isEmpty) {
-                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                if (resetError) {
+                  return null;
+                } else {
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
                   }
                 }
               },
@@ -91,10 +114,14 @@ class Signup extends StatelessWidget {
                 ignoring: true,
                 child: getCustomTextFormFieldWithPadding(
                   validator: (p0) {
-                    if (p0 != null) {
-                      if (p0.isEmpty) {
-                        return AppLocalizations.of(context)!
-                            .notEmptyErrorMessage;
+                    if (resetError) {
+                      return null;
+                    } else {
+                      if (p0 != null) {
+                        if (p0.isEmpty) {
+                          return AppLocalizations.of(context)!
+                              .notEmptyErrorMessage;
+                        }
                       }
                     }
                   },
@@ -106,8 +133,12 @@ class Signup extends StatelessWidget {
             ),
             getCustomDropdownButtonFormFieldWithPadding(
                 validator: (p0) {
-                  if (p0 != null) {
-                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  if (resetError) {
+                    return null;
+                  } else {
+                    if (p0 == null) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
                   }
                 },
                 context: context,
@@ -120,10 +151,14 @@ class Signup extends StatelessWidget {
               iconData: Icons.password,
               controller: passwordController,
               validator: (p0) {
-                passwordValidator(p0);
-                if (p0 != null) {
-                  if (p0.isEmpty) {
-                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                if (resetError) {
+                  return null;
+                } else {
+                  passwordValidator(p0);
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
                   }
                 }
               },
@@ -134,13 +169,18 @@ class Signup extends StatelessWidget {
                 iconData: Icons.password,
                 controller: repeatPasswordController,
                 validator: (String? val) {
-                  if (val != null) {
-                    if (val.isEmpty) {
-                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                  if (resetError) {
+                    return null;
+                  } else {
+                    if (val != null) {
+                      if (val.isEmpty) {
+                        return AppLocalizations.of(context)!
+                            .notEmptyErrorMessage;
+                      }
                     }
-                  }
-                  if (val != passwordController.text) {
-                    return AppLocalizations.of(context)!.repeatPasswordError;
+                    if (val != passwordController.text) {
+                      return AppLocalizations.of(context)!.repeatPasswordError;
+                    }
                   }
                 }),
           ]),

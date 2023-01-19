@@ -1,4 +1,5 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,6 +15,7 @@ import '../../utils/ui/ui_utils.dart';
 import '../../widgets/form_fields.dart';
 import '../main_page.dart';
 import 'confirm.dart';
+import 'confirm_reset_password.dart';
 import 'login.dart';
 import 'login_data.dart';
 
@@ -119,11 +121,15 @@ void signIn(LoginSignupData loginSignupData, BuildContext context) async {
   }
 }
 
-void resetPassword(LoginSignupData loginSignupData) async {
+Future<String?> resetPassword(LoginSignupData loginSignupData) async {
   try {
     await RestService().resetPassword(email: loginSignupData.email!);
-  } catch (e) {
-    //TODO
+    Get.to(ConfirmResetPassword(loginSignupData), duration: Duration.zero);
+  } on UserNotFoundException catch (e) {
+    return AppLocalizations.of(loginContext)!.noEmailError;
+  } on Exception catch (e) {
+    //TODO (intern) log unexpected exeption. OT-29
+    print(e);
   }
 }
 
@@ -192,14 +198,14 @@ class LoginSignUp extends StatelessWidget {
         child: SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           getAssetImage(
             width: 130,
             OthiaConstants.logoName,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           topText != null
@@ -211,10 +217,10 @@ class LoginSignUp extends StatelessWidget {
                     topText!,
                     style: Theme.of(context).primaryTextTheme.headlineLarge,
                   ))
-              : SizedBox(
+              : const SizedBox(
                   height: 20,
                 ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Form(
@@ -223,8 +229,8 @@ class LoginSignUp extends StatelessWidget {
               children: textFields,
             ),
           ),
-          betweenButtonAndTextFields ?? SizedBox.shrink(),
-          SizedBox(
+          betweenButtonAndTextFields ?? const SizedBox.shrink(),
+          const SizedBox(
             height: 20,
           ),
           getLoginSignupButton(

@@ -70,6 +70,7 @@ class CustomTextFormField extends TextFormField {
             controller: controller,
             keyboardType: numberInput ? TextInputType.number : null,
             decoration: InputDecoration(
+                errorStyle: TextStyle(),
                 suffixIcon: suffixIcon,
                 counterText: counterText,
                 prefixIcon: Icon(
