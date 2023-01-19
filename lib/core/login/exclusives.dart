@@ -86,7 +86,8 @@ PreferredSizeWidget getLoginAppBar() {
       ));
 }
 
-void signIn(LoginSignupData loginSignupData, BuildContext context) async {
+Future<String?> signIn(
+    LoginSignupData loginSignupData, BuildContext context) async {
   try {
     await RestService().signIn(
       email: loginSignupData.email!,
@@ -112,14 +113,10 @@ void signIn(LoginSignupData loginSignupData, BuildContext context) async {
     //TODO intern log this OT-29
   } on UserNotFoundException catch (e) {
     //wrong email
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.wrongCredentialsError),
-    ));
+    return AppLocalizations.of(context)!.wrongCredentialsError;
   } on NotAuthorizedException catch (e) {
     //wrong password
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context)!.wrongCredentialsError),
-    ));
+    return AppLocalizations.of(context)!.wrongCredentialsError;
   } catch (e) {
     //TODO (intern) log unexpected exeption. OT-29
     print(e);
@@ -133,34 +130,44 @@ Future<String?> resetPassword(LoginSignupData loginSignupData) async {
   } on UserNotFoundException catch (e) {
     return AppLocalizations.of(loginContext)!.noEmailError;
   } on Exception catch (e) {
-    //TODO (intern) log unexpected exeption. OT-29
+    //TODO (intern) log unexpected exception. OT-29
     print(e);
   }
 }
 
-void confirm(LoginSignupData loginSignupData, BuildContext context) async {
+Future<String?> confirm(
+    LoginSignupData loginSignupData, BuildContext context) async {
   try {
     await RestService().confirmSignUp(
         confirmationCode: loginSignupData.confirmCode!,
         phoneNumber: loginSignupData.email!);
-    signIn(loginSignupData, context);
+    return signIn(loginSignupData, context);
   } on CodeMismatchException catch (e) {
-    //TODO show feedback here
     //user put in the wrong auth Code
+    return AppLocalizations.of(loginContext)!.wrongCode;
   } on NotAuthorizedException catch (e) {
-    //TODO show feedback here
     //most likely user is already authorized.
+    return AppLocalizations.of(loginContext)!.probalbyAlreadyAuthorized;
   }
 }
 
-void signUp(LoginSignupData loginSignupData) async {
+Future<String?> signUp(
+    LoginSignupData loginSignupData, BuildContext context) async {
   try {
     await RestService().signUp(
       password: loginSignupData.password!,
       email: loginSignupData.email!,
     );
-    //sign up was successfull. forward user to confirmation
+    //sign up was successful. forward user to confirmation
     Get.to(ConfirmationScreen(loginSignupData));
+  } on InvalidParameterException catch (e) {
+    return AppLocalizations.of(loginContext)!.invalidMailError;
+  } on UsernameExistsException catch (e) {
+    return AppLocalizations.of(loginContext)!.emailInUse;
+  } on AmplifyException catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(loginContext)!.unspecifiedError),
+    ));
   } on Exception catch (e) {
     //TODO (intern) log unexpected exeption. OT-29
   }
@@ -252,6 +259,7 @@ Widget getLoginSignupButton(
     Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
+        //TODO (extern) align button Size
         onPressed: () => onPressed(key),
         style: ElevatedButton.styleFrom(
             elevation: 18,

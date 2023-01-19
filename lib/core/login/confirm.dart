@@ -14,7 +14,7 @@ class ConfirmationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController confirmController = TextEditingController();
-
+    String? errorMessage;
     return Scaffold(
         appBar: AppBar(),
         body: LoginSignUp(
@@ -22,16 +22,22 @@ class ConfirmationScreen extends StatelessWidget {
           onPressed: (GlobalKey<FormState> key) async {
             if (key.currentState!.validate()) {
               data.confirmCode = confirmController.text;
-              confirm(data, context);
+              errorMessage = await confirm(data, context);
+              key.currentState!.validate();
+              errorMessage = null;
             }
           },
           textFields: [
             //TODO extern only number keyboard should open here
             CustomTextFormField(
               validator: (p0) {
-                if (p0 != null) {
-                  if (p0.isEmpty) {
-                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                if (errorMessage != null) {
+                  return errorMessage;
+                } else {
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
                   }
                 }
               },
