@@ -21,7 +21,7 @@ SafeArea buildMapAppBar(
           }),
           context: context,
           appBarTitle: AppLocalizations.of(context)!.discover,
-          automaticallyImplyLeading: false),
+          automaticallyImplyLeading: true),
       body: body,
     );
   }));

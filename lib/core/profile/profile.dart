@@ -144,19 +144,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   ? AppLocalizations.of(context)!.futureHostedEvents
                   : AppLocalizations.of(context)!.futureHostedEventsOrganizer,
               Ids: model.newUserInfo.upcomingEventIds,
-              actionButtonType: ActionButtonType.settingsButton),
+              actionButtonType: isProfileView
+                  ? ActionButtonType.settingsButton
+                  : ActionButtonType.addLikeButton),
           buildVerticalDiscovery(
               caption: isProfileView
                   ? AppLocalizations.of(context)!.hostedActivities
                   : AppLocalizations.of(context)!.pastHostedEventsOrganizer,
               Ids: model.newUserInfo.activityIds,
-              actionButtonType: ActionButtonType.settingsButton),
+              actionButtonType: isProfileView
+                  ? ActionButtonType.settingsButton
+                  : ActionButtonType.addLikeButton),
           buildVerticalDiscovery(
               caption: isProfileView
                   ? AppLocalizations.of(context)!.pastHostedEvents
                   : AppLocalizations.of(context)!.hostedActivitiesOrganizer,
               Ids: model.newUserInfo.pastEventIds,
-              actionButtonType: ActionButtonType.settingsButtonDisabled)
+              actionButtonType: isProfileView
+                  ? ActionButtonType.settingsButton
+                  : ActionButtonType.addLikeButton)
         ];
         return CustomScrollView(slivers: slivers);
       }
@@ -207,6 +213,7 @@ ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
 
 Container getProfileSection(
     {required BuildContext context, required UserInfo userInfo}) {
+  // TODO (extern) email must be copyable
   return Container(
     color: bgColor,
     width: double.infinity,
