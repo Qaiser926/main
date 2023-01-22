@@ -153,6 +153,8 @@ class RestService {
 
   Future<Object> getHomePageIds() async {
     print('requesting home page ids');
+    DateTime time = DateTime.now();
+    // TODO (intern) add time to request
     RestOptions restOptions =
         RestOptions(path: '/${APIConstants.getHomePageIds}/');
     final result = await get(restOptions);

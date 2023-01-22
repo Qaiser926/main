@@ -69,7 +69,12 @@ class _HomePageState extends State<HomePage> {
         ),
         BaseDiscoveryClass(
           caption: AppLocalizations.of(context)!.popularEA,
-          Ids: homePageIds.popularEA,
+          Ids: homePageIds.popularEvents,
+          showMore: false,
+        ),
+        BaseDiscoveryClass(
+          caption: AppLocalizations.of(context)!.popularEA,
+          Ids: homePageIds.popularActivities,
           showMore: false,
         ),
         BaseDiscoveryClass(
