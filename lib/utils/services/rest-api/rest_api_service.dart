@@ -55,7 +55,7 @@ class RestService {
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.addFavouriteEventOrActivity}/$eAId',
         headers: {'token': '${token}'},
-        body: transformCMaptoBody(
+        body: transformMaptoBody(
             {"userId": userId, DataConstants.EventActivityId: eAId}));
     final result = await put(restOptions);
     return result;
@@ -154,9 +154,9 @@ class RestService {
   Future<Object> getHomePageIds() async {
     print('requesting home page ids');
     DateTime time = DateTime.now();
-    // TODO (intern) add time to request
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getHomePageIds}/');
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getHomePageIds}/',
+        body: transformMaptoBody({"user_time": time}));
     final result = await get(restOptions);
     return result;
   }
