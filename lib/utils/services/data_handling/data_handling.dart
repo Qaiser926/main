@@ -202,7 +202,8 @@ String getPriceText(
       }
     } else {
       priceText = AppLocalizations.of(context)!.priceRange(
-          roundDouble(prices[0].price!, 2), roundDouble(prices[1].price!, 2));
+          roundDouble(prices[0].price!, 2),
+          roundDouble(prices[prices.length - 1].price!, 2));
     }
   }
   return priceText;
