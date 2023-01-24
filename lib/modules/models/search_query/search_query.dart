@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/constants/categories.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
@@ -13,7 +14,7 @@ class SearchQuery {
   late double maxPrice;
   final SortCriteria? sortCriteria;
   final EAType? eAType;
-  final List<String> selectedCategoryIds;
+  late List<String> selectedCategoryIds;
 
   SearchQuery(
       {required this.startDate,
@@ -21,12 +22,19 @@ class SearchQuery {
       required this.minPrice,
       required maxPrice,
       required this.sortCriteria,
-      required this.selectedCategoryIds,
+      required List<String> selectedCategoryIds,
       required this.eAType}) {
     if (maxPrice == DataConstants.PriceRangeEnd) {
       this.maxPrice = 1000000;
     } else {
       this.maxPrice = maxPrice;
+    }
+    if (selectedCategoryIds.isEmpty) {
+      List<String> tempCategories = [];
+      categoryIdToSubcategoryIds.forEach((k, v) => tempCategories.addAll(v));
+      this.selectedCategoryIds = tempCategories;
+    } else {
+      this.selectedCategoryIds = selectedCategoryIds;
     }
   }
 

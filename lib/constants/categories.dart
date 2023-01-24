@@ -26,7 +26,6 @@ String? mapSubcategoryToCategory({required String subCategoryId}) {
       }
     }
   }
-  ;
 }
 
 class Categories {
