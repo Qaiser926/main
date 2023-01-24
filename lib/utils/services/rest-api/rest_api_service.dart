@@ -6,6 +6,7 @@ import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
+import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 
 import '../../../modules/models/user_info/user_info.dart';
 import 'amplify/amp.dart';
@@ -55,7 +56,7 @@ class RestService {
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.addFavouriteEventOrActivity}/$eAId',
         headers: {'token': '${token}'},
-        body: transformMaptoBody(
+        body: transformMapToBody(
             {"userId": userId, DataConstants.EventActivityId: eAId}));
     final result = await put(restOptions);
     return result;
@@ -107,11 +108,12 @@ class RestService {
     return result;
   }
 
-  Future<Object> getSearchResultIds({required searchQuery}) async {
+  Future<Object> getSearchResultIds({required SearchQuery searchQuery}) async {
     print('requesting ids for: ');
     //TODO (intern) define API call for several query parameters
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getSearchResultIds}/');
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getSearchResultIds}/',
+        body: transformClassToBody(searchQuery));
     final result = await get(restOptions);
     return result;
   }
@@ -156,7 +158,7 @@ class RestService {
     String time = DateTime.now().toString();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getHomePageIds}/',
-        body: transformMaptoBody({"user_time": time}));
+        body: transformMapToBody({"user_time": time}));
     final result = await get(restOptions);
     return result;
   }
