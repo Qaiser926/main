@@ -4,9 +4,9 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
+import 'package:othia/modules/models/search_query/search_query.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
-import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
 
 import '../../../modules/models/user_info/user_info.dart';
 import 'amplify/amp.dart';
@@ -109,21 +109,19 @@ class RestService {
   }
 
   Future<Object> getSearchResultIds({required SearchQuery searchQuery}) async {
-    print('requesting ids for: ');
-    //TODO (intern) define API call for several query parameters
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getSearchResultIds}/',
         body: transformClassToBody(searchQuery));
-    final result = await get(restOptions);
+    final result = await put(restOptions);
     return result;
   }
 
   Future<Object> getMapResultIds({required searchQuery}) async {
     print('requesting Map result ids');
-    //TODO (intern) define API call for several query parameters
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getMapResultIds}/');
-    final result = await get(restOptions);
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getMapResultIds}/',
+        body: transformClassToBody(searchQuery));
+    final result = await put(restOptions);
     return result;
   }
 

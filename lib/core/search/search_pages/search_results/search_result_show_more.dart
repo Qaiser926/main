@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:othia/core/search/search_pages/search_results/search_results_page.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/filter_related/filter_frameworks/dropdown_appbar.dart';
 import 'package:othia/widgets/filter_related/filter_frameworks/search_filter.dart';
@@ -16,28 +17,32 @@ class _SearchResultShowMore extends State<SearchResultShowMore> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
+      child: Scaffold(
+        primary: true,
+        body: Consumer<SearchNotifier>(builder: (context, model, child) {
+          return Scaffold(
             primary: true,
-            body: Consumer<SearchNotifier>(builder: (context, model, child) {
-              return Scaffold(
-                  primary: true,
-                  appBar: DropDownAppBar(
-                      filter: Consumer<SearchNotifier>(
-                          builder: (context, model, child) {
-                            return SearchFilter(
+            appBar: DropDownAppBar(
+                filter:
+                    Consumer<SearchNotifier>(builder: (context, model, child) {
+                  return SearchFilter(
                           context: context,
-                                dynamicProvider: Provider.of<SearchNotifier>(
-                                    context,
-                                    listen: false)).buildDropdownBar();
-                      }),
-                      context: context,
-                      appBarTitle: AppLocalizations.of(context)!.results),
-                  body: CustomScrollView(slivers: [
-                    buildVerticalDiscovery(
-                      actionButtonType: ActionButtonType.addLikeButton,
-                      Ids: model.showMoreIds,
-                    )
-                  ]));
-            })));
+                          dynamicProvider: Provider.of<SearchNotifier>(context,
+                              listen: false))
+                      .buildDropdownBar();
+                }),
+                context: context,
+                appBarTitle: AppLocalizations.of(context)!.results,
+                onBackPressed: getOnBackPressedFunction),
+            body: CustomScrollView(slivers: [
+              buildVerticalDiscovery(
+                actionButtonType: ActionButtonType.addLikeButton,
+                Ids: model.showMoreIds,
+              )
+            ]),
+          );
+        }),
+      ),
+    );
   }
 }

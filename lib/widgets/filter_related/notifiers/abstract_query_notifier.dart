@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/modules/models/search_query/search_query.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
@@ -287,21 +288,4 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
   }
 }
 
-class SearchQuery {
-  final DateTime startDate;
-  final DateTime endDate;
-  final double minPrice;
-  final double maxPrice;
-  final SortCriteria? sortCriteria;
-  final EAType? eAType;
-  final List<String> selectedCategoryIds;
 
-  SearchQuery(
-      {required this.startDate,
-      required this.endDate,
-      required this.minPrice,
-      required this.maxPrice,
-      required this.sortCriteria,
-      required this.selectedCategoryIds,
-      required this.eAType});
-}
