@@ -8,7 +8,7 @@ Uint8List transformClassToBody(dynamic obj) {
   return result;
 }
 
-Uint8List transformCMaptoBody(Map obj) {
+Uint8List transformMaptoBody(Map obj) {
   final String jsonAsString = JsonEncoder().convert(obj);
   Uint8List result = Uint8List.fromList(jsonAsString.codeUnits);
   return result;

@@ -110,7 +110,7 @@ Future<String?> signIn(
     //forward user to confirmation page
     Get.to(ConfirmationScreen(loginSignupData), duration: Duration.zero);
   } on InvalidParameterException catch (e) {
-    //TODO intern log this OT-29
+    //TODO (intern) log this OT-29
   } on UserNotFoundException catch (e) {
     //wrong email
     return AppLocalizations.of(context)!.wrongCredentialsError;

@@ -47,7 +47,7 @@ class Signup extends StatelessWidget {
           buttonText: AppLocalizations.of(context)!.signup,
           onPressed: (GlobalKey<FormState> key) async {
             if (key.currentState!.validate()) {
-              //TODO intern save all provided data
+              //TODO (intern) save all provided data
               loginSignupData.password = passwordController.text;
               loginSignupData.email = emailController.text;
               //at the time of coding the function signUp only returns error Messages for the Email inout. if we want to add error messages for other input fields it will get a lot more complicated
@@ -67,7 +67,7 @@ class Signup extends StatelessWidget {
           textFields: [
             getCustomTextFormFieldWithPadding(
               key: emailKey,
-              //TODO extern remove spaces after email
+              //TODO (extern) remove spaces after email
               hintText: AppLocalizations.of(context)!.eMail,
               iconData: Icons.mail,
               controller: emailController,
