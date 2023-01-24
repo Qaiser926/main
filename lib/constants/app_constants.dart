@@ -17,26 +17,29 @@ class WidgetConstants {
 }
 
 class APIConstants {
-  static const String deleteEA = 'deleteEA-dev';
-  static const String createEA = 'createEA-dev';
-  static const String getPrivateUserInfo = 'getUserInfo-dev';
-  static const String getPublicUserInfo = 'getPublicUserInfo-dev';
-  static const String savePrivateUserInfo = 'saveprivateuserinformation';
-  static const String getMapResultIds = 'getMapResultIds-dev';
-  static const String getSearchResultIds = 'getSearchResultIds-dev';
-  static const String getEASummary = 'getEASummary-dev';
-  static const String getEAIdsForLocation = 'getEAIdsForLocation-dev';
-  static const String getEAIdsForEventSeries = 'getMapResultIds-dev';
-  static const String getEAIdsForCategory = 'getEAIdsForCategory-dev';
-  static const String isEALikedByUser = 'isEALikedByUser-dev';
-  static const String addFavouriteEventOrActivity = 'addLikedEA-dev';
-  static const String removeFavouriteEventOrActivity = 'removeFavourite-dev';
+  static const String addFavouriteEA = 'addfavouriteea';
+  static const String createEA = 'createEA';
+  static const String deleteAccount = 'deleteAccount';
+  static const String deleteEA = 'deleteEA';
+  static const String eventDetailPath = 'event';
+  static const String getEAIdsForCategory = 'getEAIdsForCategory';
+  static const String getEAIdsForEventSeries = 'geteaidsforeventseries';
+  static const String getEAIdsForLocation = 'geteaidsforlocation';
+  static const String getEASummary = 'geteasummary';
   static const String fetchFavouriteEventsAndActivities =
-      'favouriteeventsandactivities';
-  static const String getHomePageIds = 'getHomePageIds-dev';
-  static const String deleteAccount = 'deleteaccount';
+      'getfavouriteeventsandactivities';
+  static const String getHomePageIds = 'gethomepageids';
+  static const String getHostedEA = 'gethostedea';
+  static const String getMapResultIds = 'getmapresultids';
+  static const String getPrivateUserInfo = 'getprivateuserinfo';
+  static const String getPublicUserInfo = 'getpublicuserinfo';
+  static const String getSearchResultIds = 'getsearchresultids';
+  static const String getUserInterests = 'getuserinterests ';
+  static const String isEALikedByUser = 'isealikedbyuser';
+  static const String removeFavouriteEventOrActivity = 'removefavouriteea';
+  static const String savePrivateUserInfo = 'saveprivateuserinformation';
+
   static const String organizerDetailPath = 'organizer';
-  static const String eventDetailPath = 'events';
 }
 
 class OtherConstants {

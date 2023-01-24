@@ -8,7 +8,7 @@ import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_map_result_ids/get_map_result_ids.dart';
-import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';

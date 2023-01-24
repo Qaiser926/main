@@ -13,8 +13,6 @@
     },
     "categories": {
       "auth": {
-        "userPoolGroups": {},
-        "othia834d26ce": {},
         "othiaAuth": {}
       },
       "function": {
@@ -82,7 +80,6 @@
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
           "s3Key": "amplify-builds/savePrivateUserInformation-64566e33497a49665a34-build.zip"
         },
-        "removeFavourite": {},
         "deleteEA": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
           "s3Key": "amplify-builds/deleteEA-496837564f717a75436d-build.zip"
@@ -94,7 +91,8 @@
         "getPublicUserInfo": {
           "deploymentBucketName": "amplify-othia-dev-141535-deployment",
           "s3Key": "amplify-builds/getPublicUserInfo-577a6b32785041733831-build.zip"
-        }
+        },
+        "removeFavourite": {}
       },
       "api": {
         "othiaApi": {}

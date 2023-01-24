@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/home/exclusive_widgets/map_picture.dart';
 import 'package:othia/modules/models/get_home_page_ids/get_home_page_ids.dart';
-import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';

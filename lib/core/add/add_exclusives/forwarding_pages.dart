@@ -18,7 +18,7 @@ import 'package:othia/core/main_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/helpers/diverse.dart';
-import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
