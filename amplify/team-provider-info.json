@@ -93,6 +93,9 @@
           "s3Key": "amplify-builds/getPublicUserInfo-577a6b32785041733831-build.zip"
         },
         "removeFavourite": {}
+      },
+      "api": {
+        "othiaApi": {}
       }
     }
   }

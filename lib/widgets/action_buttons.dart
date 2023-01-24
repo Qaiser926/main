@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/app_dialogs.dart';
 import '../modules/models/is_liked_ea/is_liked_ea.dart';
-import '../utils/services/data_handling/keep_alive_future_builder.dart';
+import 'keep_alive_future_builder.dart';
 
 enum ActionButtonType {
   favouriteLikeButton,

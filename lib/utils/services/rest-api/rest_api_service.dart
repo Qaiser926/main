@@ -54,7 +54,7 @@ class RestService {
     print('add favourite event or activity with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.addFavouriteEventOrActivity}/$eAId',
+        path: '/${APIConstants.addFavouriteEA}/$eAId',
         headers: {'token': '${token}'},
         body: transformMapToBody(
             {"userId": userId, DataConstants.EventActivityId: eAId}));

@@ -45,6 +45,8 @@ class ResetPassword extends StatelessWidget {
                   key.currentState?.validate();
                   errorMessage = null;
                 });
+              } else {
+                signIn(loginSignupData, context);
               }
             }
           },

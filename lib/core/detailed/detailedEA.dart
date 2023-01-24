@@ -14,7 +14,7 @@ import '../../constants/app_constants.dart';
 import '../../modules/models/detailed_event/detailed_event.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/services/data_handling/get_ical_element.dart';
-import '../../utils/services/data_handling/keep_alive_future_builder.dart';
+import '../../widgets/keep_alive_future_builder.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/future_service.dart';
 import '../../utils/ui/ui_utils.dart';

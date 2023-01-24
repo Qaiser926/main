@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../modules/models/eA_summary/eA_summary.dart';
-import '../../utils/services/data_handling/keep_alive_future_builder.dart';
+import '../keep_alive_future_builder.dart';
 import '../../utils/ui/ui_utils.dart';
 
 class BaseDiscoveryClass extends StatelessWidget {

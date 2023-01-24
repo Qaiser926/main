@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
-import 'package:othia/utils/services/data_handling/keep_alive_future_builder.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/action_buttons.dart';
