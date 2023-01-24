@@ -89,7 +89,6 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
 
   late List<String> selectedSubcategoryIds = [];
 
-
   // show more page related
   late String showMoreCaption;
   late List<String?> showMoreIds;
@@ -278,8 +277,12 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
 
   SearchQuery getSearchQuery() {
     return SearchQuery(
-        startDate: startDate,
-        endDate: endDate,
+        startDateUtc: DateTime(startDate.year, startDate.month, startDate.day,
+                startDate.hour, startDate.minute)
+            .subtract(DateTime.now().timeZoneOffset),
+        endDateUtc: DateTime(endDate.year, endDate.month, endDate.day,
+                endDate.hour, endDate.minute)
+            .subtract(DateTime.now().timeZoneOffset),
         minPrice: priceRange.start,
         maxPrice: priceRange.end,
         sortCriteria: sortCriteria,
@@ -287,5 +290,3 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
         eAType: eAType);
   }
 }
-
-

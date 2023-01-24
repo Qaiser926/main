@@ -8,8 +8,8 @@ part 'search_query.g.dart';
 
 @JsonSerializable()
 class SearchQuery {
-  final DateTime startDate;
-  final DateTime endDate;
+  final DateTime startDateUtc;
+  final DateTime endDateUtc;
   final double minPrice;
   late double maxPrice;
   final SortCriteria? sortCriteria;
@@ -17,8 +17,8 @@ class SearchQuery {
   late List<String> selectedCategoryIds;
 
   SearchQuery(
-      {required this.startDate,
-      required this.endDate,
+      {required this.startDateUtc,
+      required this.endDateUtc,
       required this.minPrice,
       required maxPrice,
       required this.sortCriteria,

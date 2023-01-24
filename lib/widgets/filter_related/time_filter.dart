@@ -74,7 +74,7 @@ class _TimeFilterState extends State<TimeFilter> {
     setState(() {
       if (args.value is PickerDateRange) {
         startDate = args.value.startDateTime;
-        endDate = args.value.endDate ?? args.value.startDateTime;
+        endDate = args.value.endDateUtc ?? args.value.startDateTime;
         thisWeekendButtonEnabled = false;
         todayButtonEnabled = false;
         tomorrowButtonEnabled = false;
