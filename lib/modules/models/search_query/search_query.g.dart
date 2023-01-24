@@ -7,8 +7,8 @@ part of 'search_query.dart';
 // **************************************************************************
 
 SearchQuery _$SearchQueryFromJson(Map<String, dynamic> json) => SearchQuery(
-      startDateUtc: DateTime.parse(json['startDate'] as String),
-      endDateUtc: DateTime.parse(json['endDate'] as String),
+      startDateUtc: DateTime.parse(json['startDateUtc'] as String),
+      endDate: DateTime.parse(json['endDate'] as String),
       minPrice: (json['minPrice'] as num).toDouble(),
       maxPrice: json['maxPrice'],
       sortCriteria:
@@ -17,12 +17,13 @@ SearchQuery _$SearchQueryFromJson(Map<String, dynamic> json) => SearchQuery(
           .map((e) => e as String)
           .toList(),
       eAType: $enumDecodeNullable(_$EATypeEnumMap, json['eAType']),
-    );
+    )..userTime = DateTime.parse(json['userTime'] as String);
 
 Map<String, dynamic> _$SearchQueryToJson(SearchQuery instance) =>
     <String, dynamic>{
-      'startDate': instance.startDateUtc.toIso8601String(),
-      'endDate': instance.endDateUtc.toIso8601String(),
+      'startDateUtc': instance.startDateUtc.toIso8601String(),
+      'endDate': instance.endDate.toIso8601String(),
+      'userTime': instance.userTime.toIso8601String(),
       'minPrice': instance.minPrice,
       'maxPrice': instance.maxPrice,
       'sortCriteria': _$SortCriteriaEnumMap[instance.sortCriteria],

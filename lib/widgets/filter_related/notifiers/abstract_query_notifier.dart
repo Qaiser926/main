@@ -280,9 +280,8 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
         startDateUtc: DateTime(startDate.year, startDate.month, startDate.day,
                 startDate.hour, startDate.minute)
             .subtract(DateTime.now().timeZoneOffset),
-        endDateUtc: DateTime(endDate.year, endDate.month, endDate.day,
-                endDate.hour, endDate.minute)
-            .subtract(DateTime.now().timeZoneOffset),
+        endDate: DateTime(endDate.year, endDate.month, endDate.day,
+            endDate.hour, endDate.minute),
         minPrice: priceRange.start,
         maxPrice: priceRange.end,
         sortCriteria: sortCriteria,

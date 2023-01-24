@@ -9,7 +9,8 @@ part 'search_query.g.dart';
 @JsonSerializable()
 class SearchQuery {
   final DateTime startDateUtc;
-  final DateTime endDateUtc;
+  final DateTime endDate;
+  late DateTime userTime;
   final double minPrice;
   late double maxPrice;
   final SortCriteria? sortCriteria;
@@ -18,12 +19,13 @@ class SearchQuery {
 
   SearchQuery(
       {required this.startDateUtc,
-      required this.endDateUtc,
+      required this.endDate,
       required this.minPrice,
       required maxPrice,
       required this.sortCriteria,
       required List<String> selectedCategoryIds,
       required this.eAType}) {
+    this.userTime = DateTime.now();
     if (maxPrice == DataConstants.PriceRangeEnd) {
       this.maxPrice = 1000000;
     } else {
