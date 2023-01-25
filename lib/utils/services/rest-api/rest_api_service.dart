@@ -157,7 +157,7 @@ class RestService {
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getHomePageIds}/',
         body: transformMaptoBody({"user_time": time}));
-    final result = await get(restOptions);
+    final result = await put(restOptions);
     return result;
   }
 
