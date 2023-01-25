@@ -8,12 +8,12 @@ import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_map_result_ids/get_map_result_ids.dart';
-import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
+import 'package:othia/widgets/keep_alive_future_buildiers/map_notifier.dart';
 import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:provider/provider.dart';
 
@@ -162,6 +162,7 @@ class _MapResultsState extends State<MapResults> {
         builder: (ctx) => GestureDetector(
               onTap: () =>
               {
+                // TODO (extern) highlight selected marker
                 setState(() {
                   eAId = locationData["id"];
                 })
@@ -181,7 +182,7 @@ class _MapResultsState extends State<MapResults> {
   List<Marker> getResultMarkers() {
     List<Marker> markerList = [];
 
-    // TODO (extern) check if user position icon gots clustered with the other icons and if so, modify code such that the user location icon is never part of a cluster
+    // TODO (extern) check if user position icon gots clustered with the other icons and if so, modify code such that the user location icon is never part of a cluster, also make sure the number of the cluster does not rotate
     markerList.add(Marker(
         width: 50.0,
         height: 500.0,
