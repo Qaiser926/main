@@ -8,7 +8,7 @@ part of 'search_query.dart';
 
 SearchQuery _$SearchQueryFromJson(Map<String, dynamic> json) => SearchQuery(
       startDateUtc: DateTime.parse(json['startDateUtc'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
+      endDateUtc: DateTime.parse(json['endDateUtc'] as String),
       minPrice: (json['minPrice'] as num).toDouble(),
       maxPrice: json['maxPrice'],
       sortCriteria:
@@ -17,12 +17,15 @@ SearchQuery _$SearchQueryFromJson(Map<String, dynamic> json) => SearchQuery(
           .map((e) => e as String)
           .toList(),
       eAType: $enumDecodeNullable(_$EATypeEnumMap, json['eAType']),
-    )..userTime = DateTime.parse(json['userTime'] as String);
+    )
+      ..timeZoneOffset = Duration(microseconds: json['timeZoneOffset'] as int)
+      ..userTime = DateTime.parse(json['userTime'] as String);
 
 Map<String, dynamic> _$SearchQueryToJson(SearchQuery instance) =>
     <String, dynamic>{
       'startDateUtc': instance.startDateUtc.toIso8601String(),
-      'endDate': instance.endDate.toIso8601String(),
+      'endDateUtc': instance.endDateUtc.toIso8601String(),
+      'timeZoneOffset': instance.timeZoneOffset.inMicroseconds,
       'userTime': instance.userTime.toIso8601String(),
       'minPrice': instance.minPrice,
       'maxPrice': instance.maxPrice,
