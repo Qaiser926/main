@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
+import 'package:othia/modules/models/search_query/search_query.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
@@ -55,7 +56,7 @@ class RestService {
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.addFavouriteEA}/$eAId',
         headers: {'token': '${token}'},
-        body: transformMaptoBody(
+        body: transformMapToBody(
             {"userId": userId, DataConstants.EventActivityId: eAId}));
     final result = await put(restOptions);
     return result;
@@ -107,21 +108,20 @@ class RestService {
     return result;
   }
 
-  Future<Object> getSearchResultIds({required searchQuery}) async {
-    print('requesting ids for: ');
-    //TODO (intern) define API call for several query parameters
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getSearchResultIds}/');
-    final result = await get(restOptions);
+  Future<Object> getSearchResultIds({required SearchQuery searchQuery}) async {
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getSearchResultIds}/',
+        body: transformClassToBody(searchQuery));
+    final result = await put(restOptions);
     return result;
   }
 
   Future<Object> getMapResultIds({required searchQuery}) async {
     print('requesting Map result ids');
-    //TODO (intern) define API call for several query parameters
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getMapResultIds}/');
-    final result = await get(restOptions);
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getMapResultIds}/',
+        body: transformClassToBody(searchQuery));
+    final result = await put(restOptions);
     return result;
   }
 
@@ -156,7 +156,7 @@ class RestService {
     String time = DateTime.now().toString();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getHomePageIds}/',
-        body: transformMaptoBody({"user_time": time}));
+        body: transformMapToBody({"user_time": time}));
     final result = await put(restOptions);
     return result;
   }

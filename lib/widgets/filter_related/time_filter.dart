@@ -10,7 +10,9 @@ import 'package:typicons_flutter/typicons_flutter.dart';
 
 import '../../utils/services/data_handling/data_handling.dart';
 import 'get_reset_apply_filter.dart';
-// TODO (extern) solve that button are only selected after the second click, this issue was not there when we first implemented this feature. This also causes that time ranges can only be selected by holding, instead of clicking on a start date and then end date
+
+// TODO (extern) solve that button are only selected after the second click, this issue was not there when we first implemented this feature. This also causes that time ranges can only be selected by holding, instead of clicking on a start date and then end date. Also make it possible to insert a date via the keyboard (make sure to enforce that the user input is transferable to datetime) and show the range highlighted in the calendar
+// TODO (extern) when selecting "Next Week" and the next week begins in the next month, it is not highlighted as it should be when going to the next month view. Selecting fields directly in the calendar is also not possible as it is only updated in visual term but does not update the notifier
 Future<dynamic> TimeFilterDialog(
     {required BuildContext context,
     required AbstractQueryNotifier dynamicProvider}) {
