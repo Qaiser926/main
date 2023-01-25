@@ -17,7 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 ## folder structure 
 
-The folder Structure is inspired by this artictle https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd
+The folder Structure is inspired by this
+artictle https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd
 
-
-
+'''
+flutter gen-l10n
+'''
