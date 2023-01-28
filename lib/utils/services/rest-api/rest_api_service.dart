@@ -30,6 +30,15 @@ class RestService {
     return result;
   }
 
+  Future<Object> getEASummary({required id}) async {
+    print('requesting summary for: $id');
+
+    RestOptions restOptions =
+        RestOptions(path: '/${APIConstants.getEASummary}/$id');
+    final result = await get(restOptions);
+    return result;
+  }
+
   Future<Object> fetchFavouriteEventsAndActivities() async {
     print('fetching event details with id');
     //TODO (intern) make user specific
@@ -99,14 +108,7 @@ class RestService {
     return result;
   }
 
-  Future<Object> getEASummary({required id}) async {
-    print('requesting summary for: $id');
 
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEASummary}/$id');
-    final result = await get(restOptions);
-    return result;
-  }
 
   Future<Object> getSearchResultIds({required SearchQuery searchQuery}) async {
     RestOptions restOptions = RestOptions(
@@ -157,7 +159,7 @@ class RestService {
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getHomePageIds}/',
         body: transformMapToBody({"user_time": time}));
-    final result = await get(restOptions);
+    final result = await put(restOptions);
     return result;
   }
 
