@@ -13,7 +13,7 @@ import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
-import 'package:othia/widgets/keep_alive_future_buildiers/map_notifier.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:provider/provider.dart';
 

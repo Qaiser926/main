@@ -8,8 +8,8 @@ class UserInfo {
   final String profileName;
   final String profileEMail;
   final String? profilePhoto;
-  final Gender? gender;
-  final DateTime? birthdate;
+  late final Gender? gender;
+  late final DateTime? birthdate;
   final String? userId;
 
   final List<String?> upcomingEventIds;
@@ -19,13 +19,17 @@ class UserInfo {
   UserInfo(
       {required this.profileName,
       required this.profileEMail,
-      required this.gender,
-      required this.birthdate,
+      required gender,
+      required birthdate,
       required this.userId,
       this.profilePhoto,
       required this.activityIds,
       required this.pastEventIds,
-      required this.upcomingEventIds});
+      required this.upcomingEventIds}) {
+    this.birthdate = DateTime.parse(birthdate);
+    this.gender =
+        Gender.values.firstWhere((e) => e.toString() == 'Gender.' + gender);
+  }
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
