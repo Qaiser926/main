@@ -26,9 +26,14 @@ class UserInfo {
       required this.activityIds,
       required this.pastEventIds,
       required this.upcomingEventIds}) {
-    this.birthdate = DateTime.parse(birthdate);
-    this.gender =
-        Gender.values.firstWhere((e) => e.toString() == 'Gender.' + gender);
+    // the cases are needed since user info can be initialized via an API call or by a notifier
+    birthdate is String
+        ? this.birthdate = DateTime.parse(birthdate)
+        : this.birthdate = birthdate;
+    gender is String
+        ? this.gender =
+            Gender.values.firstWhere((e) => e.toString() == 'Gender.' + gender)
+        : this.gender = gender;
   }
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>

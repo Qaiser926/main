@@ -9,10 +9,8 @@ part of 'user_info.dart';
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       profileName: json['profileName'] as String,
       profileEMail: json['profileEMail'] as String,
-      gender: $enumDecodeNullable(_$GenderEnumMap, json['gender']),
-      birthdate: json['birthdate'] == null
-          ? null
-          : DateTime.parse(json['birthdate'] as String),
+      gender: json['gender'],
+      birthdate: json['birthdate'],
       userId: json['userId'] as String?,
       profilePhoto: json['profilePhoto'] as String?,
       activityIds: (json['activityIds'] as List<dynamic>)
