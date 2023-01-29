@@ -52,6 +52,7 @@ class CustomTextFormField extends TextFormField {
       String? hintText,
       List<FilteringTextInputFormatter>? inputFormatters,
       TextEditingController? controller,
+      int errorMaxLines = 1,
       IconData? iconData,
       int? maxLines,
       int? maxLength,
@@ -71,6 +72,7 @@ class CustomTextFormField extends TextFormField {
             keyboardType: numberInput ? TextInputType.number : null,
             decoration: InputDecoration(
                 errorStyle: TextStyle(),
+                errorMaxLines: errorMaxLines,
                 suffixIcon: suffixIcon,
                 counterText: counterText,
                 prefixIcon: Icon(

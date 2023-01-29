@@ -59,14 +59,15 @@ class Signup extends StatelessWidget {
               Future.delayed(Duration(seconds: 3)).then(
                 (value) => key.currentState?.setState(() {
                   resetError = true;
-                      key.currentState?.validate();
-                      resetError = false;
-                    }),
+                  key.currentState?.validate();
+                  resetError = false;
+                }),
               );
             }
           },
           textFields: [
             getCustomTextFormFieldWithPadding(
+              errorMaxLines: 2,
               key: emailKey,
               //TODO (extern) remove spaces after email
               hintText: AppLocalizations.of(context)!.eMail,

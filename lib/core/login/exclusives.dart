@@ -24,6 +24,7 @@ import 'login_data.dart';
 Widget getCustomTextFormFieldWithPadding(
     {EdgeInsets edgeInsets = const EdgeInsets.only(top: 10),
     TextEditingController? controller,
+    int errorMaxLines = 1,
     required IconData iconData,
     required String hintText,
     bool obscureText = false,
@@ -38,6 +39,7 @@ Widget getCustomTextFormFieldWithPadding(
   return Padding(
     padding: edgeInsets,
     child: CustomTextFormField(
+      errorMaxLines: errorMaxLines,
       key: key,
       onTap: onTap,
       enabled: enabled,
@@ -146,7 +148,7 @@ Future<String?> confirm(
   try {
     await RestService().confirmSignUp(
         confirmationCode: loginSignupData.confirmCode!,
-        phoneNumber: loginSignupData.email!);
+        email: loginSignupData.email!);
     // confirmation successful. user is stored to data base after successful signing in (only then the id can be retrieved)
     return loginOrSignIn(loginSignupData, true, context);
   } on CodeMismatchException catch (e) {

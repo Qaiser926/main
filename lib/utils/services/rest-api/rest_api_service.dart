@@ -220,9 +220,9 @@ class RestService {
   }
 
   Future<void> confirmSignUp(
-      {required String confirmationCode, required String phoneNumber}) async {
+      {required String confirmationCode, required String email}) async {
     final result = await amplifyConfirmSignUp(
-        phoneNumber: phoneNumber, confirmationCode: confirmationCode);
+        phoneNumber: email, confirmationCode: confirmationCode);
   }
 
   Future<void> resendConfirmationCode({required String email}) async {

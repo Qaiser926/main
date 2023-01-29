@@ -284,7 +284,7 @@
   "wrongCode": "Der eingegebene Code ist falsch",
   "probalbyAlreadyAuthorized": "Etwas ist schiefgelaufen. Ist deine EMail eventuell schon bestätigt?",
   "unspecifiedError": "Etwas ist schiefgelaufen",
-  "emailInUse": "Diese Email ist schon einem Account zugeordnet",
+  "emailInUse": "Diese Email ist schon einem Account zugeordnet. Solltest du diese noch nicht bestätigt haben, kannst du diese Email-Adresse dennoch im regulären Login angeben.",
   "notYetConfirmed": "Deine Email wurde noch nicht bestätigt.",
   "wrongCredentialsError": "Login fehlgeschlagen. Überprüfe deine Email und dein Passwort",
   "noEmailError": "Nachricht konnte nicht gesendet werden. Überprüfe deine Eingabe",

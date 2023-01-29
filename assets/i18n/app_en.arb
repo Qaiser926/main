@@ -300,7 +300,7 @@
   "wrongCode": "Wrong Code",
   "probalbyAlreadyAuthorized": "Something went wrong. Maybe your Email is already confirmed?",
   "unspecifiedError": "Something went wrong",
-  "emailInUse": "This Email is already taken",
+  "emailInUse": "This Email is already taken. If you have not confirmed it yet, you can state it in the login menu anyway.",
   "invalidMailError": "invalid Email",
   "notYetConfirmed": "Your Mail has not been confirmed yet",
   "wrongCredentialsError": "Login failed. Check your Email and Password",
