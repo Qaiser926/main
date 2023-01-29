@@ -58,7 +58,7 @@ class ConfirmResetPassword extends StatelessWidget {
             getCustomTextFormFieldWithPadding(
               obscureText: true,
               hintText: AppLocalizations.of(context)!.password,
-              iconData: Icons.password,
+              iconData: Icons.key,
               controller: newPasswordController,
               validator: (p0) {
                 passwordValidator(p0);
@@ -72,7 +72,7 @@ class ConfirmResetPassword extends StatelessWidget {
             getCustomTextFormFieldWithPadding(
                 obscureText: true,
                 hintText: AppLocalizations.of(context)!.repeatPassword,
-                iconData: Icons.password,
+                iconData: Icons.key,
                 controller: repeatPasswordController,
                 validator: (String? val) {
                   if (val != null) {
