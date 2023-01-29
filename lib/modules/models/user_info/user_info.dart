@@ -6,7 +6,7 @@ part 'user_info.g.dart';
 @JsonSerializable()
 class UserInfo {
   final String profileName;
-  final String profileEMail;
+  final String profileEmail;
   final String? profilePhoto;
   late final Gender? gender;
   late final DateTime? birthdate;
@@ -18,7 +18,7 @@ class UserInfo {
 
   UserInfo(
       {required this.profileName,
-      required this.profileEMail,
+      required this.profileEmail,
       required gender,
       required birthdate,
       required this.userId,

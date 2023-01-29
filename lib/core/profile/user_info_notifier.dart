@@ -20,7 +20,7 @@ class UserInfoNotifier extends ChangeNotifier {
 
   void updateUserInfo({String? image, FieldType? profileField, dynamic value}) {
     String? profileName = null;
-    String? profileEMail = null;
+    String? profileEmail = null;
     Gender? gender = null;
     DateTime? birthdate = null;
 
@@ -47,7 +47,7 @@ class UserInfoNotifier extends ChangeNotifier {
     _newUserInfo = UserInfo(
         userId: _newUserInfo.userId,
         profileName: profileName ?? _newUserInfo.profileName,
-        profileEMail: profileEMail ?? _newUserInfo.profileEMail,
+        profileEmail: profileEmail ?? _newUserInfo.profileEmail,
         profilePhoto: image ?? _newUserInfo.profilePhoto,
         activityIds: _newUserInfo.activityIds,
         pastEventIds: _newUserInfo.pastEventIds,

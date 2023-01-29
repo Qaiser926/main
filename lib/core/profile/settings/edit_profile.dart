@@ -67,7 +67,7 @@ class _EditProfileState extends State<EditProfile> {
                       TextEditingController nameController = TextEditingController(
                       text: model.newUserInfo.profileName);
                   TextEditingController emailController = TextEditingController(
-                      text: model.newUserInfo.profileEMail);
+                      text: model.newUserInfo.profileEmail);
                   TextEditingController birthdateController =
                       TextEditingController(
                           text: model.newUserInfo.birthdate.toString());
