@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
 import '../../constants/colors.dart';
+import '../../modules/models/user_info/user_info.dart';
 import '../../utils/services/global_navigation_notifier.dart';
+import '../../utils/services/rest-api/amplify/amp.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../../widgets/form_fields.dart';
@@ -58,6 +60,7 @@ Widget getCustomDropdownButtonFormFieldWithPadding({
   required List<DropdownMenuItem<Object>> items,
   required String hintText,
   required IconData iconData,
+  required void Function(Object?) onChangedFunction,
   String? Function(Object?)? validator,
   EdgeInsets edgeInsets = const EdgeInsets.only(top: 10),
 }) {
@@ -67,7 +70,7 @@ Widget getCustomDropdownButtonFormFieldWithPadding({
           validator: validator,
           hint: Text(hintText),
           items: items,
-          onChanged: (value) {},
+          onChanged: onChangedFunction,
           decoration: InputDecoration(
               prefixIcon: Icon(iconData),
               contentPadding: EdgeInsets.all(5.h),
@@ -86,16 +89,19 @@ PreferredSizeWidget getLoginAppBar() {
       ));
 }
 
-Future<String?> signIn(
-    LoginSignupData loginSignupData, BuildContext context) async {
+Future<String?> loginOrSignIn(LoginSignupData loginSignupData, bool isSignUp,
+    BuildContext context) async {
   try {
     await RestService().signIn(
       email: loginSignupData.email!,
       password: loginSignupData.password!,
     );
+    if (isSignUp) {
+      storeUserDataToDB(loginSignupData);
+    }
     GlobalNavigationNotifier globalNot =
         Provider.of<GlobalNavigationNotifier>(context, listen: false);
-    //TODO intern perfomance
+    //TODO intern performance
     await globalNot.initializeUserLoggedIn();
     await globalNot.initializeUserId();
     globalNot.notifyListeners();
@@ -141,7 +147,8 @@ Future<String?> confirm(
     await RestService().confirmSignUp(
         confirmationCode: loginSignupData.confirmCode!,
         phoneNumber: loginSignupData.email!);
-    return signIn(loginSignupData, context);
+    // confirmation successful. user is stored to data base after successful signing in (only then the id can be retrieved)
+    return loginOrSignIn(loginSignupData, true, context);
   } on CodeMismatchException catch (e) {
     //user put in the wrong auth Code
     return AppLocalizations.of(loginContext)!.wrongCode;
@@ -149,6 +156,26 @@ Future<String?> confirm(
     //most likely user is already authorized.
     return AppLocalizations.of(loginContext)!.probalbyAlreadyAuthorized;
   }
+}
+
+UserInfo mapLogInDataToUserInfo(
+    LoginSignupData loginSignupData, String userId) {
+  return UserInfo(
+      userId: userId,
+      gender: loginSignupData.gender,
+      birthdate: loginSignupData.birthdate,
+      profileName: loginSignupData.userName!,
+      profileEMail: loginSignupData.email!,
+      upcomingEventIds: [],
+      pastEventIds: [],
+      activityIds: []);
+}
+
+Future<void> storeUserDataToDB(LoginSignupData loginSignupData) async {
+  String userId = await getUserId();
+  UserInfo userInfo = mapLogInDataToUserInfo(loginSignupData, userId);
+  // TODO (extern) error handling
+  RestService().savePrivateUserInfo(userInfo: userInfo);
 }
 
 Future<String?> signUp(
