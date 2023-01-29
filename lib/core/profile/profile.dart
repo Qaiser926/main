@@ -11,11 +11,11 @@ import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/helpers/diverse.dart';
-import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/action_buttons.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
 import 'package:provider/provider.dart';
@@ -45,10 +45,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ? globalNot.isUserLoggedIn
             ? RestService().getPrivateUserInfo(userId: globalNot.userId)
             : Future.value(UserInfo(
-                activityIds: [],
+        activityIds: [],
                 pastEventIds: [],
                 upcomingEventIds: [],
-                profileEMail: "",
+                profileEmail: "",
                 profileName: "",
                 userId: "",
                 birthdate: null,
@@ -229,7 +229,7 @@ Container getProfileSection(
         ),
         getVerSpace(15.h),
         Text(
-          userInfo.profileEMail,
+          userInfo.profileEmail,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         getVerSpace(20.h),

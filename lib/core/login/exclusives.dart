@@ -167,7 +167,7 @@ UserInfo mapLogInDataToUserInfo(
       gender: loginSignupData.gender,
       birthdate: loginSignupData.birthdate,
       profileName: loginSignupData.userName!,
-      profileEMail: loginSignupData.email!,
+      profileEmail: loginSignupData.email!,
       upcomingEventIds: [],
       pastEventIds: [],
       activityIds: []);
