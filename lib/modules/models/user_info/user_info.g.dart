@@ -24,7 +24,8 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
           .toList(),
     );
 
-Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
+    <String, dynamic>{
       'profileName': instance.profileName,
       'profileEmail': instance.profileEmail,
       'profilePhoto': instance.profilePhoto,
