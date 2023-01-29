@@ -75,9 +75,11 @@ class CustomTextFormField extends TextFormField {
                 errorMaxLines: errorMaxLines,
                 suffixIcon: suffixIcon,
                 counterText: counterText,
-                prefixIcon: Icon(
-                  iconData,
-                ),
+                prefixIcon: iconData != null
+                    ? Icon(
+                        iconData,
+                      )
+                    : null,
                 contentPadding: EdgeInsets.all(5.h),
                 border: const OutlineInputBorder(),
                 hintText: hintText),
