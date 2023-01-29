@@ -12,7 +12,8 @@ Future<void> _launchUrl(_url) async {
   }
 }
 
-Widget? getMoreInformationButton({String? websiteUrl, String? ticketUrl, required BuildContext context}) {
+Widget? getMoreInformationButton(
+    {String? websiteUrl, String? ticketUrl, required BuildContext context}) {
   if (ticketUrl != null) {
     return Expanded(
         child: Padding(
@@ -33,18 +34,26 @@ Widget? getMoreInformationButton({String? websiteUrl, String? ticketUrl, require
 
 Widget? getCalendarButton({required BuildContext context, Event? iCalElement}) {
   if (iCalElement != null) {
-    return Expanded(child: Padding(padding: EdgeInsets.all(5), child: ElevatedButton(
-        onPressed: () => Add2Calendar.addEvent2Cal(iCalElement),
-        child: Text(AppLocalizations.of(context)!.calendar))));
+    return Expanded(
+        child: Padding(
+            padding: EdgeInsets.all(5),
+            child: ElevatedButton(
+                onPressed: () => Add2Calendar.addEvent2Cal(iCalElement),
+                child: Text(AppLocalizations.of(context)!.calendar))));
   }
 }
 
 Widget? getShareButton({required BuildContext context, String? shareUrl}) {
   if (shareUrl != null) {
-    return Expanded(child: Padding(padding: EdgeInsets.all(5), child: ElevatedButton(
-        onPressed: () => openShare(
-                  '${AppLocalizations.of(context)!.shareMessage} $shareUrl'),
-        child: Text(AppLocalizations.of(context)!.share))),);
+    return Expanded(
+      child: Padding(
+          padding: EdgeInsets.all(5),
+          child: ElevatedButton(
+              onPressed: () => openShare(
+                  '${AppLocalizations.of(context)!.shareMessage} $shareUrl',
+                  context),
+              child: Text(AppLocalizations.of(context)!.share))),
+    );
   }
 }
 
@@ -54,18 +63,19 @@ class ButtonWidget extends StatelessWidget {
   Event? iCalElement;
   String? shareUrl;
 
-  ButtonWidget({super.key,
-    this.websiteUrl,
-    this.ticketUrl,
-    this.iCalElement,
-    this.shareUrl});
+  ButtonWidget(
+      {super.key,
+      this.websiteUrl,
+      this.ticketUrl,
+      this.iCalElement,
+      this.shareUrl});
 
   @override
   Widget build(BuildContext context) {
     Widget? moreInformationButton = getMoreInformationButton(
         context: context, ticketUrl: ticketUrl, websiteUrl: websiteUrl);
     Widget? calendarButton =
-    getCalendarButton(context: context, iCalElement: iCalElement);
+        getCalendarButton(context: context, iCalElement: iCalElement);
     Widget? shareButton = getShareButton(context: context, shareUrl: shareUrl);
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.h),

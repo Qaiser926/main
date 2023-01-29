@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ? globalNot.isUserLoggedIn
             ? RestService().getPrivateUserInfo(userId: globalNot.userId)
             : Future.value(UserInfo(
-        activityIds: [],
+                activityIds: [],
                 pastEventIds: [],
                 upcomingEventIds: [],
                 profileEmail: "",
@@ -88,15 +88,15 @@ class _ProfilePageState extends State<ProfilePage> {
                               Icons.settings,
                               size: 24.h,
                             ))
-                        : GestureDetector(
-                            onTap: () {
-                              openShare(organizerShareLinkBuilder(
-                                  widget.userInfo!.userId!));
-                            },
-                            child: Icon(
-                              Icons.share,
-                              size: 24.h,
-                            )),
+                        : Container(),
+                    GestureDetector(
+                        onTap: () {
+                          openShare('organizerShareLinkBuilder', context);
+                        },
+                        child: Icon(
+                          Icons.share,
+                          size: 24.h,
+                        )),
                     getHorSpace(20.h)
                   ],
                   automaticallyImplyLeading: false),
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ? getLoggedInSensitiveBody(
                       context: context,
                       loggedInWidget: profilePageFutureBuilder(context),
-                      )
+                    )
                   : profilePageFutureBuilder(context));
         },
       ),

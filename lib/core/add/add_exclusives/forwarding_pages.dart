@@ -128,7 +128,8 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       children: [
         getButton(
             onTap: () {
-              openShare('${eAShareLinkBuilder(widget.detailedEA.id!)}');
+              openShare(
+                  '${eAShareLinkBuilder(widget.detailedEA.id!)}', context);
             },
             caption: Padding(
               padding: EdgeInsets.all(8.h),
@@ -192,7 +193,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
             ],
           )
         : Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
                   onPressed: () {
