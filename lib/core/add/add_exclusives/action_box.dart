@@ -47,7 +47,8 @@ class ActionBox extends StatelessWidget {
                 final String shareLink =
                     eAShareLinkBuilder(inputNotifier.detailedEA.id!);
                 openShare(
-                    '${AppLocalizations.of(context)!.shareMessage} $shareLink');
+                    '${AppLocalizations.of(context)!.shareMessage} $shareLink',
+                    context);
               },
               icon: Icons.share),
         ],
