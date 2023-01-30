@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,51 +23,50 @@ class PricePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
-      return Column(
-        // TODO (extern) make each price row (containing of label, price and cross) scrollable
-        children: [
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: inputNotifierConsumer.detailedEA.prices!.length,
-              itemBuilder: (context, index) {
-                return buildPriceRow(
-                    index: index,
-                    context: context,
-                    inputPrice: inputNotifierConsumer.detailedEA.prices![index],
-                    inputNotifierConsumer: inputNotifierConsumer);
-              }),
-          getVerSpace(5.h),
-          GestureDetector(
-            onTap: () {
-              dismissKeyboard();
-              inputNotifierConsumer.detailedEA.prices!.add(Price());
-              inputNotifier.notifyListeners();
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 5.h),
-                  child: Text(
-                    AppLocalizations.of(context)!.addPriceGroup,
-                    style:
+          return Column(
+            // TODO (extern) make each price row (containing of label, price and cross) scrollable
+            children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: inputNotifierConsumer.detailedEA.prices!.length,
+                  itemBuilder: (context, index) {
+                    return buildPriceRow(
+                        index: index,
+                        context: context,
+                        inputPrice: inputNotifierConsumer.detailedEA.prices![index],
+                        inputNotifierConsumer: inputNotifierConsumer);
+                  }),
+              getVerSpace(5.h),
+              GestureDetector(
+                onTap: () {
+                  dismissKeyboard();
+                  inputNotifierConsumer.detailedEA.prices!.add(Price());
+                  inputNotifier.notifyListeners();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 5.h),
+                      child: Text(
+                        AppLocalizations.of(context)!.addPriceGroup,
+                        style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
-                  ),
+                      ),
+                    ),
+                    Icon(Icons.add)
+                  ],
                 ),
-                Icon(Icons.add)
-              ],
-            ),
-          )
-        ],
-      );
-    });
+              )
+            ],
+          );
+        });
   }
 
-  Widget buildPriceRow(
-      {required int index,
-      required Price inputPrice,
-      required AddEANotifier inputNotifierConsumer,
-      required BuildContext context}) {
+  Widget buildPriceRow({required int index,
+    required Price inputPrice,
+    required AddEANotifier inputNotifierConsumer,
+    required BuildContext context}) {
     return Padding(
       padding: EdgeInsets.only(top: 5.h),
       child: Row(
@@ -78,19 +79,19 @@ class PricePicker extends StatelessWidget {
                     controller: inputPrice.label == null
                         ? null
                         : TextEditingController(
-                            text: inputPrice.label,
-                          ),
+                      text: inputPrice.label,
+                    ),
                     onChanged: (label) {
                       inputNotifierConsumer.detailedEA.prices![index].label =
-                          label.substring(0, DataConstants.MaxPriceLength);
-                      inputNotifierConsumer.notifyListeners();
+                          label.substring(0,
+                              min(label.length, DataConstants.MaxPriceLength));
                     },
                     maxLines: 1,
                     decoration: new InputDecoration(
                         contentPadding: EdgeInsets.all(5.h),
                         border: OutlineInputBorder(),
                         hintText:
-                            AppLocalizations.of(context)!.priceLabelHintText),
+                        AppLocalizations.of(context)!.priceLabelHintText),
                   ))),
           Expanded(
             flex: 1,
@@ -101,7 +102,7 @@ class PricePicker extends StatelessWidget {
                       ? null
                       : TextEditingController(
                           text: inputPrice.price.toString(),
-                        ),
+                  ),
                   inputFormatters: <TextInputFormatter>[
                     CurrencyTextInputFormatter(
                       locale: 'de',
