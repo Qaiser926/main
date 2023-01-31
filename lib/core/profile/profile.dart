@@ -9,7 +9,6 @@ import 'package:othia/core/profile/settings.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
-import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
@@ -89,14 +88,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               size: 24.h,
                             ))
                         : Container(),
-                    GestureDetector(
-                        onTap: () {
-                          openShare('organizerShareLinkBuilder', context);
-                        },
-                        child: Icon(
-                          Icons.share,
-                          size: 24.h,
-                        )),
+                    isProfileView
+                        ? SizedBox()
+                        : GestureDetector(
+                            onTap: () {
+                              openShare('organizerShareLinkBuilder', context);
+                            },
+                            child: Icon(
+                              Icons.share,
+                              size: 24.h,
+                            )),
                     getHorSpace(20.h)
                   ],
                   automaticallyImplyLeading: false),
