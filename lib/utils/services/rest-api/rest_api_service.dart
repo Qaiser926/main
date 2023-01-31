@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
@@ -32,7 +33,6 @@ class RestService {
 
   Future<Object> getEASummary({required id}) async {
     print('requesting summary for: $id');
-
     RestOptions restOptions =
         RestOptions(path: '/${APIConstants.getEASummary}/$id');
     final result = await get(restOptions);
@@ -155,11 +155,11 @@ class RestService {
 
   Future<Object> getHomePageIds() async {
     print('requesting home page ids');
-    String time = DateTime.now().toString();
+    String time = DateFormat('yyyy-MM-ddThh:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.getHomePageIds}/',
-        body: transformMapToBody({"user_time": time}));
-    final result = await put(restOptions);
+      path: '/${APIConstants.getHomePageIds}/$time',
+    );
+    final result = await get(restOptions);
     return result;
   }
 
@@ -176,6 +176,7 @@ class RestService {
   }
 
   Future<Object> deleteAccount(String userId) async {
+    // TODO: run amazon functions
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.deleteAccount}/$userId',
@@ -219,9 +220,9 @@ class RestService {
   }
 
   Future<void> confirmSignUp(
-      {required String confirmationCode, required String phoneNumber}) async {
+      {required String confirmationCode, required String email}) async {
     final result = await amplifyConfirmSignUp(
-        phoneNumber: phoneNumber, confirmationCode: confirmationCode);
+        phoneNumber: email, confirmationCode: confirmationCode);
   }
 
   Future<void> resendConfirmationCode({required String email}) async {

@@ -6,10 +6,10 @@ part 'user_info.g.dart';
 @JsonSerializable()
 class UserInfo {
   final String profileName;
-  final String profileEMail;
+  final String profileEmail;
   final String? profilePhoto;
-  final Gender? gender;
-  final DateTime? birthdate;
+  late final Gender? gender;
+  late final DateTime? birthdate;
   final String? userId;
 
   final List<String?> upcomingEventIds;
@@ -18,14 +18,23 @@ class UserInfo {
 
   UserInfo(
       {required this.profileName,
-      required this.profileEMail,
-      required this.gender,
-      required this.birthdate,
+      required this.profileEmail,
+      required gender,
+      required birthdate,
       required this.userId,
       this.profilePhoto,
       required this.activityIds,
       required this.pastEventIds,
-      required this.upcomingEventIds});
+      required this.upcomingEventIds}) {
+    // the cases are needed since user info can be initialized via an API call or by a notifier
+    birthdate is String
+        ? this.birthdate = DateTime.parse(birthdate)
+        : this.birthdate = birthdate;
+    gender is String
+        ? this.gender =
+            Gender.values.firstWhere((e) => e.toString() == 'Gender.' + gender)
+        : this.gender = gender;
+  }
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);

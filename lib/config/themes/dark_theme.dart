@@ -37,7 +37,7 @@ ThemeData getDarkThemeData() {
     ),
     tabBarTheme: TabBarTheme(
       splashFactory: NoSplash.splashFactory,
-      overlayColor: NoAnimationColor(),
+      overlayColor: const NoAnimationColor(),
       indicator: BoxDecoration(
         borderRadius: BorderRadius.circular(44.h),
         color: primaryColor,
@@ -61,8 +61,8 @@ ThemeData getDarkThemeData() {
           const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
       headlineLarge:
           TextStyle(fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h),
-      labelSmall: TextStyle(overflow: TextOverflow.visible),
-      labelMedium: TextStyle(color: Colors.grey),
+      labelSmall: const TextStyle(overflow: TextOverflow.visible),
+      labelMedium: const TextStyle(color: Colors.grey),
     ),
 
     /// Text with a color that contrasts with the card and canvas colors.

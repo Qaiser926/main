@@ -19,7 +19,7 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        'body': json.dumps({"profileName": "Mattis Kunstmann", "profileEMail": "mattis.kunstmann@outlook.com",
+        'body': json.dumps({"profileName": "Mattis Kunstmann", "profileEmail": "mattis.kunstmann@outlook.com",
                             "profilePhoto": photo_binary,
                             "userId": "Ich-bin-eine-UUID",
                             "upcomingEventIds": ["1", "1"],

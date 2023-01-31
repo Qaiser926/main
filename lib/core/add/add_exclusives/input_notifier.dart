@@ -34,11 +34,11 @@ class AddEANotifier extends ChangeNotifier {
   String? mainCategoryId;
 
   // Level parameters
-  int physicalLevel = 2;
+  int physicalLevel = 0;
   bool physicalLevelActivated = false;
-  int cognitiveLevel = 2;
+  int cognitiveLevel = 0;
   bool cognitiveLevelActivated = false;
-  int socialLevel = 2;
+  int socialLevel = 0;
   bool socialLevelActivated = false;
   int singlePersonEligibility = 0;
   bool singlePersonEligibilityActivated = false;

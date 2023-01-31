@@ -4,10 +4,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/login/login_data.dart';
 import 'package:othia/widgets/form_fields.dart';
 
+import '../../modules/models/shared_data_models.dart';
 import '../../utils/helpers/formatters.dart';
 import 'exclusives.dart';
 
 class Signup extends StatelessWidget {
+  //the birthdate Controller just holds the value that will be shown to the user. The Value that will be parsed to the backend is saved in loginSignupData
+  TextEditingController birthdateController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   LoginSignupData loginSignupData;
 
   Signup(this.loginSignupData, {super.key});
@@ -19,22 +23,19 @@ class Signup extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
     TextEditingController genderController = TextEditingController();
-    //the birthdate Controller just holds the value that will be shown to the user. The Value that will be parsed to the backend is saved in loginSignupData
-    TextEditingController birthdateController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
 
     List<DropdownMenuItem<Object>> items = [
       DropdownMenuItem(
         child: Text(AppLocalizations.of(context)!.female),
-        value: 1,
+        value: Gender.female,
       ),
       DropdownMenuItem(
         child: Text(AppLocalizations.of(context)!.male),
-        value: 2,
+        value: Gender.male,
       ),
       DropdownMenuItem(
         child: Text(AppLocalizations.of(context)!.diverseGender),
-        value: 3,
+        value: Gender.diverse,
       ),
     ];
     bool resetError = false;
@@ -46,8 +47,8 @@ class Signup extends StatelessWidget {
           topText: AppLocalizations.of(context)!.signup,
           buttonText: AppLocalizations.of(context)!.signup,
           onPressed: (GlobalKey<FormState> key) async {
+            loginSignupData.userName = this.nameController.text;
             if (key.currentState!.validate()) {
-              //TODO (intern) save all provided data
               loginSignupData.password = passwordController.text;
               loginSignupData.email = emailController.text;
               //at the time of coding the function signUp only returns error Messages for the Email inout. if we want to add error messages for other input fields it will get a lot more complicated
@@ -66,6 +67,7 @@ class Signup extends StatelessWidget {
           },
           textFields: [
             getCustomTextFormFieldWithPadding(
+              errorMaxLines: 2,
               key: emailKey,
               //TODO (extern) remove spaces after email
               hintText: AppLocalizations.of(context)!.eMail,
@@ -111,12 +113,13 @@ class Signup extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                DateTime? foo = await pickBirthDate(context: context);
+                DateTime? pickedBirthDate =
+                    await pickBirthDate(context: context);
 
-                birthdateController.text = foo != null
-                    ? parseDateTimeToDDMMYYYFormat(foo)
+                birthdateController.text = pickedBirthDate != null
+                    ? parseDateTimeToDDMMYYYFormat(pickedBirthDate)
                     : birthdateController.text;
-                loginSignupData.birthdate = foo;
+                loginSignupData.birthdate = pickedBirthDate;
               },
               behavior: HitTestBehavior.translucent,
               child: IgnorePointer(
@@ -141,6 +144,9 @@ class Signup extends StatelessWidget {
               ),
             ),
             getCustomDropdownButtonFormFieldWithPadding(
+                onChangedFunction: (value) {
+                  loginSignupData.gender = value;
+                },
                 validator: (p0) {
                   if (resetError) {
                     return null;
@@ -157,7 +163,7 @@ class Signup extends StatelessWidget {
             getCustomTextFormFieldWithPadding(
               obscureText: true,
               hintText: AppLocalizations.of(context)!.password,
-              iconData: Icons.password,
+              iconData: Icons.key,
               controller: passwordController,
               validator: (p0) {
                 if (resetError) {
@@ -178,7 +184,7 @@ class Signup extends StatelessWidget {
             getCustomTextFormFieldWithPadding(
                 obscureText: true,
                 hintText: AppLocalizations.of(context)!.repeatPassword,
-                iconData: Icons.password,
+                iconData: Icons.key,
                 controller: repeatPasswordController,
                 validator: (String? val) {
                   if (resetError) {

@@ -6,4 +6,5 @@ class LoginSignupData {
   DateTime? birthdate;
   String? email;
   String? confirmCode;
+  Object? gender;
 }

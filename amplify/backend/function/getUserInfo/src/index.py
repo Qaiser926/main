@@ -21,7 +21,7 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        'body': json.dumps({"profileName": "Mattis Kunstmann", "profileEMail": "mattis.kunstmann@outlook.com",
+        'body': json.dumps({"profileName": "Mattis Kunstmann", "profileEmail": "mattis.kunstmann@outlook.com",
                             "userId": "Ich-bin-eine-UUID",
                             # gener can only be Strings male, female or diverse or None
                             "profilePhoto": photo_binary, "gender": "male", "birthdate": str(datetime.datetime(year=1997, month=5, day=10)),

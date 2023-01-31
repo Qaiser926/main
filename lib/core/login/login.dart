@@ -26,10 +26,10 @@ class Login extends StatelessWidget {
           topText: AppLocalizations.of(context)!.login,
           onPressed: (GlobalKey<FormState> key) async {
             if (key.currentState!.validate()) {
-              LoginSignupData data = LoginSignupData();
-              data.email = emailController.text;
-              data.password = passwordController.text;
-              String? result = await signIn(data, context);
+              LoginSignupData loginData = LoginSignupData();
+              loginData.email = emailController.text;
+              loginData.password = passwordController.text;
+              String? result = await loginOrSignIn(loginData, true, context);
               if (result != null) {
                 errorMessage = result;
                 key.currentState?.validate();

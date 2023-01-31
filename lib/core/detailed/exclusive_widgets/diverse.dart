@@ -75,7 +75,8 @@ class IconRow extends StatelessWidget {
               onTap: () {
                 final String shareLink = eAShareLinkBuilder(eAId);
                 openShare(
-                    '${AppLocalizations.of(context)!.shareMessage} $shareLink');
+                    '${AppLocalizations.of(context)!.shareMessage} $shareLink',
+                    context);
               },
               child: const Icon(
                 Icons.share,

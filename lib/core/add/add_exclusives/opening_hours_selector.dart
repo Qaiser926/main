@@ -338,7 +338,15 @@ Future displayTimePicker(
             info: AppLocalizations.of(context)!.openingHoursErrorMessage,
             context: context);
       } else {
-        inputNotifier.getOpeningTimesList()[listIndex][1] = transformedTime;
+        // getOpeningTimesList() directly returns the list for the correct weekday
+        List openingTimes = inputNotifier.getOpeningTimesList();
+        openingTimes[listIndex][1] = transformedTime;
+        // loop through list to remove 24h open hour case
+        for (var i = 0; i < openingTimes.length; i++) {
+          if ((openingTimes[i]![0] == 0) | (openingTimes[i]![1] == 0)) {
+            openingTimes.removeAt(i);
+          }
+        }
       }
     }
     inputNotifier.notifyListeners();

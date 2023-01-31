@@ -6,10 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/core/profile/profile.dart';
 import 'package:othia/modules/models/user_info/user_info.dart';
-import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 
 class OrganizerSection extends StatelessWidget {
   String organizerId;
@@ -68,7 +68,7 @@ class OrganizerSection extends StatelessWidget {
                 ),
                 Text(
                   // TODO (extern) email must be copyable
-                  userInfo.profileEMail,
+                  userInfo.profileEmail,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
