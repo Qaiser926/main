@@ -33,6 +33,9 @@ class RestService {
 
   Future<Object> getEASummary({required id}) async {
     print('requesting summary for: $id');
+    if (id == 1) {
+      print(1);
+    }
     RestOptions restOptions =
         RestOptions(path: '/${APIConstants.getEASummary}/$id');
     final result = await get(restOptions);

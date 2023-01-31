@@ -190,7 +190,7 @@ String getPriceText(
     bool isShort = false}) {
   String priceText = AppLocalizations.of(context)!.noPriceAvailable;
   if (isShort) {
-    priceText = " - ";
+    priceText = " -€ ";
   }
   if (prices != null) {
     if (prices.isEmpty) {
