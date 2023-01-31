@@ -193,6 +193,9 @@ String getPriceText(
     priceText = " - ";
   }
   if (prices != null) {
+    if (prices.isEmpty) {
+      return priceText;
+    }
     if (prices.length == 1) {
       if (prices[0].price == 0) {
         priceText = AppLocalizations.of(context)!.isFree;

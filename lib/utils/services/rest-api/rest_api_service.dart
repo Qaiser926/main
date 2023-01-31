@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
@@ -154,11 +155,11 @@ class RestService {
 
   Future<Object> getHomePageIds() async {
     print('requesting home page ids');
-    String time = DateTime.now().toString();
+    String time = DateFormat('yyyy-MM-ddThh:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.getHomePageIds}/',
-        body: transformMapToBody({"user_time": time}));
-    final result = await put(restOptions);
+      path: '/${APIConstants.getHomePageIds}/$time',
+    );
+    final result = await get(restOptions);
     return result;
   }
 
