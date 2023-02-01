@@ -91,16 +91,16 @@ Widget getContent(String heading, Map<String, dynamic> jsonData) {
   try {
     IdList eAIds = IdList.fromJson(jsonData);
     if (eAIds.eaIdList.length == 0) {
-      throw EmptyList;
+      throw EmptyList();
     }
     return BaseDiscoveryClass(
       caption: heading,
       Ids: eAIds.eaIdList,
       showMore: false,
     );
-  } on StillLoading {
+  } on StillLoading catch (e) {
     return SizedBox();
-  } on EmptyList {
+  } on EmptyList catch (e) {
     return SizedBox();
   }
 }

@@ -39,8 +39,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
   void initState() {
     // in case the detail page is shown as result of forwarding from adding
     notGoBack = Get.arguments[DataConstants.notGoBack] ?? false;
-    // TODO (intern) change to only arguments once backend is ready
-    String eventId = Get.arguments[DataConstants.EventActivityId] ?? "1";
+    String eventId = Get.arguments[DataConstants.EventActivityId];
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
 
