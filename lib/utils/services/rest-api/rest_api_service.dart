@@ -35,8 +35,9 @@ class RestService {
   Future<Object> getEASummary({required id}) async {
     String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     print('requesting summary for: $id');
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEASummary}/$id/$time');
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEASummary}/$id',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
@@ -159,8 +160,8 @@ class RestService {
     print('requesting home page ids');
     String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-      path: '/${APIConstants.getHomePageIds}/$time',
-    );
+        path: '/${APIConstants.getHomePageIds}',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }

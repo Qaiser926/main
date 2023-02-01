@@ -22,13 +22,13 @@ class APIConstants {
   static const String deleteAccount = 'deleteAccount';
   static const String deleteEA = 'deleteEA';
   static const String eADetailPath = 'eadetail';
-  static const String getEAIdsForCategory = 'getEAIdsForCategory';
-  static const String getEAIdsForEventSeries = 'geteaidsforeventseries';
-  static const String getEAIdsForLocation = 'geteaidsforlocation';
-  static const String getEASummary = 'geteasummary';
+  static const String getEAIdsForCategory = 'categoryids';
+  static const String getEAIdsForEventSeries = 'eventseriesids';
+  static const String getEAIdsForLocation = 'locationids';
+  static const String getEASummary = 'easummary';
   static const String fetchFavouriteEventsAndActivities =
       'getfavouriteeventsandactivities';
-  static const String getHomePageIds = 'gethomepageids';
+  static const String getHomePageIds = 'homepageids';
   static const String getHostedEA = 'gethostedea';
   static const String getMapResultIds = 'getmapresultids';
   static const String getPrivateUserInfo = 'getprivateuserinfo';

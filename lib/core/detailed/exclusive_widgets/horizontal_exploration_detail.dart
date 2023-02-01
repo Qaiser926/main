@@ -4,10 +4,10 @@ import 'package:othia/utils/services/exceptions.dart';
 
 import '../../../constants/categories.dart';
 import '../../../modules/models/id_list/id_list.dart';
-import '../../../widgets/keep_alive_future_builder.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../../utils/ui/future_service.dart';
 import '../../../widgets/horizontal_discovery/discover_horizontally.dart';
+import '../../../widgets/keep_alive_future_builder.dart';
 
 enum ListFunction {
   getEAIdsForCategory,
@@ -20,7 +20,7 @@ Future<Object> getFutureList(
   if (listFunction.index == 0) {
     return RestService().getEAIdsForCategory(categoryId: functionParameter);
   }
-  if (listFunction.index == 0) {
+  if (listFunction.index == 1) {
     return RestService()
         .getEAIdsForEventSeries(eventSeriesId: functionParameter);
   } else {
