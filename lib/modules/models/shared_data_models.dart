@@ -88,21 +88,28 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
+
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 }
 
 @JsonSerializable()
 class Time {
   String? startTimeUtc;
-  String? endTimeUtc;
+  late String? endTimeUtc;
   OpeningTimeCode? openingTimeCode;
   Map<String, List<List<double?>?>?>? openingTime;
 
   Time(
       {this.startTimeUtc,
       this.openingTimeCode,
-      this.endTimeUtc,
-      this.openingTime});
+      String? endTimeUtc,
+      this.openingTime}) {
+    if (endTimeUtc == "None") {
+      this.endTimeUtc = null;
+    } else {
+      this.endTimeUtc = endTimeUtc;
+    }
+  }
 
   factory Time.fromJson(Map<String, dynamic> json) => _$TimeFromJson(json);
 
@@ -134,4 +141,3 @@ class SearchEnhancement {
 
   Map<String, dynamic> toJson() => _$SearchEnhancementToJson(this);
 }
-
