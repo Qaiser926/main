@@ -68,6 +68,7 @@ const _$OpeningTimeCodeEnumMap = {
   OpeningTimeCode.closed: 'closed',
   OpeningTimeCode.openSoon: 'openSoon',
   OpeningTimeCode.closedSoon: 'closedSoon',
+  OpeningTimeCode.unknown: 'unknown',
 };
 
 SearchEnhancement _$SearchEnhancementFromJson(Map<String, dynamic> json) =>
