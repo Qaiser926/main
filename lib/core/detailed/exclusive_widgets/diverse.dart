@@ -101,7 +101,7 @@ class ImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List images = [];
-    if (pictures != null) {
+    if (pictures != null ? pictures!.isNotEmpty : false) {
       pictures!.forEach((element) {
         images.add(getPhotoNullSave(categoryId: categoryId, photo: element));
       });
