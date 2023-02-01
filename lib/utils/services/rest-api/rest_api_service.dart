@@ -32,9 +32,10 @@ class RestService {
   }
 
   Future<Object> getEASummary({required id}) async {
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     print('requesting summary for: $id');
     RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEASummary}/$id');
+        RestOptions(path: '/${APIConstants.getEASummary}/$id/$time');
     final result = await get(restOptions);
     return result;
   }

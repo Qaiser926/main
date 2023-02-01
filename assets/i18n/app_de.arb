@@ -48,6 +48,7 @@
   "closed": "Geschlossen",
   "openSoon": "Öffnet bald",
   "closedSoon": "Schließt bald",
+  "unknown": "Nicht verfügbar",
   "alwaysOpen": "24h offen",
   "openingHours": "Öffnungszeiten",
   "noLikedEvents": "Du hast noch keine Events geliket",
