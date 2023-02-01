@@ -141,7 +141,7 @@ String languageSensibleOpeningTimeCode(
     "closed": AppLocalizations.of(context)!.closed,
     "openSoon": AppLocalizations.of(context)!.openSoon,
     "closedSoon": AppLocalizations.of(context)!.closedSoon,
-    "unknown": AppLocalizations.of(context)!.closedSoon,
+    "unknown": AppLocalizations.of(context)!.unknown,
   };
   // weird code below necessary to get the enum name and access the dictionary
   return weekDayDict[openingTimeCode
