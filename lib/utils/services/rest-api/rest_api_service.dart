@@ -155,7 +155,7 @@ class RestService {
 
   Future<Object> getHomePageIds() async {
     print('requesting home page ids');
-    String time = DateFormat('yyyy-MM-ddThh:mm:ss').format(DateTime.now());
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
       path: '/${APIConstants.getHomePageIds}/$time',
     );
