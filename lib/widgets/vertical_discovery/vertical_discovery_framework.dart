@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
-import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/action_buttons.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:othia/widgets/vertical_discovery/pinned_header.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -54,6 +54,6 @@ Widget getFutureVerticalDiscovery(
       actionButtonType: actionButtonType,
       eASummary: eASummary,
       context: context);
-  return getFavouriteListItem(
+  return getVerticalSummary(
       context: context, eASummary: eASummary, actionButton: actionButton);
 }
