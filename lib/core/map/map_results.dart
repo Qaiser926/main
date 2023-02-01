@@ -230,7 +230,7 @@ Widget buildMapSummary(
       padding: EdgeInsets.only(left: 5.h, right: 5.h, bottom: 20.h),
       child: Container(
         height: 90.h,
-        child: getFavouriteListItem(
+        child: getVerticalSummary(
             eASummary: eASummary,
             context: context,
             actionButton: getActionButton(

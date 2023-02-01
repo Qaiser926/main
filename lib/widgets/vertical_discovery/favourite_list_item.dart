@@ -10,7 +10,7 @@ import '../../modules/models/eA_summary/eA_summary.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/ui/ui_utils.dart';
 
-Widget getFavouriteListItem(
+Widget getVerticalSummary(
     {required BuildContext context,
     required SummaryEventOrActivity eASummary,
     required Widget actionButton}) {
@@ -110,20 +110,26 @@ Widget getImage(SummaryEventOrActivity eASummary) {
     width: 80.h,
     height: 60.h,
     child: getImageWithBackground(
-        categoryId: eASummary.categoryId, photo: eASummary.photo),
+        categoryId: eASummary.categoryId,
+        photo: eASummary.photo,
+        width: 110,
+        height: 80),
   );
 }
 
 Widget getImageWithBackground(
-    {required String categoryId, required String? photo}) {
+    {required String categoryId,
+    required String? photo,
+    required int width,
+    required int height}) {
   Image image = getPhotoNullSave(
-      categoryId: categoryId, photo: photo, width: 110.h, height: 80.h);
+      categoryId: categoryId, photo: photo, width: width.h, height: height.h);
 
   Image fittedImage = Image(
     image: image.image,
     fit: BoxFit.cover,
-    width: 110.h,
-    height: 80.h,
+    width: width.h,
+    height: height.h,
   );
 
   return Stack(children: [

@@ -10,6 +10,7 @@ enum OpeningTimeCode {
   closed,
   openSoon,
   closedSoon,
+  unknown,
 }
 
 enum Status {

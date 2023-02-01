@@ -59,14 +59,11 @@ class _HomePageState extends State<HomePage> {
           showMore: false,
           isInfoButtonActivated: true,
         ),
-        GestureDetector(
-          onTap: () {},
-          child: BaseDiscoveryClass(
-              caption: AppLocalizations.of(context)!.openActivities,
-              Ids: homePageIds.openActivities,
-              showMore: false,
-              isInfoButtonActivated: true),
-        ),
+       BaseDiscoveryClass(
+            caption: AppLocalizations.of(context)!.openActivities,
+            Ids: homePageIds.openActivities,
+            showMore: false,
+            isInfoButtonActivated: true),
         BaseDiscoveryClass(
           caption: AppLocalizations.of(context)!.popularEvents,
           Ids: homePageIds.popularEvents,

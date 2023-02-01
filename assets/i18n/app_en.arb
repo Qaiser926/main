@@ -50,6 +50,7 @@
   "closed": "Closed",
   "openSoon": "Opens soon",
   "closedSoon": "Closes soon",
+  "unknown": "Not available",
   "alwaysOpen": "24h open",
   "openingHours": "Opening Hours",
   "noLikedEvents": "No liked Events yet",

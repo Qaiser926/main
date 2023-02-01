@@ -8,6 +8,8 @@ import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/data_handling/data_handling.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 
+import '../vertical_discovery/favourite_list_item.dart';
+
 class EASummaryCard extends StatelessWidget {
   final SummaryEventOrActivity eASummary;
   final int index;
@@ -29,19 +31,14 @@ class EASummaryCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(19.h),
-                  image: DecorationImage(
-                      image: getPhotoNullSave(
-                              categoryId: eASummary.categoryId,
-                              photo: eASummary.photo)
-                          .image,
-                      fit: BoxFit.fill)),
-              height: 118.h,
-              width: 159.h,
-              padding: EdgeInsets.only(left: 6.h, top: 6.h),
-              child: getPriceWrapper(context: context, eASummary: eASummary),
+            SizedBox(
+              width: 200.h,
+              height: 220.h,
+              child: getImageWithBackground(
+                  categoryId: eASummary.categoryId,
+                  photo: eASummary.photo,
+                  width: 200,
+                  height: 120),
             ),
             Positioned(
               width: 131.h,

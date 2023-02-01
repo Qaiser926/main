@@ -91,7 +91,7 @@ class FavouriteScrollView extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               while (index < favouriteList.length) {
-                return getFavouriteListItem(
+                return getVerticalSummary(
                     context: context,
                     eASummary: favouriteList.values.elementAt(index),
                     actionButton: getFavouriteLikeButton(
