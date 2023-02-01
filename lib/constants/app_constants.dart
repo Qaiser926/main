@@ -21,7 +21,7 @@ class APIConstants {
   static const String createEA = 'createEA';
   static const String deleteAccount = 'deleteAccount';
   static const String deleteEA = 'deleteEA';
-  static const String eventDetailPath = 'event';
+  static const String eADetailPath = 'eadetail';
   static const String getEAIdsForCategory = 'getEAIdsForCategory';
   static const String getEAIdsForEventSeries = 'geteaidsforeventseries';
   static const String getEAIdsForLocation = 'geteaidsforlocation';

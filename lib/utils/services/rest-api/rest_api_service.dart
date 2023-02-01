@@ -24,9 +24,10 @@ class RestService {
   Future<Object> fetchEventOrActivityDetails(
       {required String eventOrActivityId}) async {
     print('fetching event details with id $eventOrActivityId');
-
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.eventDetailPath}/$eventOrActivityId');
+        path: '/${APIConstants.eADetailPath}/$eventOrActivityId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
