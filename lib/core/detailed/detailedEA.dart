@@ -14,10 +14,10 @@ import '../../constants/app_constants.dart';
 import '../../modules/models/detailed_event/detailed_event.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import '../../utils/services/data_handling/get_ical_element.dart';
-import '../../widgets/keep_alive_future_builder.dart';
 import '../../utils/services/rest-api/rest_api_service.dart';
 import '../../utils/ui/future_service.dart';
 import '../../utils/ui/ui_utils.dart';
+import '../../widgets/keep_alive_future_builder.dart';
 import 'exclusive_widgets/button_widget.dart';
 import 'exclusive_widgets/horizontal_exploration_detail.dart';
 import 'exclusive_widgets/image_widgets.dart';
@@ -98,8 +98,11 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
                   ),
                   // space between ImageWidget and ticket price
                   getVerSpace(10.h),
-                  if (detailedEA.showOrganizer ?? false)
-                    OrganizerSection(detailedEA.ownerId!),
+                  detailedEA.ownerId == null
+                      ? SizedBox()
+                      : detailedEA.showOrganizer ?? false
+                          ? OrganizerSection(detailedEA.ownerId!)
+                          : SizedBox(),
                   getVerSpace(25.h),
                   if (detailedEA.description != null)
                     DescriptionWidget(description: detailedEA.description!),
