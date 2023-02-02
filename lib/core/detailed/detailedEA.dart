@@ -102,7 +102,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
                       : detailedEA.showOrganizer ?? false
                           ? OrganizerSection(detailedEA.ownerId!)
                           : SizedBox(),
-                  getVerSpace(25.h),
+                  detailedEA.ownerId == null ? SizedBox() : getVerSpace(15.h),
                   if (detailedEA.description != null)
                     DescriptionWidget(description: detailedEA.description!),
                   if (!detailedEA.isOnline!)
@@ -111,7 +111,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
                   if (detailedEA.time.openingTime != null)
                     OpeningTimesSection(
                         openingTime: detailedEA.time.openingTime!),
-                  getVerSpace(25.h),
+                  getVerSpace(15.h),
                   if (detailedEA.eventSeriesId != null)
                     ExploreEventSeries(
                         eventSeriesId: detailedEA.eventSeriesId!),
