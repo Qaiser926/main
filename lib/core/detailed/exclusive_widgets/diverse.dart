@@ -23,14 +23,14 @@ Widget getSection(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Divider(thickness: 3.h),
-          getVerSpace(25),
+          getVerSpace(15),
           Text(
             caption,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
-          getVerSpace(25),
+          getVerSpace(15),
           contentWidget,
-          getVerSpace(25.h),
+          getVerSpace(15.h),
         ],
       ));
 }

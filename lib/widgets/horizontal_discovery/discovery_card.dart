@@ -23,7 +23,8 @@ class EASummaryCard extends StatelessWidget {
       onTap: () =>
       {
         Get.to(DetailedEAPage(),
-            arguments: {DataConstants.EventActivityId: eASummary.id})
+            arguments: {DataConstants.EventActivityId: eASummary.id},
+            preventDuplicates: false)
       },
       child: Container(
         width: 160.w,
