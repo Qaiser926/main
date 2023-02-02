@@ -41,6 +41,10 @@ class EASummaryCard extends StatelessWidget {
                   height: 120),
             ),
             Positioned(
+                top: 5.h,
+                left: 12.h,
+                child: getPriceWrapper(context: context, eASummary: eASummary)),
+            Positioned(
               width: 131.h,
               top: 85.h,
               child: Container(

@@ -21,21 +21,21 @@ class APIConstants {
   static const String createEA = 'createEA';
   static const String deleteAccount = 'deleteAccount';
   static const String deleteEA = 'deleteEA';
-  static const String eventDetailPath = 'event';
-  static const String getEAIdsForCategory = 'getEAIdsForCategory';
-  static const String getEAIdsForEventSeries = 'geteaidsforeventseries';
-  static const String getEAIdsForLocation = 'geteaidsforlocation';
-  static const String getEASummary = 'geteasummary';
+  static const String eADetailPath = 'eadetail';
+  static const String getEAIdsForCategory = 'categoryids';
+  static const String getEAIdsForEventSeries = 'eventseriesids';
+  static const String getEAIdsForLocation = 'locationids';
+  static const String getEASummary = 'easummary';
   static const String fetchFavouriteEventsAndActivities =
       'getfavouriteeventsandactivities';
-  static const String getHomePageIds = 'gethomepageids';
+  static const String getHomePageIds = 'homepageids';
   static const String getHostedEA = 'gethostedea';
   static const String getMapResultIds = 'getmapresultids';
   static const String getPrivateUserInfo = 'getprivateuserinfo';
   static const String getPublicUserInfo = 'getpublicuserinfo';
   static const String getSearchResultIds = 'getsearchresultids';
   static const String getUserInterests = 'getuserinterests ';
-  static const String isEALikedByUser = 'isealikedbyuser';
+  static const String isEALikedByUser = 'isealiked';
   static const String removeFavouriteEventOrActivity = 'removefavouriteea';
   static const String savePrivateUserInfo = 'saveprivateuserinformation';
 

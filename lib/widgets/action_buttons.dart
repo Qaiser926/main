@@ -180,8 +180,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
     GlobalNavigationNotifier globalProv =
         Provider.of<GlobalNavigationNotifier>(context, listen: false);
     if (globalProv.isUserLoggedIn) {
-      isLiked =
-          RestService().isEALikedByUser(eAId: eAId, userId: globalProv.userId!);
+      isLiked = RestService().isEALikedByUser(eAId: eAId);
     }
     super.initState();
   }

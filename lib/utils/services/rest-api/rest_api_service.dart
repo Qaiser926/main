@@ -24,9 +24,10 @@ class RestService {
   Future<Object> fetchEventOrActivityDetails(
       {required String eventOrActivityId}) async {
     print('fetching event details with id $eventOrActivityId');
-
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.eventDetailPath}/$eventOrActivityId');
+        path: '/${APIConstants.eADetailPath}/$eventOrActivityId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
@@ -34,8 +35,9 @@ class RestService {
   Future<Object> getEASummary({required id}) async {
     String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     print('requesting summary for: $id');
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEASummary}/$id/$time');
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEASummary}/$id',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
@@ -72,8 +74,7 @@ class RestService {
     return result;
   }
 
-  Future<Object> isEALikedByUser(
-      {required String eAId, required String userId}) async {
+  Future<Object> isEALikedByUser({required String eAId}) async {
     print('requesting whether eA is liked by user with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
@@ -85,26 +86,30 @@ class RestService {
 
   Future<Object> getEAIdsForCategory({required categoryId}) async {
     print('requesting ids for category id: $categoryId');
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEAIdsForCategory}/$categoryId');
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEAIdsForCategory}/$categoryId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
 
   Future<Object> getEAIdsForEventSeries({required eventSeriesId}) async {
     print('requesting ids for eventseries id: $eventSeriesId');
-
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.getEAIdsForEventSeries}/$eventSeriesId');
+        path: '/${APIConstants.getEAIdsForEventSeries}/$eventSeriesId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
 
   Future<Object> getEAIdsForLocation({required locationId}) async {
     print('requesting ids for location id: $locationId');
-
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEAIdsForLocation}/$locationId');
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEAIdsForLocation}/$locationId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
@@ -158,8 +163,8 @@ class RestService {
     print('requesting home page ids');
     String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-      path: '/${APIConstants.getHomePageIds}/$time',
-    );
+        path: '/${APIConstants.getHomePageIds}',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }

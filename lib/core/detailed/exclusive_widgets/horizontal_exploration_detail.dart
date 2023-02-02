@@ -20,8 +20,7 @@ Future<Object> getFutureList(
   if (listFunction.index == 0) {
     return RestService().getEAIdsForCategory(categoryId: functionParameter);
   }
-  //TODO intern same if clause as above. fix this bug
-  if (listFunction.index == 0) {
+  if (listFunction.index == 1) {
     return RestService()
         .getEAIdsForEventSeries(eventSeriesId: functionParameter);
   } else {
@@ -92,16 +91,16 @@ Widget getContent(String heading, Map<String, dynamic> jsonData) {
   try {
     IdList eAIds = IdList.fromJson(jsonData);
     if (eAIds.eaIdList.length == 0) {
-      throw EmptyList;
+      throw EmptyList();
     }
     return BaseDiscoveryClass(
       caption: heading,
       Ids: eAIds.eaIdList,
       showMore: false,
     );
-  } on StillLoading {
+  } on StillLoading catch (e) {
     return SizedBox();
-  } on EmptyList {
+  } on EmptyList catch (e) {
     return SizedBox();
   }
 }

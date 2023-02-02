@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../modules/models/eA_summary/eA_summary.dart';
-import '../keep_alive_future_builder.dart';
 import '../../utils/ui/ui_utils.dart';
+import '../keep_alive_future_builder.dart';
 
 class BaseDiscoveryClass extends StatelessWidget {
   final List<String?> Ids;
@@ -60,8 +60,10 @@ class BaseDiscoveryClass extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      // TODO (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
                       Text(
                         caption,
+                        softWrap: true,
                         style: Theme.of(context).textTheme.headlineLarge,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

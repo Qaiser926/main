@@ -205,9 +205,18 @@ String getPriceText(
             .priceStartingAt(roundDouble(prices[0].price!, 2));
       }
     } else {
-      priceText = AppLocalizations.of(context)!.priceRange(
-          roundDouble(prices[0].price!, 2),
-          roundDouble(prices[prices.length - 1].price!, 2));
+      // sometimes the same price is two times in the data base -> check for this case and only return one price
+      double startPrice = roundDouble(prices[0].price!, 2);
+      double endPrice = roundDouble(prices[prices.length - 1].price!, 2);
+      double difference = endPrice - startPrice;
+      if (difference < 1) {
+        // basically same price
+        priceText = AppLocalizations.of(context)!.priceStartingAt(startPrice);
+      } else {
+        priceText = AppLocalizations.of(context)!.priceRange(
+            roundDouble(prices[0].price!, 2),
+            roundDouble(prices[prices.length - 1].price!, 2));
+      }
     }
   }
   return priceText;
