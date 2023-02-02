@@ -35,7 +35,7 @@ class APIConstants {
   static const String getPublicUserInfo = 'getpublicuserinfo';
   static const String getSearchResultIds = 'getsearchresultids';
   static const String getUserInterests = 'getuserinterests ';
-  static const String isEALikedByUser = 'isealikedbyuser';
+  static const String isEALikedByUser = 'isealiked';
   static const String removeFavouriteEventOrActivity = 'removefavouriteea';
   static const String savePrivateUserInfo = 'saveprivateuserinformation';
 

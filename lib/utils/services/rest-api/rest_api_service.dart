@@ -74,8 +74,7 @@ class RestService {
     return result;
   }
 
-  Future<Object> isEALikedByUser(
-      {required String eAId, required String userId}) async {
+  Future<Object> isEALikedByUser({required String eAId}) async {
     print('requesting whether eA is liked by user with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
