@@ -87,26 +87,30 @@ class RestService {
 
   Future<Object> getEAIdsForCategory({required categoryId}) async {
     print('requesting ids for category id: $categoryId');
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEAIdsForCategory}/$categoryId');
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEAIdsForCategory}/$categoryId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
 
   Future<Object> getEAIdsForEventSeries({required eventSeriesId}) async {
     print('requesting ids for eventseries id: $eventSeriesId');
-
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.getEAIdsForEventSeries}/$eventSeriesId');
+        path: '/${APIConstants.getEAIdsForEventSeries}/$eventSeriesId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
 
   Future<Object> getEAIdsForLocation({required locationId}) async {
     print('requesting ids for location id: $locationId');
-
-    RestOptions restOptions =
-        RestOptions(path: '/${APIConstants.getEAIdsForLocation}/$locationId');
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
+    RestOptions restOptions = RestOptions(
+        path: '/${APIConstants.getEAIdsForLocation}/$locationId',
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
