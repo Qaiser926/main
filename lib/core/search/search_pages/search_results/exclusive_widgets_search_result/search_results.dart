@@ -17,22 +17,19 @@ class _SearchResultsState extends State<SearchResults>
     with
         SingleTickerProviderStateMixin,
         AutomaticKeepAliveClientMixin<SearchResults> {
-  late Future<Object> searchResults;
-
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
-    searchResults = Provider.of<SearchNotifier>(context, listen: false)
-        .getSearchQueryResult();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: searchResults,
+        future: Provider.of<SearchNotifier>(context, listen: false)
+            .getSearchQueryResult(),
         builder: (context, snapshot) {
           return snapshotHandler(snapshot, getFutureFulfilledContent, []);
         });

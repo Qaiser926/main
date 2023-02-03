@@ -35,15 +35,12 @@ class MapResults extends StatefulWidget {
 }
 
 class _MapResultsState extends State<MapResults> {
-  late Future<Object> mapResults;
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
   String? eAId;
 
   @override
   void initState() {
-    mapResults =
-        Provider.of<MapNotifier>(context, listen: false).getSearchQueryResult();
     super.initState();
   }
 
@@ -54,7 +51,8 @@ class _MapResultsState extends State<MapResults> {
       if (userPosition != null) {
         return Consumer<MapNotifier>(builder: (context, model, child) {
           return FutureBuilder(
-              future: mapResults,
+              future: Provider.of<MapNotifier>(context, listen: false)
+                  .getSearchQueryResult(),
               builder: (context, snapshot) {
                 return snapshotHandler(snapshot, futureMap, []);
               });
