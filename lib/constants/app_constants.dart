@@ -60,7 +60,7 @@ class DataConstants {
   static const EventActivityId = 'eAId';
   static const notGoBack = 'notGoBack';
   static const PriceRangeStart = 0.0;
-  static const PriceRangeEnd = 200.0;
+  static const PriceRangeEnd = 100.0;
 }
 
 class NavigatorConstants {
