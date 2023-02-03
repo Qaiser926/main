@@ -17,7 +17,7 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
       startDate,
       endDate,
       this.sortCriteria = null,
-      this.eAType = EAType.eventsActivites,
+      this.eAType = EAType.eventsActivities,
       selectedCategoryIds,
       required PageController pageController})
       : pageController = pageController {
@@ -128,7 +128,7 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
 
   void backToDefault() {
     priceRange = defaultPriceRange;
-    eAType = EAType.eventsActivites;
+    eAType = EAType.eventsActivities;
     startDate = defaultStartDate;
     endDate = defaultEndDate;
     priceRange = defaultPriceRange;
@@ -227,7 +227,7 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
   }
 
   void resetEAType() {
-    eAType = EAType.eventsActivites;
+    eAType = EAType.eventsActivities;
     notifyListeners();
   }
 

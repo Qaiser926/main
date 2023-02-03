@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'get_reset_apply_filter.dart';
 import 'notifiers/abstract_query_notifier.dart';
 
-enum EAType { events, activities, eventsActivites }
+enum EAType { events, activities, eventsActivities }
 
 Future<dynamic> typeFilterDialog(
     {required BuildContext context,
@@ -127,9 +127,9 @@ class _TypeFilterState<T> extends State<TypeFilter> {
       getTypeButton(
           context: context,
           caption: AppLocalizations.of(context)!.eventsActivities,
-          onTapFunction: getTypeFunction(eAType: EAType.eventsActivites),
+          onTapFunction: getTypeFunction(eAType: EAType.eventsActivities),
           coloredBorder:
-              determineEnabled(eAType: EAType.eventsActivites, model: model)),
+              determineEnabled(eAType: EAType.eventsActivities, model: model)),
       getTypeButton(
           context: context,
           caption: AppLocalizations.of(context)!.events,
@@ -203,7 +203,7 @@ String getTypeCaption({
 String getCaptionForType(
     {required EAType eAType, required BuildContext context}) {
   Map typeMap = {
-    EAType.eventsActivites: AppLocalizations.of(context)!.eventsActivities,
+    EAType.eventsActivities: AppLocalizations.of(context)!.eventsActivities,
     EAType.events: AppLocalizations.of(context)!.events,
     EAType.activities: AppLocalizations.of(context)!.activities,
   };

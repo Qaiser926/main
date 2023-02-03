@@ -41,5 +41,5 @@ const _$SortCriteriaEnumMap = {
 const _$EATypeEnumMap = {
   EAType.events: 'events',
   EAType.activities: 'activities',
-  EAType.eventsActivites: 'eventsActivites',
+  EAType.eventsActivities: 'eventsActivities',
 };

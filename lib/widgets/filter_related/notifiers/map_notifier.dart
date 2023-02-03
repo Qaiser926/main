@@ -16,7 +16,7 @@ class MapNotifier extends AbstractQueryNotifier {
       startDate,
       endDate,
       super.sortCriteria = null,
-      super.eAType = EAType.eventsActivites,
+      super.eAType = EAType.eventsActivities,
       selectedCategoryIds,
       required PageController pageController})
       : super(
