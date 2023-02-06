@@ -69,6 +69,9 @@ class AddEANotifier extends ChangeNotifier {
     detailedEA.status = status;
     detailedEA.eventSeriesId = null;
     detailedEA.htmlAttributions = null;
+    if (detailedEA.photos == null) {
+      detailedEA.photos = [];
+    }
     updateSearchEnhancement();
     cleanUpTimes();
     cleanUpLocation();
