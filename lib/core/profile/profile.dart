@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Provider.of<GlobalNavigationNotifier>(context, listen: false);
     userInfoFuture = isProfileView
         ? globalNot.isUserLoggedIn
-            ? RestService().getPrivateUserInfo(userId: globalNot.userId)
+            ? RestService().getPrivateUserInfo()
             : Future.value(UserInfo(
                 activityIds: [],
                 pastEventIds: [],

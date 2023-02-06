@@ -30,8 +30,8 @@ class APIConstants {
   static const String getHomePageIds = 'homepageids';
   static const String getHostedEA = 'gethostedea';
   static const String getMapResultIds = 'mapsearch';
-  static const String getPrivateUserInfo = 'getprivateuserinfo';
-  static const String getPublicUserInfo = 'getpublicuserinfo';
+  static const String getPrivateUserInfo = 'privateuser';
+  static const String getPublicUserInfo = 'publicuser';
   static const String getSearchResultIds = 'search';
   static const String getUserInterests = 'getuserinterests ';
   static const String isEALikedByUser = 'isealiked';
