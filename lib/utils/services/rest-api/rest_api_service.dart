@@ -43,10 +43,12 @@ class RestService {
   }
 
   Future<Object> fetchFavouriteEventsAndActivities() async {
-    print('fetching event details with id');
-    //TODO (intern) make user specific
+    String token = await getIdToken();
+    String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.fetchFavouriteEventsAndActivities}/');
+        path: '/${APIConstants.fetchFavouriteEventsAndActivities}/',
+        headers: {'token': '${token}'},
+        queryParameters: {'user_time': time});
     final result = await get(restOptions);
     return result;
   }
@@ -66,11 +68,10 @@ class RestService {
     print('add favourite event or activity with id: $eAId');
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.addFavouriteEA}/$eAId',
-        headers: {'token': '${token}'},
-        body: transformMapToBody(
-            {"userId": userId, DataConstants.EventActivityId: eAId}));
-    final result = await put(restOptions);
+      path: '/${APIConstants.addFavouriteEA}/$eAId',
+      headers: {'token': '${token}'},
+    );
+    final result = await get(restOptions);
     return result;
   }
 

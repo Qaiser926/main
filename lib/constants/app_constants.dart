@@ -26,14 +26,13 @@ class APIConstants {
   static const String getEAIdsForEventSeries = 'eventseriesids';
   static const String getEAIdsForLocation = 'locationids';
   static const String getEASummary = 'easummary';
-  static const String fetchFavouriteEventsAndActivities =
-      'getfavouriteeventsandactivities';
+  static const String fetchFavouriteEventsAndActivities = 'favouriteea';
   static const String getHomePageIds = 'homepageids';
   static const String getHostedEA = 'gethostedea';
-  static const String getMapResultIds = 'getmapresultids';
+  static const String getMapResultIds = 'mapsearch';
   static const String getPrivateUserInfo = 'getprivateuserinfo';
   static const String getPublicUserInfo = 'getpublicuserinfo';
-  static const String getSearchResultIds = 'getsearchresultids';
+  static const String getSearchResultIds = 'search';
   static const String getUserInterests = 'getuserinterests ';
   static const String isEALikedByUser = 'isealiked';
   static const String removeFavouriteEventOrActivity = 'removefavouriteea';
