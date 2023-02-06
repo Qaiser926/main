@@ -18,7 +18,7 @@ class WidgetConstants {
 
 class APIConstants {
   static const String addFavouriteEA = 'addfavouriteea';
-  static const String createEA = 'createEA';
+  static const String createEA = 'createea';
   static const String deleteAccount = 'deleteAccount';
   static const String deleteEA = 'deleteEA';
   static const String eADetailPath = 'eadetail';
@@ -28,7 +28,6 @@ class APIConstants {
   static const String getEASummary = 'easummary';
   static const String fetchFavouriteEventsAndActivities = 'favouriteea';
   static const String getHomePageIds = 'homepageids';
-  static const String getHostedEA = 'gethostedea';
   static const String getMapResultIds = 'mapsearch';
   static const String getPrivateUserInfo = 'privateuser';
   static const String getPublicUserInfo = 'publicuser';

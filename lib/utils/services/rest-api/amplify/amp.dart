@@ -19,6 +19,15 @@ Future<Object> amplifyPost(RestOptions restOptions) async {
   return response;
 }
 
+Future<void> deleteUser() async {
+  try {
+    await Amplify.Auth.deleteUser();
+    print('Delete user succeeded');
+  } on Exception catch (e) {
+    print('Delete user failed with error: $e');
+  }
+}
+
 Future<Object> amplifyDelete(RestOptions passedRestOptions) async {
   final restOperation = Amplify.API.delete(restOptions: passedRestOptions);
   final response = await restOperation.response;

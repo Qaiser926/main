@@ -188,7 +188,7 @@ class RestService {
   }
 
   Future<Object> deleteAccount(String userId) async {
-    // TODO: run amazon functions
+    deleteUser();
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.deleteAccount}/$userId',
