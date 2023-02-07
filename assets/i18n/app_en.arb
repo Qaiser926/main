@@ -250,7 +250,7 @@
   "popularity": "Popularity",
   "noResultsFound": "No results found for search criteria",
   "closeAppDialog": "Do you want to exit the App?",
-  "deleteAccountDialogTitle": "Do you really want to delete your account?",
+  "deleteAccountDialogTitle": "Do you really want to delete your account? If you have posted events or activities they will not be visible anymore.",
   "deleteAccountDialogContent": "all your data will be deleted. this is permanent",
   "delete": "Delete",
   "confirm": "Confirm",
