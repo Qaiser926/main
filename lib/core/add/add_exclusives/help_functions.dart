@@ -236,13 +236,13 @@ class SwitchPages {
 
   void nextPage(BuildContext context) {
     pageController.nextPage(duration: animationDuration, curve: animationCurve);
-    switchPagesNotifier.currentPage = pageController.page as int;
+    switchPagesNotifier.currentPage = pageController.page!.toInt();
   }
 
   void previousPage(BuildContext context) {
     pageController.previousPage(
         duration: animationDuration, curve: animationCurve);
-    switchPagesNotifier.currentPage = pageController.page as int;
+    switchPagesNotifier.currentPage = pageController.page!.toInt();
   }
 }
 

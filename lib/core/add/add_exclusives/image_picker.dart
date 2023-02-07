@@ -48,8 +48,11 @@ class EAImagePicker extends StatelessWidget {
                                 categoryId: inputNotifierConsumer
                                         .detailedEA.categoryId ??
                                     Categories.diverse,
-                                photo:
-                                    inputNotifierConsumer.detailedEA.photos?[0])
+                                photo: inputNotifierConsumer
+                                        .detailedEA.photos!.isEmpty
+                                    ? null
+                                    : inputNotifierConsumer
+                                        .detailedEA.photos![0])
                             .image,
                         fit: BoxFit.cover,
                       ),
