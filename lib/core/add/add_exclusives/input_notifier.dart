@@ -153,9 +153,11 @@ class AddEANotifier extends ChangeNotifier {
       status = null;
     }
     if (existingDetailedEA.photos != null) {
-      copyRightVerified = true;
+      if (existingDetailedEA.photos!.isNotEmpty) {
+        copyRightVerified = true;
+      }
     }
-    handleSearchenhancement(existingDetailedEA.searchEnhancement);
+    handleSearchEnhancement(existingDetailedEA.searchEnhancement);
   }
 
   Future<void> setOwnerId() async {
@@ -210,7 +212,7 @@ class AddEANotifier extends ChangeNotifier {
     }
   }
 
-  void handleSearchenhancement(SearchEnhancement? searchEnhancement) {
+  void handleSearchEnhancement(SearchEnhancement? searchEnhancement) {
     if (searchEnhancement != null) {
       if (searchEnhancement.cognitiveLevel != null) {
         cognitiveLevel = searchEnhancement.cognitiveLevel!;

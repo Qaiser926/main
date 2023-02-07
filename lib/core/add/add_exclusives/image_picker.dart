@@ -48,11 +48,10 @@ class EAImagePicker extends StatelessWidget {
                                 categoryId: inputNotifierConsumer
                                         .detailedEA.categoryId ??
                                     Categories.diverse,
-                                photo: inputNotifierConsumer
-                                        .detailedEA.photos!.isEmpty
-                                    ? null
-                                    : inputNotifierConsumer
-                                        .detailedEA.photos![0])
+                                photo: photoExists(inputNotifierConsumer)
+                                    ? inputNotifierConsumer
+                                        .detailedEA.photos![0]
+                                    : null)
                             .image,
                         fit: BoxFit.cover,
                       ),
@@ -72,9 +71,11 @@ class EAImagePicker extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(10.h),
                           child: Text(
-                            inputNotifierConsumer.detailedEA.photos == null
-                                ? AppLocalizations.of(context)!.imageDefaultHint
-                                : AppLocalizations.of(context)!.changeImageHint,
+                            // check if photos is either empty or null
+                            photoExists(inputNotifierConsumer)
+                                ? AppLocalizations.of(context)!.changeImageHint
+                                : AppLocalizations.of(context)!
+                                    .imageDefaultHint,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary),
@@ -85,11 +86,23 @@ class EAImagePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (inputNotifierConsumer.detailedEA.photos != null)
+          if (photoExists(inputNotifierConsumer))
             getImagePickerHelpers(inputNotifierConsumer, context),
         ],
       );
     });
+  }
+
+  bool photoExists(AddEANotifier inputNotifierConsumer) {
+    if (inputNotifierConsumer.detailedEA.photos == null) {
+      return false;
+    } else {
+      if (inputNotifierConsumer.detailedEA.photos!.isEmpty) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 
   Column getImagePickerHelpers(
