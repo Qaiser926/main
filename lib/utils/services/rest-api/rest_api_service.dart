@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/modules/models/search_query/search_query.dart';
 import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
@@ -195,12 +194,12 @@ class RestService {
     return result;
   }
 
-  Future<Object> deleteEA({required DeleteEA deleteEA}) async {
+  Future<Object> deleteEA({required String eAId}) async {
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.deleteEA}/',
-        headers: {'token': '${token}'},
-        body: transformClassToBody(deleteEA));
+      path: '/${APIConstants.deleteEA}/$eAId',
+      headers: {'token': '${token}'},
+    );
     final result = await post(restOptions);
     return result;
   }

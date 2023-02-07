@@ -12,17 +12,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/core/detailed/detailedEA.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/helpers/diverse.dart';
-import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -260,8 +259,8 @@ class DeleteForwardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late Future<Object> response = RestService().deleteEA(
-        deleteEA: DeleteEA(eAId: inputNotifier.detailedEA.id!, userId: userId));
+    late Future<Object> response =
+        RestService().deleteEA(eAId: inputNotifier.detailedEA.id!);
     return WillPopScope(
         onWillPop: () async {
           return false;
