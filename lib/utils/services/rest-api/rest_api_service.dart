@@ -199,7 +199,7 @@ class RestService {
     RestOptions restOptions = RestOptions(
       path: '/${APIConstants.deleteEA}/$eAId',
       headers: {'token': '${token}'},
-    );
+      body: transformMapToBody({}));
     final result = await post(restOptions);
     return result;
   }
