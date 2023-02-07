@@ -477,4 +477,16 @@ class AddEANotifier extends ChangeNotifier {
           .isDialogOpen = false;
     });
   }
+
+  bool isPhotoSet() {
+    if (detailedEA.photos == null) {
+      return false;
+    } else {
+      if (detailedEA.photos!.isEmpty) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 }

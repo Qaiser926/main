@@ -225,8 +225,7 @@ class SwitchPages {
       _notSwitchPageAddressValid();
     } else if ((switchPagesNotifier.currentPage == 1) &
         (targetPage == 2) &
-        ((inputNotifier.detailedEA.photos != null) &
-            !inputNotifier.copyRightVerified)) {
+        ((inputNotifier.isPhotoSet()) & !inputNotifier.copyRightVerified)) {
       inputNotifier.showCopyrightErrorMessage = true;
       pageController.jumpToPage(switchPagesNotifier.currentPage);
     } else {

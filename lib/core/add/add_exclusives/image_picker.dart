@@ -48,7 +48,7 @@ class EAImagePicker extends StatelessWidget {
                                 categoryId: inputNotifierConsumer
                                         .detailedEA.categoryId ??
                                     Categories.diverse,
-                                photo: photoExists(inputNotifierConsumer)
+                                photo: inputNotifierConsumer.isPhotoSet()
                                     ? inputNotifierConsumer
                                         .detailedEA.photos![0]
                                     : null)
@@ -72,7 +72,7 @@ class EAImagePicker extends StatelessWidget {
                           padding: EdgeInsets.all(10.h),
                           child: Text(
                             // check if photos is either empty or null
-                            photoExists(inputNotifierConsumer)
+                            inputNotifierConsumer.isPhotoSet()
                                 ? AppLocalizations.of(context)!.changeImageHint
                                 : AppLocalizations.of(context)!
                                     .imageDefaultHint,
@@ -86,23 +86,11 @@ class EAImagePicker extends StatelessWidget {
               ],
             ),
           ),
-          if (photoExists(inputNotifierConsumer))
+          if (inputNotifierConsumer.isPhotoSet())
             getImagePickerHelpers(inputNotifierConsumer, context),
         ],
       );
     });
-  }
-
-  bool photoExists(AddEANotifier inputNotifierConsumer) {
-    if (inputNotifierConsumer.detailedEA.photos == null) {
-      return false;
-    } else {
-      if (inputNotifierConsumer.detailedEA.photos!.isEmpty) {
-        return false;
-      } else {
-        return true;
-      }
-    }
   }
 
   Column getImagePickerHelpers(
