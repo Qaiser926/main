@@ -96,6 +96,8 @@ class AddEANotifier extends ChangeNotifier {
 
   void cleanUpLocation() {
     if (locationType[0]) {
+      detailedEA.isOnline = false;
+      detailedEA.location.isOnline = false;
       if (isAddressChanged()) {
         detailedEA.location.locationTitle = null;
         detailedEA.location.locationId = null;
