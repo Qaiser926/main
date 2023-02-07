@@ -146,10 +146,8 @@ class RestService {
 
   Future<Object> getPublicUserInfo({required organizerId}) async {
     print('requesting public user info for for: $organizerId');
-    String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-      path: '/${APIConstants.getPublicUserInfo}/',
-      headers: {'token': '${token}'},
+      path: '/${APIConstants.getPublicUserInfo}/$organizerId',
     );
     final result = await get(restOptions);
     return result;
