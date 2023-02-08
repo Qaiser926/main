@@ -162,26 +162,41 @@ String getLocationString({required Location location, bool isShort = false}) {
   if (location.isOnline!) {
     return "Online";
   }
-  if ((location.street != null) &
-      (location.streetNumber != null) &
-      (!isShort)) {
-    return '${location.city}, ${location.street} ${location.streetNumber}';
-  }
-  if ((location.street != null)) {
-    if (!isShort) {
-      return '${location.city}, ${location.street}';
-    } else {
-      return '${location.street}, ${location.city}';
+  if (location.city != null) {
+    if ((location.street != null) &
+        (location.streetNumber != null) &
+        (!isShort)) {
+      return '${location.city}, ${location.street} ${location.streetNumber}';
     }
-  }
-  if ((location.locationTitle != null)) {
-    if (!isShort) {
-      return '${location.city}, ${location.locationTitle}';
+    if ((location.street != null)) {
+      if (!isShort) {
+        return '${location.city}, ${location.street}';
+      } else {
+        return '${location.street}, ${location.city}';
+      }
+    }
+    if ((location.locationTitle != null)) {
+      if (!isShort) {
+        return '${location.city}, ${location.locationTitle}';
+      } else {
+        return '${location.locationTitle}, ${location.city}';
+      }
     } else {
-      return '${location.locationTitle}, ${location.city}';
+      return location.city!;
     }
   } else {
-    return location.city!;
+    // case when no city name is given
+    if (location.street != null) {
+      if (location.streetNumber != null) {
+        return '${location.street} ${location.streetNumber}';
+      } else {
+        return location.street!;
+      }
+    } else if (location.locationTitle != null) {
+      return location.locationTitle!;
+    } else {
+      return "Unknown";
+    }
   }
 }
 
