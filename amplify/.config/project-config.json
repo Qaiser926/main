@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "othia",
+  "projectName": "Othia",
   "version": "3.1",
   "frontend": "flutter",
   "flutter": {

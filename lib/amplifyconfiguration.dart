@@ -6,7 +6,7 @@ const amplifyconfig = ''' {
             "awsAPIPlugin": {
                 "othiaApi": {
                     "endpointType": "REST",
-                    "endpoint": "https://296g17wt2h.execute-api.eu-central-1.amazonaws.com/dev",
+                    "endpoint": "https://ex9ty47js8.execute-api.eu-central-1.amazonaws.com/dev",
                     "region": "eu-central-1",
                     "authorizationType": "AWS_IAM"
                 }
@@ -24,15 +24,15 @@ const amplifyconfig = ''' {
                 "CredentialsProvider": {
                     "CognitoIdentity": {
                         "Default": {
-                            "PoolId": "eu-central-1:6170e889-7213-47a2-8f42-ac34b681a9de",
+                            "PoolId": "eu-central-1:d5ee9269-e4aa-49fb-ba15-e0f8e674b35c",
                             "Region": "eu-central-1"
                         }
                     }
                 },
                 "CognitoUserPool": {
                     "Default": {
-                        "PoolId": "eu-central-1_KAuZBP3aV",
-                        "AppClientId": "2p3s6gslqb57o0aij8egdi4eir",
+                        "PoolId": "eu-central-1_zPbMhNl6a",
+                        "AppClientId": "2ql55su85nheo2tdi3tl4avgoq",
                         "Region": "eu-central-1"
                     }
                 },
