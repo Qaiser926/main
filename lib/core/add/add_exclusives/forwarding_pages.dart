@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -171,21 +172,29 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
     );
   }
 
-  Widget errorFunction(dynamic snapshot) {
-    return Padding(
-        padding: EdgeInsets.all(20.h),
-        child: Text(AppLocalizations.of(context)!.deleteErrorMessage,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.error,
-            )));
+  Widget errorFunction(dynamic snapshot, BuildContext context) {
+    int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+    String? jsonMessage = jsonDecode(snapshot.error.message);
+    if (firstDigit == 5) {
+      return errorMessage(
+          jsonMessage ?? AppLocalizations.of(context)!.internalServerError,
+          context);
+    } else if (snapshot.error.httpStatusCode == 403) {
+      return errorMessage(
+          AppLocalizations.of(context)!.forbiddenErrorMessage, context);
+    } else if (snapshot.error.httpStatusCode == 404) {
+      return errorMessage(
+          AppLocalizations.of(context)!.notFoundErrorMessage, context);
+    } else {
+      return errorMessage(
+          AppLocalizations.of(context)!.defaultRequestErrorMessage, context);
+    }
   }
 
   Widget buildNavigationBox() {
     return showWaitingMessage
         ? Column(
             children: [
-              // TODO (extern) show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
-              // TODO: (extern) routing after error navigation, e.g. to Home page or add page
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
@@ -199,6 +208,18 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
                 child: Text(AppLocalizations.of(context)!.saveEAWaitingMessage,
                     textAlign: TextAlign.center),
               ),
+              getVerSpace(10.h),
+              ElevatedButton(
+                  onPressed: () {
+                    Provider.of<GlobalNavigationNotifier>(context,
+                            listen: false)
+                        .navigationBarIndex = NavigatorConstants.HomePageIndex;
+                    NavigatorConstants.sendToScreen(MainPage());
+                  },
+                  style: _buttonStyle,
+                  child: Text(
+                    AppLocalizations.of(context)!.gotToHome,
+                  ))
             ],
           )
         : Row(

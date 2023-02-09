@@ -12,7 +12,7 @@ const Widget defaultStillLoadingWidget = Center(
 Widget errorMessage(String errorMessage, BuildContext context) {
   return Padding(
       padding: EdgeInsets.all(20.h),
-      child: Text(AppLocalizations.of(context)!.deleteErrorMessage,
+      child: Text(errorMessage,
           style: TextStyle(
             color: Theme.of(context).colorScheme.error,
           )));
@@ -20,9 +20,21 @@ Widget errorMessage(String errorMessage, BuildContext context) {
 
 const Widget defaultWidget = Text("Ok");
 
-Widget defaultErrorFunction(dynamic snapshot) {
-  if (snapshot.error.httpStatusCode == 403) {}
-  return Text("default");
+Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
+  int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+  if (firstDigit == 5) {
+    return errorMessage(
+        AppLocalizations.of(context)!.internalServerError, context);
+  } else if (snapshot.error.httpStatusCode == 403) {
+    return errorMessage(
+        AppLocalizations.of(context)!.forbiddenErrorMessage, context);
+  } else if (snapshot.error.httpStatusCode == 404) {
+    return errorMessage(
+        AppLocalizations.of(context)!.notFoundErrorMessage, context);
+  } else {
+    return errorMessage(
+        AppLocalizations.of(context)!.defaultRequestErrorMessage, context);
+  }
 }
 
 Widget snapshotHandler(
