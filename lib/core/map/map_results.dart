@@ -37,7 +37,7 @@ class MapResults extends StatefulWidget {
 class _MapResultsState extends State<MapResults> {
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
-  String? eAId;
+  String? eAIds;
 
   @override
   void initState() {
@@ -82,7 +82,7 @@ class _MapResultsState extends State<MapResults> {
         minZoom: 3,
       ),
       nonRotatedChildren: [
-        if (eAId != null) buildSummaryCard(),
+        if (eAIds != null) buildSummaryCard(),
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
@@ -123,7 +123,7 @@ class _MapResultsState extends State<MapResults> {
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'ohtia.de',
+          userAgentPackageName: 'othia.de',
         ),
         MarkerClusterLayerWidget(
           options: MarkerClusterLayerOptions(
@@ -159,12 +159,16 @@ class _MapResultsState extends State<MapResults> {
         point: latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
-              onTap: () =>
-              {
+          onTap: () => {
                 // TODO (extern) highlight selected marker
                 setState(() {
-                  eAId = locationData["id"];
+                  eAIds = locationData["id"];
+                  List<String> eAIds2 = getAllIdsUnderMarker(
+                      locationData["coordinates"]["latitude"],
+                      locationData["coordinates"]["longitude"]);
+                  print(eAIds2);
                 })
+
                 // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
                 //     arguments: {
                 //       NavigatorConstants.EventActivityId: locationData["id"]
@@ -176,6 +180,27 @@ class _MapResultsState extends State<MapResults> {
                 color: markerColor,
               ),
             ));
+  }
+
+  List<String> getAllIdsUnderMarker(double latitude, double longitude) {
+    List<String> Ids = [];
+    mapResultIds.eventResults.forEach(
+      (element) {
+        if ((element!["coordinates"]["latitude"] == latitude) &
+            (element["coordinates"]["longitude"] == longitude)) {
+          Ids.add(element["id"]);
+        }
+      },
+    );
+    mapResultIds.activityResults.forEach(
+      (element) {
+        if ((element!["coordinates"]["latitude"] == latitude) &
+            (element["coordinates"]["longitude"] == longitude)) {
+          Ids.add(element["id"]);
+        }
+      },
+    );
+    return Ids;
   }
 
   List<Marker> getResultMarkers() {
@@ -207,7 +232,7 @@ class _MapResultsState extends State<MapResults> {
   }
 
   KeepAliveFutureBuilder buildSummaryCard() {
-    Future<Object> eASummary = RestService().getEASummary(id: eAId);
+    Future<Object> eASummary = RestService().getEASummary(id: eAIds);
     return KeepAliveFutureBuilder(
         future: eASummary,
         builder: (context, snapshot) {
