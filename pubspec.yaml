@@ -91,6 +91,7 @@ dependencies:
   amplify_api: ^0.6.10
   amplify_auth_cognito: ^0.6.10
   amplify_authenticator: ^0.2.4
+  amplify_analytics_pinpoint: ^0.6.0
   # ui
   typicons_flutter: ^0.5.0
   syncfusion_flutter_datepicker: 20.4.44

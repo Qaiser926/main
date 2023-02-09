@@ -1,9 +1,9 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "OthiaIdentPool",
+    "identityPoolName": "OthiaIdentityPool",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "othia56921b4c",
+    "resourceNameTruncated": "othiada79b398",
     "userPoolName": "OthiaUserPool",
     "autoVerifiedAttributes": [
       "email"
@@ -32,10 +32,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "othiaA56921b4c_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "OthiaAda79b398_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "56921b4c",
-    "resourceName": "othiaAuth",
+    "sharedId": "da79b398",
+    "resourceName": "OthiaAuth",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
     "thirdPartyAuth": true,

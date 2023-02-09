@@ -1,3 +1,4 @@
+import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -24,6 +25,7 @@ void main() async {
   _globalNavigationNotifier = GlobalNavigationNotifier();
   await _globalNavigationNotifier.initializeUserLoggedIn();
   await _globalNavigationNotifier.initializeUserId();
+
   runApp(MyApp());
 }
 
@@ -57,20 +59,20 @@ class MyApp extends StatelessWidget {
               ],
               locale: localeProvider.locale,
               supportedLocales: supportedLocales,
-                  // builder: Authenticator.builder(),
-                  debugShowCheckedModeBanner: false,
-                  initialRoute: Routes.homeRoute,
-                  // getPages: ,
-                  routes: Pages.routes,
-                  theme: getDarkThemeData(),
-                  onGenerateRoute: (settings) {
-                    if (settings.name == Routes.homeRoute) {
-                      return MaterialPageRoute(
-                          builder: Pages.routes[Routes.homeRoute]!);
-                    }
-                  },
-                );
-              }),
+              // builder: Authenticator.builder(),
+              debugShowCheckedModeBanner: false,
+              initialRoute: Routes.homeRoute,
+              // getPages: ,
+              routes: Pages.routes,
+              theme: getDarkThemeData(),
+              onGenerateRoute: (settings) {
+                if (settings.name == Routes.homeRoute) {
+                  return MaterialPageRoute(
+                      builder: Pages.routes[Routes.homeRoute]!);
+                }
+              },
+            );
+          }),
         );
       },
     );
@@ -84,7 +86,8 @@ Future<void> _configureAmplify() async {
   // final auth = AmplifyAuthCognito();
   final api = AmplifyAPI();
   final auth = AmplifyAuthCognito();
-  await Amplify.addPlugins([api, auth]);
+  final analyticsPlugin = AmplifyAnalyticsPinpoint();
+  await Amplify.addPlugins([api, auth, analyticsPlugin]);
 
   // You can use addPlugins if you are going to be adding multiple plugins
   // await Amplify.addPlugins([authPlugin, analyticsPlugin]);

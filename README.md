@@ -12,14 +12,17 @@ A few resources to get you started if this is your first Flutter project:
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[online documentation](https://docs.flutter.dev/), which offers tutorials, samples, guidance on
+mobile development, and a full API reference.
 
-## folder structure 
+## folder structure
 
 The folder Structure is inspired by this
 artictle https://medium.com/flutter-community/flutter-scalable-folder-files-structure-8f860faafebd
 
+## important commands
+
+for generating newly added internationalization variables
 '''
 flutter gen-l10n
 '''
