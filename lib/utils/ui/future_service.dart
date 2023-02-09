@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 const Widget defaultStillLoadingWidget = Center(
   child: CircularProgressIndicator(),
 );
-const Widget defaultErrorWidget = Text("An error accured");
+const Widget defaultErrorWidget = Text("An error occured");
 const Widget defaultDefaultWidget = Text("default");
 
 Widget snapshotHandler(
@@ -14,6 +14,7 @@ Widget snapshotHandler(
   Function function,
   List<dynamic> functionArguments, {
   Widget loadingWidget = defaultStillLoadingWidget,
+  Widget errorWidget = defaultErrorWidget,
 }) {
   switch (snapshot.connectionState) {
     case ConnectionState.waiting:

@@ -270,13 +270,13 @@ class DeleteForwardingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // TODO (extern) show more elaborate error message, e.g., notify user that deletion of event/activity was not successful, most likely this required modification of the snapshot handler, where different pages are shown depending on the error case
             // TODO: (extern) routing after error navigation, e.g. to Home page or add page
-
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
-                  return snapshotHandler(snapshot, goToProfilePage, [context]);
+                  return snapshotHandler(snapshot, goToProfilePage, [context],
+                      errorWidget: Text(
+                          AppLocalizations.of(context)!.deleteErrorMessage));
                 }),
             getVerSpace(10.h),
             Padding(
@@ -284,6 +284,20 @@ class DeleteForwardingPage extends StatelessWidget {
               child: Text(AppLocalizations.of(context)!.deleteEAWaitingMessage,
                   textAlign: TextAlign.center),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                      .navigationBarIndex = NavigatorConstants.HomePageIndex;
+                  NavigatorConstants.sendToScreen(MainPage());
+                },
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.h),
+                ))),
+                child: Text(
+                  AppLocalizations.of(context)!.gotToHome,
+                ))
           ],
         )));
   }
