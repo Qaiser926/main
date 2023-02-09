@@ -20,12 +20,8 @@ Future<Object> amplifyPost(RestOptions restOptions) async {
 }
 
 Future<void> deleteUser() async {
-  try {
-    await Amplify.Auth.deleteUser();
-    print('Delete user succeeded');
-  } on Exception catch (e) {
-    print('Delete user failed with error: $e');
-  }
+  await Amplify.Auth.deleteUser();
+  print('Delete user succeeded');
 }
 
 Future<Object> amplifyDelete(RestOptions passedRestOptions) async {
@@ -142,6 +138,11 @@ Future<String> getIdToken() async {
 }
 
 Future<String> getUserId() async {
-  final AuthUser user = await Amplify.Auth.getCurrentUser();
-  return user.userId;
+  try {
+    final AuthUser user = await Amplify.Auth.getCurrentUser();
+    return user.userId;
+  } on AuthException catch (e) {
+    //user should reinstall application
+    throw Exception(e);
+  }
 }

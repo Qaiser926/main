@@ -24,6 +24,7 @@ class GlobalNavigationNotifier extends ChangeNotifier {
   Future<void> logout() async {
     RestService().logout();
     // TODO (extern) error handling
+    //TODO (intern) user ID should never be null. if a user logs out he get a new id as a unauthenticated user #OT-34
     userId = null;
     isUserLoggedIn = false;
     notifyListeners();

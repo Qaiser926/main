@@ -242,7 +242,10 @@
   "noResultsFound": "Keine Ergebnisse gefunden für Suchkriterien",
   "closeAppDialog": "Möchtest du die App schließen?",
   "deleteAccountDialogTitle": "Möchtest du wirklich deinen Account löschen? Solltest du Events oder Aktivitäten gepostet haben, werden diese danach nicht mehr sichtbar sein.",
-  "deleteAccountDialogContent": "Alle deine Daten werden gelöscht - dies ist nicht rückgängig zu machen",
+  "deleteAccountDialogContent": "Alle deine Daten werden gelöscht - dies ist nicht rückgängig zu machen.",
+  "deleteAccountSuccess": "Dein Account wurde erfolgreich geschlöscht.",
+    "deleteAccountFailure": "Ein Fehler ist beim Löschvorgang aufgetreten. Bitte versuche es später erneut. Bitte kontaktiere uns, sollte der Fehler bestehen bleiben.",
+
   "delete": "Löschen",
   "confirm": "Bestätigen",
   "continueText": "Weiter",

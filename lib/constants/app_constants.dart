@@ -19,7 +19,7 @@ class WidgetConstants {
 class APIConstants {
   static const String addFavouriteEA = 'addfavouriteea';
   static const String createEA = 'createea';
-  static const String deleteAccount = 'deleteAccount';
+  static const String deleteAccount = 'deleteaccount';
   static const String deleteEA = 'deleteea';
   static const String eADetailPath = 'eadetail';
   static const String getEAIdsForCategory = 'categoryids';
