@@ -1,4 +1,3 @@
-import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
@@ -86,8 +85,7 @@ Future<void> _configureAmplify() async {
   // final auth = AmplifyAuthCognito();
   final api = AmplifyAPI();
   final auth = AmplifyAuthCognito();
-  final analyticsPlugin = AmplifyAnalyticsPinpoint();
-  await Amplify.addPlugins([api, auth, analyticsPlugin]);
+  await Amplify.addPlugins([api, auth]);
 
   // You can use addPlugins if you are going to be adding multiple plugins
   // await Amplify.addPlugins([authPlugin, analyticsPlugin]);
@@ -99,5 +97,8 @@ Future<void> _configureAmplify() async {
   } on AmplifyAlreadyConfiguredException {
     safePrint(
         "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+  } on Exception catch (e) {
+    safePrint("unexpected Amplify Error");
+    safePrint(e);
   }
 }
