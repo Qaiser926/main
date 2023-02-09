@@ -185,12 +185,11 @@ class RestService {
   }
 
   Future<Object> deleteAccount(String userId) async {
-    deleteUser();
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
-        path: '/${APIConstants.deleteAccount}/$userId',
-        headers: {'token': '${token}'});
+        path: '/${APIConstants.deleteAccount}', headers: {'token': '${token}'});
     final result = await delete(restOptions);
+    deleteUser();
     return result;
   }
 
