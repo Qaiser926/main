@@ -14,6 +14,7 @@ import '../../../constants/colors.dart';
 import '../../../modules/models/user_info/user_info.dart';
 import '../../../utils/helpers/formatters.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
+import '../../../utils/services/rest-api/amplify/amp.dart';
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../profile.dart';
 import '../user_info_notifier.dart';
@@ -147,10 +148,28 @@ class _EditProfileState extends State<EditProfile> {
                               AppLocalizations.of(localizationAndThemeContext)!
                                   .cancel)),
                       TextButton(
-                          onPressed: () {
-                            RestService().deleteAccount("as"
-                                // userInfoNotifier.userInfo.userId
-                                );
+                          onPressed: () async {
+                            dynamic restResponse =
+                                await RestService().deleteAccount();
+                            try {
+                              if (restResponse.statusCode == 200) {
+                                deleteUser();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(AppLocalizations.of(
+                                          localizationAndThemeContext)!
+                                      .deleteAccountSuccess),
+                                ));
+                              } else {
+                                throw Exception();
+                              }
+                            } on Exception catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(AppLocalizations.of(
+                                              localizationAndThemeContext)!
+                                          .deleteAccountFailure)));
+                            }
                             Navigator.of(context).pop();
                           },
                           child: Text(
