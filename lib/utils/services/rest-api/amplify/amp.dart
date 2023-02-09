@@ -138,6 +138,11 @@ Future<String> getIdToken() async {
 }
 
 Future<String> getUserId() async {
-  final AuthUser user = await Amplify.Auth.getCurrentUser();
-  return user.userId;
+  try {
+    final AuthUser user = await Amplify.Auth.getCurrentUser();
+    return user.userId;
+  } on AuthException catch (e) {
+    //user should reinstall application
+    throw Exception(e);
+  }
 }
