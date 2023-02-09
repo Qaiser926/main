@@ -88,7 +88,9 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
 
             child: SingleChildScrollView(
               child: Column(
-                // TODO (extern) align distances
+                // TODO (extern) align distances done
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // in the image widget, the event details (name, place, time are contained)
                   ImageWidget(
