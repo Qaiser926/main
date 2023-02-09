@@ -1,0 +1,21 @@
+{
+  "appName": "OthiaPinpoint",
+  "roleName": "pinpointLambdaRole4b02f6b5",
+  "cloudformationPolicyName": "cloudformationPolicy4b02f6b5",
+  "cloudWatchPolicyName": "cloudWatchPolicy4b02f6b5",
+  "pinpointPolicyName": "pinpointPolicy4b02f6b5",
+  "authPolicyName": "pinpoint_amplify_4b02f6b5",
+  "unauthPolicyName": "pinpoint_amplify_4b02f6b5",
+  "authRoleName": {
+    "Ref": "AuthRoleName"
+  },
+  "unauthRoleName": {
+    "Ref": "UnauthRoleName"
+  },
+  "authRoleArn": {
+    "Fn::GetAtt": [
+      "AuthRole",
+      "Arn"
+    ]
+  }
+}

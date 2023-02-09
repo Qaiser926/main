@@ -29,5 +29,11 @@
         ]
       }
     }
+  },
+  "analytics": {
+    "OthiaPinpoint": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

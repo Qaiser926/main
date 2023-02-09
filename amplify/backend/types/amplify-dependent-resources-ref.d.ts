@@ -10,5 +10,12 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string",
             "CreatedSNSRole": "string"
         }
+    },
+    "analytics": {
+        "OthiaPinpoint": {
+            "Region": "string",
+            "Id": "string",
+            "appName": "string"
+        }
     }
 }
