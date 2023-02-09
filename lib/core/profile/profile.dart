@@ -118,11 +118,14 @@ class _ProfilePageState extends State<ProfilePage> {
     return KeepAliveFutureBuilder(
         future: userInfoFuture,
         builder: (context, snapshot) {
-          return MultiProvider(providers: [
-            ChangeNotifierProvider.value(
-              value: userInfoNotifier,
-            )
-          ], child: snapshotHandler(snapshot, getProfilePage, [context]));
+          return MultiProvider(
+              providers: [
+                ChangeNotifierProvider.value(
+                  value: userInfoNotifier,
+                )
+              ],
+              child: snapshotHandler(
+                  context, snapshot, getProfilePage, [context]));
         });
   }
 

@@ -31,7 +31,8 @@ class _SearchResultsState extends State<SearchResults>
         future: Provider.of<SearchNotifier>(context, listen: false)
             .getSearchQueryResult(),
         builder: (context, snapshot) {
-          return snapshotHandler(snapshot, getFutureFulfilledContent, []);
+          return snapshotHandler(
+              context, snapshot, getFutureFulfilledContent, []);
         });
   }
 

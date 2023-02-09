@@ -30,7 +30,10 @@ Widget buildVerticalDiscovery(
               return KeepAliveFutureBuilder(
                   future: eASummary,
                   builder: (context, snapshot) {
-                    return snapshotHandler(snapshot, getFutureVerticalDiscovery,
+                    return snapshotHandler(
+                        context,
+                        snapshot,
+                        getFutureVerticalDiscovery,
                         [context, actionButtonType]);
                   });
             } else {

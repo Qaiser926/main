@@ -192,7 +192,7 @@ class _AddLikeButtonState extends State<AddLikeButton> {
       return KeepAliveFutureBuilder(
           future: isLiked,
           builder: (context, snapshot) {
-            return snapshotHandler(snapshot, getLikeButton, []);
+            return snapshotHandler(context, snapshot, getLikeButton, []);
           });
     } else {
       return buildNotLoggedInLikeButton();

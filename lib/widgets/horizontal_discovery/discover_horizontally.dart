@@ -140,7 +140,7 @@ class HorizontalEADiscovery extends StatelessWidget {
                   future: response,
                   builder: (context, snapshot) {
                     return snapshotHandler(
-                        snapshot, getFutureFulfilledContent, [index]);
+                        context, snapshot, getFutureFulfilledContent, [index]);
                   });
             }));
   }

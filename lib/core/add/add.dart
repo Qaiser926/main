@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/helpers/diverse.dart';
-import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
 
@@ -134,7 +134,10 @@ class _AddState extends State<Add> {
         ? KeepAliveFutureBuilder(
             future: detailedEventOrActivity,
             builder: (context, snapshot) {
-              return snapshotHandler(snapshot, getFutureHandlerPageView,
+              return snapshotHandler(
+                  context,
+                  snapshot,
+                  getFutureHandlerPageView,
                   [inputNotifier, switchPages, pageController]);
             })
         : getFutureHandlerPageView(

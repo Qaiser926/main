@@ -171,6 +171,15 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
     );
   }
 
+  Widget errorFunction(dynamic snapshot) {
+    return Padding(
+        padding: EdgeInsets.all(20.h),
+        child: Text(AppLocalizations.of(context)!.deleteErrorMessage,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.error,
+            )));
+  }
+
   Widget buildNavigationBox() {
     return showWaitingMessage
         ? Column(
@@ -180,8 +189,9 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                    return snapshotHandler(snapshot, futureHandler,
-                        [context, widget.detailedEA.id!]);
+                    return snapshotHandler(context, snapshot, futureHandler,
+                        [context, widget.detailedEA.id!],
+                        defaultErrorFunction: errorFunction);
                   }),
               getVerSpace(10.h),
               Padding(
@@ -273,8 +283,9 @@ class DeleteForwardingPage extends StatelessWidget {
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
-                  return snapshotHandler(snapshot, goToProfilePage, [context],
-                      errorWidget: Padding(
+                  return snapshotHandler(
+                      context, snapshot, goToProfilePage, [context],
+                      defaultErrorFunction: (_) => Padding(
                           padding: EdgeInsets.all(20.h),
                           child: Text(
                               AppLocalizations.of(context)!.deleteErrorMessage,

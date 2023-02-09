@@ -166,6 +166,7 @@
   "deleteEAWaitingMessage": "Deine Veranstaltung wird aus unserer Datenbank gelöscht",
   "deleteErrorMessage": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es später erneut. Bitte kontaktiere uns, sollte sich der Fehler wiederholen.",
   "saveEAWaitingMessage": "Deine Veranstaltung wird zu unserer Datenbank hinzugefügt. Dies kann einen Moment dauern.",
+  "saveEADefaultErrorMessage": "",
   "navigation": "Navigation",
   "shareLink": "Teile Link",
   "storeQRCode": "QR Code speichern",

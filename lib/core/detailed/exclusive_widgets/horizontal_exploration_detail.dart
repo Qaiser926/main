@@ -83,7 +83,7 @@ Widget getHorizontalDiscovery(
   return KeepAliveFutureBuilder(
       future: eAIds,
       builder: (context, snapshot) {
-        return snapshotHandler(snapshot, getContent, [heading]);
+        return snapshotHandler(context, snapshot, getContent, [heading]);
       });
 }
 

@@ -51,7 +51,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
     return KeepAliveFutureBuilder(
         future: detailedEventOrActivity,
         builder: (context, snapshot) {
-          return snapshotHandler(snapshot, getContent, []);
+          return snapshotHandler(context, snapshot, getContent, []);
         });
   }
 

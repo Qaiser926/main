@@ -48,7 +48,7 @@ class _FavouritePageState extends State<FavouritePage>
     return FutureBuilder(
         future: favouriteEA,
         builder: (context, snapshot) {
-          return snapshotHandler(snapshot, futureFulfilledWidget, []);
+          return snapshotHandler(context, snapshot, futureFulfilledWidget, []);
         });
   }
 

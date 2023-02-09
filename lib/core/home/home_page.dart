@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     return KeepAliveFutureBuilder(
         future: futureHomePageIds,
         builder: (context, snapshot) {
-          return snapshotHandler(snapshot, getHomePage, []);
+          return snapshotHandler(context, snapshot, getHomePage, []);
         });
   }
 

@@ -54,7 +54,7 @@ class _MapResultsState extends State<MapResults> {
               future: Provider.of<MapNotifier>(context, listen: false)
                   .getSearchQueryResult(),
               builder: (context, snapshot) {
-                return snapshotHandler(snapshot, futureMap, []);
+                return snapshotHandler(context, snapshot, futureMap, []);
               });
         });
       } else {
@@ -211,7 +211,7 @@ class _MapResultsState extends State<MapResults> {
     return KeepAliveFutureBuilder(
         future: eASummary,
         builder: (context, snapshot) {
-          return snapshotHandler(snapshot, buildMapSummary, [context]);
+          return snapshotHandler(context, snapshot, buildMapSummary, [context]);
         });
   }
 }
