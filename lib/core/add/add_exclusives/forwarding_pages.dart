@@ -270,13 +270,17 @@ class DeleteForwardingPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // TODO: (extern) routing after error navigation, e.g. to Home page or add page
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
                   return snapshotHandler(snapshot, goToProfilePage, [context],
-                      errorWidget: Text(
-                          AppLocalizations.of(context)!.deleteErrorMessage));
+                      errorWidget: Padding(
+                          padding: EdgeInsets.all(20.h),
+                          child: Text(
+                              AppLocalizations.of(context)!.deleteErrorMessage,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ))));
                 }),
             getVerSpace(10.h),
             Padding(

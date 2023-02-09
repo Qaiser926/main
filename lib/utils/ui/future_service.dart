@@ -21,7 +21,7 @@ Widget snapshotHandler(
       return loadingWidget;
     case ConnectionState.done:
       if (snapshot.hasError) {
-        return defaultErrorWidget;
+        return errorWidget;
         //TODO (extern) implement rest error handling, please document your expected behaviour
         // throw Exception(snapshot.error);
       } else {
