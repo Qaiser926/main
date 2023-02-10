@@ -37,6 +37,25 @@ Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
   }
 }
 
+Widget messageErrorFunction(dynamic snapshot, BuildContext context) {
+  int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+  String? jsonMessage = jsonDecode(snapshot.error.message);
+  if (firstDigit == 5) {
+    return errorMessage(
+        jsonMessage ?? AppLocalizations.of(context)!.internalServerError,
+        context);
+  } else if (snapshot.error.httpStatusCode == 403) {
+    return errorMessage(
+        AppLocalizations.of(context)!.forbiddenErrorMessage, context);
+  } else if (snapshot.error.httpStatusCode == 404) {
+    return errorMessage(
+        AppLocalizations.of(context)!.notFoundErrorMessage, context);
+  } else {
+    return errorMessage(
+        AppLocalizations.of(context)!.defaultRequestErrorMessage, context);
+  }
+}
+
 Widget snapshotHandler(
   BuildContext context,
   snapshot,

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -172,25 +171,6 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
     );
   }
 
-  Widget errorFunction(dynamic snapshot, BuildContext context) {
-    int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
-    String? jsonMessage = jsonDecode(snapshot.error.message);
-    if (firstDigit == 5) {
-      return errorMessage(
-          jsonMessage ?? AppLocalizations.of(context)!.internalServerError,
-          context);
-    } else if (snapshot.error.httpStatusCode == 403) {
-      return errorMessage(
-          AppLocalizations.of(context)!.forbiddenErrorMessage, context);
-    } else if (snapshot.error.httpStatusCode == 404) {
-      return errorMessage(
-          AppLocalizations.of(context)!.notFoundErrorMessage, context);
-    } else {
-      return errorMessage(
-          AppLocalizations.of(context)!.defaultRequestErrorMessage, context);
-    }
-  }
-
   Widget buildNavigationBox() {
     return showWaitingMessage
         ? Column(
@@ -200,7 +180,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
                   builder: (context, snapshot) {
                     return snapshotHandler(context, snapshot, futureHandler,
                         [context, widget.detailedEA.id!],
-                        defaultErrorFunction: errorFunction);
+                        defaultErrorFunction: messageErrorFunction);
                   }),
               getVerSpace(10.h),
               Padding(
