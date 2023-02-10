@@ -83,7 +83,11 @@ class _MapResultsState extends State<MapResults> {
         minZoom: 3,
       ),
       nonRotatedChildren: [
-        if (eAIds != null) buildSummaryCarousel(),
+        if (eAIds != null)
+          Container(
+            child: buildSummaryCarousel(),
+            alignment: Alignment.bottomCenter,
+          ),
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
@@ -166,7 +170,6 @@ class _MapResultsState extends State<MapResults> {
                       locationData["coordinates"]["latitude"],
                       locationData["coordinates"]["longitude"]);
             })
-
             // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
             //     arguments: {
             //       NavigatorConstants.EventActivityId: locationData["id"]
@@ -233,7 +236,7 @@ class _MapResultsState extends State<MapResults> {
     // TODO (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 800.h,
+        height: 150.h,
 
         viewportFraction: 1,
         initialPage: 0,
