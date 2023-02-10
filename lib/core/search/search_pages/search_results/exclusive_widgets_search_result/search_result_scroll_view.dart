@@ -30,10 +30,28 @@ class SearchScrollView extends StatelessWidget {
     }
   }
 
+  SearchResultIds orderEmptyIds(SearchResultIds searchResultIds) {
+    Map<String, List<String?>> nonEmptyIds = {};
+    Map<String, List<String?>> emptyIds = {};
+    searchResultIds.searchResultIds.forEach((key, value) {
+      if (value.isNotEmpty) {
+        nonEmptyIds[key] = value;
+      } else {
+        emptyIds[key] = value;
+      }
+    });
+    Map<String, List<String?>> orderedIds = {}
+      ..addAll(nonEmptyIds)
+      ..addAll(emptyIds);
+    searchResultIds.searchResultIds = orderedIds;
+    return searchResultIds;
+  }
+
   Widget getHorizontalDiscovery(
-      SearchResultIds searchResultIds, BuildContext context) {
+      SearchResultIds unfilteredSearchResultIds, BuildContext context) {
+    SearchResultIds searchResultIds = orderEmptyIds(unfilteredSearchResultIds);
     return ListView.builder(
-        itemCount: searchResultIds.searchResultIds.length,
+        itemCount: unfilteredSearchResultIds.searchResultIds.length,
         itemBuilder: (BuildContext context, int index) {
           String key = searchResultIds.searchResultIds.keys.elementAt(index);
           bool showDivider = true;
