@@ -6,10 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<void> _launchUrl(_url) async {
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
+String removeHttp(String url) {
+  RegExp regExp = new RegExp(
+    r"^https?://",
+    caseSensitive: false,
+    multiLine: false,
+  );
+  RegExpMatch? match = regExp.firstMatch(url);
+  return url.substring(match?.end ?? 0);
 }
 
 Widget? getMoreInformationButton(
@@ -19,7 +23,10 @@ Widget? getMoreInformationButton(
         child: Padding(
             padding: EdgeInsets.all(5),
             child: ElevatedButton(
-                onPressed: () => _launchUrl(ticketUrl),
+                onPressed: () {
+                  String websiteWithoutHttp = removeHttp(ticketUrl);
+                  launchUrl(Uri.parse("https://" + websiteWithoutHttp));
+                },
                 child: Text(AppLocalizations.of(context)!.ticket))));
   }
   if (websiteUrl != null) {
@@ -27,7 +34,10 @@ Widget? getMoreInformationButton(
         child: Padding(
             padding: EdgeInsets.all(5),
             child: ElevatedButton(
-                onPressed: () => _launchUrl(websiteUrl),
+                onPressed: () {
+                  String websiteWithoutHttp = removeHttp(websiteUrl);
+                  launchUrl(Uri.parse("https://" + websiteWithoutHttp));
+                },
                 child: Text(AppLocalizations.of(context)!.website))));
   }
 }
