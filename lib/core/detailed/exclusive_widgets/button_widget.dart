@@ -27,7 +27,10 @@ Widget? getMoreInformationButton(
                   String websiteWithoutHttp = removeHttp(ticketUrl);
                   launchUrl(Uri.parse("https://" + websiteWithoutHttp));
                 },
-                child: Text(AppLocalizations.of(context)!.ticket))));
+                child: Text(
+                  AppLocalizations.of(context)!.ticket,
+                  textAlign: TextAlign.center,
+                ))));
   }
   if (websiteUrl != null) {
     return Expanded(
@@ -38,7 +41,10 @@ Widget? getMoreInformationButton(
                   String websiteWithoutHttp = removeHttp(websiteUrl);
                   launchUrl(Uri.parse("https://" + websiteWithoutHttp));
                 },
-                child: Text(AppLocalizations.of(context)!.website))));
+                child: Text(
+                  AppLocalizations.of(context)!.website,
+                  textAlign: TextAlign.center,
+                ))));
   }
 }
 
@@ -92,7 +98,9 @@ class ButtonWidget extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           if (moreInformationButton != null) moreInformationButton,
           if (calendarButton != null) calendarButton,
-          if (shareButton != null) shareButton
+          if ((shareButton != null) &
+              ((moreInformationButton == null) | (calendarButton == null)))
+            shareButton!
         ]));
   }
 }
