@@ -280,7 +280,7 @@
   "resend": "Erneut Senden",
   "confirmationCode": "Bestätigungscode",
   "signupNameHintText": "Dies ist dein öffentlich angezeigter Name",
-  "profileDialogTitle": "Gib deinen {placeholder} ein",
+  "profileDialogTitle": "Gib hier deinen {placeholder} ein",
   "@profileDialogTitle": {
     "placeholders": {
       "placeholder": {}

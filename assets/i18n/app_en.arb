@@ -92,7 +92,7 @@
   "addActions": "Delete or Share",
   "title": "Title",
   "titleHint": "State a title",
-  "titleErrorMessage": "Titel ist erforderlich",
+  "titleErrorMessage": "A title is required",
     "categorization": "Categorization",
     "categorizationHint": "Choose a main category",
     "categorizationErrorMessage": "A category is required",
@@ -293,7 +293,7 @@
   "resend": "Resend",
   "confirmationCode": "Confirmation Code",
   "signupNameHintText": "This is you publicly shown name",
-  "profileDialogTitle": "Input your {placeholder}",
+  "profileDialogTitle": "Input your {placeholder} here",
   "@profileDialogTitle": {
     "placeholders": {
       "placeholder": {}
