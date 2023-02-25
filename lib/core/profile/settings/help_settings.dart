@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:othia/utils/ui/ui_utils.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({Key? key}) : super(key: key);
@@ -32,11 +30,41 @@ class _HelpScreenState extends State<HelpScreen> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.only(bottom: 0, left: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                getVerSpace(25.h),
-                Text(AppLocalizations.of(context)!.helpText)
+                // getVerSpace(25.h),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0.0),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Text.rich(TextSpan(
+                            text:
+                                'If you need help or you want to give us feeback ',
+                            children: <InlineSpan>[])),
+                      ),
+                      Row(
+                        children: [
+                          Center(
+                            child: Text.rich(TextSpan(
+                                text:
+                                    '                feel free to contact us:',
+                                children: <InlineSpan>[
+                                  TextSpan(
+                                      text: ' othia@outlook.de',
+                                      style: TextStyle(
+                                          color: Colors.orange.shade900,
+                                          fontSize: 16)),
+                                ])),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

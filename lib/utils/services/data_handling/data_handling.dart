@@ -25,11 +25,6 @@ Image getPhotoNullSave(
       fit: BoxFit.contain,
       width: width,
       height: height,
-      errorBuilder: (_, __, ___) {
-        // TODO (extern) not working for detail view
-        return getAssetImage("$categoryId.jpg", width: width, height: height)
-            as Image;
-      },
     );
   } else {
     return getAssetImage("$categoryId.jpg", width: width, height: height)

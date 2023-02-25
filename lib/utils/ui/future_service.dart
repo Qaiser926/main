@@ -4,9 +4,37 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 const Widget defaultStillLoadingWidget = Center(
-  child: CircularProgressIndicator(),
+  child: Shimmer(
+    gradient: LinearGradient(
+      colors: [Colors.grey, Colors.white, Colors.grey],
+      stops: [0.1, 0.3, 0.4],
+      begin: Alignment(-1.0, -0.3),
+      end: Alignment(1.0, 0.3),
+      tileMode: TileMode.repeated,
+    ),
+    child: Center(
+      child: Shimmer(
+        gradient: LinearGradient(
+          colors: [Colors.white, Colors.white, Colors.white],
+          stops: [0.1, 0.3, 0.4],
+          begin: Alignment(-1.0, -0.3),
+          end: Alignment(1.0, 0.3),
+          tileMode: TileMode.clamp,
+        ),
+        child: Center(
+          child: Text(
+            "   . . .   ",
+            style: TextStyle(
+                color: Colors.grey, fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          // child: CircularProgressIndicator(),
+        ),
+      ),
+    ),
+  ),
 );
 
 Widget errorMessage(String errorMessage, BuildContext context) {
@@ -71,7 +99,7 @@ Widget snapshotHandler(
       if (snapshot.hasError) {
         return defaultErrorFunction(snapshot, context);
         //TODO (extern) implement rest error handling, please document your expected behaviour
-        // throw Exception(snapshot.error);
+        throw Exception(snapshot.error);
       } else {
         RestResponse data = snapshot.data as RestResponse;
         try {

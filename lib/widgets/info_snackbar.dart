@@ -17,6 +17,6 @@ void launchInfoSnackBarButton(BuildContext context) {
 
     content: Text(AppLocalizations.of(context)!.explanationEA,
         textAlign: TextAlign.center),
-    duration: Duration(seconds: 3, milliseconds: 500),
+    duration: const Duration(seconds: 3, milliseconds: 500),
   ));
 }

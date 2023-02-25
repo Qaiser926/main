@@ -24,12 +24,15 @@ Widget getNotLoggedIn(
               getVerSpace(10.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.h),
-                child: Expanded(
+                child: FittedBox(
                   child: Padding(
                       padding: EdgeInsets.all(5),
                       child: ElevatedButton(
                           onPressed: () => Get.to(Login()),
-                          child: Text("Login"))),
+                          child: Text(
+                            "Login",
+                            style: TextStyle(fontSize: 14),
+                          ))),
                 ),
               ),
             ],

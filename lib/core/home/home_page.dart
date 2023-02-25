@@ -53,13 +53,15 @@ class _HomePageState extends State<HomePage> {
         child: Column(
       children: [
         MapPicture(),
-        BaseDiscoveryClass(
-          caption: AppLocalizations.of(context)!.compingUpEvents,
-          Ids: homePageIds.compingUpEvents,
-          showMore: false,
-          isInfoButtonActivated: true,
+        Container(
+          child: BaseDiscoveryClass(
+            caption: AppLocalizations.of(context)!.compingUpEvents,
+            Ids: homePageIds.compingUpEvents,
+            showMore: false,
+            isInfoButtonActivated: true,
+          ),
         ),
-       BaseDiscoveryClass(
+        BaseDiscoveryClass(
             caption: AppLocalizations.of(context)!.openActivities,
             Ids: homePageIds.openActivities,
             showMore: false,
