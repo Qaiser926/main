@@ -6,6 +6,8 @@ import 'package:othia/modules/models/search_query/search_query.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
 
+import '../../../constants/categories.dart';
+
 abstract class AbstractQueryNotifier extends ChangeNotifier {
   // Pagecontroller related
   bool isControllerSet = false;
@@ -252,6 +254,16 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
       goToFirstPage();
     }
     notifyListeners();
+  }
+
+  bool isCategorySelected({required categoryId}) {
+    for (var i = 0; i < selectedSubcategoryIds.length; i++) {
+      if (categoryId ==
+          mapSubcategoryToCategory(subCategoryId: selectedSubcategoryIds[i])) {
+        return true;
+      }
+    }
+    return false;
   }
 
   void changeForFullCategorySearch(
