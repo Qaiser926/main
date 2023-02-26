@@ -75,7 +75,8 @@ class CategoryFilterState extends State<CategoryFilter>
 
     if (widget.isModalBottomSheetMode) {
       header = Container(
-        // color: Theme.of(context).scaffoldBackgroundColor,
+        // TODO (extern) remove (small) edges created by the container that reach into the rounded corners
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

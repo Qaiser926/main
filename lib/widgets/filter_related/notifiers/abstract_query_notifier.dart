@@ -307,6 +307,7 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
         maxPrice: priceRange.end,
         sortCriteria: sortCriteria,
         selectedCategoryIds: selectedSubcategoryIds,
+        // per default all categories are searched
         eAType: eAType);
   }
 }
