@@ -120,8 +120,12 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
             context: context,
             functionAccept: dynamicNotifier.showCategoryFilterResults,
             functionArgumentsAccept: {},
-            functionReset: dynamicNotifier.resetSubcategoryList,
-            functionArgumentsReset: {#context: context}),
+            functionReset: dynamicNotifier.resetSelectedSubcategories,
+            // TODO, subcategoryIds| resetSubcategoryList
+            functionArgumentsReset: {
+              #context: context,
+              #subcategoryIds: subcategoryIds
+            }),
       ),
       // ),
     );
