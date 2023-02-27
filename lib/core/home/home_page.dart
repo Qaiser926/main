@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             isInfoButtonActivated: true,
           ),
         ),
-       BaseDiscoveryClass(
+        BaseDiscoveryClass(
             caption: AppLocalizations.of(context)!.openActivities,
             Ids: homePageIds.openActivities,
             showMore: false,
