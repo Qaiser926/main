@@ -7,7 +7,6 @@ import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.d
 import 'package:provider/provider.dart';
 
 import 'exclusives/category_grid_item.dart';
-import 'exclusives/close_button.dart';
 import 'exclusives/expanded_widget.dart';
 
 Future<dynamic> getCategoryFilterDialog(
@@ -75,14 +74,10 @@ class CategoryFilterState extends State<CategoryFilter>
 
     if (widget.isModalBottomSheetMode) {
       header = Container(
-        // TODO (extern) remove (small) edges created by the container that reach into the rounded corners
-        color: Theme.of(context).scaffoldBackgroundColor,
+        // color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ClearButton(abstractNotifier: dynamicProvider, context: context),
-              CloseButton()
-            ]),
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [CloseButton()]),
       );
     }
     return MultiProvider(

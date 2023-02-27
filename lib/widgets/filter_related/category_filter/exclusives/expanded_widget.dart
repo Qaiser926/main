@@ -76,7 +76,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
                     color: listItemColor,
                     borderRadius: BorderRadius.circular(borderRadius),
                   ),
-            child: Consumer<AbstractQueryNotifier>(
+                  child: Consumer<AbstractQueryNotifier>(
                       builder: (context, model, child) {
                     bool closeDialog = true;
                     if (model.currentIndex ==
@@ -120,11 +120,8 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
             context: context,
             functionAccept: dynamicNotifier.showCategoryFilterResults,
             functionArgumentsAccept: {},
-            functionReset: dynamicNotifier.resetSelectedSubcategories,
-            functionArgumentsReset: {
-              #context: context,
-              #subcategoryIds: subcategoryIds
-            }),
+            functionReset: dynamicNotifier.resetSubcategoryList,
+            functionArgumentsReset: {#context: context}),
       ),
       // ),
     );

@@ -121,8 +121,7 @@ class CategoryGridItem extends StatelessWidget {
               IgnorePointer(
                 child: Consumer<AbstractQueryNotifier>(
                     builder: (context, model, child) {
-                  return ((model.getExpandedIndex == index) |
-                          model.isCategorySelected(categoryId: categoryId))
+                  return model.getExpandedIndex == index
                       ? Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),

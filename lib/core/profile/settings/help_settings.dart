@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:othia/utils/ui/ui_utils.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({Key? key}) : super(key: key);

@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/modules/models/search_query/search_query.dart';
 import 'package:othia/widgets/filter_related/sort_filter.dart';
 import 'package:othia/widgets/filter_related/type_filter.dart';
-
-import '../../../constants/categories.dart';
 
 abstract class AbstractQueryNotifier extends ChangeNotifier {
   // Pagecontroller related
@@ -245,33 +244,14 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
     goToResultPage();
   }
 
-  void resetSelectedSubcategories(
-      {required BuildContext context, required List<String> subcategoryIds}) {
-    for (var i = 0; i < subcategoryIds.length; i++) {
-      selectedSubcategoryIds.remove(subcategoryIds[i]);
-    }
-
-    notifyListeners();
-  }
-
   void resetSubcategoryList({required BuildContext context}) {
     categoryFilterActivated = false;
     selectedSubcategoryIds = [];
-    // if (!anyFilterActivated()) {
-    //   if (currentIndex != NavigatorConstants.SearchPageIndex) Get.back();
-    //   goToFirstPage();
-    // }
-    notifyListeners();
-  }
-
-  bool isCategorySelected({required categoryId}) {
-    for (var i = 0; i < selectedSubcategoryIds.length; i++) {
-      if (categoryId ==
-          mapSubcategoryToCategory(subCategoryId: selectedSubcategoryIds[i])) {
-        return true;
-      }
+    if (!anyFilterActivated()) {
+      if (currentIndex != NavigatorConstants.SearchPageIndex) Get.back();
+      goToFirstPage();
     }
-    return false;
+    notifyListeners();
   }
 
   void changeForFullCategorySearch(
@@ -307,7 +287,6 @@ abstract class AbstractQueryNotifier extends ChangeNotifier {
         maxPrice: priceRange.end,
         sortCriteria: sortCriteria,
         selectedCategoryIds: selectedSubcategoryIds,
-        // per default all categories are searched
         eAType: eAType);
   }
 }

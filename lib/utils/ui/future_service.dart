@@ -49,11 +49,7 @@ Widget errorMessage(String errorMessage, BuildContext context) {
 const Widget defaultWidget = Text("Ok");
 
 Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
-  int firstDigit = 4;
-  try {
-    int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
-  } catch (e) {}
-
+  int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
   if (firstDigit == 5) {
     return errorMessage(
         AppLocalizations.of(context)!.internalServerError, context);
