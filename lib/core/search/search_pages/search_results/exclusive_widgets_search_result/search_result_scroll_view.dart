@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/modules/models/get_search_results_ids/get_search_result_ids.dart';
 import 'package:othia/widgets/action_buttons.dart';
@@ -69,25 +68,13 @@ class SearchScrollView extends StatelessWidget {
   Widget getVerticalDiscovery(
       SearchResultIds searchResultIds, BuildContext context) {
     List<Widget> slivers = [];
-    bool allResultsEmpty = true;
     for (MapEntry<String, List> item
         in searchResultIds.searchResultIds.entries) {
-      if (item.value.isNotEmpty) {
-        allResultsEmpty = false;
-      }
       slivers.add(buildVerticalDiscovery(
           actionButtonType: ActionButtonType.favouriteLikeButton,
           Ids: item.value));
     }
 
-    return allResultsEmpty
-        ? Container(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(AppLocalizations.of(context)!.noResultsFound),
-            ),
-          )
-        : CustomScrollView(slivers: slivers);
+    return CustomScrollView(slivers: slivers);
   }
 }
