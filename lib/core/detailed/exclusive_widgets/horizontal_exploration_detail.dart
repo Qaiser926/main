@@ -39,7 +39,9 @@ class ExploreLocation extends StatelessWidget {
         functionParameter: locationId,
         listFunction: ListFunction.getEAIdsForLocation);
     return getHorizontalDiscovery(
-        eAIds: eAIds, heading: AppLocalizations.of(context)!.exploreLocation);
+        eAIds: eAIds,
+        heading: AppLocalizations.of(context)!.exploreLocation,
+        isMoreLocation: true);
   }
 }
 
@@ -79,18 +81,21 @@ class ExploreEventSeries extends StatelessWidget {
 }
 
 Widget getHorizontalDiscovery(
-    {required Future eAIds, required String heading}) {
+    {required Future eAIds, required String heading, isMoreLocation = false}) {
   return KeepAliveFutureBuilder(
       future: eAIds,
       builder: (context, snapshot) {
-        return snapshotHandler(context, snapshot, getContent, [heading]);
+        return snapshotHandler(
+            context, snapshot, getContent, [heading, isMoreLocation]);
       });
 }
 
-Widget getContent(String heading, Map<String, dynamic> jsonData) {
+Widget getContent(
+    String heading, bool isMoreLocation, Map<String, dynamic> jsonData) {
   try {
     IdList eAIds = IdList.fromJson(jsonData);
-    if (eAIds.eaIdList.length == 0) {
+    if (((eAIds.eaIdList.length == 1) & isMoreLocation) |
+        (eAIds.eaIdList.length == 0)) {
       throw EmptyList();
     }
     return BaseDiscoveryClass(

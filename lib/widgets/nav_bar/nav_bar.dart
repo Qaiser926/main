@@ -10,7 +10,6 @@ class CustomNavigationBar extends StatelessWidget {
   build(BuildContext context) {
     return Consumer<NavigationBarNotifier>(builder: (context, model, child) {
       return NavigationBar(
-          height: MediaQuery.of(context).size.height / 10,
           destinations: getCustomNavigationDestinations(),
           // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           selectedIndex: model.getIndex,
