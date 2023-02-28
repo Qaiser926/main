@@ -8,8 +8,6 @@ import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 
-import '../../utils/get_user_time.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -51,11 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget getHomePage(Map<String, dynamic> jsonData) {
     HomePageIds homePageIds = HomePageIds.fromJson(jsonData);
-    findFreeTimes().then((freeTimes) {
-      // Do something with the free times
-    }).catchError((error) {
-      // Handle any errors that occurred while finding free times
-    });
+
     return SingleChildScrollView(
         child: Column(
       children: [
