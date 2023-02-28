@@ -1,7 +1,11 @@
 import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/services.dart';
 
 Future<void> recordCustomEvent() async {
+  MethodChannel sdf = MethodChannel('com.amazonaws.amplify/analytics_pinpoint');
+
   final eAClickedEvent = EAClickedEvent(
       buttonName: 'EAdetails', eAId: "EVENT ACTIVTIY ID", userId: "USER ID");
   Amplify.Analytics.recordEvent(event: eAClickedEvent);
@@ -10,7 +14,44 @@ Future<void> recordCustomEvent() async {
       buttonName: "EALIKED", userId: "SELBER USER", eAId: "ANDERES EVENT");
   Amplify.Analytics.recordEvent(event: eALikedEvent);
 
+  FirebaseAnalytics analytics = await FirebaseAnalytics.instance;
+  analytics.setAnalyticsCollectionEnabled(true);
+  analytics.setConsent(
+      adStorageConsentGranted: true, analyticsStorageConsentGranted: true);
+  analytics.setUserId(id: "dfd");
+  analytics.setSessionTimeoutDuration(Duration(seconds: 1));
+  // analytics.logEvent(name: "testgoogleEvent");
+  analytics.logSearch(searchTerm: "searchTerm");
+  await FirebaseAnalytics.instance.logSelectContent(
+    contentType: "image",
+    itemId: "itemId",
+  );
+
+  analytics.setUserProperty(name: 'table', value: 'yes i am a table');
+  analytics.setCurrentScreen(
+    screenName: 'currentScreen',
+  );
+
   Amplify.Analytics.flushEvents();
+
+  // AnalyticsUserProfileLocation location = AnalyticsUserProfileLocation();
+  // location.latitude = 32.423424;
+  // location.longitude = -52.342342;
+  // location.postalCode = '98122';
+  // location.city = 'Seattle';
+  // location.region = 'WA';
+  // location.country = 'USA';
+  //
+  // AnalyticsProperties properties = AnalyticsProperties();
+  // properties.addStringProperty('phoneNumber', '+11234567890');
+  // properties.addIntProperty('age', 25);
+  //
+  // AnalyticsUserProfile userProfile = AnalyticsUserProfile();
+  // userProfile.name = username;
+  // userProfile.email = 'name@example.com';
+  // userProfile.location = location;
+  //
+  // Amplify.Analytics.identifyUser(userId: userId, userProfile: profile);
 }
 
 class AnalyticsConstants {

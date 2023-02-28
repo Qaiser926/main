@@ -2,6 +2,7 @@ import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,16 +16,22 @@ import 'config/routes/pages.dart';
 import 'config/routes/routes.dart';
 import 'config/themes/dark_theme.dart';
 import 'constants/locales_settings.dart';
+import 'firebase_options.dart';
 import 'utils/services/global_navigation_notifier.dart';
 
 late final GlobalNavigationNotifier _globalNavigationNotifier;
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
+  WidgetsFlutterBinding.ensureInitialized();
   await _configureAmplify();
   _globalNavigationNotifier = GlobalNavigationNotifier();
   await _globalNavigationNotifier.initializeUserLoggedIn();
   await _globalNavigationNotifier.initializeUserId();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(MyApp());
 }
@@ -50,29 +57,29 @@ class MyApp extends StatelessWidget {
           ],
           child: Consumer<LocaleProvider>(
               builder: (context, localeProvider, child) {
-                return GetMaterialApp(
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  locale: localeProvider.locale,
-                  supportedLocales: supportedLocales,
-                  // builder: Authenticator.builder(),
-                  debugShowCheckedModeBanner: false,
-                  initialRoute: Routes.homeRoute,
-                  // getPages: ,
-                  routes: Pages.routes,
-                  theme: getDarkThemeData(),
-                  onGenerateRoute: (settings) {
-                    if (settings.name == Routes.homeRoute) {
-                      return MaterialPageRoute(
-                          builder: Pages.routes[Routes.homeRoute]!);
-                    }
-                  },
-                );
-              }),
+            return GetMaterialApp(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              locale: localeProvider.locale,
+              supportedLocales: supportedLocales,
+              // builder: Authenticator.builder(),
+              debugShowCheckedModeBanner: false,
+              initialRoute: Routes.homeRoute,
+              // getPages: ,
+              routes: Pages.routes,
+              theme: getDarkThemeData(),
+              onGenerateRoute: (settings) {
+                if (settings.name == Routes.homeRoute) {
+                  return MaterialPageRoute(
+                      builder: Pages.routes[Routes.homeRoute]!);
+                }
+              },
+            );
+          }),
         );
       },
     );
