@@ -60,6 +60,8 @@ dependencies:
   add_2_calendar: ^2.2.3
   image_picker: ^0.8.6
   gallery_saver: ^2.3.2
+  device_calendar: ^4.3.0
+  permission_handler: ^8.0.0
 
   #widgets
   readmore: ^2.1.0
