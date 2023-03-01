@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/core/main_page.dart';
@@ -16,6 +17,9 @@ class SearchResultsPage extends StatefulWidget {
 class _SearchResultsPage extends State<SearchResultsPage> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'searchResultScreen',
+    );
     return SafeArea(
         child: Scaffold(
       primary: true,
@@ -28,16 +32,16 @@ class _SearchResultsPage extends State<SearchResultsPage> {
                       context: context,
                       dynamicProvider:
                           Provider.of<SearchNotifier>(context, listen: false))
-                  .buildDropdownBar();
-            }),
-            context: context,
-            appBarTitle: AppLocalizations.of(context)!.results,
-            onBackPressed: getOnBackPressedFunction(context),
-          ),
-          body: SearchResults(),
-        );
-      }),
-    ));
+                          .buildDropdownBar();
+                    }),
+                context: context,
+                appBarTitle: AppLocalizations.of(context)!.results,
+                onBackPressed: getOnBackPressedFunction(context),
+              ),
+              body: SearchResults(),
+            );
+          }),
+        ));
   }
 }
 

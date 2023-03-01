@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +29,7 @@ class Add extends StatefulWidget {
 
 class _AddState extends State<Add> {
   SwitchAddPageNotifier switchPagesNotifier =
-      SwitchAddPageNotifier(Add.firstPage);
+  SwitchAddPageNotifier(Add.firstPage);
   PageController pageController = PageController(initialPage: Add.firstPage);
 
   AddEANotifier inputNotifier = AddEANotifier();
@@ -53,6 +54,9 @@ class _AddState extends State<Add> {
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }
     }
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'addScreen',
+    );
     super.initState();
   }
 
@@ -91,34 +95,34 @@ class _AddState extends State<Add> {
           appBar: AppBar(automaticallyImplyLeading: false, actions: [
             Consumer<SwitchAddPageNotifier>(
                 builder: (context, switchPageModel, child) {
-              // TODO (extern) align that this button row is always aligned central for both languages
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  buildUpperNavigationElement(
-                      context: context,
-                      index: 0,
-                      switchPageModel: switchPageModel),
-                  getArrowIcon(context),
-                  buildUpperNavigationElement(
-                      context: context,
-                      index: 1,
-                      switchPageModel: switchPageModel),
-                  getArrowIcon(context),
-                  buildUpperNavigationElement(
-                      context: context,
-                      index: 2,
-                      switchPageModel: switchPageModel),
-                  getHorSpace(16.h)
-                ],
-              );
-            })
+                  // TODO (extern) align that this button row is always aligned central for both languages
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildUpperNavigationElement(
+                          context: context,
+                          index: 0,
+                          switchPageModel: switchPageModel),
+                      getArrowIcon(context),
+                      buildUpperNavigationElement(
+                          context: context,
+                          index: 1,
+                          switchPageModel: switchPageModel),
+                      getArrowIcon(context),
+                      buildUpperNavigationElement(
+                          context: context,
+                          index: 2,
+                          switchPageModel: switchPageModel),
+                      getHorSpace(16.h)
+                    ],
+                  );
+                })
           ]),
           persistentFooterButtons: [getFloatingButtons(switchPages)],
           // bottomNavigationBar: getFloatingButtons(),
           // floatingActionButton: ,
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+          FloatingActionButtonLocation.centerFloat,
           body: getLoggedInSensitiveBody(
               notLoggedInMessages: NotLoggedInMessage.addPage,
               loggedInWidget: getLoggedInBody(switchPages),
@@ -132,45 +136,44 @@ class _AddState extends State<Add> {
     // it is first tested if an existing event or acitvity is modifier or if a new one is added
     return inputNotifier.isModifyMode
         ? KeepAliveFutureBuilder(
-            future: detailedEventOrActivity,
-            builder: (context, snapshot) {
-              return snapshotHandler(
-                  context,
-                  snapshot,
-                  getFutureHandlerPageView,
-                  [inputNotifier, switchPages, pageController]);
-            })
+        future: detailedEventOrActivity,
+        builder: (context, snapshot) {
+          return snapshotHandler(
+              context,
+              snapshot,
+              getFutureHandlerPageView,
+              [inputNotifier, switchPages, pageController]);
+        })
         : getFutureHandlerPageView(
-            inputNotifier, switchPages, pageController, {});
+        inputNotifier, switchPages, pageController, {});
   }
 
   Widget getFloatingButtons(SwitchPages switchPages) {
     return Consumer<SwitchAddPageNotifier>(
         builder: (context, switchPageConsumer, child) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          switchPageConsumer.currentPage == Add.firstPage
-              ? const SizedBox.shrink()
-              : getNavigationButton(
-                  Icon(Icons.arrow_back),
-                  switchPages.previousPage,
-                  context,
-                ),
-          switchPageConsumer.currentPage == Add.lastPage
-              ? getNavigationButton(Text(AppLocalizations.of(context)!.publish),
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              switchPageConsumer.currentPage == Add.firstPage
+                  ? const SizedBox.shrink()
+                  : getNavigationButton(
+                Icon(Icons.arrow_back),
+                switchPages.previousPage,
+                context,
+              ),
+              switchPageConsumer.currentPage == Add.lastPage
+                  ? getNavigationButton(Text(AppLocalizations.of(context)!.publish),
                   publishFunction, context, 130.h)
-              : getNavigationButton(
+                  : getNavigationButton(
                   Icon(Icons.arrow_forward), switchPages.nextPage, context),
-        ],
-      );
-    });
+            ],
+          );
+        });
   }
 
-  Widget buildUpperNavigationElement(
-      {required BuildContext context,
-      required SwitchAddPageNotifier switchPageModel,
-      required int index}) {
+  Widget buildUpperNavigationElement({required BuildContext context,
+    required SwitchAddPageNotifier switchPageModel,
+    required int index}) {
     Map<int, String> navigationCaptions = {
       0: AppLocalizations.of(context)!.information,
       1: AppLocalizations.of(context)!.details,
@@ -181,7 +184,7 @@ class _AddState extends State<Add> {
         padding: EdgeInsets.all(5.h),
         child: GestureDetector(
           onTap: () =>
-              {pageController.jumpToPage(index), closeSnackBar(context)},
+          {pageController.jumpToPage(index), closeSnackBar(context)},
           child: Container(
             height: 30.h,
             decoration: BoxDecoration(
@@ -189,7 +192,7 @@ class _AddState extends State<Add> {
                     ? Theme.of(context).colorScheme.primary
                     : null,
                 border:
-                    Border.all(color: Theme.of(context).colorScheme.primary),
+                Border.all(color: Theme.of(context).colorScheme.primary),
                 borderRadius: BorderRadius.all(Radius.circular(10.h))),
             child: Align(
               alignment: Alignment.center,
@@ -213,12 +216,11 @@ class _AddState extends State<Add> {
   }
 
   // TODO (extern) when switching pages, the left button changes its position. This should be fixed.
-  Widget getNavigationButton(
-      Widget child,
+  Widget getNavigationButton(Widget child,
       void Function(
-    BuildContext context,
-  )
-          onPressedFunction,
+          BuildContext context,
+          )
+      onPressedFunction,
       BuildContext context,
       [double? width]) {
     return SizedBox(

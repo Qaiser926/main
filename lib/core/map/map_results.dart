@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -41,6 +42,9 @@ class _MapResultsState extends State<MapResults> {
 
   @override
   void initState() {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'mapScreen',
+    );
     super.initState();
   }
 
@@ -100,7 +104,7 @@ class _MapResultsState extends State<MapResults> {
                 height: 8,
                 child: DecoratedBox(
                   decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
+                  BoxDecoration(color: Theme.of(context).primaryColor),
                 ),
               ),
               getHorSpace(5.h),
@@ -111,7 +115,7 @@ class _MapResultsState extends State<MapResults> {
                 height: 8,
                 child: DecoratedBox(
                   decoration:
-                      BoxDecoration(color: Theme.of(context).bottomAppBarColor),
+                  BoxDecoration(color: Theme.of(context).bottomAppBarColor),
                 ),
               ),
               getHorSpace(5.h),
@@ -134,7 +138,7 @@ class _MapResultsState extends State<MapResults> {
             ),
             markers: getResultMarkers(),
             polygonOptions:
-                PolygonOptions(color: Colors.black12, borderStrokeWidth: 3),
+            PolygonOptions(color: Colors.black12, borderStrokeWidth: 3),
             builder: (context, markers) {
               return FloatingActionButton(
                 foregroundColor: Colors.white,
@@ -149,9 +153,8 @@ class _MapResultsState extends State<MapResults> {
     );
   }
 
-  Marker getMarker(
-      {required Map<String, dynamic> locationData,
-      required Color markerColor}) {
+  Marker getMarker({required Map<String, dynamic> locationData,
+    required Color markerColor}) {
     return Marker(
         width: 50.0,
         height: 50.0,
@@ -159,23 +162,23 @@ class _MapResultsState extends State<MapResults> {
         point: latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
-              onTap: () =>
-              {
-                // TODO (extern) highlight selected marker
-                setState(() {
-                  eAId = locationData["id"];
-                })
-                // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
-                //     arguments: {
-                //       NavigatorConstants.EventActivityId: locationData["id"]
-                //     })
-              },
-              child: Icon(
-                Icons.location_on,
-                size: 44,
-                color: markerColor,
-              ),
-            ));
+          onTap: () =>
+          {
+            // TODO (extern) highlight selected marker
+            setState(() {
+              eAId = locationData["id"];
+            })
+            // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+            //     arguments: {
+            //       NavigatorConstants.EventActivityId: locationData["id"]
+            //     })
+          },
+          child: Icon(
+            Icons.location_on,
+            size: 44,
+            color: markerColor,
+          ),
+        ));
   }
 
   List<Marker> getResultMarkers() {
@@ -188,10 +191,10 @@ class _MapResultsState extends State<MapResults> {
         rotate: false,
         point: userPosition!,
         builder: (ctx) => Icon(
-              Icons.my_location,
-              size: 22,
-              color: Colors.blue,
-            )));
+          Icons.my_location,
+          size: 22,
+          color: Colors.blue,
+        )));
     // for activities
     //TODO (extern) align color scheme for event and activity icons.
     mapResultIds.activityResults.forEach((element) {
@@ -216,12 +219,11 @@ class _MapResultsState extends State<MapResults> {
   }
 }
 
-Widget buildMapSummary(
-  BuildContext context,
-  Map<String, dynamic> decodedJson,
+Widget buildMapSummary(BuildContext context,
+    Map<String, dynamic> decodedJson,
 ) {
   SummaryEventOrActivity eASummary =
-      SummaryEventOrActivity.fromJson(decodedJson);
+  SummaryEventOrActivity.fromJson(decodedJson);
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(

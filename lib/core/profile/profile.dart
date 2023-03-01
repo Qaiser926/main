@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,6 +55,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 profilePhoto: "",
                 gender: Gender.male))
         : RestService().getPublicUserInfo(organizerId: widget.userInfo!.userId);
+    isProfileView
+        ? FirebaseAnalytics.instance.setCurrentScreen(
+            screenName: 'profileScreen',
+          )
+        : FirebaseAnalytics.instance.setCurrentScreen(
+            screenName: 'publisherScreen',
+          );
     super.initState();
   }
 

@@ -32,6 +32,7 @@ class _MapPageState extends State<MapPage>
     );
     _pageController = mapNotifier.getPageController();
     userPositionNotifier = UserPositionNotifier(context);
+
     super.initState();
   }
 

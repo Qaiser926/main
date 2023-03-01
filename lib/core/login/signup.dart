@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,6 +19,9 @@ class Signup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'signUpScreen',
+    );
     TextEditingController emailController =
         TextEditingController(text: loginSignupData.email);
     TextEditingController passwordController = TextEditingController();
@@ -57,7 +61,7 @@ class Signup extends StatelessWidget {
               emailErrorMessage = null;
             } else {
               Future.delayed(Duration(seconds: 3)).then(
-                (value) => key.currentState?.setState(() {
+                    (value) => key.currentState?.setState(() {
                   resetError = true;
                   key.currentState?.validate();
                   resetError = false;
@@ -114,7 +118,7 @@ class Signup extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 DateTime? pickedBirthDate =
-                    await pickBirthDate(context: context);
+                await pickBirthDate(context: context);
 
                 birthdateController.text = pickedBirthDate != null
                     ? parseDateTimeToDDMMYYYFormat(pickedBirthDate)

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +22,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     futureHomePageIds = RestService().getHomePageIds();
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'homeScreen',
+    );
     super.initState();
   }
 
@@ -51,35 +55,35 @@ class _HomePageState extends State<HomePage> {
     HomePageIds homePageIds = HomePageIds.fromJson(jsonData);
     return SingleChildScrollView(
         child: Column(
-      children: [
-        MapPicture(),
-        BaseDiscoveryClass(
-          caption: AppLocalizations.of(context)!.compingUpEvents,
-          Ids: homePageIds.compingUpEvents,
-          showMore: false,
-          isInfoButtonActivated: true,
-        ),
-       BaseDiscoveryClass(
-            caption: AppLocalizations.of(context)!.openActivities,
-            Ids: homePageIds.openActivities,
-            showMore: false,
-            isInfoButtonActivated: true),
-        BaseDiscoveryClass(
-          caption: AppLocalizations.of(context)!.popularEvents,
-          Ids: homePageIds.popularEvents,
-          showMore: false,
-        ),
-        BaseDiscoveryClass(
-          caption: AppLocalizations.of(context)!.popularActivities,
-          Ids: homePageIds.popularActivities,
-          showMore: false,
-        ),
-        BaseDiscoveryClass(
-          caption: AppLocalizations.of(context)!.universityEvents,
-          Ids: homePageIds.universityEvents,
-          showMore: false,
-        ),
-      ],
-    ));
+          children: [
+            MapPicture(),
+            BaseDiscoveryClass(
+              caption: AppLocalizations.of(context)!.compingUpEvents,
+              Ids: homePageIds.compingUpEvents,
+              showMore: false,
+              isInfoButtonActivated: true,
+            ),
+            BaseDiscoveryClass(
+                caption: AppLocalizations.of(context)!.openActivities,
+                Ids: homePageIds.openActivities,
+                showMore: false,
+                isInfoButtonActivated: true),
+            BaseDiscoveryClass(
+              caption: AppLocalizations.of(context)!.popularEvents,
+              Ids: homePageIds.popularEvents,
+              showMore: false,
+            ),
+            BaseDiscoveryClass(
+              caption: AppLocalizations.of(context)!.popularActivities,
+              Ids: homePageIds.popularActivities,
+              showMore: false,
+            ),
+            BaseDiscoveryClass(
+              caption: AppLocalizations.of(context)!.universityEvents,
+              Ids: homePageIds.universityEvents,
+              showMore: false,
+            ),
+          ],
+        ));
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/not_logged_in.dart';
@@ -42,6 +43,9 @@ class _FavouritePageState extends State<FavouritePage>
       length: 2,
       vsync: this,
     );
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'favouriteScreen',
+    );
   }
 
   Widget getLoggedInBody() {
@@ -78,7 +82,7 @@ class _FavouritePageState extends State<FavouritePage>
               "closedActivities":{}
               }""";
     FavouriteEventsAndActivities favouriteEventAndActivity =
-        FavouriteEventsAndActivities.fromJson(json);
+    FavouriteEventsAndActivities.fromJson(json);
     return FavouriteScrollView(
       tabController: _tabController,
       favouriteEventAndActivity: favouriteEventAndActivity,

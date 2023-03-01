@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -28,6 +29,9 @@ class MapInitialization extends StatefulWidget {
 class _MapInitializationState extends State<MapInitialization> {
   @override
   void initState() {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'mapInitScreen',
+    );
     super.initState();
   }
 
@@ -49,14 +53,14 @@ class _MapInitializationState extends State<MapInitialization> {
                   Container(
                     alignment: Alignment.bottomRight,
                     padding:
-                        const EdgeInsetsDirectional.only(end: 8, bottom: 2),
+                    const EdgeInsetsDirectional.only(end: 8, bottom: 2),
                     child: Text('© OpenStreetMap'),
                   )
                 ],
                 children: [
                   TileLayer(
                     urlTemplate:
-                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'ohtia.de',
                   ),
                   MarkerLayer(markers: [
@@ -66,16 +70,16 @@ class _MapInitializationState extends State<MapInitialization> {
                         rotate: true,
                         point: userPosition,
                         builder: (ctx) => GestureDetector(
-                              onTap: () => MapsLauncher.launchCoordinates(
-                                  userPosition.latitude,
-                                  userPosition.longitude),
-                              // child: Icon(
-                              //   // Icons.location_on,
-                              //   Icons.my_location,
-                              //   size: 22,
-                              //   color: Colors.blue,
-                              // ),
-                            ))
+                          onTap: () => MapsLauncher.launchCoordinates(
+                              userPosition.latitude,
+                              userPosition.longitude),
+                          // child: Icon(
+                          //   // Icons.location_on,
+                          //   Icons.my_location,
+                          //   size: 22,
+                          //   color: Colors.blue,
+                          // ),
+                        ))
                   ])
                 ]),
             GestureDetector(
@@ -83,7 +87,7 @@ class _MapInitializationState extends State<MapInitialization> {
                 getCategoryFilterDialog(
                     context: context,
                     dynamicProvider:
-                        Provider.of<MapNotifier>(context, listen: false))
+                    Provider.of<MapNotifier>(context, listen: false))
               },
               child: Stack(
                 children: [
@@ -94,21 +98,21 @@ class _MapInitializationState extends State<MapInitialization> {
                       height: double.infinity,
                       // TODO (extern) align color and overall experience
                       decoration:
-                          BoxDecoration(color: Theme.of(context).primaryColor),
+                      BoxDecoration(color: Theme.of(context).primaryColor),
                     ),
                   ),
                   Positioned.fill(
                       child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Align(
-                      alignment: Alignment.center,
-                      // TODO (extern) align text size or find other solution to make optic more appealing. If you have a better idea on how to show the map, please let us know
-                      child: Text(
-                        AppLocalizations.of(context)!.mapCategoryInfo,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ))
+                        padding: EdgeInsets.all(20),
+                        child: Align(
+                          alignment: Alignment.center,
+                          // TODO (extern) align text size or find other solution to make optic more appealing. If you have a better idea on how to show the map, please let us know
+                          child: Text(
+                            AppLocalizations.of(context)!.mapCategoryInfo,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ))
                 ],
               ),
             ),
