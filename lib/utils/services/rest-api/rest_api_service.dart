@@ -57,6 +57,7 @@ class RestService {
 
   Future<Object> removeFavouriteEventOrActivity({required eAId}) async {
     print('removing favourite event or activity with id: $eAId');
+    recordCustomEvent(eventName: "userDisikes", eventParams: {"eAId": eAId});
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.removeFavouriteEventOrActivity}/$eAId',
@@ -68,6 +69,7 @@ class RestService {
   Future<Object> addFavouriteEventOrActivity(
       {required String eAId, required String userId}) async {
     print('add favourite event or activity with id: $eAId');
+    recordCustomEvent(eventName: "userLikes", eventParams: {"eAId": eAId});
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
       path: '/${APIConstants.addFavouriteEA}/$eAId',

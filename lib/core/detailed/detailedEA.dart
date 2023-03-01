@@ -78,6 +78,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
         onWillPop: () => onWillPop(),
         child: Scaffold(
           bottomNavigationBar: ButtonWidget(
+              eAId: detailedEA.id!,
               iCalElement: iCalElement,
               shareUrl: eAShareLinkBuilder(detailedEA.id!),
               websiteUrl: detailedEA.websiteUrl,
@@ -111,8 +112,10 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
                   if (detailedEA.description != null)
                     DescriptionWidget(description: detailedEA.description!),
                   if (!detailedEA.isOnline!)
-                    SimpleMap(latLng.LatLng(detailedEA.location.latitude!,
-                        detailedEA.location.longitude!)),
+                    SimpleMap(
+                        latLng.LatLng(detailedEA.location.latitude!,
+                            detailedEA.location.longitude!),
+                        detailedEA.id!),
                   if (detailedEA.time.openingTime != null)
                     OpeningTimesSection(
                         openingTime: detailedEA.time.openingTime!),
