@@ -9,6 +9,8 @@ import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 
+import '../../utils/services/events/get_user_time.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -25,11 +27,19 @@ class _HomePageState extends State<HomePage> {
     FirebaseAnalytics.instance.setCurrentScreen(
       screenName: 'homeScreen',
     );
+    // the code snippet would call the extraction of user times
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    requestCalendarPermissions().then((bool isGranted) {
+      if (isGranted) {
+        findFreeTimes();
+      }
+    });
+
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
