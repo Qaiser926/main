@@ -1,38 +1,49 @@
 import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter/services.dart';
 
-Future<void> recordCustomEvent() async {
-  MethodChannel sdf = MethodChannel('com.amazonaws.amplify/analytics_pinpoint');
+Future<void> recordCustomEvent(
+    {required String eventName,
+    required Map<String, dynamic> eventParams}) async {
+  // MethodChannel sdf = MethodChannel('com.amazonaws.amplify/analytics_pinpoint');
+  //
+  // final eAClickedEvent = EAClickedEvent(
+  //     buttonName: 'EAdetails', eAId: "EVENT ACTIVTIY ID", userId: "USER ID");
+  // Amplify.Analytics.recordEvent(event: eAClickedEvent);
+  //
+  // final eALikedEvent = EALikedEvent(
+  //     buttonName: "EALIKED", userId: "SELBER USER", eAId: "ANDERES EVENT");
+  // Amplify.Analytics.recordEvent(event: eALikedEvent);
 
-  final eAClickedEvent = EAClickedEvent(
-      buttonName: 'EAdetails', eAId: "EVENT ACTIVTIY ID", userId: "USER ID");
-  Amplify.Analytics.recordEvent(event: eAClickedEvent);
-
-  final eALikedEvent = EALikedEvent(
-      buttonName: "EALIKED", userId: "SELBER USER", eAId: "ANDERES EVENT");
-  Amplify.Analytics.recordEvent(event: eALikedEvent);
+  // always add the userId here
 
   FirebaseAnalytics analytics = await FirebaseAnalytics.instance;
   analytics.setAnalyticsCollectionEnabled(true);
   analytics.setConsent(
       adStorageConsentGranted: true, analyticsStorageConsentGranted: true);
-  analytics.setUserId(id: "dfd");
+  analytics.setUserId(id: "newUserId");
   analytics.setSessionTimeoutDuration(Duration(seconds: 1));
   // analytics.logEvent(name: "testgoogleEvent");
   analytics.logSearch(searchTerm: "searchTerm");
+
+  // use case unclear
   await FirebaseAnalytics.instance.logSelectContent(
     contentType: "image",
     itemId: "itemId",
   );
 
   analytics.setUserProperty(name: 'table', value: 'yes i am a table');
+
+  // could be used to send which screen has been accessed
   analytics.setCurrentScreen(
     screenName: 'currentScreen',
   );
+  analytics.logEvent(
+    name: eventName,
+    parameters: eventParams,
+  );
 
-  Amplify.Analytics.flushEvents();
+  //Amplify.Analytics.flushEvents();
 
   // AnalyticsUserProfileLocation location = AnalyticsUserProfileLocation();
   // location.latitude = 32.423424;

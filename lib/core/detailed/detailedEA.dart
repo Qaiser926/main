@@ -1,4 +1,5 @@
 import 'package:add_2_calendar/src/model/event.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,9 +44,11 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
     String eventId = Get.arguments[DataConstants.EventActivityId];
     detailedEventOrActivity =
         RestService().fetchEventOrActivityDetails(eventOrActivityId: eventId);
-
-    recordCustomEvent();
-
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'detailScreen',
+    );
+    recordCustomEvent(
+        eventName: "detailScreenOpened", eventParams: {"eAId": eventId});
     super.initState();
   }
 
