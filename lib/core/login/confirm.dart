@@ -16,45 +16,40 @@ class ConfirmationScreen extends StatelessWidget {
     TextEditingController confirmController = TextEditingController();
     String? errorMessage;
     return Scaffold(
-      appBar: AppBar(),
-      body: LoginSignUp(
-        buttonText: AppLocalizations.of(context)!.confirm,
-        onPressed: (GlobalKey<FormState> key) async {
-          if (key.currentState!.validate()) {
-            data.confirmCode = confirmController.text;
-            errorMessage = await confirm(data, context);
-            key.currentState!.validate();
-            errorMessage = null;
-          }
-        },
-        textFields: [
-          //TODO (extern) only number keyboard should open here
-          CustomTextFormField(
-            validator: (p0) {
-              if (errorMessage != null) {
-                return errorMessage;
-              } else {
-                if (p0 != null) {
-                  if (p0.isEmpty) {
-                    return AppLocalizations.of(context)!.notEmptyErrorMessage;
+        appBar: AppBar(),
+        body: LoginSignUp(
+          buttonText: AppLocalizations.of(context)!.confirm,
+          onPressed: (GlobalKey<FormState> key) async {
+            if (key.currentState!.validate()) {
+              data.confirmCode = confirmController.text;
+              errorMessage = await confirm(data, context);
+              key.currentState!.validate();
+              errorMessage = null;
+            }
+          },
+          textFields: [
+            //TODO (extern) only number keyboard should open here
+            CustomTextFormField(
+              validator: (p0) {
+                if (errorMessage != null) {
+                  return errorMessage;
+                } else {
+                  if (p0 != null) {
+                    if (p0.isEmpty) {
+                      return AppLocalizations.of(context)!.notEmptyErrorMessage;
+                    }
                   }
                 }
-              }
-            },
-            suffixIcon: TextButton(
-                onPressed: () =>
-                    RestService().resendConfirmationCode(email: data.email!),
-                child: Text(AppLocalizations.of(context)!.resend)),
-            controller: confirmController,
-            iconData: Icons.mail,
-            hintText: AppLocalizations.of(context)!.confirmationCode,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 40,
-          ),
-          Text('check your email for confirmation key'),
-        ],
-      ),
-    );
+              },
+              suffixIcon: TextButton(
+                  onPressed: () =>
+                      RestService().resendConfirmationCode(email: data.email!),
+                  child: Text(AppLocalizations.of(context)!.resend)),
+              controller: confirmController,
+              iconData: Icons.mail,
+              hintText: AppLocalizations.of(context)!.confirmationCode,
+            ),
+          ],
+        ));
   }
 }

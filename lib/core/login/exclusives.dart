@@ -173,22 +173,11 @@ UserInfo mapLogInDataToUserInfo(
       activityIds: []);
 }
 
-// Future<void> storeUserDataToDB(LoginSignupData loginSignupData) async {
-//   String userId = await getUserId();
-//   UserInfo userInfo = mapLogInDataToUserInfo(loginSignupData, userId);
-//   // TODO (extern) error handling
-//   RestService().savePrivateUserInfo(userInfo: userInfo);
-// }
-
 Future<void> storeUserDataToDB(LoginSignupData loginSignupData) async {
-  try {
-    String userId = await getUserId();
-    UserInfo userInfo = mapLogInDataToUserInfo(loginSignupData, userId);
-    await RestService().savePrivateUserInfo(userInfo: userInfo);
-  } catch (e) {
-    // Handle the error here
-    print('Error saving user data to DB: $e');
-  }
+  String userId = await getUserId();
+  UserInfo userInfo = mapLogInDataToUserInfo(loginSignupData, userId);
+  // TODO (extern) error handling
+  RestService().savePrivateUserInfo(userInfo: userInfo);
 }
 
 Future<String?> signUp(
