@@ -298,6 +298,8 @@
   "notYetConfirmed": "Deine Email wurde noch nicht bestätigt.",
   "wrongCredentialsError": "Login fehlgeschlagen. Überprüfe deine Email und dein Passwort",
   "noEmailError": "Nachricht konnte nicht gesendet werden. Überprüfe deine Eingabe",
+  "termsConditionsError": "Bitte bestätige, dass du mit unseren Datenschutzrichtlinien einverstanden bist",
+  "termsConditionsHint": "Ich akzeptiere die Datenschutzerklärung.",
   "recoverPassword": "Passwort vergessen",
   "repeatPassword": "Passwort Wiederholen",
   "repeatPasswordError": "Passwörter stimmen nicht überein",

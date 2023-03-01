@@ -72,7 +72,8 @@ Column getHeadline(
   );
 }
 
-Future getInfoDialog({required String info, required BuildContext context}) {
+Future getInfoDialog(
+    {Widget? heading, Widget? content, required BuildContext context}) {
   Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
       true;
   dismissKeyboard();
@@ -80,7 +81,8 @@ Future getInfoDialog({required String info, required BuildContext context}) {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(info),
+          title: heading,
+          content: content,
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             ElevatedButton(
@@ -106,7 +108,7 @@ Widget getHeadlineWithInfoDialog(
     showDivider: showDivider,
     context: context,
     caption: GestureDetector(
-      onTap: () => {getInfoDialog(info: infoText, context: context)},
+      onTap: () => {getInfoDialog(heading: Text(infoText), context: context)},
       child: Row(children: [
         Text(caption, style: Theme.of(context).textTheme.headlineLarge),
         Padding(

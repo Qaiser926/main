@@ -195,7 +195,7 @@ class SearchEnhancementSlider extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              getInfoDialog(info: infoText, context: context);
+              getInfoDialog(heading: Text(infoText), context: context);
             },
             child: Row(
               children: [

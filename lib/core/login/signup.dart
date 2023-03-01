@@ -1,11 +1,16 @@
+import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/login/login_data.dart';
 import 'package:othia/widgets/form_fields.dart';
 
+import '../../constants/asset_constants.dart';
 import '../../modules/models/shared_data_models.dart';
 import '../../utils/helpers/formatters.dart';
+import '../add/add_exclusives/help_functions.dart';
 import 'exclusives.dart';
 
 class Signup extends StatelessWidget {
@@ -19,7 +24,7 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController emailController =
-        TextEditingController(text: loginSignupData.email);
+    TextEditingController(text: loginSignupData.email);
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
     TextEditingController genderController = TextEditingController();
@@ -57,7 +62,7 @@ class Signup extends StatelessWidget {
               emailErrorMessage = null;
             } else {
               Future.delayed(Duration(seconds: 3)).then(
-                (value) => key.currentState?.setState(() {
+                    (value) => key.currentState?.setState(() {
                   resetError = true;
                   key.currentState?.validate();
                   resetError = false;
@@ -114,7 +119,7 @@ class Signup extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 DateTime? pickedBirthDate =
-                    await pickBirthDate(context: context);
+                await pickBirthDate(context: context);
 
                 birthdateController.text = pickedBirthDate != null
                     ? parseDateTimeToDDMMYYYFormat(pickedBirthDate)
@@ -201,6 +206,49 @@ class Signup extends StatelessWidget {
                     }
                   }
                 }),
+            CheckboxListTileFormField(
+              title: GestureDetector(
+                onTap: () => {
+                  getInfoDialog(
+                      content: SingleChildScrollView(
+                          child: Html(
+                        data: AssetConstants.dataProtectionDisclaimer,
+                      )),
+                      context: context)
+                },
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          AppLocalizations.of(context)!.termsConditionsHint,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(width: 8.h),
+                      Icon(Icons.info_outline, size: 20.h)
+                    ],
+                  ),
+                ),
+              ),
+              checkColor: Theme.of(context).colorScheme.primary,
+              activeColor: Theme.of(context).colorScheme.secondary,
+              validator: (bool? value) {
+                if (resetError) {
+                  return null;
+                } else {
+                  if (value!) {
+                    return null;
+                  } else {
+                    return AppLocalizations.of(context)!.termsConditionsError;
+                  }
+                }
+              },
+              autovalidateMode: AutovalidateMode.disabled,
+              contentPadding: EdgeInsets.all(1),
+            ),
           ]),
     );
   }

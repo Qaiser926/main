@@ -79,8 +79,8 @@ class TimeSelector extends StatelessWidget {
                   pickDateTime(DateType.EndDate);
                 } else {
                   getInfoDialog(
-                      info:
-                          "Please select a start time before selecting an end time",
+                      heading: Text(
+                          "Please select a start time before selecting an end time"),
                       context: context);
                 }
               },
@@ -181,8 +181,8 @@ class TimeSelector extends StatelessWidget {
             dateTimeUtc: inputNotifier.detailedEA.time.startTimeUtc)!)) {
           inputNotifier.resetEndDateTime();
           getInfoDialog(
-              info:
-                  AppLocalizations.of(context)!.endTimeBeforeStartErrorMessage,
+              heading: Text(
+                  AppLocalizations.of(context)!.endTimeBeforeStartErrorMessage),
               context: context);
         } else {
           inputNotifier.detailedEA.time.endTimeUtc =
