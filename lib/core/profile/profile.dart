@@ -133,7 +133,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 )
               ],
               child: snapshotHandler(
-                  context, snapshot, getProfilePage, [context]));
+                  context, snapshot, getProfilePage, [context],
+                  defaultErrorFunction: messageErrorFunction));
         });
   }
 

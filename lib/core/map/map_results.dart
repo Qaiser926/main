@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,7 +39,7 @@ class MapResults extends StatefulWidget {
 class _MapResultsState extends State<MapResults> {
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
-  String? eAId;
+  List<String>? eAIds;
 
   @override
   void initState() {
@@ -86,7 +87,11 @@ class _MapResultsState extends State<MapResults> {
         minZoom: 3,
       ),
       nonRotatedChildren: [
-        if (eAId != null) buildSummaryCard(),
+        if (eAIds != null)
+          Container(
+            child: buildSummaryCarousel(),
+            alignment: Alignment.bottomCenter,
+          ),
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
@@ -127,7 +132,7 @@ class _MapResultsState extends State<MapResults> {
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'ohtia.de',
+          userAgentPackageName: 'othia.de',
         ),
         MarkerClusterLayerWidget(
           options: MarkerClusterLayerOptions(
@@ -162,29 +167,51 @@ class _MapResultsState extends State<MapResults> {
         point: latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
-          onTap: () =>
-          {
-            // TODO (extern) highlight selected marker
-            setState(() {
-              eAId = locationData["id"];
-            })
-            // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
-            //     arguments: {
-            //       NavigatorConstants.EventActivityId: locationData["id"]
-            //     })
-          },
-          child: Icon(
-            Icons.location_on,
-            size: 44,
-            color: markerColor,
-          ),
-        ));
+          onTap: () => {
+                // TODO (extern) highlight selected marker
+                setState(() {
+                  eAIds = getAllIdsUnderMarker(
+                      locationData["coordinates"]["latitude"],
+                      locationData["coordinates"]["longitude"]);
+                })
+                // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+                //     arguments: {
+                //       NavigatorConstants.EventActivityId: locationData["id"]
+                //     })
+              },
+              child: Icon(
+                Icons.location_on,
+                size: 44,
+                color: markerColor,
+              ),
+            ));
+  }
+
+  List<String> getAllIdsUnderMarker(double latitude, double longitude) {
+    List<String> Ids = [];
+    mapResultIds.eventResults.forEach(
+      (element) {
+        if ((element!["coordinates"]["latitude"] == latitude) &
+            (element["coordinates"]["longitude"] == longitude)) {
+          Ids.add(element["id"]);
+        }
+      },
+    );
+    mapResultIds.activityResults.forEach(
+      (element) {
+        if ((element!["coordinates"]["latitude"] == latitude) &
+            (element["coordinates"]["longitude"] == longitude)) {
+          Ids.add(element["id"]);
+        }
+      },
+    );
+    return Ids;
   }
 
   List<Marker> getResultMarkers() {
     List<Marker> markerList = [];
 
-    // TODO (extern) check if user position icon gots clustered with the other icons and if so, modify code such that the user location icon is never part of a cluster, also make sure the number of the cluster does not rotate
+    // TODO (extern) modify code such that the user location icon is never part of a cluster, also make sure the number of the cluster does not rotate
     markerList.add(Marker(
         width: 50.0,
         height: 500.0,
@@ -209,8 +236,34 @@ class _MapResultsState extends State<MapResults> {
     return markerList;
   }
 
-  KeepAliveFutureBuilder buildSummaryCard() {
-    Future<Object> eASummary = RestService().getEASummary(id: eAId);
+  CarouselSlider buildSummaryCarousel() {
+    // TODO (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
+    return CarouselSlider.builder(
+      options: CarouselOptions(
+        height: 150.h,
+
+        viewportFraction: 1,
+        initialPage: 0,
+        enableInfiniteScroll: true,
+        reverse: false,
+        //autoPlay: true,
+        //autoPlayInterval: Duration(seconds: 6),
+        //autoPlayAnimationDuration: Duration(milliseconds: 800),
+        //autoPlayCurve: Curves.fastOutSlowIn,
+        //enlargeCenterPage: true,
+        //enlargeFactor: 1,
+        scrollDirection: Axis.horizontal,
+      ),
+      itemCount: eAIds!.length,
+      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+          Container(
+        child: buildSummaryCard(eAIds![itemIndex]),
+      ),
+    );
+  }
+
+  KeepAliveFutureBuilder buildSummaryCard(String id) {
+    Future<Object> eASummary = RestService().getEASummary(id: id);
     return KeepAliveFutureBuilder(
         future: eASummary,
         builder: (context, snapshot) {

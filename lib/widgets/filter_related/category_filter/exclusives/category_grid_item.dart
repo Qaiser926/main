@@ -50,84 +50,90 @@ class CategoryGridItem extends StatelessWidget {
           Get.back();
         }
       },
-      child: SizedBox(
-        height: WidgetConstants.categoryGridItemHeight,
-        width: WidgetConstants.categoryGridItemWidth,
-        child: Stack(
-          children: [
-            Categories.categoryRoundedImagesMap[categoryId]!,
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  height: gradientHeight,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          lessListItemColor.withOpacity(.7),
-                          lessListItemColor.withOpacity(0),
-                        ],
-                        begin: Alignment.bottomCenter,
-                        tileMode: TileMode.mirror,
-                        end: Alignment.topCenter),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => onLowerAreaTapped(context),
-                  child: Container(
-                    height: bottomPartHeight,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: ShapeDecoration(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.zero,
-                          topLeft: Radius.zero,
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
-                        ),
-                      ),
-                      color: lessListItemColor.withOpacity(.7),
+      child: FittedBox(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 4,
+          width: MediaQuery.of(context).size.width / 2,
+          child: Stack(
+            children: [
+              Categories.categoryRoundedImagesMap[categoryId]!,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    // height: MediaQuery.of(context).size.height,
+                    // width: MediaQuery.of(context).size.width,
+                    height: gradientHeight,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            lessListItemColor.withOpacity(.7),
+                            lessListItemColor.withOpacity(0),
+                          ],
+                          begin: Alignment.bottomCenter,
+                          tileMode: TileMode.mirror,
+                          end: Alignment.topCenter),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: WidgetConstants.categoryGridItemTextWidth,
-                          child: Text(
-                            CategoryIdToI18nMapper.getCategorySubcategoryName(
-                                context, categoryId),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                  ),
+                  GestureDetector(
+                    onTap: () => onLowerAreaTapped(context),
+                    child: Container(
+                      // height: MediaQuery.of(context).size.height,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      decoration: ShapeDecoration(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.zero,
+                            topLeft: Radius.zero,
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
                           ),
                         ),
-                        const Spacer(),
-                        Consumer<AbstractQueryNotifier>(
-                            builder: (context, model, child) {
-                          return model.getExpandedIndex == index
-                              ? const Icon(Icons.expand_less_outlined)
-                              : const Icon(Icons.expand_more_outlined);
-                        }),
-                      ],
+                        color: lessListItemColor.withOpacity(.7),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: WidgetConstants.categoryGridItemTextWidth,
+                            child: Text(
+                              CategoryIdToI18nMapper.getCategorySubcategoryName(
+                                  context, categoryId),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const Spacer(),
+                          Consumer<AbstractQueryNotifier>(
+                              builder: (context, model, child) {
+                            return model.getExpandedIndex == index
+                                ? const Icon(Icons.expand_less_outlined)
+                                : const Icon(Icons.expand_more_outlined);
+                          }),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            IgnorePointer(
-              child: Consumer<AbstractQueryNotifier>(
-                  builder: (context, model, child) {
-                return model.getExpandedIndex == index
-                    ? Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: primaryColor, width: 3)),
-                      )
-                    : const SizedBox.shrink();
-              }),
-            ),
-          ],
+                ],
+              ),
+              IgnorePointer(
+                child: Consumer<AbstractQueryNotifier>(
+                    builder: (context, model, child) {
+                  return ((model.getExpandedIndex == index) |
+                          model.isCategorySelected(categoryId: categoryId))
+                      ? Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              border:
+                                  Border.all(color: primaryColor, width: 3)),
+                        )
+                      : const SizedBox.shrink();
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

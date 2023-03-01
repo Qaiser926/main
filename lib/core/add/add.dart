@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'add_exclusives/add_page_notifier.dart';
 import 'add_exclusives/input_notifier.dart';
 
+// TODO (extern) include back button only on the first adding page
 class Add extends StatefulWidget {
   Add({super.key});
 

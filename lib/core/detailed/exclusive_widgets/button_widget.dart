@@ -15,6 +15,16 @@ Future<void> _launchUrl(_url) async {
   }
 }
 
+String removeHttp(String url) {
+  RegExp regExp = new RegExp(
+    r"^https?://",
+    caseSensitive: false,
+    multiLine: false,
+  );
+  RegExpMatch? match = regExp.firstMatch(url);
+  return url.substring(match?.end ?? 0);
+}
+
 Widget? getMoreInformationButton(
     {String? websiteUrl, String? ticketUrl, required BuildContext context}) {
   if (ticketUrl != null) {
@@ -22,16 +32,28 @@ Widget? getMoreInformationButton(
         child: Padding(
             padding: EdgeInsets.all(5),
             child: ElevatedButton(
-                onPressed: () => _launchUrl(ticketUrl),
-                child: Text(AppLocalizations.of(context)!.ticket))));
+                onPressed: () {
+                  String websiteWithoutHttp = removeHttp(ticketUrl);
+                  launchUrl(Uri.parse("https://" + websiteWithoutHttp));
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.ticket,
+                  textAlign: TextAlign.center,
+                ))));
   }
   if (websiteUrl != null) {
     return Expanded(
         child: Padding(
             padding: EdgeInsets.all(5),
             child: ElevatedButton(
-                onPressed: () => _launchUrl(websiteUrl),
-                child: Text(AppLocalizations.of(context)!.website))));
+                onPressed: () {
+                  String websiteWithoutHttp = removeHttp(websiteUrl);
+                  launchUrl(Uri.parse("https://" + websiteWithoutHttp));
+                },
+                child: Text(
+                  AppLocalizations.of(context)!.website,
+                  textAlign: TextAlign.center,
+                ))));
   }
 }
 
@@ -98,7 +120,9 @@ class ButtonWidget extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           if (moreInformationButton != null) moreInformationButton,
           if (calendarButton != null) calendarButton,
-          if (shareButton != null) shareButton
+          if ((shareButton != null) &
+              ((moreInformationButton == null) | (calendarButton == null)))
+            shareButton!
         ]));
   }
 }

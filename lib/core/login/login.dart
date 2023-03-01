@@ -83,10 +83,13 @@ class Login extends StatelessWidget {
           ],
           betweenButtonAndTextFields: SizedBox(
             height: 30,
-            child: TextButton(
-                onPressed: () =>
-                    Get.to(ResetPassword(), duration: Duration.zero),
-                child: Text(AppLocalizations.of(context)!.recoverPassword)),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 240.0),
+              child: TextButton(
+                  onPressed: () =>
+                      Get.to(ResetPassword(), duration: Duration.zero),
+                  child: Text(AppLocalizations.of(context)!.recoverPassword)),
+            ),
           ),
           belowButton: Column(
             children: [

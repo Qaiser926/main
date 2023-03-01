@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/modules/models/get_search_results_ids/get_search_result_ids.dart';
 import 'package:othia/widgets/action_buttons.dart';
@@ -30,10 +31,28 @@ class SearchScrollView extends StatelessWidget {
     }
   }
 
+  SearchResultIds orderEmptyIds(SearchResultIds searchResultIds) {
+    Map<String, List<String?>> nonEmptyIds = {};
+    Map<String, List<String?>> emptyIds = {};
+    searchResultIds.searchResultIds.forEach((key, value) {
+      if (value.isNotEmpty) {
+        nonEmptyIds[key] = value;
+      } else {
+        emptyIds[key] = value;
+      }
+    });
+    Map<String, List<String?>> orderedIds = {}
+      ..addAll(nonEmptyIds)
+      ..addAll(emptyIds);
+    searchResultIds.searchResultIds = orderedIds;
+    return searchResultIds;
+  }
+
   Widget getHorizontalDiscovery(
-      SearchResultIds searchResultIds, BuildContext context) {
+      SearchResultIds unfilteredSearchResultIds, BuildContext context) {
+    SearchResultIds searchResultIds = orderEmptyIds(unfilteredSearchResultIds);
     return ListView.builder(
-        itemCount: searchResultIds.searchResultIds.length,
+        itemCount: unfilteredSearchResultIds.searchResultIds.length,
         itemBuilder: (BuildContext context, int index) {
           String key = searchResultIds.searchResultIds.keys.elementAt(index);
           bool showDivider = true;
@@ -50,15 +69,25 @@ class SearchScrollView extends StatelessWidget {
   Widget getVerticalDiscovery(
       SearchResultIds searchResultIds, BuildContext context) {
     List<Widget> slivers = [];
+    bool allResultsEmpty = true;
     for (MapEntry<String, List> item
         in searchResultIds.searchResultIds.entries) {
+      if (item.value.isNotEmpty) {
+        allResultsEmpty = false;
+      }
       slivers.add(buildVerticalDiscovery(
           actionButtonType: ActionButtonType.favouriteLikeButton,
           Ids: item.value));
     }
 
-    return CustomScrollView(slivers: slivers);
+    return allResultsEmpty
+        ? Container(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(AppLocalizations.of(context)!.noResultsFound),
+            ),
+          )
+        : CustomScrollView(slivers: slivers);
   }
 }
-
-

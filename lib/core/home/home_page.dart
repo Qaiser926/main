@@ -53,37 +53,40 @@ class _HomePageState extends State<HomePage> {
 
   Widget getHomePage(Map<String, dynamic> jsonData) {
     HomePageIds homePageIds = HomePageIds.fromJson(jsonData);
+
     return SingleChildScrollView(
         child: Column(
-          children: [
-            MapPicture(),
-            BaseDiscoveryClass(
-              caption: AppLocalizations.of(context)!.compingUpEvents,
-              Ids: homePageIds.compingUpEvents,
-              showMore: false,
-              isInfoButtonActivated: true,
-            ),
-            BaseDiscoveryClass(
-                caption: AppLocalizations.of(context)!.openActivities,
-                Ids: homePageIds.openActivities,
-                showMore: false,
-                isInfoButtonActivated: true),
-            BaseDiscoveryClass(
-              caption: AppLocalizations.of(context)!.popularEvents,
-              Ids: homePageIds.popularEvents,
-              showMore: false,
-            ),
-            BaseDiscoveryClass(
-              caption: AppLocalizations.of(context)!.popularActivities,
-              Ids: homePageIds.popularActivities,
-              showMore: false,
-            ),
-            BaseDiscoveryClass(
-              caption: AppLocalizations.of(context)!.universityEvents,
-              Ids: homePageIds.universityEvents,
-              showMore: false,
-            ),
-          ],
-        ));
+      children: [
+        MapPicture(),
+        Container(
+          child: BaseDiscoveryClass(
+            caption: AppLocalizations.of(context)!.compingUpEvents,
+            Ids: homePageIds.compingUpEvents,
+            showMore: false,
+            isInfoButtonActivated: true,
+          ),
+        ),
+        BaseDiscoveryClass(
+            caption: AppLocalizations.of(context)!.openActivities,
+            Ids: homePageIds.openActivities,
+            showMore: false,
+            isInfoButtonActivated: true),
+        BaseDiscoveryClass(
+          caption: AppLocalizations.of(context)!.popularEvents,
+          Ids: homePageIds.popularEvents,
+          showMore: false,
+        ),
+        BaseDiscoveryClass(
+          caption: AppLocalizations.of(context)!.popularActivities,
+          Ids: homePageIds.popularActivities,
+          showMore: false,
+        ),
+        BaseDiscoveryClass(
+          caption: AppLocalizations.of(context)!.universityEvents,
+          Ids: homePageIds.universityEvents,
+          showMore: false,
+        ),
+      ],
+    ));
   }
 }

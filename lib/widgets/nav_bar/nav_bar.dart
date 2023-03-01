@@ -11,7 +11,7 @@ class CustomNavigationBar extends StatelessWidget {
     return Consumer<NavigationBarNotifier>(builder: (context, model, child) {
       return NavigationBar(
           destinations: getCustomNavigationDestinations(),
-          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           selectedIndex: model.getIndex,
           onDestinationSelected: (index) {
             Provider.of<NavigationBarNotifier>(context, listen: false)
@@ -24,26 +24,31 @@ class CustomNavigationBar extends StatelessWidget {
     List<Widget> result = [];
 
     result.add(CustomNavigationDestination(
+      selectedIcon: Icon(Icons.home_outlined, color: Colors.orange),
       icon: const Icon(Icons.home_outlined),
       label: "",
     ));
 
     result.add(CustomNavigationDestination(
+      selectedIcon: Icon(Icons.search, color: Colors.orange),
       icon: const Icon(Icons.search),
       label: "",
     ));
 
     result.add(CustomNavigationDestination(
+      selectedIcon: Icon(Icons.add, color: Colors.orange),
       icon: const Icon(Icons.add),
       label: "",
     ));
 
     result.add(CustomNavigationDestination(
+      selectedIcon: Icon(Icons.favorite_outline, color: Colors.orange),
       icon: const Icon(Icons.favorite_outline),
       label: "",
     ));
 
     result.add(CustomNavigationDestination(
+      selectedIcon: Icon(Icons.perm_identity, color: Colors.orange),
       icon: const Icon(Icons.perm_identity),
       label: "",
     ));

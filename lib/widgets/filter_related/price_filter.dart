@@ -133,15 +133,13 @@ class _PriceFilterState extends State<PriceFilter> {
             padding: EdgeInsets.all(20),
             child: getShowResultsButton(
                 context: context,
-                functionAccept:
-                dynamicProvider.changePriceRange,
+                functionAccept: dynamicProvider.changePriceRange,
                 functionArgumentsAccept: {
                   #priceRange: RangeValues(_values.start.roundToDouble(),
                       _values.end.roundToDouble())
                 },
                 functionArgumentsReset: {},
-                functionReset:
-                dynamicProvider.resetPriceRange,
+                functionReset: dynamicProvider.resetPriceRange,
                 closeDialog: true),
           )
         ],
@@ -171,7 +169,6 @@ Widget getPriceBox(
     ),
   );
 }
-
 
 String getPriceCaption(
     {required BuildContext context,

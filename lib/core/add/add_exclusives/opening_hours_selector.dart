@@ -335,7 +335,8 @@ Future displayTimePicker(
     } else {
       if (inputNotifier.getOpeningTimesList()[listIndex][0] > transformedTime) {
         getInfoDialog(
-            info: AppLocalizations.of(context)!.openingHoursErrorMessage,
+            heading:
+                Text(AppLocalizations.of(context)!.openingHoursErrorMessage),
             context: context);
       } else {
         // getOpeningTimesList() directly returns the list for the correct weekday

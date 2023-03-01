@@ -1,12 +1,17 @@
+import 'package:checkbox_formfield/checkbox_list_tile_formfield.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/login/login_data.dart';
 import 'package:othia/widgets/form_fields.dart';
 
+import '../../constants/asset_constants.dart';
 import '../../modules/models/shared_data_models.dart';
 import '../../utils/helpers/formatters.dart';
+import '../add/add_exclusives/help_functions.dart';
 import 'exclusives.dart';
 
 class Signup extends StatelessWidget {
@@ -26,7 +31,6 @@ class Signup extends StatelessWidget {
         TextEditingController(text: loginSignupData.email);
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
-    TextEditingController genderController = TextEditingController();
 
     List<DropdownMenuItem<Object>> items = [
       DropdownMenuItem(
@@ -205,6 +209,51 @@ class Signup extends StatelessWidget {
                     }
                   }
                 }),
+            CheckboxListTileFormField(
+              title: GestureDetector(
+                onTap: () => {
+                  getInfoDialog(
+                      content: SingleChildScrollView(
+                          child: Html(
+                        data: AssetConstants.dataProtectionDisclaimer,
+                      )),
+                      context: context)
+                },
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Text(
+                          AppLocalizations.of(context)!.termsConditionsHint,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColorLight),
+                        ),
+                      ),
+                      SizedBox(width: 8.h),
+                      Icon(Icons.info_outline, size: 20.h)
+                    ],
+                  ),
+                ),
+              ),
+              checkColor: Theme.of(context).colorScheme.primary,
+              activeColor: Theme.of(context).colorScheme.secondary,
+              validator: (bool? value) {
+                if (resetError) {
+                  return null;
+                } else {
+                  if (value!) {
+                    return null;
+                  } else {
+                    return AppLocalizations.of(context)!.termsConditionsError;
+                  }
+                }
+              },
+              autovalidateMode: AutovalidateMode.disabled,
+              contentPadding: EdgeInsets.all(1),
+            ),
           ]),
     );
   }
