@@ -2,6 +2,8 @@ import 'package:amplify_analytics_pinpoint/amplify_analytics_pinpoint.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+import '../rest-api/amplify/amp.dart';
+
 Future<void> recordCustomEvent(
     {required String eventName,
     required Map<String, dynamic> eventParams}) async {
@@ -18,26 +20,22 @@ Future<void> recordCustomEvent(
   // always add the userId here
 
   FirebaseAnalytics analytics = await FirebaseAnalytics.instance;
-  analytics.setAnalyticsCollectionEnabled(true);
-  analytics.setConsent(
-      adStorageConsentGranted: true, analyticsStorageConsentGranted: true);
-  analytics.setUserId(id: "newUserId");
-  analytics.setSessionTimeoutDuration(Duration(seconds: 1));
-  // analytics.logEvent(name: "testgoogleEvent");
-  analytics.logSearch(searchTerm: "searchTerm");
+  // analytics.setAnalyticsCollectionEnabled(true);
+  // analytics.setConsent(
+  //     adStorageConsentGranted: true, analyticsStorageConsentGranted: true);
+  // analytics.setUserId(id: "newUserId");
+  // analytics.setSessionTimeoutDuration(Duration(seconds: 1));
+  // // analytics.logEvent(name: "testgoogleEvent");
+  // analytics.logSearch(searchTerm: "searchTerm");
+  //
+  // // use case unclear
+  // await FirebaseAnalytics.instance.logSelectContent(
+  //   contentType: "image",
+  //   itemId: "itemId",
+  // );
+  // analytics.setUserProperty(name: 'table', value: 'yes i am a table');
 
-  // use case unclear
-  await FirebaseAnalytics.instance.logSelectContent(
-    contentType: "image",
-    itemId: "itemId",
-  );
-
-  analytics.setUserProperty(name: 'table', value: 'yes i am a table');
-
-  // could be used to send which screen has been accessed
-  analytics.setCurrentScreen(
-    screenName: 'currentScreen',
-  );
+  eventParams['userId'] = getUserId();
   analytics.logEvent(
     name: eventName,
     parameters: eventParams,
