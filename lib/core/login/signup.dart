@@ -27,7 +27,6 @@ class Signup extends StatelessWidget {
     TextEditingController(text: loginSignupData.email);
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
-    TextEditingController genderController = TextEditingController();
 
     List<DropdownMenuItem<Object>> items = [
       DropdownMenuItem(
@@ -225,6 +224,8 @@ class Signup extends StatelessWidget {
                           AppLocalizations.of(context)!.termsConditionsHint,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColorLight),
                         ),
                       ),
                       SizedBox(width: 8.h),
