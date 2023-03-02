@@ -7,13 +7,19 @@ import '../rest-api/amplify/amp.dart';
 
 Future<void> recordCustomEvent(
     {required String eventName,
-    required Map<String, dynamic> eventParams}) async {
+    required Map<String, dynamic> eventParams,
+    String? userId}) async {
   Map<String, dynamic> eventParameters = {};
-  try {
-    eventParameters['userId'] = await getUserId();
-  } on SignedOutException catch (_) {
-    eventParameters['userId'] = '';
+  if (userId == null) {
+    try {
+      eventParameters['userId'] = await getUserId();
+    } on SignedOutException catch (_) {
+      eventParameters['userId'] = '';
+    }
+  } else {
+    eventParameters['userId'] = userId;
   }
+
   eventParams.forEach((key, value) {
     eventParameters[key] = json.encode(value);
   });

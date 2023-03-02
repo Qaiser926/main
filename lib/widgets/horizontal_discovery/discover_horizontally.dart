@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:othia/widgets/horizontal_discovery/discovery_card.dart';
@@ -141,14 +142,17 @@ class HorizontalEADiscovery extends StatelessWidget {
               return KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                    return snapshotHandler(
-                        context, snapshot, getFutureFulfilledContent, [index]);
+                    return snapshotHandler(context, snapshot,
+                        getFutureFulfilledContent, [index, context]);
                   });
             }));
   }
 
   Widget getFutureFulfilledContent(
-      int index, Map<String, dynamic> decodedJson) {
+    int index,
+    BuildContext context,
+    Map<String, dynamic> decodedJson,
+  ) {
     SummaryEventOrActivity eASummary =
         SummaryEventOrActivity.fromJson(decodedJson);
     return VisibilityDetector(
@@ -156,7 +160,11 @@ class HorizontalEADiscovery extends StatelessWidget {
         onVisibilityChanged: (visibilityInfo) {
           if (visibilityInfo.visibleFraction >= 0.85) {
             recordCustomEvent(
-                eventName: "summaryShown", eventParams: {"eAId": eASummary.id});
+                eventName: "summaryShown",
+                eventParams: {"eAId": eASummary.id},
+                userId: Provider.of<GlobalNavigationNotifier>(context,
+                        listen: false)
+                    .userId);
           }
         },
         child: EASummaryCard(
