@@ -123,8 +123,7 @@ class RestService {
 
   Future<Object> getSearchResultIds({required SearchQuery searchQuery}) async {
     recordCustomEvent(
-        eventName: "searchRequest",
-        eventParams: {"searchQuery": searchQuery.toJson()});
+        eventName: "searchRequest", eventParams: searchQuery.toJson());
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getSearchResultIds}/',
         body: transformClassToBody(searchQuery));
@@ -135,8 +134,7 @@ class RestService {
   Future<Object> getMapResultIds({required searchQuery}) async {
     print('requesting Map result ids');
     recordCustomEvent(
-        eventName: "mapSearch",
-        eventParams: {"searchQuery": searchQuery.toJson()});
+        eventName: "mapSearch", eventParams: searchQuery.toJson());
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getMapResultIds}/',
         body: transformClassToBody(searchQuery));
