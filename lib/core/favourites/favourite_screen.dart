@@ -82,7 +82,7 @@ class _FavouritePageState extends State<FavouritePage>
               "closedActivities":{}
               }""";
     FavouriteEventsAndActivities favouriteEventAndActivity =
-    FavouriteEventsAndActivities.fromJson(json);
+        FavouriteEventsAndActivities.fromJson(json);
     return FavouriteScrollView(
       tabController: _tabController,
       favouriteEventAndActivity: favouriteEventAndActivity,
