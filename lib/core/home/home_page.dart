@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/core/home/exclusive_widgets/map_picture.dart';
 import 'package:othia/modules/models/get_home_page_ids/get_home_page_ids.dart';
+import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
@@ -27,19 +28,23 @@ class _HomePageState extends State<HomePage> {
     FirebaseAnalytics.instance.setCurrentScreen(
       screenName: 'homeScreen',
     );
-    // the code snippet would call the extraction of user times
+    // the code snippet will call the extraction of user times
+    amplifyIsUserSignedIn().then((isSignedIn) {
+      // only save calendar times for signed in users
+      if (isSignedIn) {
+        requestCalendarPermissions().then((bool isGranted) {
+          if (isGranted) {
+            findFreeTimes();
+          }
+        });
+      }
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    requestCalendarPermissions().then((bool isGranted) {
-      if (isGranted) {
-        findFreeTimes();
-      }
-    });
-
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(

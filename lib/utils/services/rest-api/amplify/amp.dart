@@ -143,6 +143,6 @@ Future<String> getUserId() async {
     return user.userId;
   } on AuthException catch (e) {
     //user should reinstall application
-    throw Exception(e);
+    throw e;
   }
 }

@@ -34,8 +34,12 @@ Future<void> recordCustomEvent(
   //   itemId: "itemId",
   // );
   // analytics.setUserProperty(name: 'table', value: 'yes i am a table');
+  try {
+    eventParams['userId'] = await getUserId();
+  } on SignedOutException catch (e) {
+    eventParams['userId'] = null;
+  }
 
-  eventParams['userId'] = getUserId();
   analytics.logEvent(
     name: eventName,
     parameters: eventParams,
