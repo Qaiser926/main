@@ -7,6 +7,9 @@ import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:othia/widgets/vertical_discovery/pinned_header.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+
+import '../../utils/services/events/example_event.dart';
 
 Widget buildVerticalDiscovery(
     {required List Ids,
@@ -57,6 +60,14 @@ Widget getFutureVerticalDiscovery(
       actionButtonType: actionButtonType,
       eASummary: eASummary,
       context: context);
-  return getVerticalSummary(
-      context: context, eASummary: eASummary, actionButton: actionButton);
+  return VisibilityDetector(
+      key: Key(eASummary.id),
+      onVisibilityChanged: (visibilityInfo) {
+        if (visibilityInfo.visibleFraction >= 0.85) {
+          recordCustomEvent(
+              eventName: "summaryShown", eventParams: {"eAId": eASummary.id});
+        }
+      },
+      child: getVerticalSummary(
+          context: context, eASummary: eASummary, actionButton: actionButton));
 }

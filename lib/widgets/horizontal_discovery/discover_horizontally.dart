@@ -7,9 +7,11 @@ import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:othia/widgets/horizontal_discovery/discovery_card.dart';
 import 'package:othia/widgets/info_snackbar.dart';
 import 'package:provider/provider.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../modules/models/eA_summary/eA_summary.dart';
+import '../../utils/services/events/example_event.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../keep_alive_future_builder.dart';
 
@@ -149,9 +151,17 @@ class HorizontalEADiscovery extends StatelessWidget {
       int index, Map<String, dynamic> decodedJson) {
     SummaryEventOrActivity eASummary =
         SummaryEventOrActivity.fromJson(decodedJson);
-    return EASummaryCard(
-      eASummary: eASummary,
-      index: index,
-    );
+    return VisibilityDetector(
+        key: Key(eASummary.id),
+        onVisibilityChanged: (visibilityInfo) {
+          if (visibilityInfo.visibleFraction >= 0.85) {
+            recordCustomEvent(
+                eventName: "summaryShown", eventParams: {"eAId": eASummary.id});
+          }
+        },
+        child: EASummaryCard(
+          eASummary: eASummary,
+          index: index,
+        ));
   }
 }
