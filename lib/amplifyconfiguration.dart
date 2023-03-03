@@ -37,15 +37,15 @@ const amplifyconfig = ''' {
                 "CredentialsProvider": {
                     "CognitoIdentity": {
                         "Default": {
-                            "PoolId": "eu-central-1:a513a9f6-1f50-405d-be0b-5be8c61bdbb2",
+                            "PoolId": "eu-central-1:d5ee9269-e4aa-49fb-ba15-e0f8e674b35c",
                             "Region": "eu-central-1"
                         }
                     }
                 },
                 "CognitoUserPool": {
                     "Default": {
-                        "PoolId": "eu-central-1_FM6VpWdUi",
-                        "AppClientId": "3e7q8hrs8ocls3h2a6t0gtpkt7",
+                        "PoolId": "eu-central-1_zPbMhNl6a",
+                        "AppClientId": "2ql55su85nheo2tdi3tl4avgoq",
                         "Region": "eu-central-1"
                     }
                 },
@@ -71,17 +71,6 @@ const amplifyconfig = ''' {
                         "verificationMechanisms": [
                             "EMAIL"
                         ]
-                    }
-                },
-                "PinpointAnalytics": {
-                    "Default": {
-                        "AppId": "f26cba646d784bf6840578687384b4f5",
-                        "Region": "eu-central-1"
-                    }
-                },
-                "PinpointTargeting": {
-                    "Default": {
-                        "Region": "eu-central-1"
                     }
                 }
             }
