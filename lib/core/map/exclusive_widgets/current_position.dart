@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 
+import '../../../utils/services/events/example_event.dart';
+
 class UserPositionNotifier extends ChangeNotifier {
   UserPositionNotifier(BuildContext context) {
     this._getCurrentPosition(context);
@@ -44,6 +46,10 @@ class UserPositionNotifier extends ChangeNotifier {
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       userPosition = latLng.LatLng(position.latitude, position.longitude);
+      recordCustomEvent(eventName: "userLocation", eventParams: {
+        "userLatitude": position.latitude,
+        'userLongitude': position.longitude
+      });
       notifyListeners();
     }).catchError((e) {
       debugPrint(e);

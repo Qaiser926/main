@@ -5,10 +5,13 @@ import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:othia/core/detailed/exclusive_widgets/diverse.dart';
 
+import '../../../utils/services/events/example_event.dart';
+
 class SimpleMap extends StatefulWidget {
   final latLng.LatLng latlong;
+  final String eAId;
 
-  SimpleMap(latLng.LatLng this.latlong) {}
+  SimpleMap(latLng.LatLng this.latlong, String this.eAId) {}
 
   @override
   State<SimpleMap> createState() => _SimpleMapState(latlong);
@@ -58,8 +61,13 @@ class _SimpleMapState extends State<SimpleMap> {
                             rotate: true,
                             point: latlong,
                             builder: (ctx) => GestureDetector(
-                                  onTap: () => MapsLauncher.launchCoordinates(
-                                      latlong.latitude, latlong.longitude),
+                                  onTap: () {
+                                    recordCustomEvent(
+                                        eventName: "launchMap",
+                                        eventParams: {"eAId": widget.eAId});
+                                    MapsLauncher.launchCoordinates(
+                                        latlong.latitude, latlong.longitude);
+                                  },
                                   child: const Icon(
                                     Icons.location_on,
                                     size: 50,

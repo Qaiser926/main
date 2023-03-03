@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
@@ -11,6 +12,9 @@ class InitialSearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'searchInitScreen',
+    );
     return SafeArea(
       child: Consumer<SearchNotifier>(builder: (context, model, child) {
         return Scaffold(
@@ -32,7 +36,7 @@ class InitialSearchPage extends StatelessWidget {
           CategoryFilter(
             isModalBottomSheetMode: false,
             dynamicProvider:
-                Provider.of<SearchNotifier>(context, listen: false),
+            Provider.of<SearchNotifier>(context, listen: false),
           ),
         );
       }),

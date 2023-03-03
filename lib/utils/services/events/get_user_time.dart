@@ -2,28 +2,22 @@ import 'package:device_calendar/device_calendar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tuple/tuple.dart';
 
-// the code snippet would call the extraction of user times
 
-// requestCalendarPermissions().then((_) {
-// findFreeTimes().then((freeTimes) {
-// // Do something with the free times
-// }).catchError((error) {
-// // Handle any errors that occurred while finding free times
-// });
-// });
 
-Future<void> requestCalendarPermissions() async {
+Future<bool> requestCalendarPermissions() async {
   var permissionStatus = await Permission.calendar.status;
   if (permissionStatus == PermissionStatus.granted) {
     // User has already granted permission to access the calendar.
-    return;
+    return true;
   }
 
   permissionStatus = await Permission.calendar.request();
 
   if (permissionStatus != PermissionStatus.granted) {
-    throw Exception('User did not grant permission to access the calendar');
+    //await openAppSettings();
+    return false;
   }
+  return true;
 }
 
 Future<List<Tuple2<DateTime?, DateTime?>>> findFreeTimes() async {
@@ -31,13 +25,13 @@ Future<List<Tuple2<DateTime?, DateTime?>>> findFreeTimes() async {
   DateTime end = DateTime.now().add(Duration(days: 7));
   final DeviceCalendarPlugin _deviceCalendarPlugin = DeviceCalendarPlugin();
 
-  var permissionsGranted = await _deviceCalendarPlugin.hasPermissions();
-  if (permissionsGranted.isSuccess && !(permissionsGranted.data ?? true)) {
-    permissionsGranted = await _deviceCalendarPlugin.requestPermissions();
-    if (!permissionsGranted.isSuccess || !(permissionsGranted.data ?? true)) {
-      print("failure");
-    }
-  }
+  // var permissionsGranted = await _deviceCalendarPlugin.hasPermissions();
+  // if (permissionsGranted.isSuccess && !(permissionsGranted.data ?? true)) {
+  //   permissionsGranted = await _deviceCalendarPlugin.requestPermissions();
+  //   if (!permissionsGranted.isSuccess || !(permissionsGranted.data ?? true)) {
+  //     print("failure");
+  //   }
+  // }
 
   final calendarsResult = await _deviceCalendarPlugin.retrieveCalendars();
 

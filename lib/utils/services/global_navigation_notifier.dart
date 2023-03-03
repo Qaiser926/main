@@ -23,7 +23,7 @@ class GlobalNavigationNotifier extends ChangeNotifier {
 
   Future<void> logout() async {
     try {
-       RestService().logout();
+      RestService().logout();
     } catch (e) {
       print("error");
     }

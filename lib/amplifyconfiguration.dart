@@ -13,6 +13,19 @@ const amplifyconfig = ''' {
             }
         }
     },
+    "analytics": {
+        "plugins": {
+            "awsPinpointAnalyticsPlugin": {
+                "pinpointAnalytics": {
+                    "appId": "f26cba646d784bf6840578687384b4f5",
+                    "region": "eu-central-1"
+                },
+                "pinpointTargeting": {
+                    "region": "eu-central-1"
+                }
+            }
+        }
+    },
     "auth": {
         "plugins": {
             "awsCognitoAuthPlugin": {

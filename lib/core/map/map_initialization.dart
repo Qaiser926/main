@@ -4,6 +4,7 @@
 import 'dart:async';
 
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -47,12 +48,14 @@ class MapInitialization extends StatefulWidget {
 class _MapInitializationState extends State<MapInitialization> {
   @override
   void initState() {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'mapInitScreen',
+    );
     super.initState();
-    // mapLocation();
   }
-  
+
     Completer<GoogleMapController> _controller=Completer();
- 
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserPositionNotifier>(builder: (context, model, child) {
@@ -63,8 +66,8 @@ class _MapInitializationState extends State<MapInitialization> {
               GoogleMap(
                 // markers: Set.of(_marker),
                 initialCameraPosition: CameraPosition(target:LatLng(28.534301, 77.057100),zoom: 13)),
-         
-          
+
+
             GestureDetector(
               onTap: () => {
                 getCategoryFilterDialog(
@@ -99,7 +102,7 @@ class _MapInitializationState extends State<MapInitialization> {
                 ],
               ),
             ),
-         
+
           ],
         );
       } else {
@@ -141,7 +144,7 @@ class _MapInitializationState extends State<MapInitialization> {
                   //   Get.to(MainPage(), transition: Transition.fadeIn);
                   //   openAppSettings();
                   // }
-                  
+
                 _handleLocationPermission(context);
                  Get.to(MainPage(),transition: Transition.fadeIn);
                 },
@@ -192,4 +195,3 @@ class _MapInitializationState extends State<MapInitialization> {
     return true;
   }
 }
-

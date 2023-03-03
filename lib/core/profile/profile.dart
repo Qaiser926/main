@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.da
 import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
+import '../../utils/services/events/example_event.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../add/add.dart';
 
@@ -54,6 +56,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 profilePhoto: "",
                 gender: Gender.male))
         : RestService().getPublicUserInfo(organizerId: widget.userInfo!.userId);
+    isProfileView
+        ? FirebaseAnalytics.instance.setCurrentScreen(
+            screenName: 'profileScreen',
+          )
+        : {
+            FirebaseAnalytics.instance.setCurrentScreen(
+              screenName: 'publisherScreen',
+            ),
+            recordCustomEvent(
+                eventName: "viewPublisher",
+                eventParams: {'publisherId': widget.userInfo!.userId}),
+          };
     super.initState();
   }
 

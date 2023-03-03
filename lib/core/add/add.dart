@@ -29,7 +29,7 @@ class Add extends StatefulWidget {
 
 class _AddState extends State<Add> {
   SwitchAddPageNotifier switchPagesNotifier =
-      SwitchAddPageNotifier(Add.firstPage);
+  SwitchAddPageNotifier(Add.firstPage);
   PageController pageController = PageController(initialPage: Add.firstPage);
 
   AddEANotifier inputNotifier = AddEANotifier();
@@ -54,6 +54,9 @@ class _AddState extends State<Add> {
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }
     }
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'addScreen',
+    );
     super.initState();
   }
 
@@ -68,7 +71,7 @@ class _AddState extends State<Add> {
 
   @override
   Widget build(BuildContext context) {
-    return 
+    return
     WillPopScope(
       onWillPop: () async {
         if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
@@ -90,7 +93,7 @@ class _AddState extends State<Add> {
           )
         ],
         child: Scaffold(
-          appBar: AppBar( 
+          appBar: AppBar(
           centerTitle: true,
           title:     Consumer<SwitchAddPageNotifier>(
                 builder: (context, switchPageModel, child) {
@@ -116,18 +119,18 @@ class _AddState extends State<Add> {
                   getHorSpace(20.w)
                 ],
               );
-           
+
             })
        ,
         actions: [
-         
+
         ],),
-        
+
           persistentFooterButtons: [getFloatingButtons(switchPages)],
           // bottomNavigationBar: getFloatingButtons(),
           // floatingActionButton: ,
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+          FloatingActionButtonLocation.centerFloat,
           body: getLoggedInSensitiveBody(
               notLoggedInMessages: NotLoggedInMessage.addPage,
               loggedInWidget: getLoggedInBody(switchPages),
@@ -135,23 +138,23 @@ class _AddState extends State<Add> {
         ),
       ),
     );
- 
+
   }
 
   Widget getLoggedInBody(SwitchPages switchPages) {
     // it is first tested if an existing event or acitvity is modifier or if a new one is added
     return inputNotifier.isModifyMode
         ? KeepAliveFutureBuilder(
-            future: detailedEventOrActivity,
-            builder: (context, snapshot) {
-              return snapshotHandler(
-                  context,
-                  snapshot,
-                  getFutureHandlerPageView,
-                  [inputNotifier, switchPages, pageController]);
-            })
+        future: detailedEventOrActivity,
+        builder: (context, snapshot) {
+          return snapshotHandler(
+              context,
+              snapshot,
+              getFutureHandlerPageView,
+              [inputNotifier, switchPages, pageController]);
+        })
         : getFutureHandlerPageView(
-            inputNotifier, switchPages, pageController, {});
+        inputNotifier, switchPages, pageController, {});
   }
 
   Widget getFloatingButtons(SwitchPages switchPages) {
@@ -172,17 +175,16 @@ class _AddState extends State<Add> {
           switchPageConsumer.currentPage == Add.lastPage
               ? getNavigationButton(Text(AppLocalizations.of(context)!.publish),
                   publishFunction, context, 130.h)
-              : getNavigationButton(
+                  : getNavigationButton(
                   Icon(Icons.arrow_forward), switchPages.nextPage, context),
-        ],
-      );
-    });
+            ],
+          );
+        });
   }
 
-  Widget buildUpperNavigationElement(
-      {required BuildContext context,
-      required SwitchAddPageNotifier switchPageModel,
-      required int index}) {
+  Widget buildUpperNavigationElement({required BuildContext context,
+    required SwitchAddPageNotifier switchPageModel,
+    required int index}) {
     Map<int, String> navigationCaptions = {
       0: AppLocalizations.of(context)!.information,
       1: AppLocalizations.of(context)!.details,
@@ -226,12 +228,11 @@ class _AddState extends State<Add> {
   }
 
   // TODO clear (extern) when switching pages, the left button changes its position. This should be fixed.
-  Widget getNavigationButton(
-      Widget child,
+  Widget getNavigationButton(Widget child,
       void Function(
-    BuildContext context,
-  )
-          onPressedFunction,
+          BuildContext context,
+          )
+      onPressedFunction,
       BuildContext context,
       [double? width]) {
     return SizedBox(

@@ -9,6 +9,7 @@ import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
 import '../../../modules/models/user_info/user_info.dart';
+import '../events/example_event.dart';
 import 'amplify/amp.dart';
 
 class RestService {
@@ -23,6 +24,8 @@ class RestService {
   Future<Object> fetchEventOrActivityDetails(
       {required String eventOrActivityId}) async {
     print('fetching event details with id $eventOrActivityId');
+    recordCustomEvent(
+        eventName: "detailRequest", eventParams: {"eAId": eventOrActivityId});
     String time = DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now());
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.eADetailPath}/$eventOrActivityId',
@@ -54,6 +57,7 @@ class RestService {
 
   Future<Object> removeFavouriteEventOrActivity({required eAId}) async {
     print('removing favourite event or activity with id: $eAId');
+    recordCustomEvent(eventName: "userDislikes", eventParams: {"eAId": eAId});
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.removeFavouriteEventOrActivity}/$eAId',
@@ -65,6 +69,7 @@ class RestService {
   Future<Object> addFavouriteEventOrActivity(
       {required String eAId, required String userId}) async {
     print('add favourite event or activity with id: $eAId');
+    recordCustomEvent(eventName: "userLikes", eventParams: {"eAId": eAId});
     String token = await getIdToken();
     RestOptions restOptions = RestOptions(
       path: '/${APIConstants.addFavouriteEA}/$eAId',
@@ -117,6 +122,8 @@ class RestService {
 
 
   Future<Object> getSearchResultIds({required SearchQuery searchQuery}) async {
+    recordCustomEvent(
+        eventName: "searchRequest", eventParams: searchQuery.toJson());
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getSearchResultIds}/',
         body: transformClassToBody(searchQuery));
@@ -126,6 +133,8 @@ class RestService {
 
   Future<Object> getMapResultIds({required searchQuery}) async {
     print('requesting Map result ids');
+    recordCustomEvent(
+        eventName: "mapSearch", eventParams: searchQuery.toJson());
     RestOptions restOptions = RestOptions(
         path: '/${APIConstants.getMapResultIds}/',
         body: transformClassToBody(searchQuery));
@@ -145,6 +154,9 @@ class RestService {
 
   Future<Object> getPublicUserInfo({required organizerId}) async {
     print('requesting public user info for for: $organizerId');
+    recordCustomEvent(
+        eventName: "publisherRequest",
+        eventParams: {"publisherId": organizerId});
     RestOptions restOptions = RestOptions(
       path: '/${APIConstants.getPublicUserInfo}/$organizerId',
     );

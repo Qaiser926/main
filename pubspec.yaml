@@ -54,6 +54,7 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   shimmer: ^2.0.0
   lottie: ^2.2.0
+  visibility_detector: 0.3.3
 
   #os calls
   url_launcher: ^6.1.7
@@ -99,11 +100,12 @@ dependencies:
   amplify_analytics_pinpoint: ^0.6.0
   # ui
   typicons_flutter: ^0.5.0
-  syncfusion_flutter_datepicker: ^20.4.44
+  syncfusion_flutter_datepicker: 20.4.44
   font_awesome_flutter: ^10.3.0
   flutter_html: ^3.0.0-alpha.6
-  checkbox_formfield: ^0.2.0
-
+  checkbox_formfield: 0.2.0
+  firebase_core: ^2.6.1
+  firebase_analytics: ^10.1.3
 
 
 dev_dependencies:
@@ -137,7 +139,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/lottiesfile/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

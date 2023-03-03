@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -46,6 +47,9 @@ class _MapResultsState extends State<MapResults> {
 
   @override
   void initState() {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'mapScreen',
+    );
     super.initState();
   }
 
@@ -194,39 +198,39 @@ class _MapResultsState extends State<MapResults> {
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
           onTap: () => {
-            // TODO (extern) highlight selected marker
-            setState(() {
-              eAIds = getAllIdsUnderMarker(
+                // TODO (extern) highlight selected marker
+                setState(() {
+                  eAIds = getAllIdsUnderMarker(
                       locationData["coordinates"]["latitude"],
                       locationData["coordinates"]["longitude"]);
-            })
-            // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
-            //     arguments: {
-            //       NavigatorConstants.EventActivityId: locationData["id"]
-            //     })
-          },
-          child: Icon(
-            Icons.location_on,
-            size: 44,
-            color: markerColor,
-          ),
-        ));
+                })
+                // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+                //     arguments: {
+                //       NavigatorConstants.EventActivityId: locationData["id"]
+                //     })
+              },
+              child: Icon(
+                Icons.location_on,
+                size: 44,
+                color: markerColor,
+              ),
+            ));
   }
 
   List<String> getAllIdsUnderMarker(double latitude, double longitude) {
     List<String> Ids = [];
     mapResultIds.eventResults.forEach(
-          (element) {
+      (element) {
         if ((element!["coordinates"]["latitude"] == latitude) &
-        (element["coordinates"]["longitude"] == longitude)) {
+            (element["coordinates"]["longitude"] == longitude)) {
           Ids.add(element["id"]);
         }
       },
     );
     mapResultIds.activityResults.forEach(
-          (element) {
+      (element) {
         if ((element!["coordinates"]["latitude"] == latitude) &
-        (element["coordinates"]["longitude"] == longitude)) {
+            (element["coordinates"]["longitude"] == longitude)) {
           Ids.add(element["id"]);
         }
       },

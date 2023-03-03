@@ -1,4 +1,5 @@
-import 'package:checkbox_formfield/checkbox_formfield.dart';
+import 'package:checkbox_formfield/checkbox_list_tile_formfield.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,8 +24,11 @@ class Signup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'signUpScreen',
+    );
     TextEditingController emailController =
-    TextEditingController(text: loginSignupData.email);
+        TextEditingController(text: loginSignupData.email);
     TextEditingController passwordController = TextEditingController();
     TextEditingController repeatPasswordController = TextEditingController();
 

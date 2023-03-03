@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "306065074302",
+    "firebase_url": "https://othiaapp-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "othiaapp",
+    "storage_bucket": "othiaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306065074302:android:d6899deaefbafb7be2902f",
+        "android_client_info": {
+          "package_name": "de.othia.othia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306065074302-1aj29lt7rdbqc5lvm920db7ip0h315ul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzYQxM2bGpi8PJYCX-qA0MINguQMsS5hU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306065074302-1aj29lt7rdbqc5lvm920db7ip0h315ul.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "306065074302-a0aejlvko3d7k7mio7mb8belsn9qobf0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "de.othia.othia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

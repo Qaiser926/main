@@ -110,9 +110,8 @@ class PublishPage extends StatelessWidget {
 
   Widget getErrorMessage(BuildContext context) {
     return Text(
-          AppLocalizations.of(context)!.agreeGuidelinesErrorMessage,
-          style: TextStyle(color: Theme.of(context).colorScheme.error),
-        )
-    ;
+      AppLocalizations.of(context)!.agreeGuidelinesErrorMessage,
+      style: TextStyle(color: Theme.of(context).colorScheme.error),
+    );
   }
 }
