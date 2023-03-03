@@ -21,6 +21,7 @@ import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.da
 import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
+import '../../utils/services/events/example_event.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../add/add.dart';
 
@@ -59,9 +60,14 @@ class _ProfilePageState extends State<ProfilePage> {
         ? FirebaseAnalytics.instance.setCurrentScreen(
             screenName: 'profileScreen',
           )
-        : FirebaseAnalytics.instance.setCurrentScreen(
-            screenName: 'publisherScreen',
-          );
+        : {
+            FirebaseAnalytics.instance.setCurrentScreen(
+              screenName: 'publisherScreen',
+            ),
+            recordCustomEvent(
+                eventName: "viewPublisher",
+                eventParams: {'publisherId': widget.userInfo!.userId}),
+          };
     super.initState();
   }
 
