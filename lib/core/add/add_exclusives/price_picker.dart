@@ -21,16 +21,19 @@ class PricePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddEANotifier>(
+    return 
+    Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
           return Column(
-            // TODO (extern) make each price row (containing of label, price and cross) scrollable
+            // TODO clear (extern) make each price row (containing of label, price and cross) scrollable
             children: [
               ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: inputNotifierConsumer.detailedEA.prices!.length,
                   itemBuilder: (context, index) {
-                    return buildPriceRow(
+                    return 
+                    buildPriceRow(
                         index: index,
                         context: context,
                         inputPrice: inputNotifierConsumer.detailedEA.prices![index],
@@ -61,6 +64,7 @@ class PricePicker extends StatelessWidget {
             ],
           );
         });
+  
   }
 
   Widget buildPriceRow({required int index,

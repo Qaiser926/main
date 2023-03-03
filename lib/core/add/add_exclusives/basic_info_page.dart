@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/core/add/add_exclusives/action_box.dart';
@@ -38,15 +39,18 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final snackBar = SnackBar(
-        // TODO (extern) improve design of snackbar
+      final snackBar = 
+      SnackBar(
+        backgroundColor: Colors.grey.shade300,
+        // TODO clear (extern) improve design of snackbar
         content: inputNotifier.isModifyMode
-            ? Text(AppLocalizations.of(context)!.snackBarMessageModifying)
-            : Text(AppLocalizations.of(context)!.snackBarMessageAdding),
+            ? Text(AppLocalizations.of(context)!.snackBarMessageModifying,textAlign: TextAlign.justify,)
+            : Text(AppLocalizations.of(context)!.snackBarMessageAdding,style: TextStyle(fontSize: 14.sp,),textAlign: TextAlign.justify,),
         duration: Duration(seconds: 7, milliseconds: 500),
       );
       if (!Provider.of<AddEANotifier>(context, listen: false).snackBarShown) {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        // Get.snackbar(snackBar.toString(), "",snackPosition: SnackPosition.BOTTOM);
         Provider.of<AddEANotifier>(context, listen: false).snackBarShown = true;
       }
     });
@@ -54,7 +58,11 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return 
+    //  Scaffold(
+    //   backgroundColor: Colors.red,
+    // );
+    Form(
       key: widget.inputNotifier.basicInformationFormKey,
       child: Scaffold(
         body: SingleChildScrollView(
@@ -189,7 +197,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         ),
       ),
     );
-    // });
+   
   }
 
   Column buildTitleSection() {

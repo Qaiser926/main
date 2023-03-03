@@ -28,7 +28,8 @@ class InitialSearchPage extends StatelessWidget {
               appBarTitle: AppLocalizations.of(context)!.discover,
               automaticallyImplyLeading: false,
               onBackPressed: () => {}),
-          body: CategoryFilter(
+          body: 
+          CategoryFilter(
             isModalBottomSheetMode: false,
             dynamicProvider:
                 Provider.of<SearchNotifier>(context, listen: false),

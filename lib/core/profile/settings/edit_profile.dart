@@ -59,7 +59,7 @@ class _EditProfileState extends State<EditProfile> {
               height: 1000,
               child: Scaffold(
                 appBar: AppBar(
-                  // TODO (extern) align design
+                  // TODO clear (extern) align design
                   title: Text(AppLocalizations.of(context)!.editProfile),
                 ),
                 bottomNavigationBar: getDeleteButton(context),

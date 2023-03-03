@@ -12,7 +12,7 @@ class MapPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO (extern) align distances between caption and content
-    return Column(
+    return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
@@ -28,6 +28,7 @@ class MapPicture extends StatelessWidget {
                 ),
               ],
             )),
+      
         Padding(
           padding: EdgeInsets.fromLTRB(20.h, 2.h, 20.h, 0.h),
           child: GestureDetector(
@@ -81,5 +82,10 @@ class MapPicture extends StatelessWidget {
         getVerSpace(10.h),
       ],
     );
+  
+    // Container(
+    //   color: Colors.red,
+    // );
+   
   }
 }

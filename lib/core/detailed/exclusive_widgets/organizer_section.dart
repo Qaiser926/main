@@ -35,7 +35,7 @@ class OrganizerSection extends StatelessWidget {
       fit: BoxFit.cover,
     );
     // Approach with stack is necessary as the background image width would otherwise influence the horizontal distances
-    return Padding(
+    return  Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.h),
       child: Stack(children: [
         ClipOval(
@@ -100,5 +100,9 @@ class OrganizerSection extends StatelessWidget {
         ),
       ]),
     );
+  
+  //  Scaffold(
+  //   backgroundColor: Colors.red,
+  //  );
   }
 }

@@ -17,7 +17,7 @@ class SearchEnhancementSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddEANotifier>(
+    return   Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return Column(children: [
         // TODO (extern) transform code such that it is less repetitive
@@ -43,6 +43,7 @@ class SearchEnhancementSlider extends StatelessWidget {
               inputNotifier.notifyListeners();
             },
             sliderActivated: inputNotifierConsumer.socialLevelActivated),
+       
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.physicalLevel, LevelType.physicalLevel),
@@ -178,6 +179,10 @@ class SearchEnhancementSlider extends StatelessWidget {
                 inputNotifierConsumer.professionalEligibilityActivated),
       ]);
     });
+  
+  // Scaffold(
+  //   backgroundColor: Colors.red,
+  // );
   }
 
   Widget buildSlider(

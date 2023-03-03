@@ -52,7 +52,6 @@ class EventSummary extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-
           // TODO: (extern) solve that title can flow into price information
           Padding(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 5),

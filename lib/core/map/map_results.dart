@@ -4,15 +4,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:othia/core/main_page.dart';
 import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
+import 'package:othia/core/map/map.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_map_result_ids/get_map_result_ids.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../widgets/filter_related/notifiers/map_notifier.dart';
@@ -59,13 +63,39 @@ class _MapResultsState extends State<MapResults> {
               });
         });
       } else {
-        // TODO (extern) implement exception handling and messages for user permission, e.g. implement loading when map is not shown
+        // TODO clear (extern) implement exception handling and messages for user permission, e.g. implement loading when map is not shown
         // TODO (extern) align style
         return Align(
           alignment: Alignment.center,
-          child: Text(
-            AppLocalizations.of(context)!.waitingLocationPermission,
-            textAlign: TextAlign.center,
+          child: Column(
+            children: [
+              // Text(
+              //   AppLocalizations.of(context)!.waitingLocationPermission,
+              //   textAlign: TextAlign.center,
+              // ),
+              ElevatedButton(onPressed: ()async{
+                  PermissionStatus permission =
+                      await Permission.location.request();
+                   if (permission == PermissionStatus.granted) {
+                      setState(() {
+                        Get.snackbar(
+                            titleText:
+                                Center(child: Text("Permission Granted")),
+                            "",
+                            "",
+                            snackPosition: SnackPosition.BOTTOM,
+                            colorText: Colors.white);
+                         Get.to(MainPage(),transition: Transition.fadeIn);
+                      });
+                    }
+                  if (permission == PermissionStatus.denied) {
+                    // Get.snackbar('Permission is recommended', "");
+                    Get.to(MainPage(), transition: Transition.fadeIn);
+                    openAppSettings();
+                  }
+              }, child: Text("get Location"))
+
+            ],
           ),
         );
       }
@@ -233,12 +263,12 @@ class _MapResultsState extends State<MapResults> {
   }
 
   CarouselSlider buildSummaryCarousel() {
-    // TODO (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
+    // TODO clear (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
     return CarouselSlider.builder(
       options: CarouselOptions(
         height: 150.h,
 
-        viewportFraction: 1,
+        viewportFraction: 0.8,
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,

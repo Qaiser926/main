@@ -101,7 +101,6 @@ class _TimeFilterState extends State<TimeFilter> {
     }
     return true;
   }
-
   Widget getTimeButton({required BuildContext context,
     required String caption,
     required Function onTapFunction,
@@ -211,7 +210,8 @@ class _TimeFilterState extends State<TimeFilter> {
           dynamicProvider.setTimeCaption(caption: null);
         })
       };
-    } else {
+    } 
+    else {
       return () => {
         setState(() {
           startDate = DateTime.now().add(Duration(days: 1));

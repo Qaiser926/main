@@ -54,21 +54,25 @@ class TimeSelector extends StatelessWidget {
                 },
                 child: IgnorePointer(
                   child: TextFormField(
-                      // TODO (extern) align color such that it has the same color as the other TextFormFields. The reason for the color difference is that we use a TextController here, whereas we just use the text form field elsewhere.
+                      // TODO clear (extern) align color such that it has the same color as the other TextFormFields. The reason for the color difference is that we use a TextController here, whereas we just use the text form field elsewhere.
                       style:
-                          TextStyle(color: Theme.of(context).bottomAppBarColor),
+                          TextStyle(color: Theme.of(context).selectedRowColor),
                       controller: TextEditingController(
+                        
                         text: showStartTime
                             ? "${AppLocalizations.of(context)!.startTime}: ${getLocalTimeString(context: context, dateTimeUtc: inputNotifierConsumer.detailedEA.time.startTimeUtc!)}"
                             : AppLocalizations.of(context)!.startTimeHint,
                       ),
+                      
                       validator: _validateStartTime,
                       decoration: new InputDecoration(
+                        hintStyle: TextStyle(color: Colors.grey),
                         contentPadding: EdgeInsets.all(5.h),
                         border: OutlineInputBorder(),
                       )),
                 ),
               )),
+         
           Padding(
             padding: EdgeInsets.only(top: 5.h),
             child: GestureDetector(
@@ -86,9 +90,9 @@ class TimeSelector extends StatelessWidget {
               },
               child: IgnorePointer(
                 child: TextFormField(
-                  // TODO (extern) align color such that it has the same color as the other TextFormFields
+                  // TODO clear (extern) align color such that it has the same color as the other TextFormFields
                     style:
-                        TextStyle(color: Theme.of(context).bottomAppBarColor),
+                        TextStyle(color: Theme.of(context).selectedRowColor),
                     controller: TextEditingController(
                       text: showEndTime
                           ? "${AppLocalizations.of(context)!.endTime}: ${getLocalTimeString(context: context, dateTimeUtc: inputNotifierConsumer.detailedEA.time.endTimeUtc!)}"
@@ -220,6 +224,7 @@ class TimeSelector extends StatelessWidget {
       initialDate: initialDate ?? DateTime.now(),
       firstDate: firstDate,
       lastDate: DateTime(DateTime.now().year + 5),
+      
     );
 
     Provider.of<GlobalNavigationNotifier>(context, listen: false).isDialogOpen =
@@ -238,4 +243,5 @@ class TimeSelector extends StatelessWidget {
       return null;
     }
   }
+
 }

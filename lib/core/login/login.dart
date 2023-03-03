@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:othia/core/login/reset_password.dart';
 import 'package:othia/core/login/signup.dart';
@@ -16,8 +17,8 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     loginContext = context;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
     String? errorMessage;
     return Scaffold(
       appBar: AppBar(),
@@ -27,8 +28,8 @@ class Login extends StatelessWidget {
           onPressed: (GlobalKey<FormState> key) async {
             if (key.currentState!.validate()) {
               LoginSignupData loginData = LoginSignupData();
-              loginData.email = emailController.text;
-              loginData.password = passwordController.text;
+              loginData.email = emailController.text.trim();
+              loginData.password = passwordController.text.trim();
               String? result = await loginOrSignIn(loginData, true, context);
               if (result != null) {
                 errorMessage = result;
@@ -39,7 +40,7 @@ class Login extends StatelessWidget {
           },
           textFields: [
             getCustomTextFormFieldWithPadding(
-              //TODO (extern) remove spaces after email
+              //TODO clear (extern) remove spaces after email
               controller: emailController,
               iconData: Icons.mail,
               hintText: AppLocalizations.of(context)!.eMail,
@@ -80,7 +81,7 @@ class Login extends StatelessWidget {
           betweenButtonAndTextFields: SizedBox(
             height: 30,
             child: Padding(
-              padding: const EdgeInsets.only(left: 240.0),
+              padding:  EdgeInsets.only(left: 0.w),
               child: TextButton(
                   onPressed: () =>
                       Get.to(ResetPassword(), duration: Duration.zero),
@@ -94,8 +95,8 @@ class Login extends StatelessWidget {
                   buttonText: AppLocalizations.of(context)!.signup,
                   onPressed: (key) {
                     LoginSignupData data = LoginSignupData();
-                    data.email = emailController.text;
-                    data.password = passwordController.text;
+                    data.email = emailController.value.text.trim();
+                    data.password = passwordController.text.trim();
                     Get.to(Signup(data), duration: Duration.zero);
                   }),
               //TODO (intern) add auth Providers like facebook, google, apple ...

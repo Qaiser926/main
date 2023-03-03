@@ -269,7 +269,12 @@ class LoginSignUp extends StatelessWidget {
               children: textFields,
             ),
           ),
-          betweenButtonAndTextFields ?? const SizedBox.shrink(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              betweenButtonAndTextFields ?? const SizedBox.expand(),
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -294,15 +299,15 @@ Widget getLoginSignupButton(
     Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
-        //TODO (extern) align button Size
+        //TODO clear (extern) align button Size
         onPressed: () => onPressed(key),
         style: ElevatedButton.styleFrom(
             elevation: 18,
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20))),
+                borderRadius: BorderRadius.circular(15))),
         child: Container(
-          height: 45,
+          height: 47,
           alignment: Alignment.center,
           child: Text(
             buttonText,
@@ -314,6 +319,7 @@ Widget getLoginSignupButton(
         ),
       ),
     )
+  
   ]);
 }
 

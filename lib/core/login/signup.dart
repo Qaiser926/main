@@ -47,14 +47,15 @@ class Signup extends StatelessWidget {
     GlobalKey<EditableTextState> emailKey = GlobalKey();
     return Scaffold(
       appBar: AppBar(),
-      body: LoginSignUp(
+      body: 
+      LoginSignUp(
           topText: AppLocalizations.of(context)!.signup,
           buttonText: AppLocalizations.of(context)!.signup,
           onPressed: (GlobalKey<FormState> key) async {
             loginSignupData.userName = this.nameController.text;
             if (key.currentState!.validate()) {
               loginSignupData.password = passwordController.text;
-              loginSignupData.email = emailController.text;
+              loginSignupData.email = emailController.text.trim();
               //at the time of coding the function signUp only returns error Messages for the Email inout. if we want to add error messages for other input fields it will get a lot more complicated
               emailErrorMessage = await signUp(loginSignupData, context);
               key.currentState!.validate();
@@ -73,7 +74,7 @@ class Signup extends StatelessWidget {
             getCustomTextFormFieldWithPadding(
               errorMaxLines: 2,
               key: emailKey,
-              //TODO (extern) remove spaces after email
+              //TODO clear (extern) remove spaces after email
               hintText: AppLocalizations.of(context)!.eMail,
               iconData: Icons.mail,
               controller: emailController,
@@ -91,6 +92,7 @@ class Signup extends StatelessWidget {
                 }
               },
             ),
+      
             getCustomTextFormFieldWithPadding(
               validator: (p0) {
                 if (resetError) {
@@ -147,6 +149,7 @@ class Signup extends StatelessWidget {
                 ),
               ),
             ),
+           
             getCustomDropdownButtonFormFieldWithPadding(
                 onChangedFunction: (value) {
                   loginSignupData.gender = value;
@@ -185,6 +188,7 @@ class Signup extends StatelessWidget {
                 }
               },
             ),
+           
             getCustomTextFormFieldWithPadding(
                 obscureText: true,
                 hintText: AppLocalizations.of(context)!.repeatPassword,
@@ -250,7 +254,9 @@ class Signup extends StatelessWidget {
               autovalidateMode: AutovalidateMode.disabled,
               contentPadding: EdgeInsets.all(1),
             ),
+        
           ]),
+    
     );
   }
 }

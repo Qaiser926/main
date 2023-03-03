@@ -36,8 +36,9 @@ class ConfirmResetPassword extends StatelessWidget {
             }
           },
           textFields: [
-            //TODO (extern) only number keyboard should open here
+            //TODO clear (extern) only number keyboard should open here
             CustomTextFormField(
+              numberInput: true,
               validator: (p0) {
                 if (p0 != null) {
                   if (p0.isEmpty) {

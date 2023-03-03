@@ -22,6 +22,7 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.red,
       body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -237,8 +238,8 @@ class DetailsPage extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.h),
-                // TODO (extern) apply different border color, same as the text form border
-                side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                // TODO clear (extern) apply different border color, same as the text form border
+                side: BorderSide(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
               ))),
           onPressed: () => onPressed(),
           child: Text(caption),

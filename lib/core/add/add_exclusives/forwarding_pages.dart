@@ -251,11 +251,16 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       final file = await new File('${tempDir.path}/image.png').create();
       await file.writeAsBytes(pngBytes);
       await GallerySaver.saveImage('${tempDir.path}/image.png');
-      // TODO (extern) design of snackbar
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
-        duration: Duration(seconds: 2),
-      ));
+      // TODO clear (extern) design of snackbar
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+       
+      //   content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
+      //   duration: Duration(seconds: 2),
+      // )
+      // );
+      Get.snackbar("", "",snackPosition: SnackPosition.BOTTOM,
+      titleText: Center(child: Text(AppLocalizations.of(context)!.storedQRCodeMessage)), 
+       colorText: Colors.white,);
     } catch (e) {
       print(e.toString());
     }

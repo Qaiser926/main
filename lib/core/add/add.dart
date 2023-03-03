@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'add_exclusives/add_page_notifier.dart';
 import 'add_exclusives/input_notifier.dart';
 
-// TODO (extern) include back button only on the first adding page
+// TODO clear (extern) include back button only on the first adding page
 class Add extends StatefulWidget {
   Add({super.key});
 
@@ -50,7 +50,7 @@ class _AddState extends State<Add> {
             RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
         inputNotifier.isModifyMode = true;
       } on NoSuchMethodError catch (e) {
-        // TODO (extern) get rid of error, just continue here
+        // TODO clear (extern) get rid of error, just continue here
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }
     }
@@ -68,7 +68,8 @@ class _AddState extends State<Add> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return 
+    WillPopScope(
       onWillPop: () async {
         if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
             .isDialogOpen) {
@@ -89,11 +90,13 @@ class _AddState extends State<Add> {
           )
         ],
         child: Scaffold(
-          appBar: AppBar(automaticallyImplyLeading: false, actions: [
-            Consumer<SwitchAddPageNotifier>(
+          appBar: AppBar( 
+          centerTitle: true,
+          title:     Consumer<SwitchAddPageNotifier>(
                 builder: (context, switchPageModel, child) {
-              // TODO (extern) align that this button row is always aligned central for both languages
+              // TODO clear (extern) align that this button row is always aligned central for both languages
               return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   buildUpperNavigationElement(
@@ -110,11 +113,16 @@ class _AddState extends State<Add> {
                       context: context,
                       index: 2,
                       switchPageModel: switchPageModel),
-                  getHorSpace(16.h)
+                  getHorSpace(20.w)
                 ],
               );
+           
             })
-          ]),
+       ,
+        actions: [
+         
+        ],),
+        
           persistentFooterButtons: [getFloatingButtons(switchPages)],
           // bottomNavigationBar: getFloatingButtons(),
           // floatingActionButton: ,
@@ -127,6 +135,7 @@ class _AddState extends State<Add> {
         ),
       ),
     );
+ 
   }
 
   Widget getLoggedInBody(SwitchPages switchPages) {
@@ -149,10 +158,12 @@ class _AddState extends State<Add> {
     return Consumer<SwitchAddPageNotifier>(
         builder: (context, switchPageConsumer, child) {
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           switchPageConsumer.currentPage == Add.firstPage
-              ? const SizedBox.shrink()
+              ?  SizedBox(width:88.w,)
+              // ? const SizedBox.shrink()
               : getNavigationButton(
                   Icon(Icons.arrow_back),
                   switchPages.previousPage,
@@ -179,12 +190,12 @@ class _AddState extends State<Add> {
     };
 
     return Padding(
-        padding: EdgeInsets.all(5.h),
+        padding: EdgeInsets.only(right: 7.w,left: 3.w),
         child: GestureDetector(
           onTap: () =>
               {pageController.jumpToPage(index), closeSnackBar(context)},
           child: Container(
-            height: 30.h,
+            // height: 30.h,
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index
                     ? Theme.of(context).colorScheme.primary
@@ -195,9 +206,10 @@ class _AddState extends State<Add> {
             child: Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: EdgeInsets.all(5.h),
+                padding: EdgeInsets.all(4.5.h),
                 child: Text(
                   navigationCaptions[index]!,
+                  style: TextStyle(fontSize: 12.sp),
                 ),
               ),
             ),
@@ -208,12 +220,12 @@ class _AddState extends State<Add> {
   Icon getArrowIcon(BuildContext context) {
     return Icon(
       Icons.arrow_forward,
-      size: 20.h,
+      size: 17.h,
       color: Theme.of(context).colorScheme.primary,
     );
   }
 
-  // TODO (extern) when switching pages, the left button changes its position. This should be fixed.
+  // TODO clear (extern) when switching pages, the left button changes its position. This should be fixed.
   Widget getNavigationButton(
       Widget child,
       void Function(

@@ -57,7 +57,6 @@ class ChangePasswordScreen extends StatelessWidget {
       child: Scaffold(
         // TODO (extern) align colors
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.changePassword),
         ),

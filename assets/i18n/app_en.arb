@@ -7,7 +7,7 @@
   "map": "Map",
   "exploreMap": "Click on Map to explore",
   "mapCategoryInfo": "Please select a category to show results from the filters.",
-  "waitingLocationPermission": "Waiting for location permission",
+  "waitingLocationPermission": "Allow location to see events near you",
   "compingUpEvents": "Coming up Events",
   "popularEvents": "Popular Events",
     "popularActivities": "Popular Activities",

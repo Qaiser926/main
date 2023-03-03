@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
           Ids: homePageIds.universityEvents,
           showMore: false,
         ),
+       
       ],
     ));
   }

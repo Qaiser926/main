@@ -44,7 +44,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.settings),
         ),
-        body: SafeArea(
+        body: 
+        SafeArea(
           child: Column(
             children: [
               Expanded(

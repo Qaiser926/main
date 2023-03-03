@@ -28,8 +28,9 @@ class ConfirmationScreen extends StatelessWidget {
             }
           },
           textFields: [
-            //TODO (extern) only number keyboard should open here
+            //TODO clear (extern) only number keyboard should open here
             CustomTextFormField(
+              numberInput: true,
               validator: (p0) {
                 if (errorMessage != null) {
                   return errorMessage;

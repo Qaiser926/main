@@ -51,7 +51,8 @@ class SearchScrollView extends StatelessWidget {
   Widget getHorizontalDiscovery(
       SearchResultIds unfilteredSearchResultIds, BuildContext context) {
     SearchResultIds searchResultIds = orderEmptyIds(unfilteredSearchResultIds);
-    return ListView.builder(
+    return 
+    ListView.builder(
         itemCount: unfilteredSearchResultIds.searchResultIds.length,
         itemBuilder: (BuildContext context, int index) {
           String key = searchResultIds.searchResultIds.keys.elementAt(index);
@@ -64,6 +65,7 @@ class SearchScrollView extends StatelessWidget {
             showDivider: showDivider,
           );
         });
+  
   }
 
   Widget getVerticalDiscovery(
