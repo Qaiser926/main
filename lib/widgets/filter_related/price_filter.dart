@@ -8,7 +8,7 @@ import 'package:typicons_flutter/typicons_flutter.dart';
 
 import 'get_reset_apply_filter.dart';
 
-// TODO (extern) it should be possible to type in ranges via the keyboard when clicking on the boxes
+// TODO clear (extern) it should be not possible to type in ranges via the keyboard when clicking on the boxes
 
 Future<dynamic> priceFilterDialog(
     {required BuildContext context,
@@ -166,7 +166,11 @@ Widget getPriceBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Text(header), getVerSpace(5), Text(priceText)],
+      children: [Text(header), getVerSpace(5),
+      Text(priceText)
+   
+       
+       ],
     ),
   );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
@@ -30,6 +31,7 @@ Future<dynamic> getCategoryFilterDialog(
               // TODO (extern) make container height dynamic if needed & align height of container
               Container(
             height: MediaQuery.of(context).size.height * 0.7,
+           
             child: CategoryFilter(
                 isModalBottomSheetMode: true, dynamicProvider: dynamicProvider),
           ),
@@ -75,7 +77,7 @@ class CategoryFilterState extends State<CategoryFilter>
 
     if (widget.isModalBottomSheetMode) {
       header = Container(
-        // TODO (extern) remove (small) edges created by the container that reach into the rounded corners
+        // TODO clear (extern) remove (small) edges created by the container that reach into the rounded corners
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

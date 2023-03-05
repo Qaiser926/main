@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:othia/core/profile/settings/change_password.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
+import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void backClick() {
     Get.back();
   }
+   late bool isProfileView;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +42,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO (extern) align color of appbar
-        // TODO (extern) align buttons left at height of caption
+        // TODO clear (extern) align color of appbar
+        // TODO clear (extern) align buttons left at height of caption
+        
+      
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.settings),
-        ),
+           leading:IconButton(onPressed: (){
+            Get.back();
+           }, icon: Icon(Icons.arrow_back,color:  Theme.of(context).colorScheme.primary,)),
+                  toolbarHeight: 53.h,
+                  elevation: 0,
+                  title: Text(AppLocalizations.of(context)!.settings),
+                  centerTitle: true,
+                  automaticallyImplyLeading: false),
         body: 
         SafeArea(
           child: Column(
@@ -96,16 +107,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Provider.of<GlobalNavigationNotifier>(context,
                                           listen: false)
                                       .logout();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    // TODO (extern) improve design, only show this if logout was indeed successful
-                                    content: Text(
+                                    // TODO clear (extern) improve design, only show this if logout was indeed successful
+                                  
+                                  
+                                  Get.snackbar("", "",titleText:  Text(
                                         AppLocalizations.of(context)!
                                             .successfulLogoutMessage,
-                                        textAlign: TextAlign.center),
-                                    duration:
-                                        Duration(seconds: 1, milliseconds: 500),
-                                  ));
+                                        textAlign: TextAlign.center),snackPosition: SnackPosition.BOTTOM,colorText:Colors.white);
                                 });
                               },
                               child: Text(
@@ -185,7 +193,7 @@ Widget getSettingContainer(Function function, String title, Icon icon) {
                 padding: EdgeInsets.all(15.h),
                 child: icon,
               ),
-              getHorSpace(16.h),
+              getHorSpace(19.h),
               Text(title),
             ],
           ),

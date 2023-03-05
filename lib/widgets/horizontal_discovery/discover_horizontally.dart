@@ -31,7 +31,8 @@ class BaseDiscoveryClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return 
+    Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (showDivider)
@@ -60,13 +61,14 @@ class BaseDiscoveryClass extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // TODO (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
+                      // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
                       Text(
                         caption,
                         softWrap: true,
                         style: Theme.of(context).textTheme.headlineLarge,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
+                        
                       ),
                       getHorSpace(5.h),
                       isInfoButtonActivated
@@ -95,7 +97,9 @@ class BaseDiscoveryClass extends StatelessWidget {
         if (!Ids.isEmpty) HorizontalEADiscovery(Ids: Ids),
         if (Ids.isEmpty) getNoResultsMessage(context),
       ],
+   
     );
+ 
   }
 }
 

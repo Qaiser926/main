@@ -4,6 +4,7 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
 const Widget defaultStillLoadingWidget = Center(
@@ -101,8 +102,10 @@ Widget snapshotHandler(
       return loadingWidget;
     case ConnectionState.done:
       if (snapshot.hasError) {
+        Get.snackbar("","",titleText: Text(snapshot.error),snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
         return defaultErrorFunction(snapshot, context);
-        //TODO (extern) implement rest error handling, please document your expected behaviour
+        //TODO clear  (extern) implement rest error handling, please document your expected behaviour
+       
         throw Exception(snapshot.error);
       } else {
         RestResponse data = snapshot.data as RestResponse;
@@ -112,7 +115,8 @@ Widget snapshotHandler(
           return Function.apply(function, functionArguments);
           return function(decodedJson);
         } catch (e) {
-          //TODO (extern) catch more specific and handle accordingly
+          //TODO clear (extern) catch more specific and handle accordingly
+          Get.snackbar("", "",titleText: Text(e.toString()),snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
           throw e;
         }
       }

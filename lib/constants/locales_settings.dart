@@ -14,10 +14,12 @@ class LocaleProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   void clearLocale() {
     _locale = null;
     notifyListeners();
   }
 
   Locale? get getLocale => _locale;
+  
 }

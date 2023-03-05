@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/form_fields.dart';
@@ -28,7 +29,7 @@ enum WidgetTypes {
   formKey,
 }
 
-// TODO (extern) when opening the dialogs, the bottom overflows. Please solve this. It is not required that the "Delete Account" button stays in a bottom app bar.
+// TODO clear (extern) when opening the dialogs, the bottom overflows. Please solve this. It is not required that the "Delete Account" button stays in a bottom app bar.
 
 class EditProfile extends StatefulWidget {
   final UserInfoNotifier userInfoNotifier;
@@ -58,10 +59,17 @@ class _EditProfileState extends State<EditProfile> {
               width: MediaQuery.of(context).size.width,
               height: 1000,
               child: Scaffold(
-                appBar: AppBar(
-                  // TODO clear (extern) align design
-                  title: Text(AppLocalizations.of(context)!.editProfile),
-                ),
+                 appBar: AppBar(
+                   // TODO clear (extern) align design
+           leading:IconButton(onPressed: (){
+            Get.back();
+           }, icon: Icon(Icons.arrow_back,color:  Theme.of(context).colorScheme.primary,)),
+                  toolbarHeight: 53.h,
+                  elevation: 0,
+                  title:Text(AppLocalizations.of(context)!.editProfile),
+                  centerTitle: true,
+                  automaticallyImplyLeading: false),
+               
                 bottomNavigationBar: getDeleteButton(context),
                 body: Consumer<UserInfoNotifier>(
                     builder: (context, model, child) {
@@ -78,9 +86,15 @@ class _EditProfileState extends State<EditProfile> {
                               model.newUserInfo.gender, context));
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.h),
-                    child: Column(children: [
+                    child: ListView(children: [
                       getVerSpace(20.h),
-                      getProfilePhotoStack(model.newUserInfo, context),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          getProfilePhotoStack(model.newUserInfo, context),
+                        ],
+                      ),
                       getVerSpace(40.h),
                       getItem(
                         context,

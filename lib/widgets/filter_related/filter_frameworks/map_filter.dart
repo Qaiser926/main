@@ -32,6 +32,7 @@ class MapFilter extends AbstractFilter<MapNotifier> {
           context: context,
           index: 1,
           caption: getTimeCaption(
+            
               context: context, dynamicProvider: dynamicNotifier),
           coloredBorder: dynamicNotifier.timeFilterActivated,
           textStyle: getTextStyle(),

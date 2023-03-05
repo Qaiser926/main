@@ -56,8 +56,10 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
+      
               locale: localeProvider.locale,
               supportedLocales: supportedLocales,
+              fallbackLocale: Locale('en','US'),
               // builder: Authenticator.builder(),
               debugShowCheckedModeBanner: false,
               initialRoute: Routes.homeRoute,

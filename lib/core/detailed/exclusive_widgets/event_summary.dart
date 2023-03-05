@@ -76,6 +76,7 @@ class EventSummary extends StatelessWidget {
           getVerSpace(13.h),
         ],
       ),
+   
     );
   }
 }

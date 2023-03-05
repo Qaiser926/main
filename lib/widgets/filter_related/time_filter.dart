@@ -87,21 +87,7 @@ class _TimeFilterState extends State<TimeFilter> {
       }
     });
   }
-
-  int calculateDifference(DateTime date) {
-    DateTime now = DateTime.now();
-    return DateTime(date.year, date.month, date.day)
-        .difference(DateTime(now.year, now.month, now.day))
-        .inDays;
-  }
-
-  bool predicateCallback(DateTime date) {
-    if (calculateDifference(date) < 0) {
-      return false;
-    }
-    return true;
-  }
-  Widget getTimeButton({required BuildContext context,
+   Widget getTimeButton({required BuildContext context,
     required String caption,
     required Function onTapFunction,
     required bool coloredBorder}) {
@@ -130,44 +116,7 @@ class _TimeFilterState extends State<TimeFilter> {
       ),
     );
   }
-
-  List<Widget> getTimeButtons({required BuildContext context}) {
-    List<Widget> timeButtons = [
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.today,
-          onTapFunction: getTodayFunction(),
-          coloredBorder: todayButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.tomorrow,
-          onTapFunction: getTomorrowFunction(),
-          coloredBorder: tomorrowButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.thisWeek,
-          onTapFunction: getThisWeekFunction(),
-          coloredBorder: thisWeekButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.thisWeekend,
-          onTapFunction: getThisWeekendFunction(),
-          coloredBorder: thisWeekendButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.nextWeek,
-          onTapFunction: getNextWeekFunction(),
-          coloredBorder: nextWeekButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.nextWeekend,
-          onTapFunction: getNextWeekendFunction(),
-          coloredBorder: nextWeekendButtonEnabled),
-    ];
-    return timeButtons;
-  }
-
-  Function getTodayFunction() {
+ Function getTodayFunction() {
     if (todayButtonEnabled) {
       return () => {
         setState(() {
@@ -408,8 +357,63 @@ class _TimeFilterState extends State<TimeFilter> {
     });
   }
 
+  List<Widget> getTimeButtons({required BuildContext context}) {
+    List<Widget> timeButtons = [
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.today,
+          onTapFunction: getTodayFunction(),
+       
+          coloredBorder: todayButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.tomorrow,
+          onTapFunction: getTomorrowFunction(),
+          coloredBorder: tomorrowButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeek,
+          onTapFunction: getThisWeekFunction(),
+          coloredBorder: thisWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeekend,
+          onTapFunction: getThisWeekendFunction(),
+          coloredBorder: thisWeekendButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeek,
+          onTapFunction: getNextWeekFunction(),
+          coloredBorder: nextWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeekend,
+          onTapFunction: getNextWeekendFunction(),
+          coloredBorder: nextWeekendButtonEnabled),
+    ];
+    return timeButtons;
+  }
+
+  int calculateDifference(DateTime date) {
+    DateTime now = DateTime.now();
+    return DateTime(date.year, date.month, date.day)
+        .difference(DateTime(now.year, now.month, now.day))
+        .inDays;
+  }
+
+  bool predicateCallback(DateTime date) {
+    if (calculateDifference(date) < 0) {
+      return false;
+    }
+    return true;
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
+    
+ 
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       if (model.dateReset) {
         Future.delayed(Duration.zero, () async {
@@ -440,8 +444,8 @@ class _TimeFilterState extends State<TimeFilter> {
             initialSelectedRange: PickerDateRange(startDate!, endDate!),
           ),
         ),
-        // TODO (extern)  fix that buttons are aligned on the left side like the rest
-        Padding(
+        // TODO clear (extern)  fix that buttons are aligned on the left side like the rest
+       Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.start,
@@ -542,3 +546,4 @@ String getTimeCaption(
     return AppLocalizations.of(context)!.time;
   }
 }
+

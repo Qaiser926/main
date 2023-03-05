@@ -54,6 +54,7 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   shimmer: ^2.0.0
   lottie: ^2.2.0
+  get_storage: ^2.1.1
 
   #os calls
   url_launcher: ^6.1.7
@@ -69,18 +70,18 @@ dependencies:
   carousel_slider: ^4.1.1
   flutter_multiselect: ^1.0.0
   currency_text_input_formatter: ^2.1.8
+  
 
 
   #loction & map packages
   geolocator: ^9.0.2
   geocoding: ^2.0.5
   latlng: any
-  # flutter_map: ^3.0.0
+  flutter_map: ^3.0.0
   maps_launcher: ^2.0.1
   flutter_map_marker_cluster: ^1.0.1
   google_maps_flutter: ^2.2.5
-  # geocoding: ^2.0.5
-  # geolocator: ^9.0.2
+
 
 
   #state and route management

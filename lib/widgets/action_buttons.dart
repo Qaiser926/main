@@ -89,9 +89,11 @@ Widget getFavouriteLikeButton({
                       .removeKey(key: eASummary.id);
                 });
               } on Exception catch (e) {
-                //TODO (extern) Error handling
+                //TODO clear(extern) Error handling
+                 Get.snackbar("", "",titleText: Text("Exception"+e.toString()),snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
                 throw e;
               } catch (e) {
+                Get.snackbar("", "",titleText: Text(e.toString()),snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
                 throw e;
               }
             }
@@ -156,7 +158,7 @@ Widget addLikeButton({
   );
 }
 
-// TODO (extern) align starting color to our action color
+// TODO clear (extern) align starting color to our action color
 class AddLikeButton extends StatefulWidget {
   final String eAId;
 
@@ -266,7 +268,7 @@ class _LikeButtonState extends State<LikeButton> {
         Icons.favorite,
         color: widget.isLiked
             ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.secondary,
+            : Theme.of(context).colorScheme.inversePrimary,
       ),
     );
   }
@@ -276,7 +278,8 @@ class _LikeButtonState extends State<LikeButton> {
       try {
         RestService().removeFavouriteEventOrActivity(eAId: widget.eAId);
       } on Exception catch (e) {
-        //TODO (extern) error handling
+        //TODO clear (extern) error handling
+         Get.snackbar("", "",titleText: Text(""+e.toString()),snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
         throw e;
       }
     } else {
@@ -287,6 +290,7 @@ class _LikeButtonState extends State<LikeButton> {
                 Provider.of<GlobalNavigationNotifier>(context, listen: false)
                     .userId!);
       } on Exception catch (e) {
+         Get.snackbar("", "",titleText: Text(""+e.toString()),snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
         throw e;
       }
     }

@@ -130,6 +130,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
 
               // make it all scrollable
             ),
+         
           ),
         ),
       ),
