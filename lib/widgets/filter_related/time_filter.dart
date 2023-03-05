@@ -124,11 +124,12 @@ class _TimeFilterState extends State<TimeFilter> {
           endDate = dynamicProvider.defaultEndDate;
           _dateRangePickerController.selectedRange =
               PickerDateRange(startDate, endDate);
-          todayButtonEnabled = false;
+          todayButtonEnabled = true;
           dynamicProvider.setTimeCaption(caption: null);
         })
       };
-    } else {
+    } 
+    else {
       return () => {
         setState(() {
           startDate = DateTime.now();
@@ -362,13 +363,42 @@ class _TimeFilterState extends State<TimeFilter> {
       getTimeButton(
           context: context,
           caption: AppLocalizations.of(context)!.today,
-          onTapFunction: getTodayFunction(),
+          onTapFunction: (){
+             setState(() {
+          startDate = DateTime.now();
+          endDate = DateTime.now();
+          _dateRangePickerController.selectedRange =
+              PickerDateRange(startDate, endDate);
+          todayButtonEnabled = true;
+          tomorrowButtonEnabled = false;
+          thisWeekendButtonEnabled = false;
+          thisWeekButtonEnabled = false;
+          nextWeekButtonEnabled = false;
+          nextWeekendButtonEnabled = false;
+          dynamicProvider.setTimeCaption(caption: AppLocalizations.of(context)!.today);
+        });
+          },
        
           coloredBorder: todayButtonEnabled),
       getTimeButton(
           context: context,
           caption: AppLocalizations.of(context)!.tomorrow,
-          onTapFunction: getTomorrowFunction(),
+          onTapFunction: (){
+              setState(() {
+          startDate = DateTime.now().add(Duration(days: 1));
+          endDate = DateTime.now().add(Duration(days: 1));
+          _dateRangePickerController.selectedRange =
+              PickerDateRange(startDate, endDate);
+          tomorrowButtonEnabled = true;
+          todayButtonEnabled = false;
+          thisWeekendButtonEnabled = false;
+          thisWeekButtonEnabled = false;
+          nextWeekButtonEnabled = false;
+          nextWeekendButtonEnabled = false;
+          dynamicProvider.setTimeCaption(
+              caption: AppLocalizations.of(context)!.tomorrow);
+        });
+          },
           coloredBorder: tomorrowButtonEnabled),
       getTimeButton(
           context: context,

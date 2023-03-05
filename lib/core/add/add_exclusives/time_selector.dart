@@ -66,7 +66,7 @@ class TimeSelector extends StatelessWidget {
                       
                       validator: _validateStartTime,
                       decoration: new InputDecoration(
-                        hintStyle: TextStyle(color: Colors.grey),
+                        hintStyle: TextStyle(color: Theme.of(context).highlightColor),
                         contentPadding: EdgeInsets.all(5.h),
                         border: OutlineInputBorder(),
                       )),

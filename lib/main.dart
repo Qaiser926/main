@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
       
               locale: localeProvider.locale,
               supportedLocales: supportedLocales,
-              fallbackLocale: Locale('en','US'),
               // builder: Authenticator.builder(),
               debugShowCheckedModeBanner: false,
               initialRoute: Routes.homeRoute,

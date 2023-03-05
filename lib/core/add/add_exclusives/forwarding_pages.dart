@@ -260,7 +260,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       // );
       Get.snackbar("", "",snackPosition: SnackPosition.BOTTOM,
       titleText: Center(child: Text(AppLocalizations.of(context)!.storedQRCodeMessage)), 
-       colorText: Colors.white,);
+       colorText: Theme.of(context).colorScheme.inversePrimary,);
     } catch (e) {
       print(e.toString());
     }
