@@ -103,6 +103,7 @@ class _MapInitializationState extends State<MapInitialization> {
               },
               child: Stack(
                 children: [
+
                   Opacity(
                     opacity: 0.4,
                     child: Container(

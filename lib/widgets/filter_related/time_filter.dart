@@ -37,7 +37,6 @@ Future<dynamic> TimeFilterDialog(
         );
       });
 }
-
 class TimeFilter extends StatefulWidget {
   AbstractQueryNotifier dynamicProvider;
 
@@ -87,12 +86,10 @@ class _TimeFilterState extends State<TimeFilter> {
       }
     });
   }
-
-  Widget getTimeButton(
-      {required BuildContext context,
-      required String caption,
-      required Function onTapFunction,
-      required bool coloredBorder}) {
+   Widget getTimeButton({required BuildContext context,
+    required String caption,
+    required Function onTapFunction,
+    required bool coloredBorder}) {
     Color? borderColor = null;
     if (coloredBorder) {
       borderColor = Theme.of(context).colorScheme.primary;
@@ -118,31 +115,31 @@ class _TimeFilterState extends State<TimeFilter> {
       ),
     );
   }
-
-  Function getTodayFunction() {
+ Function getTodayFunction() {
     if (todayButtonEnabled) {
       return () => {
-            setState(() {
-              startDate = dynamicProvider.defaultStartDate;
-              endDate = dynamicProvider.defaultEndDate;
-              _dateRangePickerController.selectedRange =
-                  PickerDateRange(startDate, endDate);
-              todayButtonEnabled = true;
-              dynamicProvider.setTimeCaption(caption: null);
-            })
-          };
-    } else {
+        setState(() {
+          startDate = dynamicProvider.defaultStartDate;
+          endDate = dynamicProvider.defaultEndDate;
+          _dateRangePickerController.selectedRange =
+              PickerDateRange(startDate, endDate);
+          todayButtonEnabled = false;
+          dynamicProvider.setTimeCaption(caption: null);
+        })
+      };
+    } 
+    else {
       return () => {
-            setState(() {
-              startDate = DateTime.now();
-              endDate = DateTime.now();
-              _dateRangePickerController.selectedRange =
-                  PickerDateRange(startDate, endDate);
-              todayButtonEnabled = true;
-              tomorrowButtonEnabled = false;
-              thisWeekendButtonEnabled = false;
-              thisWeekButtonEnabled = false;
-              nextWeekButtonEnabled = false;
+        setState(() {
+          startDate = DateTime.now();
+          endDate = DateTime.now();
+          _dateRangePickerController.selectedRange =
+              PickerDateRange(startDate, endDate);
+          todayButtonEnabled = true;
+          tomorrowButtonEnabled = false;
+          thisWeekendButtonEnabled = false;
+          thisWeekButtonEnabled = false;
+          nextWeekButtonEnabled = false;
           nextWeekendButtonEnabled = false;
           dynamicProvider.setTimeCaption(caption: AppLocalizations.of(context)!.today);
         }),
@@ -365,42 +362,13 @@ class _TimeFilterState extends State<TimeFilter> {
       getTimeButton(
           context: context,
           caption: AppLocalizations.of(context)!.today,
-          onTapFunction: () {
-            setState(() {
-              startDate = DateTime.now();
-              endDate = DateTime.now();
-              _dateRangePickerController.selectedRange =
-                  PickerDateRange(startDate, endDate);
-              todayButtonEnabled = true;
-              tomorrowButtonEnabled = false;
-              thisWeekendButtonEnabled = false;
-              thisWeekButtonEnabled = false;
-              nextWeekButtonEnabled = false;
-              nextWeekendButtonEnabled = false;
-              dynamicProvider.setTimeCaption(
-                  caption: AppLocalizations.of(context)!.today);
-            });
-          },
+          onTapFunction: ()=>getTodayFunction(),
+       
           coloredBorder: todayButtonEnabled),
       getTimeButton(
           context: context,
           caption: AppLocalizations.of(context)!.tomorrow,
-          onTapFunction: () {
-            setState(() {
-              startDate = DateTime.now().add(Duration(days: 1));
-              endDate = DateTime.now().add(Duration(days: 1));
-              _dateRangePickerController.selectedRange =
-                  PickerDateRange(startDate, endDate);
-              tomorrowButtonEnabled = true;
-              todayButtonEnabled = false;
-              thisWeekendButtonEnabled = false;
-              thisWeekButtonEnabled = false;
-              nextWeekButtonEnabled = false;
-              nextWeekendButtonEnabled = false;
-              dynamicProvider.setTimeCaption(
-                  caption: AppLocalizations.of(context)!.tomorrow);
-            });
-          },
+          onTapFunction: ()=> getTomorrowFunction(),
           coloredBorder: tomorrowButtonEnabled),
       getTimeButton(
           context: context,
@@ -440,8 +408,12 @@ class _TimeFilterState extends State<TimeFilter> {
     return true;
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
+ 
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       if (model.dateReset) {
         Future.delayed(Duration.zero, () async {
@@ -473,7 +445,7 @@ class _TimeFilterState extends State<TimeFilter> {
           ),
         ),
         // TODO clear (extern)  fix that buttons are aligned on the left side like the rest
-        Padding(
+       Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.start,

@@ -27,7 +27,7 @@ Future<dynamic> getCategoryFilterDialog(
             )
           ],
           child:
-              // TODO (extern) make container height dynamic if needed & align height of container
+              // TODO clear (extern) make container height dynamic if needed & align height of container
               Container(
             height: MediaQuery.of(context).size.height * 0.7,
             child: CategoryFilter(
@@ -76,7 +76,10 @@ class CategoryFilterState extends State<CategoryFilter>
     if (widget.isModalBottomSheetMode) {
       header = Container(
         // TODO clear (extern) remove (small) edges created by the container that reach into the rounded corners
-        color: Theme.of(context).scaffoldBackgroundColor,
+       decoration: BoxDecoration(
+           color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+        ),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -106,6 +109,7 @@ class CategoryFilterState extends State<CategoryFilter>
             ]),
       ),
     );
+  
   }
 
   @override

@@ -24,7 +24,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   void initState() {
-    // TODO clear missing functionality  (extern) currently not working to get the currently set locale
+    // TODO  (extern) currently not working to get the currently set locale
     if (context.read<LocaleProvider>().getLocale == Locale('en', ''))
       isEnglishSelected = true;
     if (context.read<LocaleProvider>().getLocale == Locale('de', ''))

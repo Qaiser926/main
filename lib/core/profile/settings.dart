@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:othia/core/main_page.dart';
+import 'package:othia/core/profile/profile.dart';
 import 'package:othia/core/profile/settings/change_password.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
@@ -30,8 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void backClick() {
     Get.back();
   }
-
-  late bool isProfileView;
+   late bool isProfileView;
 
   @override
   Widget build(BuildContext context) {
@@ -109,15 +110,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Provider.of<GlobalNavigationNotifier>(context,
                                           listen: false)
                                       .logout();
-                                  // TODO clear (extern) improve design, only show this if logout was indeed successful
+                                      Get.off(  MainPage(),transition: Transition.fadeIn);
+                                    // TODO clear (extern) improve design, only show this if logout was indeed successful
 
-                                  Get.snackbar("", "",
-                                      titleText: Text(
-                                          AppLocalizations.of(context)!
-                                              .successfulLogoutMessage,
-                                          textAlign: TextAlign.center),
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      colorText: Colors.white);
+
+                                  Get.snackbar("", "",titleText:  Text(
+                                        AppLocalizations.of(context)!
+                                            .successfulLogoutMessage,style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary),
+                                        textAlign: TextAlign.center),snackPosition: SnackPosition.BOTTOM);
                                 });
                               },
                               child: Text(

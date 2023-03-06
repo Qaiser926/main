@@ -86,14 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, child) {
           return Scaffold(
               appBar: AppBar(
-                leading: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Theme.of(context).colorScheme.primary,
-                    )),
+
                 toolbarHeight: 53.h,
                 elevation: 0,
                 title: Text(
@@ -272,4 +265,5 @@ Container getProfileSection(
       ],
     ),
   );
+
 }

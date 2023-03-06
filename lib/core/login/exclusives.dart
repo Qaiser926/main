@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
@@ -174,10 +176,15 @@ UserInfo mapLogInDataToUserInfo(
 }
 
 Future<void> storeUserDataToDB(LoginSignupData loginSignupData) async {
-  String userId = await getUserId();
+try {
+    String userId = await getUserId();
   UserInfo userInfo = mapLogInDataToUserInfo(loginSignupData, userId);
-  // TODO (extern) error handling
+  // TODO clear (extern) error handling
   RestService().savePrivateUserInfo(userInfo: userInfo);
+}on SocketException  catch (e) {
+  Get.snackbar("", "",titleText: Text(e.toString()),snackPosition: SnackPosition.BOTTOM);
+ rethrow;
+}
 }
 
 Future<String?> signUp(
