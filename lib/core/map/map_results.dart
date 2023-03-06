@@ -295,7 +295,7 @@ class _MapResultsState extends State<MapResults> {
       options: CarouselOptions(
         height: 150.h,
 
-        viewportFraction: 0.8,
+        viewportFraction: 1,
         initialPage: 0,
         enableInfiniteScroll: true,
         reverse: false,
