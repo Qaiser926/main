@@ -37,7 +37,7 @@ class GlobalNavigationNotifier extends ChangeNotifier {
     notifyListeners();
     RestService();
     resetScreenState;
-    // TODO (extern) update the other screens such that show their logged out behaviour, e.g. initialize them anew
+    // TODO clear (extern) update the other screens such that show their logged out behaviour, e.g. initialize them anew
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
 
@@ -59,8 +60,12 @@ class UserInfoNotifier extends ChangeNotifier {
   }
 
   void _saveToBackend() {
-    //TODO (extern) error handling
-    RestService().savePrivateUserInfo(userInfo: _newUserInfo);
+    //TODO clear (extern) error handling
+   try {
+      RestService().savePrivateUserInfo(userInfo: _newUserInfo);
     return;
+   } catch (e) {
+     Get.snackbar("", "",titleText: Text(e.toString()),snackPosition: SnackPosition.BOTTOM);
+   }
   }
 }

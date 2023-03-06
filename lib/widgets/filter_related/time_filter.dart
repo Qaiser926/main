@@ -37,7 +37,6 @@ Future<dynamic> TimeFilterDialog(
         );
       });
 }
-
 class TimeFilter extends StatefulWidget {
   AbstractQueryNotifier dynamicProvider;
 
@@ -363,42 +362,13 @@ class _TimeFilterState extends State<TimeFilter> {
       getTimeButton(
           context: context,
           caption: AppLocalizations.of(context)!.today,
-          onTapFunction: (){
-             setState(() {
-          startDate = DateTime.now();
-          endDate = DateTime.now();
-          _dateRangePickerController.selectedRange =
-              PickerDateRange(startDate, endDate);
-          todayButtonEnabled = true;
-          tomorrowButtonEnabled = false;
-          thisWeekendButtonEnabled = false;
-          thisWeekButtonEnabled = false;
-          nextWeekButtonEnabled = false;
-          nextWeekendButtonEnabled = false;
-          dynamicProvider.setTimeCaption(caption: AppLocalizations.of(context)!.today);
-        });
-          },
+          onTapFunction: ()=>getTodayFunction(),
        
           coloredBorder: todayButtonEnabled),
       getTimeButton(
           context: context,
           caption: AppLocalizations.of(context)!.tomorrow,
-          onTapFunction: (){
-              setState(() {
-          startDate = DateTime.now().add(Duration(days: 1));
-          endDate = DateTime.now().add(Duration(days: 1));
-          _dateRangePickerController.selectedRange =
-              PickerDateRange(startDate, endDate);
-          tomorrowButtonEnabled = true;
-          todayButtonEnabled = false;
-          thisWeekendButtonEnabled = false;
-          thisWeekButtonEnabled = false;
-          nextWeekButtonEnabled = false;
-          nextWeekendButtonEnabled = false;
-          dynamicProvider.setTimeCaption(
-              caption: AppLocalizations.of(context)!.tomorrow);
-        });
-          },
+          onTapFunction: ()=> getTomorrowFunction(),
           coloredBorder: tomorrowButtonEnabled),
       getTimeButton(
           context: context,

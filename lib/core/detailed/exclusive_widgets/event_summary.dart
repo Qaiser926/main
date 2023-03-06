@@ -47,12 +47,13 @@ class EventSummary extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(12, 10, 10, 10),
             child: Text(
-              title,
+              title ,
+               overflow: TextOverflow.ellipsis,
               maxLines: 2,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          // TODO: (extern) solve that title can flow into price information
+          // TODO: clear(extern) solve that title can flow into price information
           Padding(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
             child: LocationWidget(location: location),

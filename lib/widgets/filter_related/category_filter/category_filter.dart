@@ -28,7 +28,7 @@ Future<dynamic> getCategoryFilterDialog(
             )
           ],
           child:
-              // TODO (extern) make container height dynamic if needed & align height of container
+              // TODO clear (extern) make container height dynamic if needed & align height of container
               Container(
             height: MediaQuery.of(context).size.height * 0.7,
            

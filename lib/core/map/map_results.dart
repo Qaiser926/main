@@ -207,7 +207,8 @@ class _MapResultsState extends State<MapResults> {
         width: 50.0,
         height: 50.0,
         rotate: true,
-        point: latLng.LatLng(locationData["coordinates"]["latitude"],
+        point:
+         latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
           onTap: () => {
