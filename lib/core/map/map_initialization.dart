@@ -43,7 +43,7 @@ class _MapInitializationState extends State<MapInitialization> {
     super.initState();
   }
 
-    Completer<GoogleMapController> _controller=Completer();
+  Completer<GoogleMapController> _controller = Completer();
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +147,7 @@ class _MapInitializationState extends State<MapInitialization> {
                 child: Text(
                   AppLocalizations.of(context)!.waitingLocationPermission,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18.sp,fontFamily: "Poppins"),
+                  style: TextStyle(fontSize: 18.sp, fontFamily: "Poppins"),
                 ),
               ),
               SizedBox(
@@ -173,10 +173,10 @@ class _MapInitializationState extends State<MapInitialization> {
                   //   openAppSettings();
                   // }
 
-                _handleLocationPermission(context);
-                 Get.to(MainPage(),transition: Transition.fadeIn);
+                  _handleLocationPermission(context);
+                  Get.to(MainPage(), transition: Transition.fadeIn);
                 },
-                child: Text("get locatinon"),
+                child: Text(AppLocalizations.of(context)!.enableGPS),
               ),
             ],
           ),
@@ -184,33 +184,34 @@ class _MapInitializationState extends State<MapInitialization> {
       }
     });
   }
-    Future<bool> _handleLocationPermission(BuildContext context) async {
+
+  Future<bool> _handleLocationPermission(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
-              'Location services are disabled. Please enable the services')));
+              AppLocalizations.of(context)!.locationPermissionDeniedMessage)));
       return false;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.locationPermissionDenied)));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
-              openAppSettings();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!
+              .locationPermissionPermanentlyDenied)));
+      openAppSettings();
       return false;
     }
     return true;
   }
 }
-
