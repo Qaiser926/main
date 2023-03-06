@@ -295,7 +295,6 @@ class _MapResultsState extends State<MapResults> {
     return CarouselSlider.builder(
       options: CarouselOptions(
         height: 150.h,
-
         viewportFraction: 1,
         initialPage: 0,
         enableInfiniteScroll: true,
