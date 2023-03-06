@@ -78,8 +78,7 @@ class SearchScrollView extends StatelessWidget {
         allResultsEmpty = false;
       }
       slivers.add(buildVerticalDiscovery(
-          actionButtonType: ActionButtonType.favouriteLikeButton,
-          Ids: item.value));
+          actionButtonType: ActionButtonType.addLikeButton, Ids: item.value));
     }
 
     return allResultsEmpty
