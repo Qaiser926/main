@@ -102,18 +102,17 @@ class _MapInitializationState extends State<MapInitialization> {
               },
               child: Stack(
                 children: [
-                  // TODO qaiser change
 
-                  // Opacity(
-                  //   opacity: 0.4,
-                  //   child: Container(
-                  //     width: double.infinity,
-                  //     height: double.infinity,
-                  //     // TODO clear (extern) align color and overall experience
-                  //     decoration:
-                  //         BoxDecoration(color: Theme.of(context).primaryColorDark),
-                  //   ),
-                  // ),
+                  Opacity(
+                    opacity: 0.4,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      // TODO clear (extern) align color and overall experience
+                      decoration:
+                          BoxDecoration(color: Theme.of(context).primaryColorDark),
+                    ),
+                  ),
                   Positioned.fill(
                       child: Padding(
                     padding: EdgeInsets.all(20),

@@ -123,7 +123,7 @@ class _TimeFilterState extends State<TimeFilter> {
           endDate = dynamicProvider.defaultEndDate;
           _dateRangePickerController.selectedRange =
               PickerDateRange(startDate, endDate);
-          todayButtonEnabled = true;
+          todayButtonEnabled = false;
           dynamicProvider.setTimeCaption(caption: null);
         })
       };
