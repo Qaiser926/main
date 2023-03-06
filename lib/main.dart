@@ -64,6 +64,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
+
               locale: localeProvider.locale,
               supportedLocales: supportedLocales,
               // builder: Authenticator.builder(),

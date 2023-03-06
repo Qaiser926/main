@@ -11,12 +11,12 @@ import 'package:othia/utils/ui/ui_utils.dart';
 class MapPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //TODO (extern) align distances between caption and content
+    //TODO clear (extern) align distances between caption and content
     return  Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-            padding: EdgeInsets.fromLTRB(30, 0, 20, 15),
+            padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -28,7 +28,7 @@ class MapPicture extends StatelessWidget {
                 ),
               ],
             )),
-      
+        getVerSpace(10.h),
         Padding(
           padding: EdgeInsets.fromLTRB(20.h, 2.h, 20.h, 0.h),
           child: GestureDetector(

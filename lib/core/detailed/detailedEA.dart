@@ -92,7 +92,7 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
 
             child: SingleChildScrollView(
               child: Column(
-                // TODO (extern) align distances done
+                // TODO clear (extern) align distances done
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

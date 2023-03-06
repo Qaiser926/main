@@ -88,23 +88,11 @@ class _TimeFilterState extends State<TimeFilter> {
     });
   }
 
-  int calculateDifference(DateTime date) {
-    DateTime now = DateTime.now();
-    return DateTime(date.year, date.month, date.day)
-        .difference(DateTime(now.year, now.month, now.day))
-        .inDays;
-  }
-
-  bool predicateCallback(DateTime date) {
-    if (calculateDifference(date) < 0) {
-      return false;
-    }
-    return true;
-  }
-  Widget getTimeButton({required BuildContext context,
-    required String caption,
-    required Function onTapFunction,
-    required bool coloredBorder}) {
+  Widget getTimeButton(
+      {required BuildContext context,
+      required String caption,
+      required Function onTapFunction,
+      required bool coloredBorder}) {
     Color? borderColor = null;
     if (coloredBorder) {
       borderColor = Theme.of(context).colorScheme.primary;
@@ -131,66 +119,30 @@ class _TimeFilterState extends State<TimeFilter> {
     );
   }
 
-  List<Widget> getTimeButtons({required BuildContext context}) {
-    List<Widget> timeButtons = [
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.today,
-          onTapFunction: getTodayFunction(),
-          coloredBorder: todayButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.tomorrow,
-          onTapFunction: getTomorrowFunction(),
-          coloredBorder: tomorrowButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.thisWeek,
-          onTapFunction: getThisWeekFunction(),
-          coloredBorder: thisWeekButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.thisWeekend,
-          onTapFunction: getThisWeekendFunction(),
-          coloredBorder: thisWeekendButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.nextWeek,
-          onTapFunction: getNextWeekFunction(),
-          coloredBorder: nextWeekButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.nextWeekend,
-          onTapFunction: getNextWeekendFunction(),
-          coloredBorder: nextWeekendButtonEnabled),
-    ];
-    return timeButtons;
-  }
-
   Function getTodayFunction() {
     if (todayButtonEnabled) {
       return () => {
-        setState(() {
-          startDate = dynamicProvider.defaultStartDate;
-          endDate = dynamicProvider.defaultEndDate;
-          _dateRangePickerController.selectedRange =
-              PickerDateRange(startDate, endDate);
-          todayButtonEnabled = false;
-          dynamicProvider.setTimeCaption(caption: null);
-        })
-      };
+            setState(() {
+              startDate = dynamicProvider.defaultStartDate;
+              endDate = dynamicProvider.defaultEndDate;
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              todayButtonEnabled = true;
+              dynamicProvider.setTimeCaption(caption: null);
+            })
+          };
     } else {
       return () => {
-        setState(() {
-          startDate = DateTime.now();
-          endDate = DateTime.now();
-          _dateRangePickerController.selectedRange =
-              PickerDateRange(startDate, endDate);
-          todayButtonEnabled = true;
-          tomorrowButtonEnabled = false;
-          thisWeekendButtonEnabled = false;
-          thisWeekButtonEnabled = false;
-          nextWeekButtonEnabled = false;
+            setState(() {
+              startDate = DateTime.now();
+              endDate = DateTime.now();
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              todayButtonEnabled = true;
+              tomorrowButtonEnabled = false;
+              thisWeekendButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
           nextWeekendButtonEnabled = false;
           dynamicProvider.setTimeCaption(caption: AppLocalizations.of(context)!.today);
         }),
@@ -408,6 +360,86 @@ class _TimeFilterState extends State<TimeFilter> {
     });
   }
 
+  List<Widget> getTimeButtons({required BuildContext context}) {
+    List<Widget> timeButtons = [
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.today,
+          onTapFunction: () {
+            setState(() {
+              startDate = DateTime.now();
+              endDate = DateTime.now();
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              todayButtonEnabled = true;
+              tomorrowButtonEnabled = false;
+              thisWeekendButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              dynamicProvider.setTimeCaption(
+                  caption: AppLocalizations.of(context)!.today);
+            });
+          },
+          coloredBorder: todayButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.tomorrow,
+          onTapFunction: () {
+            setState(() {
+              startDate = DateTime.now().add(Duration(days: 1));
+              endDate = DateTime.now().add(Duration(days: 1));
+              _dateRangePickerController.selectedRange =
+                  PickerDateRange(startDate, endDate);
+              tomorrowButtonEnabled = true;
+              todayButtonEnabled = false;
+              thisWeekendButtonEnabled = false;
+              thisWeekButtonEnabled = false;
+              nextWeekButtonEnabled = false;
+              nextWeekendButtonEnabled = false;
+              dynamicProvider.setTimeCaption(
+                  caption: AppLocalizations.of(context)!.tomorrow);
+            });
+          },
+          coloredBorder: tomorrowButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeek,
+          onTapFunction: getThisWeekFunction(),
+          coloredBorder: thisWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeekend,
+          onTapFunction: getThisWeekendFunction(),
+          coloredBorder: thisWeekendButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeek,
+          onTapFunction: getNextWeekFunction(),
+          coloredBorder: nextWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeekend,
+          onTapFunction: getNextWeekendFunction(),
+          coloredBorder: nextWeekendButtonEnabled),
+    ];
+    return timeButtons;
+  }
+
+  int calculateDifference(DateTime date) {
+    DateTime now = DateTime.now();
+    return DateTime(date.year, date.month, date.day)
+        .difference(DateTime(now.year, now.month, now.day))
+        .inDays;
+  }
+
+  bool predicateCallback(DateTime date) {
+    if (calculateDifference(date) < 0) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
@@ -440,7 +472,7 @@ class _TimeFilterState extends State<TimeFilter> {
             initialSelectedRange: PickerDateRange(startDate!, endDate!),
           ),
         ),
-        // TODO (extern)  fix that buttons are aligned on the left side like the rest
+        // TODO clear (extern)  fix that buttons are aligned on the left side like the rest
         Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Wrap(
@@ -542,3 +574,4 @@ String getTimeCaption(
     return AppLocalizations.of(context)!.time;
   }
 }
+

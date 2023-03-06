@@ -253,14 +253,19 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       await GallerySaver.saveImage('${tempDir.path}/image.png');
       // TODO clear (extern) design of snackbar
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-       
+
       //   content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
       //   duration: Duration(seconds: 2),
       // )
       // );
-      Get.snackbar("", "",snackPosition: SnackPosition.BOTTOM,
-      titleText: Center(child: Text(AppLocalizations.of(context)!.storedQRCodeMessage)), 
-       colorText: Colors.white,);
+      Get.snackbar(
+        "",
+        "",
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: Center(
+            child: Text(AppLocalizations.of(context)!.storedQRCodeMessage)),
+        colorText: Theme.of(context).colorScheme.inversePrimary,
+      );
     } catch (e) {
       print(e.toString());
     }

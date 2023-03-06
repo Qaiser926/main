@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -23,9 +24,20 @@ class _HelpScreenState extends State<HelpScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO (extern) align colors
+        // TODO clear (extern) align colors
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          elevation: 0,
+          toolbarHeight: 53.h,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.primary,
+              )),
           title: Text(AppLocalizations.of(context)!.help),
         ),
         body: SafeArea(

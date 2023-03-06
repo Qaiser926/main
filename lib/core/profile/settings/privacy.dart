@@ -27,9 +27,19 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO (extern)  align colors
+        // TODO clear (extern)  align colors
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.primary,
+              )),
+          elevation: 0,
+          toolbarHeight: 53.h,
           title: Text(AppLocalizations.of(context)!.privacy),
         ),
         body: SafeArea(

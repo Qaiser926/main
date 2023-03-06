@@ -31,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Get.back();
   }
 
+  late bool isProfileView;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -39,13 +41,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO (extern) align color of appbar
-        // TODO (extern) align buttons left at height of caption
+        // TODO clear (extern) align color of appbar
+        // TODO clear (extern) align buttons left at height of caption
+
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.settings),
-        ),
-        body: 
-        SafeArea(
+            leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).colorScheme.primary,
+                )),
+            toolbarHeight: 53.h,
+            elevation: 0,
+            title: Text(AppLocalizations.of(context)!.settings),
+            centerTitle: true,
+            automaticallyImplyLeading: false),
+        body: SafeArea(
           child: Column(
             children: [
               Expanded(
@@ -96,16 +109,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Provider.of<GlobalNavigationNotifier>(context,
                                           listen: false)
                                       .logout();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    // TODO (extern) improve design, only show this if logout was indeed successful
-                                    content: Text(
-                                        AppLocalizations.of(context)!
-                                            .successfulLogoutMessage,
-                                        textAlign: TextAlign.center),
-                                    duration:
-                                        Duration(seconds: 1, milliseconds: 500),
-                                  ));
+                                  // TODO clear (extern) improve design, only show this if logout was indeed successful
+
+                                  Get.snackbar("", "",
+                                      titleText: Text(
+                                          AppLocalizations.of(context)!
+                                              .successfulLogoutMessage,
+                                          textAlign: TextAlign.center),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      colorText: Colors.white);
                                 });
                               },
                               child: Text(
@@ -185,7 +197,7 @@ Widget getSettingContainer(Function function, String title, Icon icon) {
                 padding: EdgeInsets.all(15.h),
                 child: icon,
               ),
-              getHorSpace(16.h),
+              getHorSpace(19.h),
               Text(title),
             ],
           ),

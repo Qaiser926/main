@@ -52,7 +52,7 @@ class CategoryGridItem extends StatelessWidget {
       },
       child: FittedBox(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 4,
+          height: MediaQuery.of(context).size.height / 4.2,
           width: MediaQuery.of(context).size.width / 2,
           child: Stack(
             children: [
@@ -90,7 +90,7 @@ class CategoryGridItem extends StatelessWidget {
                             bottomRight: Radius.circular(30),
                           ),
                         ),
-                        color: lessListItemColor.withOpacity(.7),
+                        color: lessListItemColor.withOpacity(0.8),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

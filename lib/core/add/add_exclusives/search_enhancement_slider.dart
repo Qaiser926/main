@@ -20,8 +20,8 @@ class SearchEnhancementSlider extends StatelessWidget {
     return   Consumer<AddEANotifier>(
         builder: (context, inputNotifierConsumer, child) {
       return Column(children: [
-        // TODO (extern) transform code such that it is less repetitive
-        // TODO (extern) align distances such that it becomes clearer to which slider the reset belongs
+        // TODO clear (extern) transform code such that it is less repetitive
+        // TODO clear (extern) align distances such that it becomes clearer to which slider the reset belongs
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.socialLevel, LevelType.socialLevel),
@@ -43,7 +43,7 @@ class SearchEnhancementSlider extends StatelessWidget {
               inputNotifier.notifyListeners();
             },
             sliderActivated: inputNotifierConsumer.socialLevelActivated),
-       
+
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.physicalLevel, LevelType.physicalLevel),
@@ -197,6 +197,8 @@ class SearchEnhancementSlider extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 5.h),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: () {
@@ -220,10 +222,10 @@ class SearchEnhancementSlider extends StatelessWidget {
             value: sliderValue,
             onChanged: onChanged,
             label:
-                "${getSliderHint(level: transformSliderValueToInt(sliderValue, levelType), levelType: levelType, context: context)}",
+            "${getSliderHint(level: transformSliderValueToInt(sliderValue, levelType), levelType: levelType, context: context)}",
           ),
           Padding(
-            padding: EdgeInsets.only(top: 5.h, bottom: 10.h),
+            padding: EdgeInsets.only(top: 5.h, bottom: 10.h, left: 18.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

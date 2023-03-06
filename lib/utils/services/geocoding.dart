@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 
 Future<latLng.LatLng?> getLatLongFromAddress(String addressQuery) async {
@@ -8,9 +10,17 @@ Future<latLng.LatLng?> getLatLongFromAddress(String addressQuery) async {
     // in validation check also that lat/ long are set
     latLong = latLng.LatLng(locations[0].latitude, locations[0].longitude);
   } on NoResultFoundException catch (e) {
-    // TODO (extern) more precise error catch
+    // TODO clear (extern) more precise error catch
+    Get.snackbar("", "",
+        titleText: Text("No Result Found" + e.toString()),
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white);
   } catch (e) {
     print("catch errors more precisely");
+    Get.snackbar("", "",
+        titleText: Text(e.toString()),
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white);
   }
   return latLong;
 }

@@ -24,7 +24,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   void initState() {
-    // TODO (extern) currently not working to get the currently set locale
+    // TODO clear missing functionality  (extern) currently not working to get the currently set locale
     if (context.read<LocaleProvider>().getLocale == Locale('en', ''))
       isEnglishSelected = true;
     if (context.read<LocaleProvider>().getLocale == Locale('de', ''))
@@ -40,10 +40,21 @@ class _LanguageScreenState extends State<LanguageScreen> {
         return false;
       },
       child: Scaffold(
-        // TODO (extern) align colors
+        // TODO clear (extern) align colors
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          toolbarHeight: 53.h,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.primary,
+              )),
           title: Text(AppLocalizations.of(context)!.language),
         ),
         body: SafeArea(

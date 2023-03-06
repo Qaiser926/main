@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:provider/provider.dart';
@@ -55,9 +56,20 @@ class ChangePasswordScreen extends StatelessWidget {
     return MultiProvider(
       providers: [ChangeNotifierProvider.value(value: ChangeNot())],
       child: Scaffold(
-        // TODO (extern) align colors
+        // TODO clear (extern) align colors
         // backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          toolbarHeight: 53.h,
+          leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: Theme.of(context).colorScheme.primary,
+              )),
           title: Text(AppLocalizations.of(context)!.changePassword),
         ),
         body: Padding(

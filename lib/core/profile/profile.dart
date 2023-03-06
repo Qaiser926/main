@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -85,36 +86,45 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, child) {
           return Scaffold(
               appBar: AppBar(
-                  toolbarHeight: 53.h,
-                  elevation: 0,
-                  title: Text(
-                    AppLocalizations.of(context)!.profile,
-                  ),
-                  centerTitle: true,
-                  actions: [
-                    widget.userInfo == null
-                        ? GestureDetector(
-                            onTap: () {
-                              Get.to(SettingsScreen(userInfoNotifier));
-                            },
-                            child: Icon(
-                              Icons.settings,
-                              size: 24.h,
-                            ))
-                        : Container(),
-                    isProfileView
+                leading: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Theme.of(context).colorScheme.primary,
+                    )),
+                toolbarHeight: 53.h,
+                elevation: 0,
+                title: Text(
+                  AppLocalizations.of(context)!.profile,
+                ),
+                centerTitle: true,
+                automaticallyImplyLeading: false,
+                actions: [
+                  widget.userInfo == null
+                      ? GestureDetector(
+                          onTap: () {
+                            Get.to(SettingsScreen(userInfoNotifier));
+                          },
+                          child: Icon(
+                            Icons.settings,
+                            size: 24.h,
+                          ))
+                      : Container(),
+                  isProfileView
                         ? SizedBox()
-                        : GestureDetector(
-                            onTap: () {
-                              openShare('organizerShareLinkBuilder', context);
-                            },
-                            child: Icon(
-                              Icons.share,
-                              size: 24.h,
-                            )),
-                    getHorSpace(20.h)
-                  ],
-                  automaticallyImplyLeading: false),
+                      : GestureDetector(
+                          onTap: () {
+                            openShare('organizerShareLinkBuilder', context);
+                          },
+                          child: Icon(
+                            Icons.share,
+                            size: 24.h,
+                          )),
+                  getHorSpace(20.h)
+                ],
+              ),
               body: isProfileView
                   ? getLoggedInSensitiveBody(
                       context: context,
@@ -232,7 +242,7 @@ ImageProvider getProfilePictureNullSafe(UserInfo userInfo) {
 
 Container getProfileSection(
     {required BuildContext context, required UserInfo userInfo}) {
-  // TODO (extern) email must be copyable
+  // TODO clear (extern) email must be copyable
   return Container(
     color: bgColor,
     width: double.infinity,
@@ -247,9 +257,16 @@ Container getProfileSection(
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         getVerSpace(15.h),
-        Text(
-          userInfo.profileEmail,
-          style: Theme.of(context).textTheme.headlineSmall,
+        InkWell(
+          onTap: () {
+            Clipboard.setData(ClipboardData(
+              text: userInfo.profileEmail,
+            ));
+          },
+          child: Text(
+            userInfo.profileEmail,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
         ),
         getVerSpace(20.h),
       ],

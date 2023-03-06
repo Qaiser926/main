@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 
 import '../services/rest-api/rest_api_service.dart';
@@ -26,9 +27,13 @@ class GlobalNavigationNotifier extends ChangeNotifier {
       RestService().logout();
     } catch (e) {
       print("error");
+      Get.snackbar("", "",
+          titleText: Text(e.toString()),
+          snackPosition: SnackPosition.BOTTOM,
+          colorText: Colors.white);
     }
     // RestService().logout();
-    // TODO (extern) error handling
+    // TODO clear (extern) error handling
     //TODO (intern) user ID should never be null. if a user logs out he get a new id as a unauthenticated user #OT-34
     userId = null;
     isUserLoggedIn = false;

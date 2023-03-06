@@ -10,7 +10,6 @@ import 'package:latlong2/latlong.dart' as latLng;
 import 'package:othia/core/main_page.dart';
 import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
-import 'package:othia/core/map/map.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/modules/models/get_map_result_ids/get_map_result_ids.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
@@ -68,7 +67,7 @@ class _MapResultsState extends State<MapResults> {
         });
       } else {
         // TODO clear (extern) implement exception handling and messages for user permission, e.g. implement loading when map is not shown
-        // TODO (extern) align style
+        // TODO clear (extern) align style
         return Align(
           alignment: Alignment.center,
           child: Column(
@@ -125,12 +124,15 @@ class _MapResultsState extends State<MapResults> {
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
-          child: Text('© OpenStreetMap'),
+          child: Text(
+            '© OpenStreetMap',
+            style: TextStyle(color: Theme.of(context).focusColor),
+          ),
         ),
-        // TODO (extern) align colors, font size of Event and Activity colored box & introduce background color for the legend in order to make it better visible. We highly appreciate your input if you have better ideas.
+        // TODO clear (extern) align colors, font size of Event and Activity colored box & introduce background color for the legend in order to make it better visible. We highly appreciate your input if you have better ideas.
 
         Container(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.center,
           padding: const EdgeInsetsDirectional.only(start: 8, bottom: 2),
           child: Row(
             children: [
@@ -139,22 +141,43 @@ class _MapResultsState extends State<MapResults> {
                 height: 8,
                 child: DecoratedBox(
                   decoration:
-                  BoxDecoration(color: Theme.of(context).primaryColor),
+                      BoxDecoration(color: Theme.of(context).primaryColor),
                 ),
               ),
               getHorSpace(5.h),
-              Text(AppLocalizations.of(context)!.event),
+              Container(
+                  // height: 30.h,
+                  // width: 30.w,
+                  decoration: BoxDecoration(
+                      color: Colors.black26,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.event,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )),
               getHorSpace(10.h),
               SizedBox(
                 width: 10,
                 height: 8,
                 child: DecoratedBox(
                   decoration:
-                  BoxDecoration(color: Theme.of(context).bottomAppBarColor),
+                      BoxDecoration(color: Theme.of(context).bottomAppBarColor),
                 ),
               ),
               getHorSpace(5.h),
-              Text(AppLocalizations.of(context)!.activity),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(AppLocalizations.of(context)!.activity,
+                      style: TextStyle(color: Colors.white)),
+                ),
+              ),
             ],
           ),
         )
