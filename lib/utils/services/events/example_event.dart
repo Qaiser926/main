@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -21,7 +19,7 @@ Future<void> recordCustomEvent(
   }
 
   eventParams.forEach((key, value) {
-    eventParameters[key] = json.encode(value);
+    eventParameters[key] = value ?? "";
   });
 
   if (eventParams.containsKey('selectedCategoryIds')) {
