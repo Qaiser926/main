@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
               screenName: 'publisherScreen',
             ),
             recordCustomEvent(
-                eventName: "viewPublisher",
+                eventName: "viewsPublisher",
                 eventParams: {'publisherId': widget.userInfo!.userId}),
           };
     super.initState();
