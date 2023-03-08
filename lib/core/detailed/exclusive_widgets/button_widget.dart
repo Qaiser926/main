@@ -8,13 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/services/events/record_event.dart';
 
-Future<void> _launchUrl(_url) async {
-  recordCustomEvent(eventName: "userOpensUrl", eventParams: {"url": _url});
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
-}
-
 String removeHttp(String url) {
   RegExp regExp = new RegExp(
     r"^https?://",
@@ -26,7 +19,10 @@ String removeHttp(String url) {
 }
 
 Widget? getMoreInformationButton(
-    {String? websiteUrl, String? ticketUrl, required BuildContext context}) {
+    {String? websiteUrl,
+    String? ticketUrl,
+    required BuildContext context,
+    required String eAId}) {
   if (ticketUrl != null) {
     return Expanded(
         child: Padding(
@@ -35,6 +31,12 @@ Widget? getMoreInformationButton(
                 onPressed: () {
                   String websiteWithoutHttp = removeHttp(ticketUrl);
                   launchUrl(Uri.parse("https://" + websiteWithoutHttp));
+                  recordCustomEvent(
+                      eventName: "userOpensTicketUrl",
+                      eventParams: {
+                        "url": "https://" + websiteWithoutHttp,
+                        "eAId": eAId
+                      });
                 },
                 child: Text(
                   AppLocalizations.of(context)!.ticket,
@@ -49,6 +51,12 @@ Widget? getMoreInformationButton(
                 onPressed: () {
                   String websiteWithoutHttp = removeHttp(websiteUrl);
                   launchUrl(Uri.parse("https://" + websiteWithoutHttp));
+                  recordCustomEvent(
+                      eventName: "userOpensWebsite",
+                      eventParams: {
+                        "url": "https://" + websiteWithoutHttp,
+                        "eAId": eAId
+                      });
                 },
                 child: Text(
                   AppLocalizations.of(context)!.website,
@@ -110,7 +118,10 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? moreInformationButton = getMoreInformationButton(
-        context: context, ticketUrl: ticketUrl, websiteUrl: websiteUrl);
+        context: context,
+        ticketUrl: ticketUrl,
+        websiteUrl: websiteUrl,
+        eAId: eAId);
     Widget? calendarButton = getCalendarButton(
         context: context, iCalElement: iCalElement, eAId: eAId);
     Widget? shareButton =
