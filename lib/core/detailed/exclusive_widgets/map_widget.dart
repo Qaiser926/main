@@ -5,7 +5,7 @@ import 'package:latlong2/latlong.dart' as latLng;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:othia/core/detailed/exclusive_widgets/diverse.dart';
 
-import '../../../utils/services/events/example_event.dart';
+import '../../../utils/services/events/record_event.dart';
 
 class SimpleMap extends StatefulWidget {
   final latLng.LatLng latlong;

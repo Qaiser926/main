@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 
-import '../../../utils/services/events/example_event.dart';
+import '../../../utils/services/events/record_event.dart';
 
 class UserPositionNotifier extends ChangeNotifier {
   UserPositionNotifier(BuildContext context) {

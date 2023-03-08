@@ -22,7 +22,7 @@ import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.da
 import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
-import '../../utils/services/events/example_event.dart';
+import '../../utils/services/events/record_event.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../add/add.dart';
 

@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../utils/services/events/example_event.dart';
+import '../../../utils/services/events/record_event.dart';
 
 Future<void> _launchUrl(_url) async {
   recordCustomEvent(eventName: "userOpensUrl", eventParams: {"url": _url});

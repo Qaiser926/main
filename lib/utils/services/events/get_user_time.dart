@@ -1,8 +1,9 @@
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:device_calendar/device_calendar.dart';
+import 'package:othia/utils/services/events/record_event.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:tuple/tuple.dart';
 
-
+import '../rest-api/amplify/amp.dart';
 
 Future<bool> requestCalendarPermissions() async {
   var permissionStatus = await Permission.calendar.status;
@@ -20,9 +21,9 @@ Future<bool> requestCalendarPermissions() async {
   return true;
 }
 
-Future<List<Tuple2<DateTime?, DateTime?>>> findFreeTimes() async {
+Future<void> findFreeTimes() async {
   DateTime start = DateTime.now();
-  DateTime end = DateTime.now().add(Duration(days: 7));
+  DateTime end = DateTime.now().add(Duration(days: 90));
   final DeviceCalendarPlugin _deviceCalendarPlugin = DeviceCalendarPlugin();
 
   // var permissionsGranted = await _deviceCalendarPlugin.hasPermissions();
@@ -37,12 +38,12 @@ Future<List<Tuple2<DateTime?, DateTime?>>> findFreeTimes() async {
 
   if (!calendarsResult.isSuccess) {
     // Handle the error
-    return [];
+    return;
   }
 
   final calendars = calendarsResult.data!;
   if (calendars.isEmpty) {
-    return [];
+    return;
   }
 
   List<Event> events = [];
@@ -59,10 +60,21 @@ Future<List<Tuple2<DateTime?, DateTime?>>> findFreeTimes() async {
     }
   }
 
-  final List<Tuple2<DateTime?, DateTime?>> userTimes = [];
-  for (var event in events) {
-    userTimes.add(Tuple2(event.start, event.end));
-  }
+  // get the user time here to save calls
+  String? userId;
+  try {
+    userId = await getUserId();
+  } on SignedOutException catch (_) {}
 
-  return userTimes;
+  int issuingTime = DateTime.now().millisecondsSinceEpoch;
+  for (var event in events) {
+    recordCustomEvent(
+        eventName: "userOccupiedTimeIntervals",
+        userId: userId,
+        eventParams: {
+          'issuingTime': issuingTime,
+          'start': event.start?.millisecondsSinceEpoch,
+          'end': event.end?.millisecondsSinceEpoch
+        });
+  }
 }

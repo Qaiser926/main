@@ -19,6 +19,10 @@ Future<void> recordCustomEvent(
   }
 
   eventParams.forEach((key, value) {
+    if (['startDateUtc', 'endDateUtc'].contains(key)) {
+      // transform to unix epoch
+      value = DateTime.parse(value).millisecondsSinceEpoch;
+    }
     eventParameters[key] = value ?? "";
   });
 
