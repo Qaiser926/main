@@ -9,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/constants/no_internet.dart';
 import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/core/profile/settings.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
@@ -23,9 +22,7 @@ import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../constants/colors.dart';
 import '../../utils/services/events/example_event.dart';
@@ -94,7 +91,9 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, child) {
           return Scaffold(
               appBar: AppBar(
-
+                leading: isProfileView
+                    ? null
+                    : BackButton(color: Theme.of(context).colorScheme.primary),
                 toolbarHeight: 53.h,
                 elevation: 0,
                 title: Text(
@@ -120,6 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                              openShare('organizerShareLinkBuilder', context);
                              },
                           child: Icon(
+                            color: Theme.of(context).colorScheme.primary,
                             Icons.share,
                             size: 24.h,
                           )),
