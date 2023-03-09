@@ -53,7 +53,7 @@ const Widget defaultWidget = Text("Ok");
 Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
   int firstDigit = 4;
   try {
-    int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+    firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
   } catch (e) {}
 
   if (firstDigit == 5) {
@@ -72,7 +72,11 @@ Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
 }
 
 Widget messageErrorFunction(dynamic snapshot, BuildContext context) {
-  int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+  int firstDigit = 4;
+  try {
+    firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+  } catch (e) {}
+
   String? jsonMessage = jsonDecode(snapshot.error.message);
   if (firstDigit == 5) {
     return errorMessage(
