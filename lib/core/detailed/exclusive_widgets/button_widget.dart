@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/helpers/diverse.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/services/events/example_event.dart';
@@ -84,7 +85,7 @@ Widget? getShareButton(
                 openShare(
                     '${AppLocalizations.of(context)!.shareMessage} $shareUrl',
                     context);
-                recordCustomEvent(
+                   recordCustomEvent(
                     eventName: "userShares", eventParams: {"eAId": eAId});
               },
               child: Text(AppLocalizations.of(context)!.share))),

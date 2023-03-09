@@ -1,7 +1,12 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/not_logged_in.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';
@@ -29,6 +34,7 @@ class _FavouritePageState extends State<FavouritePage>
 
   get favouriteEventAndActivity => favouriteEventAndActivity;
 
+
   @override
   void initState() {
     if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
@@ -52,9 +58,17 @@ class _FavouritePageState extends State<FavouritePage>
     return FutureBuilder(
         future: favouriteEA,
         builder: (context, snapshot) {
+           if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+                    if(snapshot.hasData){
           return snapshotHandler(context, snapshot, futureFulfilledWidget, []);
+                    }else{
+                      return Center( child: Text("No Data Exit"),);
+                    }
         });
   }
+   final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +80,24 @@ class _FavouritePageState extends State<FavouritePage>
           tabController: _tabController,
           context: context,
         ),
-        body: getLoggedInSensitiveBody(
+        body:Obx(()=>Container(
+        child: studentFindTutorsController.connectionStatus.value==1?  getLoggedInSensitiveBody(
             loggedInWidget: getLoggedInBody(),
-            context: context),
+            context: context)
+      :studentFindTutorsController.connectionStatus.value==2?  getLoggedInSensitiveBody(
+            loggedInWidget: getLoggedInBody(),
+            context: context):Container(
+        width: Get.size.width,
+        height: Get.size.height,
+        child: Column(
+          children: [
+            Lottie.asset('assets/lottiesfile/no_internet.json',fit: BoxFit.cover),
+         
+          ],
+        ),
+      )))
+        
+       
       ),
       // ),
     );

@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/constants/no_internet.dart';
+import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/core/profile/settings.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
 import 'package:othia/modules/models/shared_data_models.dart';
@@ -19,7 +23,9 @@ import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../constants/colors.dart';
 import '../../utils/services/events/example_event.dart';
@@ -37,6 +43,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<Object> userInfoFuture;
   late bool isProfileView;
+  final connectivity=Connectivity();
+   final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
 
   @override
   void initState() {
@@ -109,8 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? SizedBox()
                       : GestureDetector(
                           onTap: () {
-                            openShare('organizerShareLinkBuilder', context);
-                          },
+                             openShare('organizerShareLinkBuilder', context);
+                             },
                           child: Icon(
                             Icons.share,
                             size: 24.h,
@@ -118,23 +126,54 @@ class _ProfilePageState extends State<ProfilePage> {
                   getHorSpace(20.h)
                 ],
               ),
-              body: isProfileView
+              body: Obx(()=>Container(
+        child: studentFindTutorsController.connectionStatus.value==1? isProfileView
                   ? getLoggedInSensitiveBody(
                       context: context,
                       loggedInWidget: profilePageFutureBuilder(context),
                     )
-                  : profilePageFutureBuilder(context));
+                  : profilePageFutureBuilder(context)
+      :studentFindTutorsController.connectionStatus.value==2? isProfileView
+                  ? getLoggedInSensitiveBody(
+                      context: context,
+                      loggedInWidget: profilePageFutureBuilder(context),
+                    )
+                  : profilePageFutureBuilder(context):Container(
+        width: Get.size.width,
+        height: Get.size.height,
+        child: Column(
+          children: [
+            Lottie.asset('assets/lottiesfile/no_internet.json',fit: BoxFit.cover),
+         
+          ],
+        ),
+      )))
+             
+                  
+                  );
         },
       ),
     );
   }
-
+mainBody(){
+  return   isProfileView
+                  ? getLoggedInSensitiveBody(
+                      context: context,
+                      loggedInWidget: profilePageFutureBuilder(context),
+                    )
+                  : profilePageFutureBuilder(context);
+                  
+}
   Widget profilePageFutureBuilder(BuildContext context) {
     UserInfoNotifier userInfoNotifier =
         Provider.of<UserInfoNotifier>(context, listen: false);
     return KeepAliveFutureBuilder(
         future: userInfoFuture,
         builder: (context, snapshot) {
+            if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+          if(snapshot.hasData){
           return MultiProvider(
               providers: [
                 ChangeNotifierProvider.value(
@@ -144,6 +183,9 @@ class _ProfilePageState extends State<ProfilePage> {
               child: snapshotHandler(
                   context, snapshot, getProfilePage, [context],
                   defaultErrorFunction: messageErrorFunction));
+        }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
         });
   }
 

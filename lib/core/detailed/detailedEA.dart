@@ -9,6 +9,8 @@ import 'package:othia/core/detailed/exclusive_widgets/diverse.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
@@ -54,7 +56,14 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
     return KeepAliveFutureBuilder(
         future: detailedEventOrActivity,
         builder: (context, snapshot) {
+            if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child:defaultStillLoadingWidget);
+                    }
+          if(snapshot.hasData){
           return snapshotHandler(context, snapshot, getContent, []);
+          }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
         });
   }
 

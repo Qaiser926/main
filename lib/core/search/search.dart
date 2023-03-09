@@ -1,5 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:othia/constants/no_internet.dart';
 import 'package:othia/core/search/search_pages/initial_search_page.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +35,11 @@ class _SearchPageState extends State<SearchPage>
     _pageController = notifier.getPageController();
     super.initState();
   }
+  final connectivity=Connectivity();
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: notifier,
@@ -47,7 +50,14 @@ class _SearchPageState extends State<SearchPage>
         physics: const NeverScrollableScrollPhysics(),
         children: SearchPage._pages,
       ),
-    );
+      
+      
+      );
+              
+    
+              
+    
+   
   }
 
   @override

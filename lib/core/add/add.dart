@@ -1,9 +1,13 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/constants/no_internet.dart';
+import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
@@ -12,6 +16,7 @@ import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/not_logged_in.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import 'add_exclusives/add_page_notifier.dart';
@@ -36,7 +41,7 @@ class _AddState extends State<Add> {
   AddEANotifier inputNotifier = AddEANotifier();
   late Future<Object> detailedEventOrActivity;
   late SwitchPages switchPages;
-
+ final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
   @override
   void initState() {
     switchPages = SwitchPages(
@@ -69,6 +74,7 @@ class _AddState extends State<Add> {
       pageController.jumpToPage(targetPage);
     }
   }
+  final connectivity=Connectivity();
 
   @override
   Widget build(BuildContext context) {
@@ -130,13 +136,30 @@ class _AddState extends State<Add> {
             // floatingActionButton: ,
             floatingActionButtonLocation:
             FloatingActionButtonLocation.centerFloat,
-            body: getLoggedInSensitiveBody(
+            body:  Obx(()=>Container(
+        child: studentFindTutorsController.connectionStatus.value==1?    getLoggedInSensitiveBody(
                 notLoggedInMessages: NotLoggedInMessage.addPage,
                 loggedInWidget: getLoggedInBody(switchPages),
-                context: context),
-          ),
+                context: context)
+      :studentFindTutorsController.connectionStatus.value==2?    getLoggedInSensitiveBody(
+                notLoggedInMessages: NotLoggedInMessage.addPage,
+                loggedInWidget: getLoggedInBody(switchPages),
+                context: context):Container(
+        width: Get.size.width,
+        height: Get.size.height,
+        child: Column(
+          children: [
+            Lottie.asset('assets/lottiesfile/no_internet.json',fit: BoxFit.cover),
+         
+          ],
         ),
-      );
+      )))
+            
+            
+         )));
+              
+        
+      
   }
 
   Widget getLoggedInBody(SwitchPages switchPages) {
@@ -145,11 +168,23 @@ class _AddState extends State<Add> {
         ? KeepAliveFutureBuilder(
         future: detailedEventOrActivity,
         builder: (context, snapshot) {
+           if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: JumpingDotsProgressIndicator(
+                          color: Theme.of(context).colorScheme.primary,
+              fontSize: 20.sp,
+            ),);
+                    }
+                    if(snapshot.hasData){
           return snapshotHandler(
               context,
               snapshot,
               getFutureHandlerPageView,
               [inputNotifier, switchPages, pageController]);
+                    }else{
+                      return Center(
+                        child: Text("No Data Exit"),
+                      );
+                    }
         })
         : getFutureHandlerPageView(
         inputNotifier, switchPages, pageController, {});

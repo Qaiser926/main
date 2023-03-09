@@ -9,11 +9,11 @@ void dismissKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
 
-// TODO (extern) when sharing, also include the Othia logo in the share message
+// TODO clear (extern) when sharing, also include the Othia logo in the share message
 void openShare(String shareString, BuildContext context) async {
   urlFileShare(context);
   // await Share.shareXFiles(['/yourPath/myItem.png'], text: 'Image Shared');
-  // Share.share(shareString);
+  Share.share(shareString);
 }
 
 void closeSnackBar(BuildContext context) {

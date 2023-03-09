@@ -10,6 +10,7 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 
 class OrganizerSection extends StatelessWidget {
   String organizerId;
@@ -21,8 +22,15 @@ class OrganizerSection extends StatelessWidget {
     return KeepAliveFutureBuilder(
         future: RestService().getPublicUserInfo(organizerId: organizerId),
         builder: (context, snapshot) {
+            if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+          if(snapshot.hasData){
           return snapshotHandler(
               context, snapshot, getOrganizerWidget, [context]);
+               }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
         });
   }
 

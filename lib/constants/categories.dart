@@ -40,12 +40,7 @@ class Categories {
   static ClipRRect getRoundedImage(Image image) {
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.only(
-        topRight: Radius.circular(30),
-        topLeft: Radius.circular(30),
-        bottomLeft: Radius.circular(3),
-        bottomRight: Radius.circular(3),
-      ),
+      borderRadius: BorderRadius.circular(30),
       child: Image(
         image: image.image,
         fit: BoxFit.cover,

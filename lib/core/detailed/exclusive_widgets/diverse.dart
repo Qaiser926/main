@@ -7,6 +7,7 @@ import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/openingtimes.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../utils/helpers/builders.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
@@ -77,7 +78,7 @@ class IconRow extends StatelessWidget {
                 openShare(
                     '${AppLocalizations.of(context)!.shareMessage} $shareLink',
                     context);
-              },
+                    },
               child: const Icon(
                 Icons.share,
               ),

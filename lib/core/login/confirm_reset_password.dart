@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:othia/core/login/login_data.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 
 import '../../widgets/form_fields.dart';
 import '../main_page.dart';

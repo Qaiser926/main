@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
@@ -6,6 +7,7 @@ import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/vertical_discovery/favourite_list_item.dart';
 import 'package:othia/widgets/vertical_discovery/pinned_header.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -35,11 +37,19 @@ Widget buildVerticalDiscovery(
               return KeepAliveFutureBuilder(
                   future: eASummary,
                   builder: (context, snapshot) {
+                    
+                    if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child:defaultStillLoadingWidget);
+                    }
+                    if(snapshot.hasData){
                     return snapshotHandler(
                         context,
                         snapshot,
                         getFutureVerticalDiscovery,
                         [context, actionButtonType]);
+                         }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
                   });
             } else {
               return null;

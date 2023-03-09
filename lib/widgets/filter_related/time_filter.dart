@@ -11,8 +11,8 @@ import 'package:typicons_flutter/typicons_flutter.dart';
 import '../../utils/services/data_handling/data_handling.dart';
 import 'get_reset_apply_filter.dart';
 
-// TODO (extern) solve that button are only selected after the second click, this issue was not there when we first implemented this feature. This also causes that time ranges can only be selected by holding, instead of clicking on a start date and then end date. Also make it possible to insert a date via the keyboard (make sure to enforce that the user input is transferable to datetime) and show the range highlighted in the calendar
-// TODO (extern) when selecting "Next Week" and the next week begins in the next month, it is not highlighted as it should be when going to the next month view. Selecting fields directly in the calendar is also not possible as it is only updated in visual term but does not update the notifier
+// TODO clear (extern) solve that button are only selected after the second click, this issue was not there when we first implemented this feature. This also causes that time ranges can only be selected by holding, instead of clicking on a start date and then end date. Also make it possible to insert a date via the keyboard (make sure to enforce that the user input is transferable to datetime) and show the range highlighted in the calendar
+// TODO clear (extern) when selecting "Next Week" and the next week begins in the next month, it is not highlighted as it should be when going to the next month view. Selecting fields directly in the calendar is also not possible as it is only updated in visual term but does not update the notifier
 Future<dynamic> TimeFilterDialog(
     {required BuildContext context,
     required AbstractQueryNotifier dynamicProvider}) {
@@ -37,6 +37,7 @@ Future<dynamic> TimeFilterDialog(
         );
       });
 }
+
 class TimeFilter extends StatefulWidget {
   AbstractQueryNotifier dynamicProvider;
 
@@ -69,24 +70,36 @@ class _TimeFilterState extends State<TimeFilter> {
     super.initState();
   }
 
-  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-    setState(() {
-      if (args.value is PickerDateRange) {
-        startDate = args.value.startDateTime;
-        endDate = args.value.endDateUtc ?? args.value.startDateTime;
-        thisWeekendButtonEnabled = false;
-        todayButtonEnabled = false;
-        tomorrowButtonEnabled = false;
-        thisWeekButtonEnabled = false;
-        nextWeekButtonEnabled = false;
-        nextWeekendButtonEnabled = false;
-        dynamicProvider.setTimeCaption(caption: null);
-      } else if (args.value is DateTime) {
-        print(1);
-      }
-    });
+  // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+  //  if (args.value is PickerDateRange) {
+  //       startDate = args.value.startDateTime;
+  //       endDate = args.value.endDateUtc ?? args.value.startDateTime;
+  //       thisWeekendButtonEnabled = false;
+  //       todayButtonEnabled = false;
+  //       tomorrowButtonEnabled = false;
+  //       thisWeekButtonEnabled = false;
+  //       nextWeekButtonEnabled = false;
+  //       nextWeekendButtonEnabled = false;
+  //       dynamicProvider.setTimeCaption(caption: null);
+  //     } else if (args.value is DateTime) {
+  //       print("qaiser ");
+  //     }
+  // }
+
+  int calculateDifference(DateTime date) {
+    DateTime now = DateTime.now();
+    return DateTime(date.year, date.month, date.day)
+        .difference(DateTime(now.year, now.month, now.day))
+        .inDays;
   }
-   Widget getTimeButton({required BuildContext context,
+
+  bool predicateCallback(DateTime date) {
+    if (calculateDifference(date) < 0) {
+      return false;
+    }
+    return true;
+  }
+  Widget getTimeButton({required BuildContext context,
     required String caption,
     required Function onTapFunction,
     required bool coloredBorder}) {
@@ -115,7 +128,44 @@ class _TimeFilterState extends State<TimeFilter> {
       ),
     );
   }
- Function getTodayFunction() {
+
+  List<Widget> getTimeButtons({required BuildContext context}) {
+    List<Widget> timeButtons = [
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.today,
+          onTapFunction: getTodayFunction(),
+          coloredBorder: todayButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.tomorrow,
+          onTapFunction: getTomorrowFunction(),
+          coloredBorder: tomorrowButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeek,
+          onTapFunction: getThisWeekFunction(),
+          coloredBorder: thisWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.thisWeekend,
+          onTapFunction: getThisWeekendFunction(),
+          coloredBorder: thisWeekendButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeek,
+          onTapFunction: getNextWeekFunction(),
+          coloredBorder: nextWeekButtonEnabled),
+      getTimeButton(
+          context: context,
+          caption: AppLocalizations.of(context)!.nextWeekend,
+          onTapFunction: getNextWeekendFunction(),
+          coloredBorder: nextWeekendButtonEnabled),
+    ];
+    return timeButtons;
+  }
+
+   getTodayFunction() {
     if (todayButtonEnabled) {
       return () => {
         setState(() {
@@ -127,8 +177,7 @@ class _TimeFilterState extends State<TimeFilter> {
           dynamicProvider.setTimeCaption(caption: null);
         })
       };
-    } 
-    else {
+    } else {
       return () => {
         setState(() {
           startDate = DateTime.now();
@@ -147,7 +196,7 @@ class _TimeFilterState extends State<TimeFilter> {
     }
   }
 
-  Function getTomorrowFunction() {
+ getTomorrowFunction() {
     if (tomorrowButtonEnabled) {
       return () => {
         setState(() {
@@ -357,63 +406,8 @@ class _TimeFilterState extends State<TimeFilter> {
     });
   }
 
-  List<Widget> getTimeButtons({required BuildContext context}) {
-    List<Widget> timeButtons = [
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.today,
-          onTapFunction: ()=>getTodayFunction(),
-       
-          coloredBorder: todayButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.tomorrow,
-          onTapFunction: ()=> getTomorrowFunction(),
-          coloredBorder: tomorrowButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.thisWeek,
-          onTapFunction: getThisWeekFunction(),
-          coloredBorder: thisWeekButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.thisWeekend,
-          onTapFunction: getThisWeekendFunction(),
-          coloredBorder: thisWeekendButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.nextWeek,
-          onTapFunction: getNextWeekFunction(),
-          coloredBorder: nextWeekButtonEnabled),
-      getTimeButton(
-          context: context,
-          caption: AppLocalizations.of(context)!.nextWeekend,
-          onTapFunction: getNextWeekendFunction(),
-          coloredBorder: nextWeekendButtonEnabled),
-    ];
-    return timeButtons;
-  }
-
-  int calculateDifference(DateTime date) {
-    DateTime now = DateTime.now();
-    return DateTime(date.year, date.month, date.day)
-        .difference(DateTime(now.year, now.month, now.day))
-        .inDays;
-  }
-
-  bool predicateCallback(DateTime date) {
-    if (calculateDifference(date) < 0) {
-      return false;
-    }
-    return true;
-  }
-
-  
-
   @override
   Widget build(BuildContext context) {
-    
- 
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       if (model.dateReset) {
         Future.delayed(Duration.zero, () async {
@@ -437,15 +431,15 @@ class _TimeFilterState extends State<TimeFilter> {
             ),
             // marking weekend dates not enabled right now
             // monthCellStyle: DateRangePickerMonthCellStyle(weekendDatesDecoration: BoxDecoration(border: Border(bottom: BorderSide(color: Theme.of(context).highlightColor)) ),),
-            onSelectionChanged: _onSelectionChanged,
+            // onSelectionChanged: _onSelectionChanged,
             selectionMode: DateRangePickerSelectionMode.range,
             selectableDayPredicate: predicateCallback,
             controller: _dateRangePickerController,
-            initialSelectedRange: PickerDateRange(startDate!, endDate!),
+            initialSelectedRange: PickerDateRange(startDate, endDate),
           ),
         ),
         // TODO clear (extern)  fix that buttons are aligned on the left side like the rest
-       Padding(
+        Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
           child: Wrap(
             crossAxisAlignment: WrapCrossAlignment.start,
@@ -546,4 +540,3 @@ String getTimeCaption(
     return AppLocalizations.of(context)!.time;
   }
 }
-

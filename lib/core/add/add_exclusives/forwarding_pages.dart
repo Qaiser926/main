@@ -22,7 +22,9 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -178,9 +180,16 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                    return snapshotHandler(context, snapshot, futureHandler,
+                      if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+                  if(snapshot.hasData){
+                      return snapshotHandler(context, snapshot, futureHandler,
                         [context, widget.detailedEA.id!],
                         defaultErrorFunction: messageErrorFunction);
+                  }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
                   }),
               getVerSpace(10.h),
               Padding(
@@ -294,6 +303,10 @@ class DeleteForwardingPage extends StatelessWidget {
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
+                    if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+                  if(snapshot.hasData){
                   return snapshotHandler(
                       context, snapshot, goToProfilePage, [context],
                       defaultErrorFunction: (_) => Padding(
@@ -303,6 +316,9 @@ class DeleteForwardingPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.error,
                               ))));
+                  }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
                 }),
             getVerSpace(10.h),
             Padding(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:othia/config/routes/routes.dart';
 import 'package:othia/core/favourites/favourite_screen.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 
 import '../../core/add/add.dart';
 import '../../core/detailed/detailedEA.dart';

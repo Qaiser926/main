@@ -9,6 +9,7 @@ import 'package:othia/core/login/login.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -200,7 +201,14 @@ class _AddLikeButtonState extends State<AddLikeButton> {
       return KeepAliveFutureBuilder(
           future: isLiked,
           builder: (context, snapshot) {
+              if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+            if(snapshot.hasData){
             return snapshotHandler(context, snapshot, getLikeButton, []);
+             }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
           });
     } else {
       return buildNotLoggedInLikeButton();

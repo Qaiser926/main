@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-const Widget defaultStillLoadingWidget = Center(
+const Widget defaultStillLoadingWidget = 
+Center(
   child: Shimmer(
     gradient: LinearGradient(
       colors: [Colors.grey, Colors.white, Colors.grey],
@@ -43,7 +44,7 @@ Widget errorMessage(String errorMessage, BuildContext context) {
       padding: EdgeInsets.all(20.h),
       child: Text(errorMessage,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.error,
+            color: Theme.of(context).colorScheme.inversePrimary,
           )));
 }
 
@@ -96,7 +97,8 @@ Widget snapshotHandler(
   List<dynamic> functionArguments, {
   Widget loadingWidget = defaultStillLoadingWidget,
   Function defaultErrorFunction = defaultErrorFunction,
-}) {
+}) 
+{
   switch (snapshot.connectionState) {
     case ConnectionState.waiting:
       return loadingWidget;
@@ -124,6 +126,7 @@ Widget snapshotHandler(
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white);
           throw e;
+          
         }
       }
     default:

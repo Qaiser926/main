@@ -101,6 +101,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
       } else {
         //TODO (extern) Error handling
         return const Text("An error occured");
+      
       }
     });
   

@@ -7,6 +7,7 @@ import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:othia/widgets/horizontal_discovery/discovery_card.dart';
 import 'package:othia/widgets/info_snackbar.dart';
+import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -34,7 +35,8 @@ class BaseDiscoveryClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return 
+    Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (showDivider)
@@ -99,6 +101,9 @@ class BaseDiscoveryClass extends StatelessWidget {
         if (Ids.isEmpty) getNoResultsMessage(context),
       ],
     );
+  
+  
+  
   }
 }
 
@@ -142,8 +147,15 @@ class HorizontalEADiscovery extends StatelessWidget {
               return KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
+                      if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget,);
+                    }
+                    if(snapshot.hasData){
                     return snapshotHandler(context, snapshot,
                         getFutureFulfilledContent, [index, context]);
+                         }else{
+                    return Center(child: Text("No Data Exit"),);
+                  }
                   });
             }));
   }

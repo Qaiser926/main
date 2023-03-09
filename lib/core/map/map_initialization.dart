@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import 'package:othia/core/map/exclusive_widgets/app_bar_creator.dart';
 import 'package:othia/core/map/exclusive_widgets/current_position.dart';
 import 'package:othia/widgets/filter_related/category_filter/category_filter.dart';
 import 'package:othia/widgets/filter_related/notifiers/map_notifier.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -35,14 +37,18 @@ class MapInitialization extends StatefulWidget {
 }
 
 class _MapInitializationState extends State<MapInitialization> {
+
+  BitmapDescriptor? defaultMarker;
+  BitmapDescriptor? selectedMarker;
   @override
   void initState() {
     FirebaseAnalytics.instance.setCurrentScreen(
       screenName: 'mapInitScreen',
     );
+  
     super.initState();
   }
-
+MapController mapController = MapController();
   Completer<GoogleMapController> _controller = Completer();
 
   @override
@@ -54,12 +60,17 @@ class _MapInitializationState extends State<MapInitialization> {
           children: [
             // markers: Set.of(_marker),
             FlutterMap(
+              
+              mapController: mapController,
+             
                 options: MapOptions(
+                  
                   center: userPosition,
                   zoom: 15.0,
                   maxZoom: 17,
                   minZoom: 3,
                 ),
+                
                 nonRotatedChildren: [
                   Container(
                     alignment: Alignment.bottomRight,
@@ -74,7 +85,7 @@ class _MapInitializationState extends State<MapInitialization> {
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'ohtia.de',
                   ),
-                  MarkerLayer(markers: [
+                  // MarkerLayer(markers: [
                     //   Marker(
                     //       width: 50.0,
                     //       height: 500.0,
@@ -91,7 +102,7 @@ class _MapInitializationState extends State<MapInitialization> {
                     //             //   color: Colors.blue,
                     //             // ),
                     //           ))
-                  ])
+                  // ])
                 ]),
 
             GestureDetector(
@@ -103,7 +114,6 @@ class _MapInitializationState extends State<MapInitialization> {
               },
               child: Stack(
                 children: [
-
                   Opacity(
                     opacity: 0.4,
                     child: Container(
