@@ -23,7 +23,7 @@ import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:othia/widgets/vertical_discovery/vertical_discovery_framework.dart';
-import 'package:progress_indicators/progress_indicators.dart';
+
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 

@@ -54,7 +54,9 @@ class InitialSearchPage extends StatelessWidget {
          
           ],
         ),
-      )))
+      ))
+      
+      )
 
 
         

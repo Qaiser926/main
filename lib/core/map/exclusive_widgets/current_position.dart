@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 
 import '../../../utils/services/events/example_event.dart';
@@ -17,24 +18,28 @@ class UserPositionNotifier extends ChangeNotifier {
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
+   
+      Get.snackbar("", "",titleText: Center(
+        child: Center(
+          child: Text(
+                  'Location services are disabled. Please enable the services'),
+        ),
+      ),snackPosition: SnackPosition.BOTTOM);
       return false;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+        Get.snackbar("title", "",titleText: Center(child: Text('Location permissions are denied')),snackPosition: SnackPosition.BOTTOM);
+     
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+       Get.snackbar("", "",titleText: Center(child: Text("Location permissions are permanently denied, we cannot request permissions.")),snackPosition: SnackPosition.BOTTOM);
+      
+    
       return false;
     }
     return true;

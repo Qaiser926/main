@@ -67,7 +67,7 @@ class CategoryGridItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
-                            lessListItemColor.withOpacity(.7),
+                            lessListItemColor.withOpacity(.9),
                             lessListItemColor.withOpacity(0),
                           ],
                           begin: Alignment.bottomCenter,
@@ -90,7 +90,7 @@ class CategoryGridItem extends StatelessWidget {
                             bottomRight: Radius.circular(30),
                           ),
                         ),
-                        color: lessListItemColor.withOpacity(.7),
+                        color: lessListItemColor.withOpacity(1),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

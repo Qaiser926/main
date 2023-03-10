@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
@@ -75,10 +77,13 @@ class CategoryFilterState extends State<CategoryFilter>
 
     if (widget.isModalBottomSheetMode) {
       header = Container(
+        width: Get.size.width,
+       margin: EdgeInsets.only(bottom: 10.h),
         // TODO clear (extern) remove (small) edges created by the container that reach into the rounded corners
        decoration: BoxDecoration(
+        // color: Colors.red,
            color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
         ),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,8 +92,10 @@ class CategoryFilterState extends State<CategoryFilter>
               CloseButton()
             ]),
       );
+   
     }
-    return MultiProvider(
+    return 
+    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: dynamicProvider,

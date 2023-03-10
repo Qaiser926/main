@@ -10,7 +10,6 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 
 class OrganizerSection extends StatelessWidget {
   String organizerId;

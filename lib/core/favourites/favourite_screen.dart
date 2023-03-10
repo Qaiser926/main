@@ -6,7 +6,6 @@ import 'package:lottie/lottie.dart';
 import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/not_logged_in.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../modules/models/favourite_event_and_activity/favourite_events_and_activities.dart';

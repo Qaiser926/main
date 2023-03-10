@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:othia/widgets/horizontal_discovery/discovery_card.dart';
 import 'package:othia/widgets/info_snackbar.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -54,6 +54,7 @@ class BaseDiscoveryClass extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
@@ -64,15 +65,23 @@ class BaseDiscoveryClass extends StatelessWidget {
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
-                      Text(
-                        caption,
-                        softWrap: true,
-                        style: Theme.of(context).textTheme.headlineLarge,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                       Container(
+                        width: Get.size.width*0.6,
+                         child: Flexible(
+                                  child: Text(
+                             caption,
+                          softWrap: true,
+                          style: Theme.of(context).textTheme.headlineLarge,
+                                maxLines:3,
+                                overflow: TextOverflow.ellipsis,
+                                // textAlign: TextAlign.end,
+                              
+                              )),
+                       ),
+                 
                       getHorSpace(5.h),
                       isInfoButtonActivated
                           ? Icon(

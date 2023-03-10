@@ -166,24 +166,7 @@ MapController mapController = MapController();
               ),
               ElevatedButton(
                 onPressed: () async {
-                  // PermissionStatus permission =
-                  //     await Permission.location.request();
-                  //  if (permission == PermissionStatus.granted) {
-                  //     Get.to(MainPage(),transition: Transition.fadeIn);
-                  //     Get.snackbar(
-                  //           titleText:
-                  //               Center(child: Text("Permission Granted")),
-                  //           "",
-                  //           "",
-                  //           snackPosition: SnackPosition.BOTTOM,
-                  //           colorText: Colors.white);
-                  //   }
-                  // if (permission == PermissionStatus.denied) {
-                  //   // Get.snackbar('Permission is recommended', "");
-                  //   Get.to(MainPage(), transition: Transition.fadeIn);
-                  //   openAppSettings();
-                  // }
-
+              
                   _handleLocationPermission(context);
                   Get.to(MainPage(), transition: Transition.fadeIn);
                 },
@@ -201,25 +184,21 @@ MapController mapController = MapController();
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-              AppLocalizations.of(context)!.locationPermissionDeniedMessage)));
+      Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.locationPermissionDeniedMessage)),snackPosition: SnackPosition.BOTTOM);
       return false;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content:
-                Text(AppLocalizations.of(context)!.locationPermissionDenied)));
+
+         Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.locationPermissionDenied)),snackPosition: SnackPosition.BOTTOM);
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context)!
-              .locationPermissionPermanentlyDenied)));
+       Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.locationPermissionPermanentlyDenied)),snackPosition: SnackPosition.BOTTOM);
+      
       openAppSettings();
       return false;
     }

@@ -56,7 +56,7 @@ class TimeSelector extends StatelessWidget {
                   child: TextFormField(
                       // TODO clear (extern) align color such that it has the same color as the other TextFormFields. The reason for the color difference is that we use a TextController here, whereas we just use the text form field elsewhere.
                       style:
-                          TextStyle(color: Theme.of(context).selectedRowColor),
+                          TextStyle(color:showStartTime?Theme.of(context).colorScheme.inversePrimary:Colors.white54),
                       controller: TextEditingController(
                         
                         text: showStartTime
@@ -93,7 +93,7 @@ class TimeSelector extends StatelessWidget {
                 child: TextFormField(
                   // TODO clear (extern) align color such that it has the same color as the other TextFormFields
                     style:
-                        TextStyle(color: Theme.of(context).selectedRowColor),
+                        TextStyle(color:showEndTime?Theme.of(context).colorScheme.inversePrimary: Colors.white54),
                     controller: TextEditingController(
                       text: showEndTime
                           ? "${AppLocalizations.of(context)!.endTime}: ${getLocalTimeString(context: context, dateTimeUtc: inputNotifierConsumer.detailedEA.time.endTimeUtc!)}"

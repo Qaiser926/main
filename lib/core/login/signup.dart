@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/core/login/login_data.dart';
 import 'package:othia/widgets/form_fields.dart';
 
@@ -50,7 +51,11 @@ class Signup extends StatelessWidget {
     String? emailErrorMessage;
     GlobalKey<EditableTextState> emailKey = GlobalKey();
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          toolbarHeight: 53.h,
+                elevation: 0,
+        leading: IconButton(onPressed: (){Get.back();},icon: Icon(Icons.arrow_back,color: Theme.of(context).colorScheme.primary,)),
+      ),
       body: 
       LoginSignUp(
           topText: AppLocalizations.of(context)!.signup,
@@ -73,7 +78,8 @@ class Signup extends StatelessWidget {
                 }),
               );
             }
-          },
+          }
+          ,
           textFields: [
             getCustomTextFormFieldWithPadding(
               errorMaxLines: 2,
@@ -113,10 +119,9 @@ class Signup extends StatelessWidget {
               iconData: Icons.person,
               suffixIcon: IconButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          AppLocalizations.of(context)!.signupNameHintText),
-                    ));
+               
+                     Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.signupNameHintText)),snackPosition: SnackPosition.BOTTOM);
+      
                   },
                   icon: Icon(Icons.info_outline)),
               controller: nameController,
@@ -213,6 +218,7 @@ class Signup extends StatelessWidget {
                     }
                   }
                 }),
+        
             CheckboxListTileFormField(
               title: GestureDetector(
                 onTap: () => {
@@ -259,8 +265,9 @@ class Signup extends StatelessWidget {
               contentPadding: EdgeInsets.all(1),
             ),
         
-          ]),
+          ]
+          
     
-    );
+    ));
   }
 }

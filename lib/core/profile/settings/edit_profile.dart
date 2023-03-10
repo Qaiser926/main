@@ -172,21 +172,19 @@ class _EditProfileState extends State<EditProfile> {
                             try {
                               if (restResponse.statusCode == 200) {
                                 deleteUser();
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(AppLocalizations.of(
+                                  Get.snackbar("title", "",titleText: Center(child: Text(AppLocalizations.of(
                                           localizationAndThemeContext)!
-                                      .deleteAccountSuccess),
-                                ));
+                                      .deleteAccountSuccess)),snackPosition: SnackPosition.BOTTOM);
+      
+                               
                               } else {
                                 throw Exception();
                               }
                             } on Exception catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(AppLocalizations.of(
+                            
+                                           Get.snackbar("", "",titleText: Center(child: Text(AppLocalizations.of(
                                               localizationAndThemeContext)!
-                                          .deleteAccountFailure)));
+                                          .deleteAccountFailure)),snackPosition: SnackPosition.BOTTOM);
                             }
                             Navigator.of(context).pop();
                           },
