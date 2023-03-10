@@ -15,7 +15,6 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 
 import '../../utils/services/events/get_user_time.dart';
 

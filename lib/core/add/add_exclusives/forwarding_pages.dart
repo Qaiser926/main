@@ -24,7 +24,6 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -261,12 +260,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       await file.writeAsBytes(pngBytes);
       await GallerySaver.saveImage('${tempDir.path}/image.png');
       // TODO clear (extern) design of snackbar
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-
-      //   content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
-      //   duration: Duration(seconds: 2),
-      // )
-      // );
+      
       Get.snackbar(
         "",
         "",

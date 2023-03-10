@@ -41,6 +41,8 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final snackBar = 
       SnackBar(
+        elevation: 0.6,
+        behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.grey.shade300,
         // TODO clear (extern) improve design of snackbar
         content: inputNotifier.isModifyMode

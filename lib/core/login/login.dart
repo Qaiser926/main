@@ -25,7 +25,11 @@ class Login extends StatelessWidget {
     final passwordController = TextEditingController();
     String? errorMessage;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+           toolbarHeight: 53.h,
+                elevation: 0,
+        leading: IconButton(onPressed: (){Get.back();},icon: Icon(Icons.arrow_back,color: Theme.of(context).colorScheme.primary,)),
+      ),
       body: LoginSignUp(
           buttonText: AppLocalizations.of(context)!.login,
           topText: AppLocalizations.of(context)!.login,
@@ -83,13 +87,15 @@ class Login extends StatelessWidget {
             )
           ],
           betweenButtonAndTextFields: SizedBox(
-            height: 30,
-            child: Padding(
-              padding:  EdgeInsets.only(left: 0.w),
-              child: TextButton(
-                  onPressed: () =>
-                      Get.to(ResetPassword(), duration: Duration.zero),
-                  child: Text(AppLocalizations.of(context)!.recoverPassword)),
+            // height: 30,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () =>
+                        Get.to(ResetPassword(), duration: Duration.zero),
+                    child: Text(AppLocalizations.of(context)!.recoverPassword)),
+              ],
             ),
           ),
           belowButton: Column(

@@ -56,12 +56,29 @@ class PriceFilter extends StatefulWidget {
 }
 
 class _PriceFilterState extends State<PriceFilter> {
+double _sliderValue = 0.0;
+  TextEditingController _textFieldController =
+      TextEditingController(text: "0.0");
+
   AbstractQueryNotifier dynamicProvider;
   late RangeValues _values;
 
   _PriceFilterState(
       {required BuildContext context, required this.dynamicProvider}) {
     _values = dynamicProvider.getPriceRange;
+  }
+ void _updateSliderValue(String value) {
+    setState(() {
+      _sliderValue = double.tryParse(value) ?? 0.0;
+      _textFieldController.text = _sliderValue.toStringAsFixed(1);
+    });
+  }
+
+  void _updateTextFieldValue(double value) {
+    setState(() {
+      _sliderValue = value;
+      _textFieldController.text = _sliderValue.toStringAsFixed(1);
+    });
   }
 
   @override
@@ -113,6 +130,7 @@ class _PriceFilterState extends State<PriceFilter> {
                   }
                 });
               }),
+        
           Padding(
             padding: EdgeInsets.all(20),
             child: Row(
@@ -166,7 +184,15 @@ Widget getPriceBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Text(header), getVerSpace(5), Text(priceText)],
+      children: [
+        Text(header), 
+      getVerSpace(5),
+       Text(priceText)
+
+       
+     
+       
+       ],
     ),
   );
 }

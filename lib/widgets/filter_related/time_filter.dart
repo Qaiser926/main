@@ -69,6 +69,10 @@ class _TimeFilterState extends State<TimeFilter> {
     endDate = dynamicProvider.endDate;
     super.initState();
   }
+  bool isStartDataSelect=false;
+  bool isEndDataSelect=false;
+  var startDateTime= DateTime.now();
+  var endDateTime=DateTime.now();
 
   // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
   //  if (args.value is PickerDateRange) {
@@ -82,7 +86,7 @@ class _TimeFilterState extends State<TimeFilter> {
   //       nextWeekendButtonEnabled = false;
   //       dynamicProvider.setTimeCaption(caption: null);
   //     } else if (args.value is DateTime) {
-  //       print("qaiser ");
+     
   //     }
   // }
 
@@ -426,7 +430,13 @@ class _TimeFilterState extends State<TimeFilter> {
         Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: SfDateRangePicker(
+            onSelectionChanged: (click){
+              
+              // startDate=click as  DateTime;
+                 isStartDataSelect=true;
+            },
             monthViewSettings: DateRangePickerMonthViewSettings(
+              
               firstDayOfWeek: 1,
             ),
             // marking weekend dates not enabled right now
@@ -459,7 +469,8 @@ class _TimeFilterState extends State<TimeFilter> {
               getTimeBox(
                   context: context,
                   header: AppLocalizations.of(context)!.from,
-                  time: startDate ?? DateTime.now()),
+                  time:isStartDataSelect?startDateTime: startDate ?? DateTime.now()
+                  ),
               Icon(Typicons.minus, color: Theme.of(context).highlightColor),
               getTimeBox(
                   context: context,

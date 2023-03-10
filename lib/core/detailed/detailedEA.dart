@@ -10,7 +10,6 @@ import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';

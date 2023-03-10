@@ -18,7 +18,6 @@ import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -56,6 +55,8 @@ class _MapResultsState extends State<MapResults> {
     );
     super.initState();
   }
+  bool isEventSelect=false;
+  bool isActivitySelect=false;
 
   @override
   Widget build(BuildContext context) {
@@ -148,20 +149,13 @@ class _MapResultsState extends State<MapResults> {
           padding: const EdgeInsetsDirectional.only(start: 8, bottom: 2),
           child: Row(
             children: [
-              SizedBox(
-                width: 10,
-                height: 8,
-                child: DecoratedBox(
-                  decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
-                ),
-              ),
+            
               getHorSpace(5.h),
               Container(
                   // height: 30.h,
                   // width: 30.w,
                   decoration: BoxDecoration(
-                      color: Colors.black26,
+                      color: Color(0xff0b151d),
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -171,18 +165,11 @@ class _MapResultsState extends State<MapResults> {
                     ),
                   )),
               getHorSpace(10.h),
-              SizedBox(
-                width: 10,
-                height: 8,
-                child: DecoratedBox(
-                  decoration:
-                      BoxDecoration(color: Theme.of(context).bottomAppBarColor),
-                ),
-              ),
+            
               getHorSpace(5.h),
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.black26,
+                    color: Color(0xff274a66),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -227,7 +214,9 @@ class _MapResultsState extends State<MapResults> {
   }
 
   Marker getMarker({required Map<String, dynamic> locationData,
-    required Color markerColor}) {
+    required Color markerColor,
+    // required Function() changeMarkerColorPress
+    }) {
     return Marker(
         width: 50.0,
         height: 50.0,
@@ -289,7 +278,6 @@ class _MapResultsState extends State<MapResults> {
 
     // TODO (extern) modify code such that the user location icon is never part of a cluster, also make sure the number of the cluster does not rotate
     markerList.add(Marker(
-
         width: 50.0,
         height: 500.0,
         rotate: false,
@@ -305,13 +293,15 @@ class _MapResultsState extends State<MapResults> {
     //TODO  (extern) align color scheme for event and activity icons.
     mapResultIds.activityResults.forEach((element) {
       markerList.add(getMarker(
-
-          locationData: element!, markerColor: Theme.of(context).colorScheme.primary));
+    
+    
+          locationData: element!, markerColor: Color(0xff274a66)));
+          
     });
     mapResultIds.eventResults.forEach((element) {
       markerList.add(getMarker(
           locationData: element!,
-          markerColor: Theme.of(context).colorScheme.tertiaryContainer));
+          markerColor: Color(0xff0b151d)));
     });
     return markerList;
   }
@@ -320,6 +310,7 @@ class _MapResultsState extends State<MapResults> {
     return Container(
       margin: EdgeInsets.only(bottom: 45.h),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CarouselSlider.builder(
@@ -328,7 +319,7 @@ class _MapResultsState extends State<MapResults> {
               height: 150.h,
               viewportFraction: 1,
               initialPage: 0,
-              enableInfiniteScroll: true,
+              enableInfiniteScroll: false,
               reverse: false,
               onPageChanged: (index,reason){
                 setState(() {
@@ -349,13 +340,39 @@ class _MapResultsState extends State<MapResults> {
               child: buildSummaryCard(eAIds![itemIndex]),
             ),
           ),
-        
-          buildIndicator(eAIds: eAIds, carouselController: carouselController, activeIndex: activeIndex,  context: context)
-        ],
+        buildIndicator()
+           ],
       ),
     );
   }
 
+
+Widget buildIndicator(){
+  return    Container(
+        height: 14.h,
+        width: Get.size.width,
+        child: ListView.builder(
+          
+          scrollDirection: Axis.horizontal,
+          itemCount: eAIds!.length,
+          itemBuilder: (context,index){
+            return Container(
+                      width: activeIndex == index ? 15 : 11,
+                      height: activeIndex == index ? 15 : 11,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 2.0,
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                          color: activeIndex == index
+                              ? Theme.of(context).colorScheme.inversePrimary
+                              :Colors.white60),
+                    );
+          },
+        ),
+      );
+       
+}
   KeepAliveFutureBuilder buildSummaryCard(String id) {
     Future<Object> eASummary = RestService().getEASummary(id: id);
     return KeepAliveFutureBuilder(
@@ -375,52 +392,6 @@ class _MapResultsState extends State<MapResults> {
         });
   }
 }
-class buildIndicator extends StatelessWidget {
-  const buildIndicator({
-    Key? key,
-    required this.eAIds,
-    required this.carouselController,
-    required this.activeIndex,
-    required this.context,
-  }) : super(key: key);
-
-  final List<String>? eAIds;
-  final CarouselController carouselController;
-  final int activeIndex;
-  final BuildContext context;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: Get.size.width,
-      child: SingleChildScrollView(
-        child: Row(
-          
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: eAIds!.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap:() => carouselController.animateToPage(entry.key) ,
-              child: Container(
-                      width: activeIndex == entry.key ? 17 : 10,
-                      height: 9.0,
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 3.0,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: activeIndex == entry.key
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.tertiaryContainer),
-                    ),
-                  
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-}
-
 
 Widget buildMapSummary(BuildContext context,
     Map<String, dynamic> decodedJson,

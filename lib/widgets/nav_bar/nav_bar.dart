@@ -96,6 +96,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      color: Color(0xff26343f),
         child: Stack(
           alignment: Alignment.centerRight,
           children: [

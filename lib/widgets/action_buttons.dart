@@ -9,7 +9,6 @@ import 'package:othia/core/login/login.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/services/rest-api/rest_api_service.dart';
@@ -282,7 +281,7 @@ class _LikeButtonState extends State<LikeButton> {
         Icons.favorite,
         color: widget.isLiked
             ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.inversePrimary,
+            : Theme.of(context).colorScheme.tertiaryContainer,
       ),
     );
   }

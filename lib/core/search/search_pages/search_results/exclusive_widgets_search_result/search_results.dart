@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
-import 'package:progress_indicators/progress_indicators.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../modules/models/get_search_results_ids/get_search_result_ids.dart';
@@ -34,10 +33,7 @@ class _SearchResultsState extends State<SearchResults>
             .getSearchQueryResult(),
         builder: (context, snapshot) {
            if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: JumpingDotsProgressIndicator(
-                          color: Theme.of(context).colorScheme.primary,
-              fontSize: 20.sp,
-            ),);
+                      return Center(child:defaultStillLoadingWidget);
                     }
                     if(snapshot.hasData){
           return snapshotHandler(
