@@ -78,10 +78,10 @@ class CategoryFilterState extends State<CategoryFilter>
     if (widget.isModalBottomSheetMode) {
       header = Container(
         width: Get.size.width,
-       margin: EdgeInsets.only(bottom: 10.h),
+        
+      //  margin: EdgeInsets.only(bottom: 10.h),
         // TODO clear (extern) remove (small) edges created by the container that reach into the rounded corners
        decoration: BoxDecoration(
-        // color: Colors.red,
            color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
         ),
@@ -103,22 +103,29 @@ class CategoryFilterState extends State<CategoryFilter>
       ],
       child: Container(
         padding: CategoryFilter.gridItemPadding,
-        child: CustomScrollView(
+        child:
+         CustomScrollView(
             // controller: widget._scrollController,
             cacheExtent: double.maxFinite,
+            shrinkWrap: true,
             slivers: [
               SliverStickyHeader(
-                  header: header,
+                  header: header, 
                   sliver: SliverList(
-                    delegate: SliverChildListDelegate(widget.niceList,
-                        addAutomaticKeepAlives: true),
+                    delegate: SliverChildListDelegate(
+                      
+                      addRepaintBoundaries: true
+
+,                      widget.niceList,
+                        // addAutomaticKeepAlives: true
+                        
+                        ),
                   ))
             ]),
+  
       ),
     );
-  
   }
-
   @override
   bool get wantKeepAlive => true;
 }

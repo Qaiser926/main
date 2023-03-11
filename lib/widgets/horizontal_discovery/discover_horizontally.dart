@@ -65,21 +65,25 @@ class BaseDiscoveryClass extends StatelessWidget {
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
                        Container(
-                        width: Get.size.width*0.6,
+                        constraints: BoxConstraints(
+                          maxWidth: Get.size.width/1.5
+                        ),
+                        // width: Get.size.width*0.6,
                          child: Flexible(
-                                  child: Text(
-                             caption,
-                          softWrap: true,
-                          style: Theme.of(context).textTheme.headlineLarge,
-                                maxLines:3,
-                                overflow: TextOverflow.ellipsis,
-                                // textAlign: TextAlign.end,
-                              
-                              )),
+                           child: Text(
+                               caption,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                                  maxLines:2,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.start,
+                                
+                                ),
+                         ),
                        ),
                  
                       getHorSpace(5.h),
@@ -93,16 +97,19 @@ class BaseDiscoveryClass extends StatelessWidget {
                   ),
                 ),
                 if (showMore & Ids.isNotEmpty)
-                  TextButton(
-                      onPressed: () {
-                        Provider.of<SearchNotifier>(context, listen: false)
-                            .goToShowMorePage(
-                          showMoreCaption: caption,
-                          showMoreIds: Ids,
-                          showMoreCategoryTitle: caption,
-                        );
-                      },
-                      child: Text(AppLocalizations.of(context)!.showMore))
+                  Container(
+                    // width: 100.w,
+                    child: TextButton(
+                        onPressed: () {
+                          Provider.of<SearchNotifier>(context, listen: false)
+                              .goToShowMorePage(
+                            showMoreCaption: caption,
+                            showMoreIds: Ids,
+                            showMoreCategoryTitle: caption,
+                          );
+                        },
+                        child: Text(AppLocalizations.of(context)!.showMore)),
+                  )
               ],
             )),
         getVerSpace(15),

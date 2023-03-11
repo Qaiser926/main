@@ -52,7 +52,7 @@ class CategoryGridItem extends StatelessWidget {
       },
       child: FittedBox(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 4,
+          height: MediaQuery.of(context).size.height/4.2,
           width: MediaQuery.of(context).size.width / 2,
           child: Stack(
             children: [
@@ -67,7 +67,7 @@ class CategoryGridItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
-                            lessListItemColor.withOpacity(.9),
+                            lessListItemColor.withOpacity(0.4),
                             lessListItemColor.withOpacity(0),
                           ],
                           begin: Alignment.bottomCenter,
@@ -116,6 +116,7 @@ class CategoryGridItem extends StatelessWidget {
                       ),
                     ),
                   ),
+              
                 ],
               ),
               IgnorePointer(

@@ -45,8 +45,8 @@ class _MapResultsState extends State<MapResults> {
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
   List<String>? eAIds;
-  int activeIndex=0;
-   final CarouselController carouselController = CarouselController();
+  int activeIndex = 0;
+  final CarouselController carouselController = CarouselController();
 
   @override
   void initState() {
@@ -55,8 +55,6 @@ class _MapResultsState extends State<MapResults> {
     );
     super.initState();
   }
-  bool isEventSelect=false;
-  bool isActivitySelect=false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +66,18 @@ class _MapResultsState extends State<MapResults> {
               future: Provider.of<MapNotifier>(context, listen: false)
                   .getSearchQueryResult(),
               builder: (context, snapshot) {
-                 if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget,);
-                    }
-                    if(snapshot.hasData){
-                return snapshotHandler(context, snapshot, futureMap, []);
-                    }else{
-                      return Center(child: Text("No Data Exit"),);
-                    }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: defaultStillLoadingWidget,
+                  );
+                }
+                if (snapshot.hasData) {
+                  return snapshotHandler(context, snapshot, futureMap, []);
+                } else {
+                  return Center(
+                    child: Text("No Data Exit"),
+                  );
+                }
               });
         });
       } else {
@@ -89,10 +91,11 @@ class _MapResultsState extends State<MapResults> {
               //   AppLocalizations.of(context)!.waitingLocationPermission,
               //   textAlign: TextAlign.center,
               // ),
-              ElevatedButton(onPressed: ()async{
-                  PermissionStatus permission =
-                      await Permission.location.request();
-                   if (permission == PermissionStatus.granted) {
+              ElevatedButton(
+                  onPressed: () async {
+                    PermissionStatus permission =
+                        await Permission.location.request();
+                    if (permission == PermissionStatus.granted) {
                       setState(() {
                         Get.snackbar(
                             titleText:
@@ -101,16 +104,16 @@ class _MapResultsState extends State<MapResults> {
                             "",
                             snackPosition: SnackPosition.BOTTOM,
                             colorText: Colors.white);
-                         Get.to(MainPage(),transition: Transition.fadeIn);
+                        Get.to(MainPage(), transition: Transition.fadeIn);
                       });
                     }
-                  if (permission == PermissionStatus.denied) {
-                    // Get.snackbar('Permission is recommended', "");
-                    Get.to(MainPage(), transition: Transition.fadeIn);
-                    openAppSettings();
-                  }
-              }, child: Text("get Location"))
-
+                    if (permission == PermissionStatus.denied) {
+                      // Get.snackbar('Permission is recommended', "");
+                      Get.to(MainPage(), transition: Transition.fadeIn);
+                      openAppSettings();
+                    }
+                  },
+                  child: Text("get Location"))
             ],
           ),
         );
@@ -123,6 +126,9 @@ class _MapResultsState extends State<MapResults> {
 
     return FlutterMap(
       options: MapOptions(
+
+        // to prevent map to rotate
+        interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
         center: userPosition,
         zoom: 15.0,
         maxZoom: 18.49,
@@ -146,10 +152,10 @@ class _MapResultsState extends State<MapResults> {
 
         Container(
           alignment: Alignment.bottomRight,
-          padding: const EdgeInsetsDirectional.only(start: 8, bottom: 2),
+          padding:  EdgeInsetsDirectional.only(start: 8, bottom: 2),
           child: Row(
             children: [
-            
+             
               getHorSpace(5.h),
               Container(
                   // height: 30.h,
@@ -158,21 +164,21 @@ class _MapResultsState extends State<MapResults> {
                       color: Color(0xff0b151d),
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:  EdgeInsets.all(8.0),
                     child: Text(
                       AppLocalizations.of(context)!.event,
                       style: TextStyle(color: Colors.white),
                     ),
                   )),
               getHorSpace(10.h),
-            
+              
               getHorSpace(5.h),
               Container(
                 decoration: BoxDecoration(
                     color: Color(0xff274a66),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  EdgeInsets.all(8.0),
                   child: Text(AppLocalizations.of(context)!.activity,
                       style: TextStyle(color: Colors.white)),
                 ),
@@ -190,15 +196,14 @@ class _MapResultsState extends State<MapResults> {
           options: MarkerClusterLayerOptions(
             anchor: AnchorPos.align(AnchorAlign.center),
             rotate: false,
-            
             maxClusterRadius: 120,
-            size:const Size(40, 40),
-            fitBoundsOptions:const FitBoundsOptions(
+            size:  Size(40, 40),
+            fitBoundsOptions:  FitBoundsOptions(
               padding: EdgeInsets.all(50),
             ),
             markers: getResultMarkers(),
-            polygonOptions:
-           const PolygonOptions(color: Colors.black12, borderStrokeWidth: 3),
+            polygonOptions:  PolygonOptions(
+                color: Colors.black12, borderStrokeWidth: 3),
             builder: (context, markers) {
               return FloatingActionButton(
                 foregroundColor: Colors.white,
@@ -213,46 +218,55 @@ class _MapResultsState extends State<MapResults> {
     );
   }
 
-  Marker getMarker({required Map<String, dynamic> locationData,
-    required Color markerColor,
-    // required Function() changeMarkerColorPress
-    }) {
+  Marker getMarker(
+      {required Map<String, dynamic> locationData,
+      required Color markerColor,
+      required bool select}) {
+
+    bool selecton=false;
     return Marker(
         width: 50.0,
         height: 50.0,
         rotate: true,
-        point:
-
-         latLng.LatLng(locationData["coordinates"]["latitude"],
+        point: latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
-          onTap: () => {
+              onTap: () => {
                 // TODO (extern) highlight selected marker
                 setState(() {
-                  
+                 selecton = true;
+                  markerColor = Theme.of(context).colorScheme.primary;
+                  print("select value: " + selecton.toString());
                   eAIds = getAllIdsUnderMarker(
-                      locationData["coordinates"]["latitude"],
-                      locationData["coordinates"]["longitude"],
-                      
-                      );
-                      
-                      
+                    locationData["coordinates"]["latitude"],
+                    locationData["coordinates"]["longitude"],
+                  );
+                  print(latLng.LatLng(locationData["coordinates"]["latitude"],
+                      locationData["coordinates"]["longitude"]));
                 })
-                // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+                // NavigatorConstants.sendT
+                //
+                //
+                //
+                // oNext(Routes.detailedEventRoute,
                 //     arguments: {
                 //       NavigatorConstants.EventActivityId: locationData["id"]
                 //     })
               },
-              child: Icon(
+              child: selecton?Icon(
+                Icons.add,
+                size: 44,
+                color: select == true ? Theme.of(context).colorScheme.primary : markerColor,
+              ):
+              Icon(
                 Icons.location_on,
                 size: 44,
-                color: markerColor,
+                color: select == true ? Theme.of(context).colorScheme.primary : markerColor,
               ),
             ));
   }
 
-  List<String> getAllIdsUnderMarker( double latitude, double longitude) {
-    
+  List<String> getAllIdsUnderMarker(double latitude, double longitude) {
     List<String> Ids = [];
     mapResultIds.eventResults.forEach(
       (element) {
@@ -266,6 +280,7 @@ class _MapResultsState extends State<MapResults> {
       (element) {
         if ((element!["coordinates"]["latitude"] == latitude) &
             (element["coordinates"]["longitude"] == longitude)) {
+          print(latitude.toString()+","+longitude.toString());
           Ids.add(element["id"]);
         }
       },
@@ -277,40 +292,42 @@ class _MapResultsState extends State<MapResults> {
     List<Marker> markerList = [];
 
     // TODO (extern) modify code such that the user location icon is never part of a cluster, also make sure the number of the cluster does not rotate
-    markerList.add(Marker(
-        width: 50.0,
-        height: 500.0,
-        rotate: false,
-        builder: (ctx) => Icon(
-          Icons.my_location,
-          size: 22,
-          color: Colors.blue,
-        ),
-         point: userPosition!,
-        )
-        );
+
     // for activities
     //TODO  (extern) align color scheme for event and activity icons.
     mapResultIds.activityResults.forEach((element) {
       markerList.add(getMarker(
-    
-    
-          locationData: element!, markerColor: Color(0xff274a66)));
-          
+          select: false,
+          locationData: element!,
+          markerColor: Color(0xff274a66)));
     });
     mapResultIds.eventResults.forEach((element) {
       markerList.add(getMarker(
+          select: false,
           locationData: element!,
           markerColor: Color(0xff0b151d)));
     });
+    markerList.add(Marker(
+      width: 50.0,
+      height: 500.0,
+      rotate: false,
+      builder: (ctx) => GestureDetector(
+        child: Icon(
+          Icons.my_location,
+          size: 22,
+          color: Colors.blue,
+        ),
+      ),
+      point: userPosition!,
+    ));
     return markerList;
   }
+
   Container buildSummaryCarousel() {
     // TODO clear (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
     return Container(
       margin: EdgeInsets.only(bottom: 45.h),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           CarouselSlider.builder(
@@ -319,11 +336,11 @@ class _MapResultsState extends State<MapResults> {
               height: 150.h,
               viewportFraction: 1,
               initialPage: 0,
-              enableInfiniteScroll: false,
+              enableInfiniteScroll: true,
               reverse: false,
-              onPageChanged: (index,reason){
+              onPageChanged: (index, reason) {
                 setState(() {
-                  activeIndex=index;
+                  activeIndex = index;
                 });
               },
               //autoPlay: true,
@@ -335,18 +352,18 @@ class _MapResultsState extends State<MapResults> {
               scrollDirection: Axis.horizontal,
             ),
             itemCount: eAIds!.length,
-            itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-                Container(
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    Container(
               child: buildSummaryCard(eAIds![itemIndex]),
             ),
           ),
-        buildIndicator()
-           ],
+          buildIndicator(
+              )
+        ],
       ),
     );
   }
-
-
 Widget buildIndicator(){
   return    Container(
         height: 14.h,
@@ -373,31 +390,38 @@ Widget buildIndicator(){
       );
        
 }
+
   KeepAliveFutureBuilder buildSummaryCard(String id) {
     Future<Object> eASummary = RestService().getEASummary(id: id);
     return KeepAliveFutureBuilder(
         future: eASummary,
         builder: (context, snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-            if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator(),);
-                    }
-           if(snapshot.hasData){
-          return snapshotHandler(context, snapshot, buildMapSummary, [context]);
-           }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: defaultStillLoadingWidget);
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.hasData) {
+            return snapshotHandler(
+                context, snapshot, buildMapSummary, [context]);
+          } else {
+            return Center(
+              child: Text("No Data Exit"),
+            );
+          }
         });
   }
 }
 
-Widget buildMapSummary(BuildContext context,
-    Map<String, dynamic> decodedJson,
+Widget buildMapSummary(
+  BuildContext context,
+  Map<String, dynamic> decodedJson,
 ) {
   SummaryEventOrActivity eASummary =
-  SummaryEventOrActivity.fromJson(decodedJson);
+      SummaryEventOrActivity.fromJson(decodedJson);
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(

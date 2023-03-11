@@ -69,10 +69,6 @@ class _TimeFilterState extends State<TimeFilter> {
     endDate = dynamicProvider.endDate;
     super.initState();
   }
-  bool isStartDataSelect=false;
-  bool isEndDataSelect=false;
-  var startDateTime= DateTime.now();
-  var endDateTime=DateTime.now();
 
   // void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
   //  if (args.value is PickerDateRange) {
@@ -86,7 +82,7 @@ class _TimeFilterState extends State<TimeFilter> {
   //       nextWeekendButtonEnabled = false;
   //       dynamicProvider.setTimeCaption(caption: null);
   //     } else if (args.value is DateTime) {
-     
+  //       print("qaiser ");
   //     }
   // }
 
@@ -103,6 +99,7 @@ class _TimeFilterState extends State<TimeFilter> {
     }
     return true;
   }
+
   Widget getTimeButton({required BuildContext context,
     required String caption,
     required Function onTapFunction,
@@ -410,6 +407,35 @@ class _TimeFilterState extends State<TimeFilter> {
     });
   }
 
+  // callback fucniton for onselect on datepicker
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    // TODO: implement your code here
+    print(args.value.startDate);
+    DateTime d=args.value.startDate;
+    print(d.toString());
+    String _startDate =
+        DateFormat('dd.MM.yyyy').format(args.value.startDate);
+    String _endDate =
+        DateFormat('dd.MM.yyyy').format(args.value.endDate ?? args.value.startDate).toString();
+   // startDate=DateTime.parse(_startDate);
+
+    setState(() {
+      thisWeekendButtonEnabled = false;
+      todayButtonEnabled = false;
+      tomorrowButtonEnabled = false;
+      thisWeekButtonEnabled = false;
+      nextWeekButtonEnabled = false;
+      nextWeekendButtonEnabled = false;
+      startDate=args.value.startDate;
+      endDate=args.value.endDate;
+      _dateRangePickerController.selectedRange =
+          PickerDateRange(args.value.startDate, args.value.endDate);
+    });
+
+    print("DAte: "+_startDate);
+    print("End DAte: "+_endDate);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
@@ -430,13 +456,9 @@ class _TimeFilterState extends State<TimeFilter> {
         Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: SfDateRangePicker(
-            onSelectionChanged: (click){
-              
-              // startDate=click as  DateTime;
-                 isStartDataSelect=true;
-            },
+            // on selectedcallbackfunction
+            onSelectionChanged: _onSelectionChanged,
             monthViewSettings: DateRangePickerMonthViewSettings(
-              
               firstDayOfWeek: 1,
             ),
             // marking weekend dates not enabled right now
@@ -469,8 +491,7 @@ class _TimeFilterState extends State<TimeFilter> {
               getTimeBox(
                   context: context,
                   header: AppLocalizations.of(context)!.from,
-                  time:isStartDataSelect?startDateTime: startDate ?? DateTime.now()
-                  ),
+                  time: startDate ?? DateTime.now()),
               Icon(Typicons.minus, color: Theme.of(context).highlightColor),
               getTimeBox(
                   context: context,
