@@ -16,10 +16,8 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../widgets/filter_related/notifiers/map_notifier.dart';
 import '../../widgets/keep_alive_future_builder.dart';
@@ -46,6 +44,8 @@ class _MapResultsState extends State<MapResults> {
   late MapResultIds mapResultIds;
   List<String>? eAIds;
   int activeIndex = 0;
+  int selectedIndex = 10000000000;
+  bool isEventSelected = true;
   final CarouselController carouselController = CarouselController();
 
   @override
@@ -219,11 +219,11 @@ class _MapResultsState extends State<MapResults> {
   }
 
   Marker getMarker(
-      {required Map<String, dynamic> locationData,
+      {required bool isEvent,
+      required int index,
+      required Map<String, dynamic> locationData,
       required Color markerColor,
       required bool select}) {
-
-    bool selecton=false;
     return Marker(
         width: 50.0,
         height: 50.0,
@@ -234,9 +234,10 @@ class _MapResultsState extends State<MapResults> {
               onTap: () => {
                 // TODO (extern) highlight selected marker
                 setState(() {
-                 selecton = true;
+                  this.isEventSelected = isEvent;
+                  this.selectedIndex = index;
                   markerColor = Theme.of(context).colorScheme.primary;
-                  print("select value: " + selecton.toString());
+
                   eAIds = getAllIdsUnderMarker(
                     locationData["coordinates"]["latitude"],
                     locationData["coordinates"]["longitude"],
@@ -253,15 +254,14 @@ class _MapResultsState extends State<MapResults> {
                 //       NavigatorConstants.EventActivityId: locationData["id"]
                 //     })
               },
-              child: selecton?Icon(
-                Icons.add,
-                size: 44,
-                color: select == true ? Theme.of(context).colorScheme.primary : markerColor,
-              ):
-              Icon(
+          child: Icon(
                 Icons.location_on,
                 size: 44,
-                color: select == true ? Theme.of(context).colorScheme.primary : markerColor,
+                color: this.selectedIndex == index
+                    ? (this.isEventSelected == isEvent
+                        ? Theme.of(context).colorScheme.primary
+                        : markerColor)
+                    : markerColor,
               ),
             ));
   }
@@ -295,14 +295,18 @@ class _MapResultsState extends State<MapResults> {
 
     // for activities
     //TODO  (extern) align color scheme for event and activity icons.
-    mapResultIds.activityResults.forEach((element) {
+    mapResultIds.activityResults.asMap().forEach((index, element) {
       markerList.add(getMarker(
+          isEvent: false,
+          index: index,
           select: false,
           locationData: element!,
           markerColor: Color(0xff274a66)));
     });
-    mapResultIds.eventResults.forEach((element) {
+    mapResultIds.eventResults.asMap().forEach((index, element) {
       markerList.add(getMarker(
+          isEvent: true,
+          index: index,
           select: false,
           locationData: element!,
           markerColor: Color(0xff0b151d)));

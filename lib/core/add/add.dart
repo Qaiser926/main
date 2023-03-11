@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:othia/constants/app_constants.dart';
-import 'package:othia/constants/no_internet.dart';
 import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/helpers/diverse.dart';
@@ -54,7 +53,7 @@ class _AddState extends State<Add> {
         detailedEventOrActivity =
             RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
         inputNotifier.isModifyMode = true;
-      } on NoSuchMethodError catch (e) {
+      } on NoSuchMethodError catch (_) {
         // TODO clear (extern) get rid of error, just continue here
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }

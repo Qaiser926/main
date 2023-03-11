@@ -12,7 +12,7 @@ Future<latLng.LatLng?> getLatLongFromAddress(String addressQuery) async {
   } on NoResultFoundException catch (e) {
     // TODO clear (extern) more precise error catch
     Get.snackbar("", "",
-        titleText: Text("No Result Found" + e.toString()),
+        titleText: Text("No Result Found " + e.toString()),
         snackPosition: SnackPosition.BOTTOM,
         colorText: Colors.white);
   } catch (e) {
