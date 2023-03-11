@@ -9,7 +9,7 @@ import 'package:othia/utils/services/rest-api/rest_api_utils.dart';
 import 'package:othia/utils/services/rest-api/rest_base.dart';
 
 import '../../../modules/models/user_info/user_info.dart';
-import '../events/example_event.dart';
+import '../events/record_event.dart';
 import 'amplify/amp.dart';
 
 class RestService {

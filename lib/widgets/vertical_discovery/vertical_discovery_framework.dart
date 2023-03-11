@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-import '../../utils/services/events/example_event.dart';
+import '../../utils/services/events/record_event.dart';
 import '../../utils/services/global_navigation_notifier.dart';
 
 Widget buildVerticalDiscovery(

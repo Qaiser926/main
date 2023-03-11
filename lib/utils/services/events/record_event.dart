@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:uuid/uuid.dart';
 
 import '../rest-api/amplify/amp.dart';
 
@@ -21,7 +20,11 @@ Future<void> recordCustomEvent(
   }
 
   eventParams.forEach((key, value) {
-    eventParameters[key] = json.encode(value);
+    if (['startDateUtc', 'endDateUtc'].contains(key)) {
+      // transform to unix epoch
+      value = DateTime.parse(value).millisecondsSinceEpoch;
+    }
+    eventParameters[key] = value ?? "";
   });
 
   if (eventParams.containsKey('selectedCategoryIds')) {
@@ -44,6 +47,8 @@ Future<void> searchCase(
     required Map<String, dynamic> eventParameters}) async {
   // remove key "selectedCategoryIds"
   eventParameters.remove('selectedCategoryIds');
+  // save a unique searchId for data processing purposes
+  eventParameters['searchId'] = Uuid().v4().toString();
   // log for every categoryId
   eventParams['selectedCategoryIds'].forEach((categoryId) {
     eventParameters['selectedCategoryId'] = categoryId;

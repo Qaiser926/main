@@ -13,7 +13,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../utils/services/rest-api/rest_api_service.dart';
 import '../../modules/models/eA_summary/eA_summary.dart';
-import '../../utils/services/events/example_event.dart';
+import '../../utils/services/events/record_event.dart';
 import '../../utils/ui/ui_utils.dart';
 import '../keep_alive_future_builder.dart';
 
