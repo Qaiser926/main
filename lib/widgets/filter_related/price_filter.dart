@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
@@ -56,31 +57,21 @@ class PriceFilter extends StatefulWidget {
 }
 
 class _PriceFilterState extends State<PriceFilter> {
-double _sliderValue = 0.0;
-  TextEditingController _textFieldController =
-      TextEditingController(text: "0.0");
-
   AbstractQueryNotifier dynamicProvider;
   late RangeValues _values;
+  late TextEditingController minimum;
+  late TextEditingController maximum;
 
   _PriceFilterState(
       {required BuildContext context, required this.dynamicProvider}) {
     _values = dynamicProvider.getPriceRange;
+    _UpdateTextEditior();
   }
- void _updateSliderValue(String value) {
-    setState(() {
-      _sliderValue = double.tryParse(value) ?? 0.0;
-      _textFieldController.text = _sliderValue.toStringAsFixed(1);
-    });
+//UPdate the inital value of controllers
+  _UpdateTextEditior(){
+    minimum = new TextEditingController(text: _values.start.round().toString());
+    maximum = new TextEditingController(text: _values.end.round().toString());
   }
-
-  void _updateTextFieldValue(double value) {
-    setState(() {
-      _sliderValue = value;
-      _textFieldController.text = _sliderValue.toStringAsFixed(1);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
@@ -114,7 +105,12 @@ double _sliderValue = 0.0;
               min: 0,
               max: widget.endValue,
               onChanged: (RangeValues values) {
+                print(widget.startValue);
+                print(_values);
+
                 setState(() {
+                  // RangeValues j=new RangeValues(23, 44);
+                  // _values=j;
                   if (values.end - values.start <= 3) {
                     if (widget.endValue - values.end <= 3) {
                       _values = RangeValues(widget.endValue, widget.endValue);
@@ -128,20 +124,64 @@ double _sliderValue = 0.0;
                   } else {
                     _values = values;
                   }
+                  _UpdateTextEditior();
                 });
               }),
-        
           Padding(
             padding: EdgeInsets.all(20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Adding some funcitonallyi like callback fucntions and other wiht widget
                 getPriceBox(
+                    onTextChanged: (val) {
+                      print("value is: " + val);
+                      if (val == "") {
+                        // controller.text=priceText;
+                      } else {
+                        minimum.text = val;
+                        minimum.selection = TextSelection.fromPosition(
+                            TextPosition(offset: minimum.text.length));
+                        RangeValues j =
+                            new RangeValues(double.parse(val), _values.end);
+                        _values = j;
+                        //print(range);
+
+                        //print(controller.text);
+                      }
+                    },
+                    range: _values.start,
+                    type: "minimum",
+                    controller: minimum,
                     context: context,
                     header: AppLocalizations.of(context)!.minimum,
                     price: _values.start.round().toString()),
-                Icon(Typicons.minus, color: Theme.of(context).highlightColor),
+                GestureDetector(
+                    onTap: () {
+                      print(_values);
+                    },
+                    child: Icon(Typicons.minus,
+                        color: Theme.of(context).highlightColor)),
                 getPriceBox(
+                    onTextChanged: (val) {
+                      print("value is: " + val);
+                      if (val == "") {
+                        // controller.text=priceText;
+                      } else {
+                        maximum.text = val;
+                        maximum.selection = TextSelection.fromPosition(
+                            TextPosition(offset: maximum.text.length));
+                        RangeValues j =
+                            new RangeValues(_values.start, double.parse(val));
+                        _values = j;
+                        //print(range);
+
+                        //print(controller.text);
+                      }
+                    },
+                    range: _values.end,
+                    type: "maximum",
+                    controller: maximum,
                     context: context,
                     header: AppLocalizations.of(context)!.maximum,
                     price: endValue),
@@ -150,6 +190,7 @@ double _sliderValue = 0.0;
           ),
           Padding(
             padding: EdgeInsets.all(20),
+            // Adding some funcitonallyi like callback fucntions and other wiht widget
             child: getShowResultsButton(
                 context: context,
                 functionAccept: dynamicProvider.changePriceRange,
@@ -167,11 +208,18 @@ double _sliderValue = 0.0;
   }
 }
 
-Widget getPriceBox(
-    {required BuildContext context,
-    required String header,
-    required String price}) {
+Widget getPriceBox({
+  required BuildContext context,
+  required String header,
+  required double range,
+  required String type,
+//Add some paramteres for supporting funcionallity on textfield
+  required TextEditingController controller,
+  required String price,
+  required ValueChanged<String>? onTextChanged,
+}) {
   String priceText = "€${price}";
+  print("checnge");
   if (price == AppLocalizations.of(context)!.unlimited) priceText = price;
   return Container(
     width: 110,
@@ -185,16 +233,44 @@ Widget getPriceBox(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(header), 
-      getVerSpace(5),
-       Text(priceText)
+        Text(header),
+        getVerSpace(5),
 
-       
-     
-       
-       ],
+        //change text to TextField for manual input
+        TextFormField(
+          keyboardType: TextInputType.number,
+          onChanged: onTextChanged,
+          controller: controller,
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly,
+            _NumberTextInputFormatter()
+          ],
+          decoration: InputDecoration(
+            //hintText: priceText,
+
+            filled: true,
+            fillColor: Colors.transparent,
+            border: InputBorder.none,
+          ),
+        )
+      ],
     ),
   );
+}
+
+class _NumberTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return TextEditingValue.empty;
+    } else if (int.parse(newValue.text) > 100) {
+      return TextEditingValue(text: '100');
+    } else if (int.parse(newValue.text) < 0) {
+      return TextEditingValue(text: '0');
+    }
+    return newValue;
+  }
 }
 
 String getPriceCaption(

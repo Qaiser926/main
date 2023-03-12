@@ -60,11 +60,10 @@ MapController mapController = MapController();
           children: [
             // markers: Set.of(_marker),
             FlutterMap(
-              
               mapController: mapController,
              
                 options: MapOptions(
-                  
+                  interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
                   center: userPosition,
                   zoom: 15.0,
                   maxZoom: 17,
@@ -77,7 +76,8 @@ MapController mapController = MapController();
                     padding:
                         const EdgeInsetsDirectional.only(end: 8, bottom: 2),
                     child: Text('© OpenStreetMap'),
-                  )
+                  ),
+
                 ],
                 children: [
                   TileLayer(
@@ -166,7 +166,24 @@ MapController mapController = MapController();
               ),
               ElevatedButton(
                 onPressed: () async {
-              
+                  // PermissionStatus permission =
+                  //     await Permission.location.request();
+                  //  if (permission == PermissionStatus.granted) {
+                  //     Get.to(MainPage(),transition: Transition.fadeIn);
+                  //     Get.snackbar(
+                  //           titleText:
+                  //               Center(child: Text("Permission Granted")),
+                  //           "",
+                  //           "",
+                  //           snackPosition: SnackPosition.BOTTOM,
+                  //           colorText: Colors.white);
+                  //   }
+                  // if (permission == PermissionStatus.denied) {
+                  //   // Get.snackbar('Permission is recommended', "");
+                  //   Get.to(MainPage(), transition: Transition.fadeIn);
+                  //   openAppSettings();
+                  // }
+
                   _handleLocationPermission(context);
                   Get.to(MainPage(), transition: Transition.fadeIn);
                 },
@@ -184,21 +201,25 @@ MapController mapController = MapController();
     LocationPermission permission;
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.locationPermissionDeniedMessage)),snackPosition: SnackPosition.BOTTOM);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              AppLocalizations.of(context)!.locationPermissionDeniedMessage)));
       return false;
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-
-         Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.locationPermissionDenied)),snackPosition: SnackPosition.BOTTOM);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.locationPermissionDenied)));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-       Get.snackbar("", "",titleText: Center(child: Text( AppLocalizations.of(context)!.locationPermissionPermanentlyDenied)),snackPosition: SnackPosition.BOTTOM);
-      
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!
+              .locationPermissionPermanentlyDenied)));
       openAppSettings();
       return false;
     }
