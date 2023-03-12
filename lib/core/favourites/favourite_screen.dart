@@ -57,14 +57,9 @@ class _FavouritePageState extends State<FavouritePage>
     return FutureBuilder(
         future: favouriteEA,
         builder: (context, snapshot) {
-           if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-                    if(snapshot.hasData){
+         
           return snapshotHandler(context, snapshot, futureFulfilledWidget, []);
-                    }else{
-                      return Center( child: Text("No Data Exit"),);
-                    }
+                
         });
   }
    final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());

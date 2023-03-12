@@ -70,7 +70,7 @@ class BaseDiscoveryClass extends StatelessWidget {
                       // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
                        Container(
                         constraints: BoxConstraints(
-                          maxWidth: Get.size.width/1.5
+                          maxWidth: Get.size.width/2
                         ),
                         // width: Get.size.width*0.6,
                          child: Flexible(
@@ -78,7 +78,7 @@ class BaseDiscoveryClass extends StatelessWidget {
                                caption,
                             softWrap: true,
                             style: Theme.of(context).textTheme.headlineLarge,
-                                  maxLines:2,
+                                  maxLines:3,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.start,
                                 
@@ -163,15 +163,10 @@ class HorizontalEADiscovery extends StatelessWidget {
               return KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                      if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget,);
-                    }
-                    if(snapshot.hasData){
+                   
                     return snapshotHandler(context, snapshot,
                         getFutureFulfilledContent, [index, context]);
-                         }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+                       
                   });
             }));
   }

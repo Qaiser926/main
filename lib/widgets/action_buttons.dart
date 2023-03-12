@@ -200,14 +200,17 @@ class _AddLikeButtonState extends State<AddLikeButton> {
       return KeepAliveFutureBuilder(
           future: isLiked,
           builder: (context, snapshot) {
-              if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-            if(snapshot.hasData){
-            return snapshotHandler(context, snapshot, getLikeButton, []);
-             }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+          
+           try {
+              return snapshotHandler(context, snapshot, getLikeButton, []);
+           } catch (e) {
+             return Container(
+              child: Center(
+                child: Text("No Data Exit"),
+              ),
+             );
+           }
+         
           });
     } else {
       return buildNotLoggedInLikeButton();

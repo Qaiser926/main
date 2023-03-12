@@ -21,15 +21,10 @@ class OrganizerSection extends StatelessWidget {
     return KeepAliveFutureBuilder(
         future: RestService().getPublicUserInfo(organizerId: organizerId),
         builder: (context, snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-          if(snapshot.hasData){
+          
           return snapshotHandler(
               context, snapshot, getOrganizerWidget, [context]);
-               }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+             
         });
   }
 

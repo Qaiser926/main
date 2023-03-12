@@ -139,12 +139,23 @@ class _PriceFilterState extends State<PriceFilter> {
                       if (val == "") {
                         // controller.text=priceText;
                       } else {
-                        minimum.text = val;
-                        minimum.selection = TextSelection.fromPosition(
-                            TextPosition(offset: minimum.text.length));
-                        RangeValues j =
-                            new RangeValues(double.parse(val), _values.end);
-                        _values = j;
+                        if(int.parse(val)<_values.end){
+                          minimum.text = val;
+                          minimum.selection = TextSelection.fromPosition(
+                              TextPosition(offset: minimum.text.length));
+                          RangeValues j =
+                          new RangeValues(double.parse(val), _values.end);
+                          _values = j;
+                        }
+                        else{
+                          minimum.text = "0";
+                          minimum.selection = TextSelection.fromPosition(
+                              TextPosition(offset: minimum.text.length));
+                          RangeValues j =
+                          new RangeValues(double.parse("0"), _values.end);
+                          _values = j;
+                        }
+
                         //print(range);
 
                         //print(controller.text);
@@ -168,12 +179,25 @@ class _PriceFilterState extends State<PriceFilter> {
                       if (val == "") {
                         // controller.text=priceText;
                       } else {
-                        maximum.text = val;
-                        maximum.selection = TextSelection.fromPosition(
-                            TextPosition(offset: maximum.text.length));
-                        RangeValues j =
-                            new RangeValues(_values.start, double.parse(val));
-                        _values = j;
+
+                        if(int.parse(val)>_values.start){
+                          maximum.text = val;
+                          maximum.selection = TextSelection.fromPosition(
+                              TextPosition(offset: maximum.text.length));
+                          RangeValues j =
+                          new RangeValues(_values.start, double.parse(val));
+                          _values = j;
+                        }
+                        else{
+                          print("asdfdsf");
+                          // maximum.text = "100";
+                          // maximum.selection = TextSelection.fromPosition(
+                          //     TextPosition(offset: maximum.text.length));
+                          // RangeValues j =
+                          // new RangeValues(_values.start, double.parse("100"));
+                          // _values = j;
+                        }
+
                         //print(range);
 
                         //print(controller.text);
@@ -218,7 +242,7 @@ Widget getPriceBox({
   required String price,
   required ValueChanged<String>? onTextChanged,
 }) {
-  String priceText = "€${price}";
+  String priceText = "${price}€";
   print("checnge");
   if (price == AppLocalizations.of(context)!.unlimited) priceText = price;
   return Container(
@@ -238,15 +262,18 @@ Widget getPriceBox({
 
         //change text to TextField for manual input
         TextFormField(
-          keyboardType: TextInputType.number,
+
           onChanged: onTextChanged,
           controller: controller,
+          style: TextStyle(fontSize: 22),
           inputFormatters: <TextInputFormatter>[
             FilteringTextInputFormatter.digitsOnly,
             _NumberTextInputFormatter()
           ],
           decoration: InputDecoration(
             //hintText: priceText,
+            contentPadding: EdgeInsets.zero,
+            prefix: Icon(Icons.currency_pound_rounded,color: Colors.white,size: 18,),
 
             filled: true,
             fillColor: Colors.transparent,
@@ -267,7 +294,7 @@ class _NumberTextInputFormatter extends TextInputFormatter {
     } else if (int.parse(newValue.text) > 100) {
       return TextEditingValue(text: '100');
     } else if (int.parse(newValue.text) < 0) {
-      return TextEditingValue(text: '0');
+      return TextEditingValue(text:  '0');
     }
     return newValue;
   }
@@ -282,13 +309,13 @@ String getPriceCaption(
       if (range.start == 0) {
         return AppLocalizations.of(context)!.free;
       } else {
-        return "€${range.start}";
+        return "${range.start}€";
       }
     }
     if (range.end.round() == DataConstants.PriceRangeEnd) {
-      return "€${range.start.round()} - Max.";
+      return "${range.start.round()}€ - Max.";
     }
-    return "€${range.start.round()} - €${range.end.round()}";
+    return "${range.start.round()}€ - ${range.end.round()}€";
   } else {
     return AppLocalizations.of(context)!.price;
   }

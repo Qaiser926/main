@@ -179,16 +179,11 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                      if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-                  if(snapshot.hasData){
+             
                       return snapshotHandler(context, snapshot, futureHandler,
                         [context, widget.detailedEA.id!],
                         defaultErrorFunction: messageErrorFunction);
-                  }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+               
                   }),
               getVerSpace(10.h),
               Padding(
@@ -297,10 +292,7 @@ class DeleteForwardingPage extends StatelessWidget {
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
-                    if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-                  if(snapshot.hasData){
+                 
                   return snapshotHandler(
                       context, snapshot, goToProfilePage, [context],
                       defaultErrorFunction: (_) => Padding(
@@ -310,9 +302,7 @@ class DeleteForwardingPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.error,
                               ))));
-                  }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+               
                 }),
             getVerSpace(10.h),
             Padding(

@@ -66,18 +66,9 @@ class _MapResultsState extends State<MapResults> {
               future: Provider.of<MapNotifier>(context, listen: false)
                   .getSearchQueryResult(),
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: defaultStillLoadingWidget,
-                  );
-                }
-                if (snapshot.hasData) {
+              
                   return snapshotHandler(context, snapshot, futureMap, []);
-                } else {
-                  return Center(
-                    child: Text("No Data Exit"),
-                  );
-                }
+              
               });
         });
       } else {
@@ -123,7 +114,6 @@ class _MapResultsState extends State<MapResults> {
 
   Widget futureMap(Map<String, dynamic> json) {
     mapResultIds = MapResultIds.fromJson(json);
-
     return FlutterMap(
       options: MapOptions(
 
@@ -136,10 +126,12 @@ class _MapResultsState extends State<MapResults> {
       ),
       nonRotatedChildren: [
         if (eAIds != null)
+
           Container(
             child: buildSummaryCarousel(),
             alignment: Alignment.bottomCenter,
           ),
+
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
@@ -334,6 +326,7 @@ class _MapResultsState extends State<MapResults> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+           buildIndicator(),
           CarouselSlider.builder(
             carouselController: carouselController,
             options: CarouselOptions(
@@ -362,18 +355,17 @@ class _MapResultsState extends State<MapResults> {
               child: buildSummaryCard(eAIds![itemIndex]),
             ),
           ),
-          buildIndicator(
-              )
+         
         ],
       ),
     );
   }
 Widget buildIndicator(){
   return    Container(
+    margin: EdgeInsets.symmetric(horizontal: 25.w),
         height: 14.h,
         width: Get.size.width,
         child: ListView.builder(
-          
           scrollDirection: Axis.horizontal,
           itemCount: eAIds!.length,
           itemBuilder: (context,index){
@@ -400,22 +392,10 @@ Widget buildIndicator(){
     return KeepAliveFutureBuilder(
         future: eASummary,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: defaultStillLoadingWidget);
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasData) {
+       
             return snapshotHandler(
                 context, snapshot, buildMapSummary, [context]);
-          } else {
-            return Center(
-              child: Text("No Data Exit"),
-            );
-          }
+       
         });
   }
 }

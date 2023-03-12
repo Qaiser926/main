@@ -90,7 +90,7 @@ class CategoryGridItem extends StatelessWidget {
                             bottomRight: Radius.circular(30),
                           ),
                         ),
-                        color: lessListItemColor.withOpacity(1),
+                        color: lessListItemColor.withOpacity(0.5),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

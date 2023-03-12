@@ -73,7 +73,9 @@ class CategoryFilterState extends State<CategoryFilter>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    Widget header = SizedBox();
+    Widget header = SizedBox(
+    
+    );
 
     if (widget.isModalBottomSheetMode) {
       header = Container(
@@ -109,9 +111,12 @@ class CategoryFilterState extends State<CategoryFilter>
             cacheExtent: double.maxFinite,
             shrinkWrap: true,
             slivers: [
+          
               SliverStickyHeader(
+              
                   header: header, 
                   sliver: SliverList(
+                    
                     delegate: SliverChildListDelegate(
                       
                       addRepaintBoundaries: true

@@ -242,11 +242,12 @@ class LoginSignUp extends StatelessWidget {
             height: 20,
           ),
           getAssetImage(
-            width: 130,
+            height: 150.h,
+            width: 170.w,
             OthiaConstants.logoName,
           ),
-          const SizedBox(
-            height: 30,
+           SizedBox(
+            height: 25.h,
           ),
           topText != null
               ? Container(

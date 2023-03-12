@@ -37,18 +37,13 @@ Widget buildVerticalDiscovery(
                   future: eASummary,
                   builder: (context, snapshot) {
                     
-                    if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child:defaultStillLoadingWidget);
-                    }
-                    if(snapshot.hasData){
+                
                     return snapshotHandler(
                         context,
                         snapshot,
                         getFutureVerticalDiscovery,
                         [context, actionButtonType]);
-                         }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+                         
                   });
             } else {
               return null;

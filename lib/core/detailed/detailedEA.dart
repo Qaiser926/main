@@ -52,18 +52,17 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
 
   @override
   Widget build(BuildContext context) {
-    return KeepAliveFutureBuilder(
+    return Scaffold(
+      body:  KeepAliveFutureBuilder(
         future: detailedEventOrActivity,
         builder: (context, snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child:defaultStillLoadingWidget);
-                    }
-          if(snapshot.hasData){
+          
           return snapshotHandler(context, snapshot, getContent, []);
-          }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
-        });
+    
+        })
+  ,
+    );
+   
   }
 
   Widget getContent(Map<String, dynamic> decodedJson) {

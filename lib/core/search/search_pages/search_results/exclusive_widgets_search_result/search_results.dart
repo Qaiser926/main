@@ -32,16 +32,24 @@ class _SearchResultsState extends State<SearchResults>
         future: Provider.of<SearchNotifier>(context, listen: false)
             .getSearchQueryResult(),
         builder: (context, snapshot) {
-           if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child:defaultStillLoadingWidget);
-                    }
-                    if(snapshot.hasData){
-          return snapshotHandler(
-              context, snapshot, getFutureFulfilledContent, []);}else{
-                return Center(
-                  child: Text("No Data Exit"),
-                );
-              }
+          //  if(snapshot.connectionState==ConnectionState.waiting){
+          //             return Center(child:defaultStillLoadingWidget);
+          //           }
+          //           if(snapshot.hasData){
+        try {
+            return snapshotHandler(
+              context, snapshot, getFutureFulfilledContent, []);
+        } catch (e) {
+       return   Container(
+        child: Center(child: Text("No Data Exit")),
+       );
+        }
+              
+              // }else{
+              //   return Center(
+              //     child: Text("No Data Exit"),
+              //   );
+              // }
         });
   }
 
