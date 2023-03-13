@@ -55,7 +55,7 @@ class BaseDiscoveryClass extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               crossAxisAlignment: CrossAxisAlignment.start,
+               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
@@ -65,7 +65,7 @@ class BaseDiscoveryClass extends StatelessWidget {
                         : () => {};
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
@@ -111,7 +111,7 @@ class BaseDiscoveryClass extends StatelessWidget {
                             showMoreCategoryTitle: caption,
                           );
                         },
-                        child: Text(AppLocalizations.of(context)!.showMore,style: TextStyle(fontSize: 11.sp),),),
+                        child: Text(AppLocalizations.of(context)!.showMore,style: TextStyle(fontSize: 11.sp),textAlign: TextAlign.center,),),
                   )
               ],
             )),

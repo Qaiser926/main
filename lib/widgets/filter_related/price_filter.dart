@@ -259,11 +259,11 @@ Widget getPriceBox({
       children: [
         Text(header),
         getVerSpace(5),
-
         //change text to TextField for manual input
         TextFormField(
-
+          keyboardType: TextInputType.text,
           onChanged: onTextChanged,
+          textAlign: TextAlign.center,
           controller: controller,
           style: TextStyle(fontSize: 22),
           inputFormatters: <TextInputFormatter>[
@@ -273,8 +273,8 @@ Widget getPriceBox({
           decoration: InputDecoration(
             //hintText: priceText,
             contentPadding: EdgeInsets.zero,
-            prefix: Icon(Icons.currency_pound_rounded,color: Colors.white,size: 18,),
-
+            suffix: Icon(Icons.currency_pound_rounded,color: Colors.white,size: 18,),
+            
             filled: true,
             fillColor: Colors.transparent,
             border: InputBorder.none,

@@ -13,7 +13,7 @@ void dismissKeyboard() {
 void openShare(String shareString, BuildContext context) async {
   urlFileShare(context);
   // await Share.shareXFiles(['/yourPath/myItem.png'], text: 'Image Shared');
-  Share.share(shareString);
+await  Share.share(shareString);
 }
 
 void closeSnackBar(BuildContext context) {

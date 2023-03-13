@@ -16,7 +16,7 @@ class PrivacyScreen extends StatefulWidget {
 
 class _PrivacyScreenState extends State<PrivacyScreen> {
   void backClick() {
-    Get.back();
+    Navigator.pop(context);
   }
 
   @override
@@ -32,7 +32,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Get.back();
+             Navigator.pop(context);
               },
               icon: Icon(
                 Icons.arrow_back,

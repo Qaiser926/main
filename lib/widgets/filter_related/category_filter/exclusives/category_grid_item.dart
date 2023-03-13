@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 
 Widget getCategoryGridItem(
     {required int index,
-      required bool isModalBottomSheetMode,
-      required AbstractQueryNotifier dynamicNotifier}) {
+    required bool isModalBottomSheetMode,
+    required AbstractQueryNotifier dynamicNotifier}) {
   final String categoryId = Categories.categoryIds[index];
 
   return CategoryGridItem(
@@ -47,12 +47,12 @@ class CategoryGridItem extends StatelessWidget {
         dynamicNotifier.changeForFullCategorySearch(
             selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
         if (isModalBottomSheetMode) {
-          Get.back();
+       Navigator.pop(context);
         }
       },
       child: FittedBox(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height/4.7,
+          height: MediaQuery.of(context).size.height / 4,
           width: MediaQuery.of(context).size.width / 2,
           child: Stack(
             children: [
@@ -67,7 +67,7 @@ class CategoryGridItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
-                            lessListItemColor.withOpacity(0.4),
+                            lessListItemColor.withOpacity(0),
                             lessListItemColor.withOpacity(0),
                           ],
                           begin: Alignment.bottomCenter,
@@ -90,7 +90,7 @@ class CategoryGridItem extends StatelessWidget {
                             bottomRight: Radius.circular(30),
                           ),
                         ),
-                        color: lessListItemColor.withOpacity(0.7),
+                        color: lessListItemColor.withOpacity(.7),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,38 +108,35 @@ class CategoryGridItem extends StatelessWidget {
                           const Spacer(),
                           Consumer<AbstractQueryNotifier>(
                               builder: (context, model, child) {
-                                return model.getExpandedIndex == index
-                                    ? const Icon(Icons.expand_less_outlined)
-                                    : const Icon(Icons.expand_more_outlined);
-                              }),
+                            return model.getExpandedIndex == index
+                                ? const Icon(Icons.expand_less_outlined)
+                                : const Icon(Icons.expand_more_outlined);
+                          }),
                         ],
                       ),
                     ),
                   ),
-
                 ],
               ),
               IgnorePointer(
                 child: Consumer<AbstractQueryNotifier>(
                     builder: (context, model, child) {
-                      return ((model.getExpandedIndex == index) |
-                      model.isCategorySelected(categoryId: categoryId))
-                          ? Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border:
-                            Border.all(color: primaryColor, width: 3)),
-                      )
-                          : const SizedBox.shrink();
-                    }),
+                  return ((model.getExpandedIndex == index) |
+                          model.isCategorySelected(categoryId: categoryId))
+                      ? Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              border:
+                                  Border.all(color: primaryColor, width: 3)),
+                        )
+                      : const SizedBox.shrink();
+                }),
               ),
             ],
           ),
         ),
       ),
     );
-
-
   }
 
   void onLowerAreaTapped(BuildContext context) {

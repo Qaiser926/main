@@ -67,45 +67,47 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
         child: Scaffold(
             body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              getVerSpace(70.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(AppLocalizations.of(context)!.share,
-                      style: Theme.of(context).textTheme.headlineLarge)
-                ],
-              ),
-              getVerSpace(30.h),
-              RepaintBoundary(
-                key: _globalKey,
-                child: QrImage(
-                  data: '${eAShareLinkBuilder(widget.detailedEA.id!)}',
-                  version: QrVersions.auto,
-                  foregroundColor: Colors.white,
-                  backgroundColor: Theme.of(context).colorScheme.tertiary,
-                  size: 200.0,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                getVerSpace(70.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(AppLocalizations.of(context)!.share,
+                        style: Theme.of(context).textTheme.headlineLarge)
+                  ],
                 ),
-              ),
-              getVerSpace(30.h),
-              buildShareButtons(),
-              getVerSpace(10.h),
-              Padding(
-                padding: EdgeInsets.only(bottom: 15.h, top: 10.h),
-                child: Divider(thickness: 2.h),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(AppLocalizations.of(context)!.navigation,
-                      style: Theme.of(context).textTheme.headlineLarge)
-                ],
-              ),
-              getVerSpace(20.h),
-              buildNavigationBox(),
-            ],
+                getVerSpace(30.h),
+                RepaintBoundary(
+                  key: _globalKey,
+                  child: QrImage(
+                    data: '${eAShareLinkBuilder(widget.detailedEA.id!)}',
+                    version: QrVersions.auto,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.tertiary,
+                    size: 200.0,
+                  ),
+                ),
+                getVerSpace(30.h),
+                buildShareButtons(),
+                getVerSpace(10.h),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15.h, top: 10.h),
+                  child: Divider(thickness: 2.h),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(AppLocalizations.of(context)!.navigation,
+                        style: Theme.of(context).textTheme.headlineLarge)
+                  ],
+                ),
+                getVerSpace(20.h),
+                buildNavigationBox(),
+              ],
+            ),
           ),
         )));
   }
@@ -134,8 +136,10 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
             caption: Padding(
               padding: EdgeInsets.all(8.h),
               child: Container(
+
                 width: 110.h,
                 child: Row(
+
                   children: [
                     Text(
                       AppLocalizations.of(context)!.shareLink,

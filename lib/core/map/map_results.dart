@@ -56,6 +56,7 @@ class _MapResultsState extends State<MapResults> {
     super.initState();
   }
 
+   
   @override
   Widget build(BuildContext context) {
     return Consumer<UserPositionNotifier>(builder: (context, model, child) {
@@ -325,19 +326,23 @@ class _MapResultsState extends State<MapResults> {
 
   Container buildSummaryCarousel() {
     // TODO clear (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
-    return Container(
+    return 
+    Container(
       margin: EdgeInsets.only(bottom: 20.h),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-           buildIndicator(),
+          
+         eAIds!.length<=22?  indicator():  buildIndicator(),
           CarouselSlider.builder(
             carouselController: carouselController,
             options: CarouselOptions(
               height: 150.h,
+              
               viewportFraction: 1,
               initialPage: 0,
-              enableInfiniteScroll: true,
+              enableInfiniteScroll: false,
               reverse: false,
               onPageChanged: (index, reason) {
                 setState(() {
@@ -364,17 +369,53 @@ class _MapResultsState extends State<MapResults> {
       ),
     );
   }
+
+  Container indicator() {
+    return Container(
+    width: Get.size.width,
+    child: SingleChildScrollView(
+      child: Row(
+        
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: eAIds!.asMap().entries.map((entry) {
+          return GestureDetector(
+            onTap:() => carouselController.animateToPage(entry.key) ,
+            child:eAIds!.length==1?Container(): Container(
+                    width: activeIndex == entry.key ? 15 : 11,
+                    height: activeIndex == entry.key ? 15 : 11,
+                    
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 2.0,
+                    ),
+                    decoration: BoxDecoration(
+                        // borderRadius: BorderRadius.circular(10),
+                        shape:  BoxShape.circle,
+                        color: activeIndex == entry.key
+                            ?  Color(0xff274a66)
+                            :Color(0xff274a66).withOpacity(0.4)),
+                  ),
+                
+          );
+        }).toList(),
+      ),
+    ),
+  );
+  }
 Widget buildIndicator(){
   return    Container(
-    margin: EdgeInsets.symmetric(horizontal: 25.w),
-        height: 14.h,
-        width: Get.size.width,
+    margin: EdgeInsets.symmetric(horizontal:eAIds!.length<=20? 105.w:25.w),
+       
+        constraints: BoxConstraints(
+          maxWidth: Get.size.width,
+           maxHeight: 14.h,
+        ),
         child: ListView.builder(
+          
           scrollDirection: Axis.horizontal,
           itemCount: eAIds!.length,
           itemBuilder: (context,index){
-            return Container(
-              padding: EdgeInsets.only(bottom: 20),
+            return eAIds!.length==1?Container(): Container(
+              // margin: EdgeInsets.only(top: 20),
                       width: activeIndex == index ? 15 : 11,
                       height: activeIndex == index ? 15 : 11,
                       margin: const EdgeInsets.symmetric(
@@ -428,3 +469,4 @@ Widget buildMapSummary(
     ),
   );
 }
+

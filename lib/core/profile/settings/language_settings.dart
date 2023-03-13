@@ -19,7 +19,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   bool isEnglishSelected = false;
 
   void backClick() {
-    Get.back();
+  Navigator.pop(context);
   }
 
   @override
@@ -49,7 +49,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           toolbarHeight: 53.h,
           leading: IconButton(
               onPressed: () {
-                Get.back();
+               Navigator.pop(context);
               },
               icon: Icon(
                 Icons.arrow_back,

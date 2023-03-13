@@ -31,7 +31,8 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   void backClick() {
-    Get.back();
+  
+    Navigator.pop(context);
   }
    late bool isProfileView;
 
@@ -49,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         appBar: AppBar(
             leading: IconButton(
                 onPressed: () {
-                  Get.back();
+                  Navigator.pop(context);
                 },
                 icon: Icon(
                   Icons.arrow_back,

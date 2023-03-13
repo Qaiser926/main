@@ -110,8 +110,8 @@ class CategoryFilterState extends State<CategoryFilter>
                     delegate: SliverChildListDelegate(
 
                       addRepaintBoundaries: false,
-                     widget.niceList
-                        // addAutomaticKeepAlives: true
+                     widget.niceList,
+                        addAutomaticKeepAlives: true
                         ),
                   ))
             ]),

@@ -67,7 +67,7 @@ class _AddState extends State<Add> {
   void backFunction() {
     int targetPage = switchPagesNotifier.currentPage - 1;
     if (targetPage < 0) {
-      Get.back();
+    Navigator.pop(context);
     } else {
       pageController.jumpToPage(targetPage);
     }
@@ -100,6 +100,9 @@ class _AddState extends State<Add> {
           child: Scaffold(
             appBar: AppBar(
              automaticallyImplyLeading: false,
+              leading: IconButton(icon: Icon(Icons.arrow_back,color: Theme.of(context).colorScheme.primary,),onPressed: (){
+                Navigator.pop(context);
+              }),
               centerTitle: true,
               title:     Consumer<SwitchAddPageNotifier>(
                   builder: (context, switchPageModel, child) {

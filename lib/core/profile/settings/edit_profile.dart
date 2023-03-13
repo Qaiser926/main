@@ -60,10 +60,11 @@ class _EditProfileState extends State<EditProfile> {
               height: 1000,
               child: Scaffold(
                 appBar: AppBar(
+
                     // TODO clear (extern) align design
                     leading: IconButton(
                         onPressed: () {
-                          Get.back();
+                         Navigator.pop(context);
                         },
                         icon: Icon(
                           Icons.arrow_back,
@@ -73,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
                     elevation: 0,
                     title: Text(AppLocalizations.of(context)!.editProfile),
                     centerTitle: true,
-                    automaticallyImplyLeading: false),
+                    automaticallyImplyLeading: true),
                 bottomNavigationBar: getDeleteButton(context),
                 body: Consumer<UserInfoNotifier>(
                     builder: (context, model, child) {

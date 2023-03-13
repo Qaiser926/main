@@ -48,11 +48,11 @@ class Categories {
           topRight: Radius.circular(30)
       ),
       child: Container(
-        height: Get.size.height/4.7,
+        height: Get.size.height/4,
         child: Image(
           image: image.image,
           fit: BoxFit.cover,
-          height: Get.size.height/4.7,
+          height: Get.size.height/4,
         ),
       ),
     );
