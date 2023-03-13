@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get/get.dart';
 
 import '../utils/ui/ui_utils.dart';
 import 'app_constants.dart';
@@ -41,15 +42,18 @@ class Categories {
     return ClipRRect(
       clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.only(
-          bottomLeft: Radius.zero,
-          bottomRight: Radius.zero,
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30)
       ),
-      child: Image(
-        image: image.image,
-        fit: BoxFit.cover,
-        height: WidgetConstants.categoryGridItemHeight,
+      child: Container(
+        height: Get.size.height/4.7,
+        child: Image(
+          image: image.image,
+          fit: BoxFit.cover,
+          height: Get.size.height/4.7,
+        ),
       ),
     );
   }

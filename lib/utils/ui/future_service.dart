@@ -109,7 +109,7 @@ Widget snapshotHandler(
     case ConnectionState.done:
       if (snapshot.hasError) {
         Get.snackbar("", "",
-            titleText: Text(snapshot.error),
+            titleText: Text(snapshot.error.toString()),
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white);
         return defaultErrorFunction(snapshot, context);

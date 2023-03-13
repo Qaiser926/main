@@ -69,14 +69,14 @@ class OrganizerSection extends StatelessWidget {
                   userInfo.profileName,
                   overflow: TextOverflow.ellipsis,
                 ),
-                // Text(
-                //   userInfo.profileEmail,
-                //   overflow: TextOverflow.ellipsis,
-                // ),
-                SelectableText(
-                  // TODO clear (extern) email must be copyable
+                Text(
                   userInfo.profileEmail,
+                  overflow: TextOverflow.ellipsis,
                 ),
+                // SelectableText(
+                //   // TODO clear (extern) email must be copyable
+                //   userInfo.profileEmail,
+                // ),
               ],
             )),
             getHorSpace(5.h),

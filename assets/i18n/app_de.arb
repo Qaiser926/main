@@ -173,7 +173,7 @@
  "forbiddenErrorMessage": "403 Error - Dir fehlen die Berechtigungen für die Aktion.",
     "notFoundErrorMessage": "404 Error - Unser Server konnte die angefragte Resource nicht finden.",
     "internalServerError": "50X Error - Aufgrund eines Server-Fehlers konnte die Anfrage nicht ausgeführt werden. Bitte kontaktiere uns, sollte der Fehler wiederholt auftreten.",
-    "defaultRequestErrorMessage": "Kein Datenausgang.",
+    "defaultRequestErrorMessage": "Ein unerwarteter Fehler ist aufgetreten.",
   "navigation": "Navigation",
   "shareLink": "Teile Link",
   "storeQRCode": "QR Code speichern",

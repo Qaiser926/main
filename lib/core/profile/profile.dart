@@ -185,7 +185,7 @@ mainBody(){
                   context, snapshot, getProfilePage, [context],
                   defaultErrorFunction: messageErrorFunction));
         }else{
-                    return Center(child: Text("No Data Exit"),);
+                    return Center(child: Text("No Internet"),);
                   }
         });
   }

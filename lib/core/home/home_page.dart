@@ -93,14 +93,14 @@ class _HomePageState extends State<HomePage> {
     return KeepAliveFutureBuilder(
         future: futureHomePageIds,
         builder: (context, snapshot) {
-            if(snapshot.connectionState==ConnectionState.waiting){
-                      return Center(child: defaultStillLoadingWidget);
-                    }
-          if(snapshot.hasData){
+          //   if(snapshot.connectionState==ConnectionState.waiting){
+          //             return Center(child: defaultStillLoadingWidget);
+          //           }
+          // if(snapshot.hasData){
           return snapshotHandler(context, snapshot, getHomePage, []);
-           }else{
-                    return Center(child: Text("No Data Exit"),);
-                  }
+          //  }else{
+          //           return Center(child: Text("No Data Exit"),);
+          //         }
       
         });
   }

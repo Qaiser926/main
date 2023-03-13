@@ -185,9 +185,12 @@ class _MapResultsState extends State<MapResults> {
           userAgentPackageName: 'othia.de',
         ),
         MarkerClusterLayerWidget(
+
           options: MarkerClusterLayerOptions(
+
             anchor: AnchorPos.align(AnchorAlign.center),
             rotate: false,
+
             maxClusterRadius: 120,
             size:  Size(40, 40),
             fitBoundsOptions:  FitBoundsOptions(
@@ -304,6 +307,7 @@ class _MapResultsState extends State<MapResults> {
           markerColor: Color(0xff0b151d)));
     });
     markerList.add(Marker(
+
       width: 50.0,
       height: 500.0,
       rotate: false,
@@ -322,7 +326,7 @@ class _MapResultsState extends State<MapResults> {
   Container buildSummaryCarousel() {
     // TODO clear (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
     return Container(
-      margin: EdgeInsets.only(bottom: 45.h),
+      margin: EdgeInsets.only(bottom: 20.h),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -370,6 +374,7 @@ Widget buildIndicator(){
           itemCount: eAIds!.length,
           itemBuilder: (context,index){
             return Container(
+              padding: EdgeInsets.only(bottom: 20),
                       width: activeIndex == index ? 15 : 11,
                       height: activeIndex == index ? 15 : 11,
                       margin: const EdgeInsets.symmetric(
@@ -378,8 +383,8 @@ Widget buildIndicator(){
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                           color: activeIndex == index
-                              ? Theme.of(context).colorScheme.inversePrimary
-                              :Colors.white60),
+                              ? Color(0xff274a66)
+                              :Color(0xff274a66).withOpacity(0.4)),
                     );
           },
         ),

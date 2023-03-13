@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:readmore/readmore.dart';
 
@@ -57,15 +58,23 @@ Widget getMultilineCustomFontRestricted({
   FontWeight fontWeight = FontWeight.normal,
   TextAlign textAlign = TextAlign.start,
 }) {
-  return ReadMoreText(
-    text,
-    trimLines: maxLines,
-    trimMode: TrimMode.Line,
-    trimCollapsedText: ' Read more',
-    trimExpandedText: ' Show less',
-    textAlign: textAlign,
-    style: textTheme,
-    lessStyle: textTheme,
-    moreStyle: textTheme,
+
+  return GestureDetector(
+    onTap: (){
+      Clipboard.setData(ClipboardData(text: text));
+
+    },
+    child: ReadMoreText(
+      text,
+
+      trimLines: maxLines,
+      trimMode: TrimMode.Line,
+      trimCollapsedText: ' Read more',
+      trimExpandedText: ' Show less',
+      textAlign: textAlign,
+      style: textTheme,
+      lessStyle: textTheme,
+      moreStyle: textTheme,
+    ),
   );
 }

@@ -49,8 +49,7 @@ class CategoryFilter extends StatefulWidget {
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
-      EdgeInsets.symmetric(horizontal: 10);
-
+      EdgeInsets.only(left: 10,right: 10,top: 5);
   CategoryFilter(
       {super.key,
       required this.isModalBottomSheetMode,
@@ -69,23 +68,17 @@ class CategoryFilterState extends State<CategoryFilter>
   CategoryFilterState({required this.dynamicProvider}) {
     selectedCategoryIds = dynamicProvider.getSelectedSubcategoryIds;
   }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    Widget header = SizedBox(
-    
-    );
-
+    Widget header = SizedBox();
     if (widget.isModalBottomSheetMode) {
       header = Container(
-        width: Get.size.width,
-        
-      //  margin: EdgeInsets.only(bottom: 10.h),
+        // width: Get.size.width,
         // TODO clear (extern) remove (small) edges created by the container that reach into the rounded corners
        decoration: BoxDecoration(
            color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(0.5),topRight: Radius.circular(1))
         ),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,9 +87,9 @@ class CategoryFilterState extends State<CategoryFilter>
               CloseButton()
             ]),
       );
-   
+
     }
-    return 
+    return
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -111,23 +104,19 @@ class CategoryFilterState extends State<CategoryFilter>
             cacheExtent: double.maxFinite,
             shrinkWrap: true,
             slivers: [
-          
               SliverStickyHeader(
-              
-                  header: header, 
+                  header: header,
                   sliver: SliverList(
-                    
                     delegate: SliverChildListDelegate(
-                      
-                      addRepaintBoundaries: true
 
-,                      widget.niceList,
+                      addRepaintBoundaries: false,
+                     widget.niceList
                         // addAutomaticKeepAlives: true
-                        
                         ),
                   ))
             ]),
-  
+
+
       ),
     );
   }

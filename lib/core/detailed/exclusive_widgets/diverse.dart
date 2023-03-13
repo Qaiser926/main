@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
@@ -64,7 +65,7 @@ class IconRow extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pop();
+            Get.back();
           },
           child: const BackButton(),
         ),

@@ -23,9 +23,9 @@ class ExpandedWidget<AbstractSearchNotifier> extends StatefulWidget {
     required this.categoryIndex,
     required this.dynamicNotifier,
   }) : subcategoryIds = categoryIdToSubcategoryIds
-                .containsKey(Categories.categoryIds[categoryIndex])
-            ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
-            : [];
+      .containsKey(Categories.categoryIds[categoryIndex])
+      ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
+      : [];
 
   @override
   State<ExpandedWidget> createState() =>
@@ -46,9 +46,9 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
   _ExpandedWidgetState({
     required this.categoryIndex,
   }) : subcategoryIds = categoryIdToSubcategoryIds
-                .containsKey(Categories.categoryIds[categoryIndex])
-            ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
-            : [];
+      .containsKey(Categories.categoryIds[categoryIndex])
+      ? categoryIdToSubcategoryIds[Categories.categoryIds[categoryIndex]]!
+      : [];
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
 
   @override
   Widget build(BuildContext context) {
-   
+
     var secHei = (subcategoryIds.length * singleExpandedHeight) +
         containerMarginBottom +
         containerMarginTop +
@@ -73,38 +73,38 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
           // height: expanded ? secHei : 0,
           child: expanded
               ? Container(
-                  decoration: BoxDecoration(
-                    color: listItemColor,
-                    borderRadius: BorderRadius.circular(borderRadius),
-                  ),
+            decoration: BoxDecoration(
+              color: listItemColor,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
             child: Consumer<AbstractQueryNotifier>(
-                      builder: (context, model, child) {
-                    bool closeDialog = true;
-                    if (model.currentIndex ==
-                        NavigatorConstants.SearchPageIndex) closeDialog = false;
-                    return Container(
-                      margin: EdgeInsets.only(
-                        bottom: containerMarginBottom,
-                        top: containerMarginTop,
-                        left: 10.h,
-                        right: 10.h,
-                      ),
-                      child: Column(
-                        children: getSubcategoryExpandableContent(
-                            context, widget.dynamicNotifier, closeDialog),
-                      ),
-                    );
-                  }),
-                )
+                builder: (context, model, child) {
+                  bool closeDialog = true;
+                  if (model.currentIndex ==
+                      NavigatorConstants.SearchPageIndex) closeDialog = false;
+                  return Container(
+                    margin: EdgeInsets.only(
+                      bottom: containerMarginBottom,
+                      top: containerMarginTop,
+                      left: 10.h,
+                      right: 10.h,
+                    ),
+                    child: Column(
+                      children: getSubcategoryExpandableContent(
+                          context, widget.dynamicNotifier, closeDialog),
+                    ),
+                  );
+                }),
+          )
               : const SizedBox.shrink(),
         );
       } else {
         //TODO (extern) Error handling
         return const Text("An error occured");
-      
+
       }
     });
-  
+
   }
 
   List<Widget> getSubcategoryExpandableContent(BuildContext context,
@@ -137,14 +137,14 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
 
   Widget getSubcategoryTextButtons(
       {required BuildContext context,
-      required AbstractQueryNotifier dynamicNotifier}) {
+        required AbstractQueryNotifier dynamicNotifier}) {
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
       return Wrap(
         crossAxisAlignment: WrapCrossAlignment.start,
         alignment: WrapAlignment.start,
         children: List<Widget>.generate(
           subcategoryIds.length,
-          (subcategoryIndex) => SizedBox(
+              (subcategoryIndex) => SizedBox(
             height: singleExpandedHeight,
             // width: singleExpandedWidth,
             child: GestureDetector(
@@ -159,7 +159,7 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
                 margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   border: model.isSubcategorySelected(
-                          subcategoryIds[subcategoryIndex])
+                      subcategoryIds[subcategoryIndex])
                       ? Border.all(color: primaryColor, width: 2.5)
                       : Border.all(color: bgColor, width: 2.5),
                   borderRadius: BorderRadius.circular(18),

@@ -175,7 +175,7 @@
 "forbiddenErrorMessage": "403 Error - You do not have the privileges to access this resource.",
    "notFoundErrorMessage": "404 Error - The requested resource could not be found.",
    "internalServerError": "50X Error - An internal server error happened. If the error repeats, please contact us.",
-   "defaultRequestErrorMessage": "No Data Exit.",
+   "defaultRequestErrorMessage": "An unexpected error occurred.",
    "navigation": "Navigation",
    "shareLink": "Share Link",
    "storeQRCode": "Store QR code",
