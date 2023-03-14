@@ -3,6 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:othia/config/routes/routes.dart';
@@ -15,6 +16,7 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/horizontal_discovery/discover_horizontally.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../utils/services/events/get_user_time.dart';
 
@@ -105,6 +107,7 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+
   Widget getHomePage(Map<String, dynamic> jsonData) {
     HomePageIds homePageIds = HomePageIds.fromJson(jsonData);
 
@@ -112,6 +115,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
       children: [
         MapPicture(),
+      
         Container(
           child: BaseDiscoveryClass(
             caption: AppLocalizations.of(context)!.compingUpEvents,

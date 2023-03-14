@@ -107,27 +107,30 @@ class _AddState extends State<Add> {
               title:     Consumer<SwitchAddPageNotifier>(
                   builder: (context, switchPageModel, child) {
                     // TODO clear (extern) align that this button row is always aligned central for both languages
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildUpperNavigationElement(
-                            context: context,
-                            index: 0,
-                            switchPageModel: switchPageModel),
-                        getArrowIcon(context),
-                        buildUpperNavigationElement(
-                            context: context,
-                            index: 1,
-                            switchPageModel: switchPageModel),
-                        getArrowIcon(context),
-                        buildUpperNavigationElement(
-                            context: context,
-                            index: 2,
-                            switchPageModel: switchPageModel),
-                        getHorSpace(20.w)
-                      ],
+                    return Container(
+                      margin: EdgeInsets.only(right: 15.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildUpperNavigationElement(
+                              context: context,
+                              index: 0,
+                              switchPageModel: switchPageModel),
+                          getArrowIcon(context),
+                          buildUpperNavigationElement(
+                              context: context,
+                              index: 1,
+                              switchPageModel: switchPageModel),
+                          getArrowIcon(context),
+                          buildUpperNavigationElement(
+                              context: context,
+                              index: 2,
+                              switchPageModel: switchPageModel),
+                          getHorSpace(25.w)
+                        ],
+                      ),
                     );
                   })
               ,
@@ -231,6 +234,9 @@ class _AddState extends State<Add> {
           {pageController.jumpToPage(index), closeSnackBar(context)},
           child: Container(
             // height: 30.h,
+            constraints: BoxConstraints(
+              maxWidth: 58.w
+            ),
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index
                     ? Theme.of(context).colorScheme.primary
@@ -255,7 +261,7 @@ class _AddState extends State<Add> {
   Icon getArrowIcon(BuildContext context) {
     return Icon(
       Icons.arrow_forward,
-      size: 17.h,
+      size: 15.h,
       color: Theme.of(context).colorScheme.primary,
     );
   }
