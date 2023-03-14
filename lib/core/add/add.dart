@@ -108,7 +108,7 @@ class _AddState extends State<Add> {
                   builder: (context, switchPageModel, child) {
                     // TODO clear (extern) align that this button row is always aligned central for both languages
                     return Container(
-                      margin: EdgeInsets.only(right: 15.w),
+                     
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,7 +128,7 @@ class _AddState extends State<Add> {
                               context: context,
                               index: 2,
                               switchPageModel: switchPageModel),
-                          getHorSpace(25.w)
+                          getHorSpace(18.w)
                         ],
                       ),
                     );
@@ -228,15 +228,15 @@ class _AddState extends State<Add> {
     };
 
     return Padding(
-        padding: EdgeInsets.only(right: 7.w,left: 3.w),
+        padding: EdgeInsets.only(right: 2.w,left: 2.w),
         child: GestureDetector(
           onTap: () =>
           {pageController.jumpToPage(index), closeSnackBar(context)},
           child: Container(
             // height: 30.h,
-            constraints: BoxConstraints(
-              maxWidth: 58.w
-            ),
+            // constraints: BoxConstraints(
+            //   maxWidth: 58.w
+            // ),
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index
                     ? Theme.of(context).colorScheme.primary
@@ -250,7 +250,7 @@ class _AddState extends State<Add> {
                 padding: EdgeInsets.all(4.5.h),
                 child: Text(
                   navigationCaptions[index]!,
-                  style: TextStyle(fontSize: 12.sp),
+                  style: TextStyle(fontSize: 10.sp),
                 ),
               ),
             ),
@@ -261,7 +261,7 @@ class _AddState extends State<Add> {
   Icon getArrowIcon(BuildContext context) {
     return Icon(
       Icons.arrow_forward,
-      size: 15.h,
+      size: 14.h,
       color: Theme.of(context).colorScheme.primary,
     );
   }
