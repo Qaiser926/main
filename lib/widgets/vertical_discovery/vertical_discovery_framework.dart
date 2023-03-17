@@ -20,6 +20,7 @@ Widget buildVerticalDiscovery(
     required ActionButtonType actionButtonType}) {
   if (Ids.isEmpty) {
     return const SliverToBoxAdapter();
+    // return Container();
   } else {
     return MultiSliver(
       pushPinnedChildren: true,
@@ -41,8 +42,10 @@ Widget buildVerticalDiscovery(
                     return snapshotHandler(
                         context,
                         snapshot,
+                        
                         getFutureVerticalDiscovery,
-                        [context, actionButtonType]);
+                        [context, actionButtonType]
+                        );
                          
                   });
             } else {
@@ -50,6 +53,7 @@ Widget buildVerticalDiscovery(
             }
           }),
         )
+      
       ],
     );
   }

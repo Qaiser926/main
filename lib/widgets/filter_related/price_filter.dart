@@ -273,7 +273,7 @@ Widget getPriceBox({
           decoration: InputDecoration(
             //hintText: priceText,
             contentPadding: EdgeInsets.zero,
-            suffix: Icon(Icons.currency_pound_rounded,color: Colors.white,size: 18,),
+            suffix: Icon(Icons.euro,color: Colors.white,size: 18,),
             
             filled: true,
             fillColor: Colors.transparent,

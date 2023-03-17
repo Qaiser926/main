@@ -76,8 +76,7 @@ class BaseDiscoveryClass extends StatelessWidget {
                             maxWidth: Get.size.width/1.5
                           ),
                           // width: Get.size.width*0.6,
-                           child: Flexible(
-                             child: Text(
+                           child:Text(
                                  caption,
                               softWrap: true,
                               style: Theme.of(context).textTheme.headlineLarge,
@@ -85,7 +84,6 @@ class BaseDiscoveryClass extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.start,
                                   ),
-                           ),
                          ),
                        ),
                  
@@ -120,9 +118,7 @@ class BaseDiscoveryClass extends StatelessWidget {
         if (Ids.isEmpty) getNoResultsMessage(context),
       ],
     );
-  
-  
-  
+
   }
 }
 

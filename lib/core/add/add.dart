@@ -39,7 +39,7 @@ class _AddState extends State<Add> {
   AddEANotifier inputNotifier = AddEANotifier();
   late Future<Object> detailedEventOrActivity;
   late SwitchPages switchPages;
- final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
+ final FavoriteController studentFindTutorsController=Get.put(FavoriteController());
   @override
   void initState() {
     switchPages = SwitchPages(

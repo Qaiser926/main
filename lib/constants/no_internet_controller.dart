@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 
 
-class StudentLocationController extends GetxController{
+class FavoriteController extends GetxController{
 
   var connectionStatus=0.obs;
   final Connectivity _connectivity=Connectivity();

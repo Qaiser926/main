@@ -38,7 +38,7 @@ Widget getActionButton(
   return Function.apply(
       getActionButtonFunction, [], {#context: context, #eASummary: eASummary});
 }
-
+bool istrue=false;
 Widget getFavouriteLikeButton({
   required BuildContext context,
   required SummaryEventOrActivity eASummary,
@@ -46,7 +46,7 @@ Widget getFavouriteLikeButton({
   return Row(children: [
     IconButton(
         constraints: BoxConstraints(maxWidth: 50.h),
-        icon: const Icon(
+        icon:const  Icon(
           Icons.favorite,
         ),
         onPressed: () {
@@ -105,6 +105,7 @@ Widget getFavouriteLikeButton({
             }
           });
         }),
+  
   ]);
 }
 
@@ -284,7 +285,7 @@ class _LikeButtonState extends State<LikeButton> {
         Icons.favorite,
         color: widget.isLiked
             ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.tertiaryContainer,
+            : Theme.of(context).colorScheme.inversePrimary,
       ),
     );
   }

@@ -312,6 +312,7 @@ Widget buildOpeningTimeBoxes(
           }
         }),
   );
+
 }
 
 Future displayTimePicker(

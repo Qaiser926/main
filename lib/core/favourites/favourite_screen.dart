@@ -62,7 +62,7 @@ class _FavouritePageState extends State<FavouritePage>
                 
         });
   }
-   final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
+   final FavoriteController favoriteController=Get.put(FavoriteController());
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +74,12 @@ class _FavouritePageState extends State<FavouritePage>
           tabController: _tabController,
           context: context,
         ),
-        body:Obx(()=>Container(
-        child: studentFindTutorsController.connectionStatus.value==1?  getLoggedInSensitiveBody(
+        body:
+        Obx(()=>Container(
+        child: favoriteController.connectionStatus.value==1?  getLoggedInSensitiveBody(
             loggedInWidget: getLoggedInBody(),
             context: context)
-      :studentFindTutorsController.connectionStatus.value==2?  getLoggedInSensitiveBody(
+      :favoriteController.connectionStatus.value==2?  getLoggedInSensitiveBody(
             loggedInWidget: getLoggedInBody(),
             context: context):Container(
         width: Get.size.width,

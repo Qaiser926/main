@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
    final connectivity=Connectivity();
   
-     final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
+     final FavoriteController studentFindTutorsController=Get.put(FavoriteController());
   @override
 
   @override
@@ -83,8 +83,6 @@ class _HomePageState extends State<HomePage> {
         ),
       )))
             
-         
-            
            ));
   }
   mainBody(){
@@ -113,9 +111,8 @@ class _HomePageState extends State<HomePage> {
 
     return SingleChildScrollView(
         child: Column(
-      children: [
+      children: [ 
         MapPicture(),
-      
         Container(
           child: BaseDiscoveryClass(
             caption: AppLocalizations.of(context)!.compingUpEvents,

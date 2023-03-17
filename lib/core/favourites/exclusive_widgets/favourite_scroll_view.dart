@@ -96,7 +96,9 @@ class FavouriteScrollView extends StatelessWidget {
                     eASummary: favouriteList.values.elementAt(index),
                     actionButton: getFavouriteLikeButton(
                         context: context,
-                        eASummary: favouriteList.values.elementAt(index)));
+                        eASummary: favouriteList.values.elementAt(index))
+                        
+                        );
               }
               return null;
             }),

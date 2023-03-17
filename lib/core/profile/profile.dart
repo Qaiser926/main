@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late Future<Object> userInfoFuture;
   late bool isProfileView;
   final connectivity=Connectivity();
-   final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
+   final FavoriteController studentFindTutorsController=Get.put(FavoriteController());
 
   @override
   void initState() {

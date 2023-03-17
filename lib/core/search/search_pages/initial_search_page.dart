@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class InitialSearchPage extends StatelessWidget {
    InitialSearchPage({Key? key}) : super(key: key);
-  final StudentLocationController studentFindTutorsController=Get.put(StudentLocationController());
+  final FavoriteController studentFindTutorsController=Get.put(FavoriteController());
   @override
   Widget build(BuildContext context) {
     FirebaseAnalytics.instance.setCurrentScreen(
