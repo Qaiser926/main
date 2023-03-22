@@ -108,7 +108,9 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               buildNavigationBox(),
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   Widget getButton({required Function() onTap, required Widget caption}) {
