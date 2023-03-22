@@ -36,8 +36,7 @@ class BaseDiscoveryClass extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (showDivider)
@@ -55,7 +54,7 @@ class BaseDiscoveryClass extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
@@ -69,24 +68,22 @@ class BaseDiscoveryClass extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
-                       GestureDetector(
-
-                         child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: Get.size.width/1.5
-                          ),
+                      GestureDetector(
+                        child: Container(
+                          constraints:
+                              BoxConstraints(maxWidth: Get.size.width / 1.5),
                           // width: Get.size.width*0.6,
-                           child:Text(
-                                 caption,
-                              softWrap: true,
-                              style: Theme.of(context).textTheme.headlineLarge,
-                                    maxLines:1,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.start,
-                                  ),
-                         ),
-                       ),
-                 
+                          child: Text(
+                            caption,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ),
+
                       getHorSpace(5.h),
                       isInfoButtonActivated
                           ? Icon(
@@ -101,15 +98,20 @@ class BaseDiscoveryClass extends StatelessWidget {
                   Container(
                     // width: 100.w,
                     child: TextButton(
-                        onPressed: () {
-                          Provider.of<SearchNotifier>(context, listen: false)
-                              .goToShowMorePage(
-                            showMoreCaption: caption,
-                            showMoreIds: Ids,
-                            showMoreCategoryTitle: caption,
-                          );
-                        },
-                        child: Text(AppLocalizations.of(context)!.showMore,style: TextStyle(fontSize: 11.sp),textAlign: TextAlign.center,),),
+                      onPressed: () {
+                        Provider.of<SearchNotifier>(context, listen: false)
+                            .goToShowMorePage(
+                          showMoreCaption: caption,
+                          showMoreIds: Ids,
+                          showMoreCategoryTitle: caption,
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.showMore,
+                        style: TextStyle(fontSize: 11.sp),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   )
               ],
             )),
@@ -118,7 +120,6 @@ class BaseDiscoveryClass extends StatelessWidget {
         if (Ids.isEmpty) getNoResultsMessage(context),
       ],
     );
-
   }
 }
 
@@ -150,24 +151,23 @@ class HorizontalEADiscovery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 155.h,
-        child: ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: Ids.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              late Future<Object> response =
-                  RestService().getEASummary(id: Ids[index]);
-              return KeepAliveFutureBuilder(
-                  future: response,
-                  builder: (context, snapshot) {
-                   
-                    return snapshotHandler(context, snapshot,
-                        getFutureFulfilledContent, [index, context]);
-                       
-                  });
-            }));
+      height: 155.h,
+      child: ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: Ids.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            late Future<Object> response =
+                RestService().getEASummary(id: Ids[index]);
+            return KeepAliveFutureBuilder(
+                future: response,
+                builder: (context, snapshot) {
+                  return snapshotHandler(context, snapshot,
+                      getFutureFulfilledContent, [index, context]);
+                });
+          }),
+    );
   }
 
   Widget getFutureFulfilledContent(

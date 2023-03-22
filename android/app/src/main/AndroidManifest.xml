@@ -12,8 +12,9 @@
         android:label="othia"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyA5AqTCc8eq5-eQv1M2TpoLTo3bhh_SvZk"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA5AqTCc8eq5-eQv1M2TpoLTo3bhh_SvZk" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -33,18 +34,6 @@
 
             <!-- Deep linking -->
 
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="https"
-                    android:host="othia.de"
-                    android:pathPrefix="/event" />
-            </intent-filter>
-
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +47,39 @@
 
                 <data
                     android:scheme="https"
+                    android:host="othia.de"
+                    android:pathPattern="/.*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
                     android:host="othia.de" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="www.othia.de"
+                    android:pathPattern="/.*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="www.othia.de" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
