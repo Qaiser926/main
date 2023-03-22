@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -83,10 +82,6 @@ class NavigatorConstants {
 
   static backToPrev() {
     Get.back();
-  }
-
-  static sendToScreen(Widget widget) {
-    Get.to(widget);
   }
 
   static closeApp() {

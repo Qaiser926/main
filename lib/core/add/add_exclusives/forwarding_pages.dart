@@ -13,7 +13,6 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/detailed/detailedEA.dart';
-import 'package:othia/core/main_page.dart';
 import 'package:othia/modules/models/detailed_event/detailed_event.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/helpers/diverse.dart';
@@ -22,11 +21,11 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../main_page.dart';
 import 'input_notifier.dart';
 
 class SaveForwardingPage extends StatefulWidget {
@@ -42,8 +41,8 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
   bool showWaitingMessage = true;
   late Future<Object> response;
   late String eAId;
-  GlobalKey _globalKey = new GlobalKey();
-  ButtonStyle _buttonStyle = ButtonStyle(
+  final GlobalKey _globalKey = new GlobalKey();
+  final ButtonStyle _buttonStyle = ButtonStyle(
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.h),
@@ -63,11 +62,11 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-          return false;
-        },
-        child: Scaffold(
-            body: Padding(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
           child: SingleChildScrollView(
             child: Column(
@@ -139,17 +138,15 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
             },
             caption: Padding(
               padding: EdgeInsets.all(8.h),
-              child: Container(
-
+              child: SizedBox(
                 width: 110.h,
                 child: Row(
-
                   children: [
                     Text(
                       AppLocalizations.of(context)!.shareLink,
                     ),
                     getHorSpace(10.h),
-                    Icon(
+                    const Icon(
                       Icons.share,
                       color: Colors.white,
                     ),
@@ -169,7 +166,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
                     AppLocalizations.of(context)!.storeQRCode,
                   ),
                   getHorSpace(10.h),
-                  Icon(
+                  const Icon(
                     Icons.download,
                     color: Colors.white,
                   ),
@@ -187,11 +184,9 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-             
-                      return snapshotHandler(context, snapshot, futureHandler,
+                    return snapshotHandler(context, snapshot, futureHandler,
                         [context, widget.detailedEA.id!],
                         defaultErrorFunction: messageErrorFunction);
-               
                   }),
               getVerSpace(10.h),
               Padding(
@@ -201,41 +196,44 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               ),
               getVerSpace(10.h),
               ElevatedButton(
-                  onPressed: () {
-                    Provider.of<GlobalNavigationNotifier>(context,
-                            listen: false)
-                        .navigationBarIndex = NavigatorConstants.HomePageIndex;
-                    NavigatorConstants.sendToScreen(MainPage());
-                  },
-                  style: _buttonStyle,
-                  child: Text(
-                    AppLocalizations.of(context)!.gotToHome,
-                  ))
+                style: _buttonStyle,
+                child: Text(AppLocalizations.of(context)!.gotToHome),
+                onPressed: () {
+                  Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                      .navigationBarNotifier
+                      .setNavigationBarSiteByIndex(
+                          index: NavigatorConstants.HomePageIndex);
+                  Get.off(MainPage());
+                },
+              )
             ],
           )
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => DetailedEAPage(), arguments: {
-                      DataConstants.EventActivityId: eAId,
-                      DataConstants.notGoBack: true
-                    });
-                  },
-                  style: _buttonStyle,
-                  child: Text(AppLocalizations.of(context)!.goToCreatedEA)),
+                style: _buttonStyle,
+                child: Text(AppLocalizations.of(context)!.goToCreatedEA),
+                onPressed: () {
+                  Get.to(() => DetailedEAPage(), arguments: {
+                    DataConstants.EventActivityId: eAId,
+                    DataConstants.notGoBack: true
+                  });
+                },
+              ),
               ElevatedButton(
-                  onPressed: () {
-                    Provider.of<GlobalNavigationNotifier>(context,
-                            listen: false)
-                        .navigationBarIndex = NavigatorConstants.HomePageIndex;
-                    NavigatorConstants.sendToScreen(MainPage());
-                  },
-                  style: _buttonStyle,
-                  child: Text(
-                    AppLocalizations.of(context)!.gotToHome,
-                  ))
+                style: _buttonStyle,
+                child: Text(
+                  AppLocalizations.of(context)!.gotToHome,
+                ),
+                onPressed: () {
+                  Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                      .navigationBarNotifier
+                      .setNavigationBarSiteByIndex(
+                          index: NavigatorConstants.HomePageIndex);
+                  Get.off(MainPage());
+                },
+              )
             ],
           );
   }
@@ -263,7 +261,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       await file.writeAsBytes(pngBytes);
       await GallerySaver.saveImage('${tempDir.path}/image.png');
       // TODO clear (extern) design of snackbar
-      
+
       Get.snackbar(
         "",
         "",
@@ -289,28 +287,32 @@ class DeleteForwardingPage extends StatelessWidget {
     late Future<Object> response =
         RestService().deleteEA(eAId: inputNotifier.detailedEA.id!);
     return WillPopScope(
-        onWillPop: () async {
-          return false;
-        },
-        child: Scaffold(
-            body: Column(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
-                 
                   return snapshotHandler(
-                      context, snapshot, goToProfilePage, [context],
-                      defaultErrorFunction: (_) => Padding(
-                          padding: EdgeInsets.all(20.h),
-                          child: Text(
-                              AppLocalizations.of(context)!.deleteErrorMessage,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
-                              ))));
-               
+                    context,
+                    snapshot,
+                    goToProfilePage,
+                    [context],
+                    defaultErrorFunction: (_) => Padding(
+                      padding: EdgeInsets.all(20.h),
+                      child: Text(
+                        AppLocalizations.of(context)!.deleteErrorMessage,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                    ),
+                  );
                 }),
             getVerSpace(10.h),
             Padding(
@@ -319,29 +321,38 @@ class DeleteForwardingPage extends StatelessWidget {
                   textAlign: TextAlign.center),
             ),
             ElevatedButton(
-                onPressed: () {
-                  Provider.of<GlobalNavigationNotifier>(context, listen: false)
-                      .navigationBarIndex = NavigatorConstants.HomePageIndex;
-                  NavigatorConstants.sendToScreen(MainPage());
-                },
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.h),
-                ))),
-                child: Text(
-                  AppLocalizations.of(context)!.gotToHome,
-                ))
+              child: Text(
+                AppLocalizations.of(context)!.gotToHome,
+              ),
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.h),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                Provider.of<GlobalNavigationNotifier>(context, listen: false)
+                    .navigationBarNotifier
+                    .setNavigationBarSiteByIndex(
+                        index: NavigatorConstants.HomePageIndex);
+                Get.off(MainPage());
+              },
+            )
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
 
 Widget goToProfilePage(BuildContext context, Map<String, dynamic> decodedJson) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
     Provider.of<GlobalNavigationNotifier>(context, listen: false)
-        .navigationBarIndex = NavigatorConstants.ProfilePageIndex;
-    NavigatorConstants.sendToScreen(MainPage());
+        .navigationBarNotifier
+        .setNavigationBarSiteByIndex(
+            index: NavigatorConstants.ProfilePageIndex);
+    Get.off(MainPage());
   });
-  return SizedBox();
+  return const SizedBox();
 }

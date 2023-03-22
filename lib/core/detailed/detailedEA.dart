@@ -9,7 +9,6 @@ import 'package:othia/core/detailed/exclusive_widgets/diverse.dart';
 import 'package:othia/core/main_page.dart';
 import 'package:othia/utils/helpers/builders.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
-import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_constants.dart';
@@ -154,9 +153,12 @@ class _DetailedEAPageState extends State<DetailedEAPage> {
         .isDialogOpen) {
     } else {
       if (notGoBack) {
+        //TODO with this navigation the MainPage gets loaded again although it is still in the memory. we could just do something like: Navigator.popUntil(MainPage()) to make the app more performant and lower the traffic on the backend
         Provider.of<GlobalNavigationNotifier>(context, listen: false)
-            .navigationBarIndex = NavigatorConstants.HomePageIndex;
-        NavigatorConstants.sendToScreen(MainPage());
+            .navigationBarNotifier
+            .setNavigationBarSiteByIndex(
+                index: NavigatorConstants.HomePageIndex);
+        Get.offAll(MainPage());
       } else {
         NavigatorConstants.backToPrev();
       }
