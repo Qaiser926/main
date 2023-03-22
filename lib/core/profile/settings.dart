@@ -11,6 +11,7 @@ import 'package:othia/core/profile/settings/edit_profile.dart';
 import 'package:othia/core/profile/user_info_notifier.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:provider/provider.dart';
 
 import '../login/login.dart';
@@ -30,7 +31,8 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   void backClick() {
-    Get.back();
+  
+    Navigator.pop(context);
   }
    late bool isProfileView;
 
@@ -48,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         appBar: AppBar(
             leading: IconButton(
                 onPressed: () {
-                  Get.back();
+                  Navigator.pop(context);
                 },
                 icon: Icon(
                   Icons.arrow_back,

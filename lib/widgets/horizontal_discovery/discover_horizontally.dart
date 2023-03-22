@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
@@ -52,6 +54,7 @@ class BaseDiscoveryClass extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 0, 5, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
@@ -61,16 +64,26 @@ class BaseDiscoveryClass extends StatelessWidget {
                         : () => {};
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // TODO clear (extern) this text causes an overflow -> make sure the text is shown in multiple lines, e.g. for other Culture and performing art
-                      Text(
-                        caption,
-                        softWrap: true,
-                        style: Theme.of(context).textTheme.headlineLarge,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      GestureDetector(
+                        child: Container(
+                          constraints:
+                              BoxConstraints(maxWidth: Get.size.width / 1.5),
+                          // width: Get.size.width*0.6,
+                          child: Text(
+                            caption,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
                       ),
+
                       getHorSpace(5.h),
                       isInfoButtonActivated
                           ? Icon(
@@ -82,7 +95,9 @@ class BaseDiscoveryClass extends StatelessWidget {
                   ),
                 ),
                 if (showMore & Ids.isNotEmpty)
-                  TextButton(
+                  Container(
+                    // width: 100.w,
+                    child: TextButton(
                       onPressed: () {
                         Provider.of<SearchNotifier>(context, listen: false)
                             .goToShowMorePage(
@@ -91,7 +106,13 @@ class BaseDiscoveryClass extends StatelessWidget {
                           showMoreCategoryTitle: caption,
                         );
                       },
-                      child: Text(AppLocalizations.of(context)!.showMore))
+                      child: Text(
+                        AppLocalizations.of(context)!.showMore,
+                        style: TextStyle(fontSize: 11.sp),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
               ],
             )),
         getVerSpace(15),

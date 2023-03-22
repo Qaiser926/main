@@ -19,6 +19,7 @@ class _KeepAliveFutureBuilderState extends State<KeepAliveFutureBuilder> with Au
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: widget.future,
+      
       builder: widget.builder,
     );
   }

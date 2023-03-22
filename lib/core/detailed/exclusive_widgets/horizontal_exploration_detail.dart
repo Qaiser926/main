@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/utils/services/exceptions.dart';
 
 import '../../../constants/categories.dart';
@@ -85,8 +86,10 @@ Widget getHorizontalDiscovery(
   return KeepAliveFutureBuilder(
       future: eAIds,
       builder: (context, snapshot) {
+        
         return snapshotHandler(
             context, snapshot, getContent, [heading, isMoreLocation]);
+           
       });
 }
 

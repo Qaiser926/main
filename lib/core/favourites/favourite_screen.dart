@@ -1,5 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
 import 'package:othia/widgets/not_logged_in.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +33,7 @@ class _FavouritePageState extends State<FavouritePage>
 
   get favouriteEventAndActivity => favouriteEventAndActivity;
 
+
   @override
   void initState() {
     if (Provider.of<GlobalNavigationNotifier>(context, listen: false)
@@ -52,9 +57,12 @@ class _FavouritePageState extends State<FavouritePage>
     return FutureBuilder(
         future: favouriteEA,
         builder: (context, snapshot) {
+         
           return snapshotHandler(context, snapshot, futureFulfilledWidget, []);
+                
         });
   }
+   final FavoriteController favoriteController=Get.put(FavoriteController());
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +74,25 @@ class _FavouritePageState extends State<FavouritePage>
           tabController: _tabController,
           context: context,
         ),
-        body: getLoggedInSensitiveBody(
+        body:
+        Obx(()=>Container(
+        child: favoriteController.connectionStatus.value==1?  getLoggedInSensitiveBody(
             loggedInWidget: getLoggedInBody(),
-            context: context),
+            context: context)
+      :favoriteController.connectionStatus.value==2?  getLoggedInSensitiveBody(
+            loggedInWidget: getLoggedInBody(),
+            context: context):Container(
+        width: Get.size.width,
+        height: Get.size.height,
+        child: Column(
+          children: [
+            Lottie.asset('assets/lottiesfile/no_internet.json',fit: BoxFit.cover),
+         
+          ],
+        ),
+      )))
+        
+       
       ),
       // ),
     );

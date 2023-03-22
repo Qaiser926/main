@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:get/get.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/constants/categories.dart';
 import 'package:othia/widgets/filter_related/notifiers/abstract_query_notifier.dart';
@@ -47,8 +49,7 @@ class CategoryFilter extends StatefulWidget {
 
   static const double gridItemDistance = 15;
   static const EdgeInsets gridItemPadding =
-      EdgeInsets.symmetric(horizontal: 10);
-
+      EdgeInsets.only(left: 10,right: 10,top: 5);
   CategoryFilter(
       {super.key,
       required this.isModalBottomSheetMode,
@@ -67,18 +68,17 @@ class CategoryFilterState extends State<CategoryFilter>
   CategoryFilterState({required this.dynamicProvider}) {
     selectedCategoryIds = dynamicProvider.getSelectedSubcategoryIds;
   }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
     Widget header = SizedBox();
-
     if (widget.isModalBottomSheetMode) {
       header = Container(
+        // width: Get.size.width,
         // TODO clear (extern) remove (small) edges created by the container that reach into the rounded corners
        decoration: BoxDecoration(
            color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10))
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(0.5),topRight: Radius.circular(1))
         ),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,8 +87,10 @@ class CategoryFilterState extends State<CategoryFilter>
               CloseButton()
             ]),
       );
+
     }
-    return MultiProvider(
+    return
+    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: dynamicProvider,
@@ -96,22 +98,28 @@ class CategoryFilterState extends State<CategoryFilter>
       ],
       child: Container(
         padding: CategoryFilter.gridItemPadding,
-        child: CustomScrollView(
+        child:
+         CustomScrollView(
             // controller: widget._scrollController,
             cacheExtent: double.maxFinite,
+            shrinkWrap: true,
             slivers: [
               SliverStickyHeader(
                   header: header,
                   sliver: SliverList(
-                    delegate: SliverChildListDelegate(widget.niceList,
-                        addAutomaticKeepAlives: true),
+                    delegate: SliverChildListDelegate(
+
+                      addRepaintBoundaries: false,
+                     widget.niceList,
+                        addAutomaticKeepAlives: true
+                        ),
                   ))
             ]),
+
+
       ),
     );
-  
   }
-
   @override
   bool get wantKeepAlive => true;
 }

@@ -33,8 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
           alignment: Alignment.center,
           width: double.infinity,
-          child: getAssetImage(OthiaConstants.logoName,
-              width: 200.h, height: 200.h),
+          child: getAssetImage(OthiaConstants.logoName,boxFit: BoxFit.cover,
+              width: 300.w, height: 300.h),
         ),
       ),
     );

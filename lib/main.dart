@@ -112,3 +112,5 @@ Future<void> _configureAmplify() async {
     safePrint(e);
   }
 }
+
+

@@ -47,7 +47,7 @@ class CategoryGridItem extends StatelessWidget {
         dynamicNotifier.changeForFullCategorySearch(
             selectedCategoryIds: categoryIdToSubcategoryIds[categoryId]!);
         if (isModalBottomSheetMode) {
-          Get.back();
+       Navigator.pop(context);
         }
       },
       child: FittedBox(
@@ -67,7 +67,7 @@ class CategoryGridItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
-                            lessListItemColor.withOpacity(.7),
+                            lessListItemColor.withOpacity(0),
                             lessListItemColor.withOpacity(0),
                           ],
                           begin: Alignment.bottomCenter,
@@ -137,8 +137,6 @@ class CategoryGridItem extends StatelessWidget {
         ),
       ),
     );
-  
-
   }
 
   void onLowerAreaTapped(BuildContext context) {

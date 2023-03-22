@@ -423,7 +423,7 @@ class AddEANotifier extends ChangeNotifier {
               AppLocalizations.of(context)!.timeSwitchingDialogStartTime,
           onPressed: () {
             times = index;
-            // Get.back();
+            
             Navigator.of(context, rootNavigator: true).pop();
           });
     } else {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/core/home/home_page.dart';
 import 'package:othia/core/profile/profile.dart';
@@ -12,17 +13,35 @@ import '../widgets/nav_bar/nav_bar_notifier.dart';
 import 'add/add.dart';
 import 'favourites/favourite_screen.dart';
 
-class MainPage extends StatelessWidget {
-  static final List<Widget> _pages = [
+
+class MainPage extends StatefulWidget {
+ 
+  @override
+  State<MainPage> createState() =>
+      _MainPageState();
+}
+class _MainPageState extends State<MainPage> {
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  int currentIndex = 0;
+  String text = '0';
+  bool select = true;
+  final _bottomnavigationGlobalkey = GlobalKey();
+  static List<Widget> pages = <Widget>[
     HomePage(),
     SearchPage(),
-    Add(),
-    const FavouritePage(),
+    // Add(),
+    Text("add"),
+     FavouritePage(),
     ProfilePage(),
   ];
+  final PageStorageBucket bucket = PageStorageBucket();
+  Widget currenScreen = HomePage();
 
-  MainPage({Key? key}) : super(key: key);
-
+  void _onItemTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     int initialPage =
@@ -31,33 +50,65 @@ class MainPage extends StatelessWidget {
     final PageController _pageController =
         PageController(initialPage: initialPage);
     return MultiProvider(
-      providers: [
+         providers: [
         ChangeNotifierProvider.value(
           value: NavigationBarNotifier(
               pageController: _pageController, index: initialPage),
         ),
       ],
-      child: Consumer<NavigationBarNotifier>(
-          builder: (context, navigationBarNotifier, child) {
-        return WillPopScope(
-          onWillPop: () {
+      child:Consumer<NavigationBarNotifier>(
+          builder: (context, navigationBarNotifier, child){
+            return WillPopScope(
+              onWillPop: () {
             return closeAppDialog(context, navigationBarNotifier);
           },
-          child: Scaffold(
-            bottomNavigationBar: const CustomNavigationBar(),
-            body: PageView(
-              controller: _pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: _pages,
-            ),
+              child:  Scaffold(
+        extendBody: true,
+        key: scaffoldKey,
+        bottomNavigationBar: CustomNavigationBar(
+          
+      
+          index: currentIndex,
+          onChangedTab: onChangeTab,
+    
+        ),
+        body: pages[currentIndex],
+      ),
+);
+          }
+      
+    ));
+  }
+  void onChangeTab(int index) {
+    setState(() {
+      this.currentIndex = index;
+    });
+  }
+  MaterialButton _bottomNavButton(String name, IconData icon,
+      Function() onpress, int colorindex, int textindex) {
+    return MaterialButton(
+      onPressed: onpress,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color:
+                currentIndex == colorindex ? Theme.of(context).colorScheme.inversePrimary : Colors.grey,
           ),
-        );
-      }),
+       
+         Text(
+             name,style: TextStyle(  fontSize: 12.sp,
+            color: currentIndex == textindex ? Theme.of(context).colorScheme.inversePrimary: Colors.grey,),
+           )
+        ],
+      ),
     );
   }
+ 
 }
 
-Future<bool> closeAppDialog(
+ Future<bool> closeAppDialog(
     BuildContext context, NavigationBarNotifier notifier) async {
   int currentSearchIndex = notifier.getSearchNotifier.currentIndex;
   bool? shouldPop;

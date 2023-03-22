@@ -22,6 +22,7 @@ import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/keep_alive_future_builder.dart';
+import 'package:othia/widgets/nav_bar/nav_bar_notifier.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -68,45 +69,47 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
         child: Scaffold(
             body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              getVerSpace(70.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(AppLocalizations.of(context)!.share,
-                      style: Theme.of(context).textTheme.headlineLarge)
-                ],
-              ),
-              getVerSpace(30.h),
-              RepaintBoundary(
-                key: _globalKey,
-                child: QrImage(
-                  data: '${eAShareLinkBuilder(widget.detailedEA.id!)}',
-                  version: QrVersions.auto,
-                  foregroundColor: Colors.white,
-                  backgroundColor: Theme.of(context).colorScheme.tertiary,
-                  size: 200.0,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                getVerSpace(70.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(AppLocalizations.of(context)!.share,
+                        style: Theme.of(context).textTheme.headlineLarge)
+                  ],
                 ),
-              ),
-              getVerSpace(30.h),
-              buildShareButtons(),
-              getVerSpace(10.h),
-              Padding(
-                padding: EdgeInsets.only(bottom: 15.h, top: 10.h),
-                child: Divider(thickness: 2.h),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(AppLocalizations.of(context)!.navigation,
-                      style: Theme.of(context).textTheme.headlineLarge)
-                ],
-              ),
-              getVerSpace(20.h),
-              buildNavigationBox(),
-            ],
+                getVerSpace(30.h),
+                RepaintBoundary(
+                  key: _globalKey,
+                  child: QrImage(
+                    data: '${eAShareLinkBuilder(widget.detailedEA.id!)}',
+                    version: QrVersions.auto,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.tertiary,
+                    size: 200.0,
+                  ),
+                ),
+                getVerSpace(30.h),
+                buildShareButtons(),
+                getVerSpace(10.h),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15.h, top: 10.h),
+                  child: Divider(thickness: 2.h),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(AppLocalizations.of(context)!.navigation,
+                        style: Theme.of(context).textTheme.headlineLarge)
+                  ],
+                ),
+                getVerSpace(20.h),
+                buildNavigationBox(),
+              ],
+            ),
           ),
         ),
       ),
@@ -137,8 +140,10 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
             caption: Padding(
               padding: EdgeInsets.all(8.h),
               child: Container(
+
                 width: 110.h,
                 child: Row(
+
                   children: [
                     Text(
                       AppLocalizations.of(context)!.shareLink,
@@ -182,9 +187,11 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
               KeepAliveFutureBuilder(
                   future: response,
                   builder: (context, snapshot) {
-                    return snapshotHandler(context, snapshot, futureHandler,
+             
+                      return snapshotHandler(context, snapshot, futureHandler,
                         [context, widget.detailedEA.id!],
                         defaultErrorFunction: messageErrorFunction);
+               
                   }),
               getVerSpace(10.h),
               Padding(
@@ -256,12 +263,7 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
       await file.writeAsBytes(pngBytes);
       await GallerySaver.saveImage('${tempDir.path}/image.png');
       // TODO clear (extern) design of snackbar
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-
-      //   content: Text(AppLocalizations.of(context)!.storedQRCodeMessage),
-      //   duration: Duration(seconds: 2),
-      // )
-      // );
+      
       Get.snackbar(
         "",
         "",
@@ -298,6 +300,7 @@ class DeleteForwardingPage extends StatelessWidget {
             KeepAliveFutureBuilder(
                 future: response,
                 builder: (context, snapshot) {
+                 
                   return snapshotHandler(
                       context, snapshot, goToProfilePage, [context],
                       defaultErrorFunction: (_) => Padding(
@@ -307,6 +310,7 @@ class DeleteForwardingPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.error,
                               ))));
+               
                 }),
             getVerSpace(10.h),
             Padding(

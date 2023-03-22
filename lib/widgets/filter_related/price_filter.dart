@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:othia/constants/app_constants.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
@@ -58,12 +59,19 @@ class PriceFilter extends StatefulWidget {
 class _PriceFilterState extends State<PriceFilter> {
   AbstractQueryNotifier dynamicProvider;
   late RangeValues _values;
+  late TextEditingController minimum;
+  late TextEditingController maximum;
 
   _PriceFilterState(
       {required BuildContext context, required this.dynamicProvider}) {
     _values = dynamicProvider.getPriceRange;
+    _UpdateTextEditior();
   }
-
+//UPdate the inital value of controllers
+  _UpdateTextEditior(){
+    minimum = new TextEditingController(text: _values.start.round().toString());
+    maximum = new TextEditingController(text: _values.end.round().toString());
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<AbstractQueryNotifier>(builder: (context, model, child) {
@@ -97,7 +105,12 @@ class _PriceFilterState extends State<PriceFilter> {
               min: 0,
               max: widget.endValue,
               onChanged: (RangeValues values) {
+                print(widget.startValue);
+                print(_values);
+
                 setState(() {
+                  // RangeValues j=new RangeValues(23, 44);
+                  // _values=j;
                   if (values.end - values.start <= 3) {
                     if (widget.endValue - values.end <= 3) {
                       _values = RangeValues(widget.endValue, widget.endValue);
@@ -111,6 +124,7 @@ class _PriceFilterState extends State<PriceFilter> {
                   } else {
                     _values = values;
                   }
+                  _UpdateTextEditior();
                 });
               }),
           Padding(
@@ -118,12 +132,80 @@ class _PriceFilterState extends State<PriceFilter> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Adding some funcitonallyi like callback fucntions and other wiht widget
                 getPriceBox(
+                    onTextChanged: (val) {
+                      print("value is: " + val);
+                      if (val == "") {
+                        // controller.text=priceText;
+                      } else {
+                        if(int.parse(val)<_values.end){
+                          minimum.text = val;
+                          minimum.selection = TextSelection.fromPosition(
+                              TextPosition(offset: minimum.text.length));
+                          RangeValues j =
+                          new RangeValues(double.parse(val), _values.end);
+                          _values = j;
+                        }
+                        else{
+                          minimum.text = "0";
+                          minimum.selection = TextSelection.fromPosition(
+                              TextPosition(offset: minimum.text.length));
+                          RangeValues j =
+                          new RangeValues(double.parse("0"), _values.end);
+                          _values = j;
+                        }
+
+                        //print(range);
+
+                        //print(controller.text);
+                      }
+                    },
+                    range: _values.start,
+                    type: "minimum",
+                    controller: minimum,
                     context: context,
                     header: AppLocalizations.of(context)!.minimum,
                     price: _values.start.round().toString()),
-                Icon(Typicons.minus, color: Theme.of(context).highlightColor),
+                GestureDetector(
+                    onTap: () {
+                      print(_values);
+                    },
+                    child: Icon(Typicons.minus,
+                        color: Theme.of(context).highlightColor)),
                 getPriceBox(
+                    onTextChanged: (val) {
+                      print("value is: " + val);
+                      if (val == "") {
+                        // controller.text=priceText;
+                      } else {
+
+                        if(int.parse(val)>_values.start){
+                          maximum.text = val;
+                          maximum.selection = TextSelection.fromPosition(
+                              TextPosition(offset: maximum.text.length));
+                          RangeValues j =
+                          new RangeValues(_values.start, double.parse(val));
+                          _values = j;
+                        }
+                        else{
+                          print("asdfdsf");
+                          // maximum.text = "100";
+                          // maximum.selection = TextSelection.fromPosition(
+                          //     TextPosition(offset: maximum.text.length));
+                          // RangeValues j =
+                          // new RangeValues(_values.start, double.parse("100"));
+                          // _values = j;
+                        }
+
+                        //print(range);
+
+                        //print(controller.text);
+                      }
+                    },
+                    range: _values.end,
+                    type: "maximum",
+                    controller: maximum,
                     context: context,
                     header: AppLocalizations.of(context)!.maximum,
                     price: endValue),
@@ -132,6 +214,7 @@ class _PriceFilterState extends State<PriceFilter> {
           ),
           Padding(
             padding: EdgeInsets.all(20),
+            // Adding some funcitonallyi like callback fucntions and other wiht widget
             child: getShowResultsButton(
                 context: context,
                 functionAccept: dynamicProvider.changePriceRange,
@@ -149,11 +232,18 @@ class _PriceFilterState extends State<PriceFilter> {
   }
 }
 
-Widget getPriceBox(
-    {required BuildContext context,
-    required String header,
-    required String price}) {
-  String priceText = "€${price}";
+Widget getPriceBox({
+  required BuildContext context,
+  required String header,
+  required double range,
+  required String type,
+//Add some paramteres for supporting funcionallity on textfield
+  required TextEditingController controller,
+  required String price,
+  required ValueChanged<String>? onTextChanged,
+}) {
+  String priceText = "${price}€";
+  print("checnge");
   if (price == AppLocalizations.of(context)!.unlimited) priceText = price;
   return Container(
     width: 110,
@@ -166,9 +256,48 @@ Widget getPriceBox(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Text(header), getVerSpace(5), Text(priceText)],
+      children: [
+        Text(header),
+        getVerSpace(5),
+        //change text to TextField for manual input
+        TextFormField(
+          keyboardType: TextInputType.text,
+          onChanged: onTextChanged,
+          textAlign: TextAlign.center,
+          controller: controller,
+          style: TextStyle(fontSize: 22),
+          inputFormatters: <TextInputFormatter>[
+            FilteringTextInputFormatter.digitsOnly,
+            _NumberTextInputFormatter()
+          ],
+          decoration: InputDecoration(
+            //hintText: priceText,
+            contentPadding: EdgeInsets.zero,
+            suffix: Icon(Icons.euro,color: Colors.white,size: 18,),
+            
+            filled: true,
+            fillColor: Colors.transparent,
+            border: InputBorder.none,
+          ),
+        )
+      ],
     ),
   );
+}
+
+class _NumberTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return TextEditingValue.empty;
+    } else if (int.parse(newValue.text) > 100) {
+      return TextEditingValue(text: '100');
+    } else if (int.parse(newValue.text) < 0) {
+      return TextEditingValue(text:  '0');
+    }
+    return newValue;
+  }
 }
 
 String getPriceCaption(
@@ -180,13 +309,13 @@ String getPriceCaption(
       if (range.start == 0) {
         return AppLocalizations.of(context)!.free;
       } else {
-        return "€${range.start}";
+        return "${range.start}€";
       }
     }
     if (range.end.round() == DataConstants.PriceRangeEnd) {
-      return "€${range.start.round()} - Max.";
+      return "${range.start.round()}€ - Max.";
     }
-    return "€${range.start.round()} - €${range.end.round()}";
+    return "${range.start.round()}€ - ${range.end.round()}€";
   } else {
     return AppLocalizations.of(context)!.price;
   }

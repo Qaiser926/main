@@ -7,16 +7,18 @@ import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/ui/ui_utils.dart';
 import 'package:othia/widgets/action_buttons.dart';
 import 'package:othia/widgets/openingtimes.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../utils/helpers/builders.dart';
 import '../../../utils/services/data_handling/data_handling.dart';
 import '../../../widgets/carousel_widget.dart';
+import 'package:flutter/services.dart' show ByteData, rootBundle;
 import '../../../widgets/filtered_image_stack.dart';
 
 Widget getSection(
     {required BuildContext context,
-    required String caption,
-    required Widget contentWidget}) {
+      required String caption,
+      required Widget contentWidget}) {
   return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.h),
       child: Column(
@@ -55,6 +57,7 @@ class IconRow extends StatelessWidget {
 
   IconRow({super.key, required this.eAId}) {}
 
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -64,15 +67,18 @@ class IconRow extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.of(context).pop();
+
           },
+
           child: const BackButton(),
         ),
         // when clicking of favourite, business logic must define to add that event
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
+            InkWell(
+              onTap: () async{
+              
                 final String shareLink = eAShareLinkBuilder(eAId);
                 openShare(
                     '${AppLocalizations.of(context)!.shareMessage} $shareLink',

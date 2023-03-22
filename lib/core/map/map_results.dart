@@ -43,6 +43,10 @@ class _MapResultsState extends State<MapResults> {
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
   List<String>? eAIds;
+  int activeIndex = 0;
+  int selectedIndex = 10000000000;
+  bool isEventSelected = true;
+  final CarouselController carouselController = CarouselController();
 
   @override
   void initState() {
@@ -52,6 +56,7 @@ class _MapResultsState extends State<MapResults> {
     super.initState();
   }
 
+   
   @override
   Widget build(BuildContext context) {
     return Consumer<UserPositionNotifier>(builder: (context, model, child) {
@@ -62,7 +67,9 @@ class _MapResultsState extends State<MapResults> {
               future: Provider.of<MapNotifier>(context, listen: false)
                   .getSearchQueryResult(),
               builder: (context, snapshot) {
-                return snapshotHandler(context, snapshot, futureMap, []);
+              
+                  return snapshotHandler(context, snapshot, futureMap, []);
+              
               });
         });
       } else {
@@ -76,10 +83,11 @@ class _MapResultsState extends State<MapResults> {
               //   AppLocalizations.of(context)!.waitingLocationPermission,
               //   textAlign: TextAlign.center,
               // ),
-              ElevatedButton(onPressed: ()async{
-                  PermissionStatus permission =
-                      await Permission.location.request();
-                   if (permission == PermissionStatus.granted) {
+              ElevatedButton(
+                  onPressed: () async {
+                    PermissionStatus permission =
+                        await Permission.location.request();
+                    if (permission == PermissionStatus.granted) {
                       setState(() {
                         Get.snackbar(
                             titleText:
@@ -88,16 +96,16 @@ class _MapResultsState extends State<MapResults> {
                             "",
                             snackPosition: SnackPosition.BOTTOM,
                             colorText: Colors.white);
-                         Get.to(MainPage(),transition: Transition.fadeIn);
+                        Get.to(MainPage(), transition: Transition.fadeIn);
                       });
                     }
-                  if (permission == PermissionStatus.denied) {
-                    // Get.snackbar('Permission is recommended', "");
-                    Get.to(MainPage(), transition: Transition.fadeIn);
-                    openAppSettings();
-                  }
-              }, child: Text("get Location"))
-
+                    if (permission == PermissionStatus.denied) {
+                      // Get.snackbar('Permission is recommended', "");
+                      Get.to(MainPage(), transition: Transition.fadeIn);
+                      openAppSettings();
+                    }
+                  },
+                  child: Text("get Location"))
             ],
           ),
         );
@@ -107,9 +115,11 @@ class _MapResultsState extends State<MapResults> {
 
   Widget futureMap(Map<String, dynamic> json) {
     mapResultIds = MapResultIds.fromJson(json);
-
     return FlutterMap(
       options: MapOptions(
+
+        // to prevent map to rotate
+        interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
         center: userPosition,
         zoom: 15.0,
         maxZoom: 18.49,
@@ -117,10 +127,12 @@ class _MapResultsState extends State<MapResults> {
       ),
       nonRotatedChildren: [
         if (eAIds != null)
+
           Container(
             child: buildSummaryCarousel(),
             alignment: Alignment.bottomCenter,
           ),
+
         Container(
           alignment: Alignment.bottomRight,
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
@@ -132,48 +144,34 @@ class _MapResultsState extends State<MapResults> {
         // TODO clear (extern) align colors, font size of Event and Activity colored box & introduce background color for the legend in order to make it better visible. We highly appreciate your input if you have better ideas.
 
         Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsetsDirectional.only(start: 8, bottom: 2),
+          alignment: Alignment.bottomRight,
+          padding:  EdgeInsetsDirectional.only(start: 8, bottom: 2),
           child: Row(
             children: [
-              SizedBox(
-                width: 10,
-                height: 8,
-                child: DecoratedBox(
-                  decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
-                ),
-              ),
+             
               getHorSpace(5.h),
               Container(
                   // height: 30.h,
                   // width: 30.w,
                   decoration: BoxDecoration(
-                      color: Colors.black26,
+                      color: Color(0xff0b151d),
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:  EdgeInsets.all(8.0),
                     child: Text(
                       AppLocalizations.of(context)!.event,
                       style: TextStyle(color: Colors.white),
                     ),
                   )),
               getHorSpace(10.h),
-              SizedBox(
-                width: 10,
-                height: 8,
-                child: DecoratedBox(
-                  decoration:
-                      BoxDecoration(color: Theme.of(context).bottomAppBarColor),
-                ),
-              ),
+              
               getHorSpace(5.h),
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.black26,
+                    color: Color(0xff274a66),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  EdgeInsets.all(8.0),
                   child: Text(AppLocalizations.of(context)!.activity,
                       style: TextStyle(color: Colors.white)),
                 ),
@@ -188,15 +186,20 @@ class _MapResultsState extends State<MapResults> {
           userAgentPackageName: 'othia.de',
         ),
         MarkerClusterLayerWidget(
+
           options: MarkerClusterLayerOptions(
+
+            anchor: AnchorPos.align(AnchorAlign.center),
+            rotate: false,
+
             maxClusterRadius: 120,
-            size: Size(40, 40),
-            fitBoundsOptions: FitBoundsOptions(
+            size:  Size(40, 40),
+            fitBoundsOptions:  FitBoundsOptions(
               padding: EdgeInsets.all(50),
             ),
             markers: getResultMarkers(),
-            polygonOptions:
-            PolygonOptions(color: Colors.black12, borderStrokeWidth: 3),
+            polygonOptions:  PolygonOptions(
+                color: Colors.black12, borderStrokeWidth: 3),
             builder: (context, markers) {
               return FloatingActionButton(
                 foregroundColor: Colors.white,
@@ -211,32 +214,50 @@ class _MapResultsState extends State<MapResults> {
     );
   }
 
-  Marker getMarker({required Map<String, dynamic> locationData,
-    required Color markerColor}) {
+  Marker getMarker(
+      {required bool isEvent,
+      required int index,
+      required Map<String, dynamic> locationData,
+      required Color markerColor,
+      required bool select}) {
     return Marker(
         width: 50.0,
         height: 50.0,
         rotate: true,
-        point:
-         latLng.LatLng(locationData["coordinates"]["latitude"],
+        point: latLng.LatLng(locationData["coordinates"]["latitude"],
             locationData["coordinates"]["longitude"]),
         builder: (ctx) => GestureDetector(
-          onTap: () => {
+              onTap: () => {
                 // TODO (extern) highlight selected marker
                 setState(() {
+                  this.isEventSelected = isEvent;
+                  this.selectedIndex = index;
+                  markerColor = Theme.of(context).colorScheme.primary;
+
                   eAIds = getAllIdsUnderMarker(
-                      locationData["coordinates"]["latitude"],
-                      locationData["coordinates"]["longitude"]);
+                    locationData["coordinates"]["latitude"],
+                    locationData["coordinates"]["longitude"],
+                  );
+                  print(latLng.LatLng(locationData["coordinates"]["latitude"],
+                      locationData["coordinates"]["longitude"]));
                 })
-                // NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+                // NavigatorConstants.sendT
+                //
+                //
+                //
+                // oNext(Routes.detailedEventRoute,
                 //     arguments: {
                 //       NavigatorConstants.EventActivityId: locationData["id"]
                 //     })
               },
-              child: Icon(
+          child: Icon(
                 Icons.location_on,
                 size: 44,
-                color: markerColor,
+                color: this.selectedIndex == index
+                    ? (this.isEventSelected == isEvent
+                        ? Theme.of(context).colorScheme.primary
+                        : markerColor)
+                    : markerColor,
               ),
             ));
   }
@@ -255,6 +276,7 @@ class _MapResultsState extends State<MapResults> {
       (element) {
         if ((element!["coordinates"]["latitude"] == latitude) &
             (element["coordinates"]["longitude"] == longitude)) {
+          print(latitude.toString()+","+longitude.toString());
           Ids.add(element["id"]);
         }
       },
@@ -266,70 +288,170 @@ class _MapResultsState extends State<MapResults> {
     List<Marker> markerList = [];
 
     // TODO (extern) modify code such that the user location icon is never part of a cluster, also make sure the number of the cluster does not rotate
+
+    // for activities
+    //TODO  (extern) align color scheme for event and activity icons.
+    mapResultIds.activityResults.asMap().forEach((index, element) {
+      markerList.add(getMarker(
+          isEvent: false,
+          index: index,
+          select: false,
+          locationData: element!,
+          markerColor: Color(0xff274a66)));
+    });
+    mapResultIds.eventResults.asMap().forEach((index, element) {
+      markerList.add(getMarker(
+          isEvent: true,
+          index: index,
+          select: false,
+          locationData: element!,
+          markerColor: Color(0xff0b151d)));
+    });
     markerList.add(Marker(
-        width: 50.0,
-        height: 500.0,
-        rotate: false,
-        point: userPosition!,
-        builder: (ctx) => Icon(
+
+      width: 50.0,
+      height: 500.0,
+      rotate: false,
+      builder: (ctx) => GestureDetector(
+        child: Icon(
           Icons.my_location,
           size: 22,
           color: Colors.blue,
-        )));
-    // for activities
-    //TODO (extern) align color scheme for event and activity icons.
-    mapResultIds.activityResults.forEach((element) {
-      markerList.add(getMarker(
-          locationData: element!, markerColor: Theme.of(context).primaryColor));
-    });
-    mapResultIds.eventResults.forEach((element) {
-      markerList.add(getMarker(
-          locationData: element!,
-          markerColor: Theme.of(context).bottomAppBarColor));
-    });
+        ),
+      ),
+      point: userPosition!,
+    ));
     return markerList;
   }
 
-  CarouselSlider buildSummaryCarousel() {
+  Container buildSummaryCarousel() {
     // TODO clear (extern) find a solution indicating to the user that they can swipe to see all the events happening at this location; changing the viewportfraction to 0.8, e.g., would solve the problem but in this case overflows appear. It might be also beneficial to change the scrolling direction to vertical
-    return CarouselSlider.builder(
-      options: CarouselOptions(
-        height: 150.h,
-        viewportFraction: 1,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        reverse: false,
-        //autoPlay: true,
-        //autoPlayInterval: Duration(seconds: 6),
-        //autoPlayAnimationDuration: Duration(milliseconds: 800),
-        //autoPlayCurve: Curves.fastOutSlowIn,
-        //enlargeCenterPage: true,
-        //enlargeFactor: 1,
-        scrollDirection: Axis.horizontal,
-      ),
-      itemCount: eAIds!.length,
-      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-          Container(
-        child: buildSummaryCard(eAIds![itemIndex]),
+    return 
+    Container(
+      margin: EdgeInsets.only(bottom: 20.h),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          
+         eAIds!.length<=22?  indicator():  buildIndicator(),
+          CarouselSlider.builder(
+            carouselController: carouselController,
+            options: CarouselOptions(
+              height: 150.h,
+              
+              viewportFraction: 1,
+              initialPage: 0,
+              enableInfiniteScroll: false,
+              reverse: false,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  activeIndex = index;
+                });
+              },
+              //autoPlay: true,
+              //autoPlayInterval: Duration(seconds: 6),
+              //autoPlayAnimationDuration: Duration(milliseconds: 800),
+              //autoPlayCurve: Curves.fastOutSlowIn,
+              //enlargeCenterPage: true,
+              //enlargeFactor: 1,
+              scrollDirection: Axis.horizontal,
+            ),
+            itemCount: eAIds!.length,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) =>
+                    Container(
+              child: buildSummaryCard(eAIds![itemIndex]),
+            ),
+          ),
+         
+        ],
       ),
     );
   }
+
+  Container indicator() {
+    return Container(
+    width: Get.size.width,
+    child: SingleChildScrollView(
+      child: Row(
+        
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: eAIds!.asMap().entries.map((entry) {
+          return GestureDetector(
+            onTap:() => carouselController.animateToPage(entry.key) ,
+            child:eAIds!.length==1?Container(): Container(
+                    width: activeIndex == entry.key ? 15 : 11,
+                    height: activeIndex == entry.key ? 15 : 11,
+                    
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 2.0,
+                    ),
+                    decoration: BoxDecoration(
+                        // borderRadius: BorderRadius.circular(10),
+                        shape:  BoxShape.circle,
+                        color: activeIndex == entry.key
+                            ?  Color(0xff274a66)
+                            :Color(0xff274a66).withOpacity(0.4)),
+                  ),
+                
+          );
+        }).toList(),
+      ),
+    ),
+  );
+  }
+Widget buildIndicator(){
+  return    Container(
+    margin: EdgeInsets.symmetric(horizontal:eAIds!.length<=20? 105.w:25.w),
+       
+        constraints: BoxConstraints(
+          maxWidth: Get.size.width,
+           maxHeight: 14.h,
+        ),
+        child: ListView.builder(
+          
+          scrollDirection: Axis.horizontal,
+          itemCount: eAIds!.length,
+          itemBuilder: (context,index){
+            return eAIds!.length==1?Container(): Container(
+              // margin: EdgeInsets.only(top: 20),
+                      width: activeIndex == index ? 15 : 11,
+                      height: activeIndex == index ? 15 : 11,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 2.0,
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                          color: activeIndex == index
+                              ? Color(0xff274a66)
+                              :Color(0xff274a66).withOpacity(0.4)),
+                    );
+          },
+        ),
+      );
+       
+}
 
   KeepAliveFutureBuilder buildSummaryCard(String id) {
     Future<Object> eASummary = RestService().getEASummary(id: id);
     return KeepAliveFutureBuilder(
         future: eASummary,
         builder: (context, snapshot) {
-          return snapshotHandler(context, snapshot, buildMapSummary, [context]);
+       
+            return snapshotHandler(
+                context, snapshot, buildMapSummary, [context]);
+       
         });
   }
 }
 
-Widget buildMapSummary(BuildContext context,
-    Map<String, dynamic> decodedJson,
+Widget buildMapSummary(
+  BuildContext context,
+  Map<String, dynamic> decodedJson,
 ) {
   SummaryEventOrActivity eASummary =
-  SummaryEventOrActivity.fromJson(decodedJson);
+      SummaryEventOrActivity.fromJson(decodedJson);
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(
@@ -347,3 +469,4 @@ Widget buildMapSummary(BuildContext context,
     ),
   );
 }
+

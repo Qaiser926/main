@@ -37,7 +37,9 @@ class _SearchResultShowMore extends State<SearchResultShowMore> {
                 }),
                 context: context,
                 appBarTitle: AppLocalizations.of(context)!.results,
-                onBackPressed: getOnBackPressedFunction),
+                onBackPressed: getOnBackPressedFunction
+             
+                ),
             body: CustomScrollView(slivers: [
               buildVerticalDiscovery(
                 actionButtonType: ActionButtonType.addLikeButton,

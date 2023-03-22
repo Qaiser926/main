@@ -38,7 +38,7 @@ Widget getActionButton(
   return Function.apply(
       getActionButtonFunction, [], {#context: context, #eASummary: eASummary});
 }
-
+bool istrue=false;
 Widget getFavouriteLikeButton({
   required BuildContext context,
   required SummaryEventOrActivity eASummary,
@@ -46,7 +46,7 @@ Widget getFavouriteLikeButton({
   return Row(children: [
     IconButton(
         constraints: BoxConstraints(maxWidth: 50.h),
-        icon: const Icon(
+        icon:const  Icon(
           Icons.favorite,
         ),
         onPressed: () {
@@ -105,6 +105,7 @@ Widget getFavouriteLikeButton({
             }
           });
         }),
+  
   ]);
 }
 
@@ -200,7 +201,17 @@ class _AddLikeButtonState extends State<AddLikeButton> {
       return KeepAliveFutureBuilder(
           future: isLiked,
           builder: (context, snapshot) {
-            return snapshotHandler(context, snapshot, getLikeButton, []);
+          
+           try {
+              return snapshotHandler(context, snapshot, getLikeButton, []);
+           } catch (e) {
+             return Container(
+              child: Center(
+                child: Text("No Data Exit"),
+              ),
+             );
+           }
+         
           });
     } else {
       return buildNotLoggedInLikeButton();

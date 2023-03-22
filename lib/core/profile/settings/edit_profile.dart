@@ -60,10 +60,11 @@ class _EditProfileState extends State<EditProfile> {
               height: 1000,
               child: Scaffold(
                 appBar: AppBar(
+
                     // TODO clear (extern) align design
                     leading: IconButton(
                         onPressed: () {
-                          Get.back();
+                         Navigator.pop(context);
                         },
                         icon: Icon(
                           Icons.arrow_back,
@@ -73,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
                     elevation: 0,
                     title: Text(AppLocalizations.of(context)!.editProfile),
                     centerTitle: true,
-                    automaticallyImplyLeading: false),
+                    automaticallyImplyLeading: true),
                 bottomNavigationBar: getDeleteButton(context),
                 body: Consumer<UserInfoNotifier>(
                     builder: (context, model, child) {
@@ -172,21 +173,19 @@ class _EditProfileState extends State<EditProfile> {
                             try {
                               if (restResponse.statusCode == 200) {
                                 deleteUser();
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(AppLocalizations.of(
+                                  Get.snackbar("title", "",titleText: Center(child: Text(AppLocalizations.of(
                                           localizationAndThemeContext)!
-                                      .deleteAccountSuccess),
-                                ));
+                                      .deleteAccountSuccess)),snackPosition: SnackPosition.BOTTOM);
+      
+                               
                               } else {
                                 throw Exception();
                               }
                             } on Exception catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(AppLocalizations.of(
+                            
+                                           Get.snackbar("", "",titleText: Center(child: Text(AppLocalizations.of(
                                               localizationAndThemeContext)!
-                                          .deleteAccountFailure)));
+                                          .deleteAccountFailure)),snackPosition: SnackPosition.BOTTOM);
                             }
                             Navigator.of(context).pop();
                           },

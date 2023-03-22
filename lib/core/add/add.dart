@@ -1,9 +1,12 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:othia/constants/app_constants.dart';
+import 'package:othia/constants/no_internet_controller.dart';
 import 'package:othia/core/add/add_exclusives/help_functions.dart';
 import 'package:othia/utils/helpers/diverse.dart';
 import 'package:othia/utils/services/global_navigation_notifier.dart';
@@ -36,7 +39,7 @@ class _AddState extends State<Add> {
   AddEANotifier inputNotifier = AddEANotifier();
   late Future<Object> detailedEventOrActivity;
   late SwitchPages switchPages;
-
+ final FavoriteController studentFindTutorsController=Get.put(FavoriteController());
   @override
   void initState() {
     switchPages = SwitchPages(
@@ -50,7 +53,7 @@ class _AddState extends State<Add> {
         detailedEventOrActivity =
             RestService().fetchEventOrActivityDetails(eventOrActivityId: eAId);
         inputNotifier.isModifyMode = true;
-      } on NoSuchMethodError catch (e) {
+      } on NoSuchMethodError catch (_) {
         // TODO clear (extern) get rid of error, just continue here
         // Do nothing, as this is the case when no eAId was passed (so adding instead of modifying case)
       }
@@ -64,11 +67,12 @@ class _AddState extends State<Add> {
   void backFunction() {
     int targetPage = switchPagesNotifier.currentPage - 1;
     if (targetPage < 0) {
-      Get.back();
+    Navigator.pop(context);
     } else {
       pageController.jumpToPage(targetPage);
     }
   }
+  final connectivity=Connectivity();
 
   @override
   Widget build(BuildContext context) {
@@ -95,30 +99,38 @@ class _AddState extends State<Add> {
           ],
           child: Scaffold(
             appBar: AppBar(
+             automaticallyImplyLeading: false,
+              leading: IconButton(icon: Icon(Icons.arrow_back,color: Theme.of(context).colorScheme.primary,),onPressed: (){
+                Navigator.pop(context);
+              }),
               centerTitle: true,
               title:     Consumer<SwitchAddPageNotifier>(
                   builder: (context, switchPageModel, child) {
                     // TODO clear (extern) align that this button row is always aligned central for both languages
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        buildUpperNavigationElement(
-                            context: context,
-                            index: 0,
-                            switchPageModel: switchPageModel),
-                        getArrowIcon(context),
-                        buildUpperNavigationElement(
-                            context: context,
-                            index: 1,
-                            switchPageModel: switchPageModel),
-                        getArrowIcon(context),
-                        buildUpperNavigationElement(
-                            context: context,
-                            index: 2,
-                            switchPageModel: switchPageModel),
-                        getHorSpace(20.w)
-                      ],
+                    return Container(
+                     
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildUpperNavigationElement(
+                              context: context,
+                              index: 0,
+                              switchPageModel: switchPageModel),
+                          getArrowIcon(context),
+                          buildUpperNavigationElement(
+                              context: context,
+                              index: 1,
+                              switchPageModel: switchPageModel),
+                          getArrowIcon(context),
+                          buildUpperNavigationElement(
+                              context: context,
+                              index: 2,
+                              switchPageModel: switchPageModel),
+                          getHorSpace(18.w)
+                        ],
+                      ),
                     );
                   })
               ,
@@ -130,13 +142,30 @@ class _AddState extends State<Add> {
             // floatingActionButton: ,
             floatingActionButtonLocation:
             FloatingActionButtonLocation.centerFloat,
-            body: getLoggedInSensitiveBody(
+            body:  Obx(()=>Container(
+        child: studentFindTutorsController.connectionStatus.value==1?    getLoggedInSensitiveBody(
                 notLoggedInMessages: NotLoggedInMessage.addPage,
                 loggedInWidget: getLoggedInBody(switchPages),
-                context: context),
-          ),
+                context: context)
+      :studentFindTutorsController.connectionStatus.value==2?    getLoggedInSensitiveBody(
+                notLoggedInMessages: NotLoggedInMessage.addPage,
+                loggedInWidget: getLoggedInBody(switchPages),
+                context: context):Container(
+        width: Get.size.width,
+        height: Get.size.height,
+        child: Column(
+          children: [
+            Lottie.asset('assets/lottiesfile/no_internet.json',fit: BoxFit.cover),
+         
+          ],
         ),
-      );
+      )))
+            
+            
+         )));
+              
+        
+      
   }
 
   Widget getLoggedInBody(SwitchPages switchPages) {
@@ -145,11 +174,20 @@ class _AddState extends State<Add> {
         ? KeepAliveFutureBuilder(
         future: detailedEventOrActivity,
         builder: (context, snapshot) {
+           if(snapshot.connectionState==ConnectionState.waiting){
+                      return Center(child: defaultStillLoadingWidget);
+                    }
+                    if(snapshot.hasData){
           return snapshotHandler(
               context,
               snapshot,
               getFutureHandlerPageView,
               [inputNotifier, switchPages, pageController]);
+                    }else{
+                      return Center(
+                        child: Text("No Data Exit"),
+                      );
+                    }
         })
         : getFutureHandlerPageView(
         inputNotifier, switchPages, pageController, {});
@@ -190,12 +228,15 @@ class _AddState extends State<Add> {
     };
 
     return Padding(
-        padding: EdgeInsets.only(right: 7.w,left: 3.w),
+        padding: EdgeInsets.only(right: 2.w,left: 2.w),
         child: GestureDetector(
           onTap: () =>
           {pageController.jumpToPage(index), closeSnackBar(context)},
           child: Container(
             // height: 30.h,
+            // constraints: BoxConstraints(
+            //   maxWidth: 58.w
+            // ),
             decoration: BoxDecoration(
                 color: switchPageModel.currentPage == index
                     ? Theme.of(context).colorScheme.primary
@@ -209,7 +250,7 @@ class _AddState extends State<Add> {
                 padding: EdgeInsets.all(4.5.h),
                 child: Text(
                   navigationCaptions[index]!,
-                  style: TextStyle(fontSize: 12.sp),
+                  style: TextStyle(fontSize: 10.sp),
                 ),
               ),
             ),
@@ -220,7 +261,7 @@ class _AddState extends State<Add> {
   Icon getArrowIcon(BuildContext context) {
     return Icon(
       Icons.arrow_forward,
-      size: 17.h,
+      size: 14.h,
       color: Theme.of(context).colorScheme.primary,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/modules/models/eA_summary/eA_summary.dart';
 import 'package:othia/utils/services/rest-api/rest_api_service.dart';
 import 'package:othia/utils/ui/future_service.dart';
@@ -19,6 +20,7 @@ Widget buildVerticalDiscovery(
     required ActionButtonType actionButtonType}) {
   if (Ids.isEmpty) {
     return const SliverToBoxAdapter();
+    // return Container();
   } else {
     return MultiSliver(
       pushPinnedChildren: true,
@@ -35,17 +37,23 @@ Widget buildVerticalDiscovery(
               return KeepAliveFutureBuilder(
                   future: eASummary,
                   builder: (context, snapshot) {
+                    
+                
                     return snapshotHandler(
                         context,
                         snapshot,
+                        
                         getFutureVerticalDiscovery,
-                        [context, actionButtonType]);
+                        [context, actionButtonType]
+                        );
+                         
                   });
             } else {
               return null;
             }
           }),
         )
+      
       ],
     );
   }

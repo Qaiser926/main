@@ -24,7 +24,7 @@ SafeArea buildMapAppBar(
           appBarTitle: AppLocalizations.of(context)!.discover,
           automaticallyImplyLeading: true,
           onBackPressed: () {
-            Get.back();
+          Navigator.pop(context);
           }),
       body: body,
     );

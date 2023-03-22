@@ -13,7 +13,7 @@ class HelpScreen extends StatefulWidget {
 
 class _HelpScreenState extends State<HelpScreen> {
   void backClick() {
-    Get.back();
+   Navigator.pop(context);
   }
 
   @override
@@ -32,7 +32,7 @@ class _HelpScreenState extends State<HelpScreen> {
           automaticallyImplyLeading: false,
           leading: IconButton(
               onPressed: () {
-                Get.back();
+              Navigator.pop(context);
               },
               icon: Icon(
                 Icons.arrow_back,

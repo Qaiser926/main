@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-const Widget defaultStillLoadingWidget = Center(
+const Widget defaultStillLoadingWidget = 
+Center(
   child: Shimmer(
     gradient: LinearGradient(
       colors: [Colors.grey, Colors.white, Colors.grey],
@@ -43,7 +44,7 @@ Widget errorMessage(String errorMessage, BuildContext context) {
       padding: EdgeInsets.all(20.h),
       child: Text(errorMessage,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.error,
+            color: Theme.of(context).colorScheme.inversePrimary,
           )));
 }
 
@@ -52,7 +53,7 @@ const Widget defaultWidget = Text("Ok");
 Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
   int firstDigit = 4;
   try {
-    int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+    firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
   } catch (e) {}
 
   if (firstDigit == 5) {
@@ -71,7 +72,11 @@ Widget defaultErrorFunction(dynamic snapshot, BuildContext context) {
 }
 
 Widget messageErrorFunction(dynamic snapshot, BuildContext context) {
-  int firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+  int firstDigit = 4;
+  try {
+    firstDigit = int.parse(snapshot.error.httpStatusCode.toString()[0]);
+  } catch (e) {}
+
   String? jsonMessage = jsonDecode(snapshot.error.message);
   if (firstDigit == 5) {
     return errorMessage(
@@ -96,14 +101,15 @@ Widget snapshotHandler(
   List<dynamic> functionArguments, {
   Widget loadingWidget = defaultStillLoadingWidget,
   Function defaultErrorFunction = defaultErrorFunction,
-}) {
+}) 
+{
   switch (snapshot.connectionState) {
     case ConnectionState.waiting:
       return loadingWidget;
     case ConnectionState.done:
       if (snapshot.hasError) {
         Get.snackbar("", "",
-            titleText: Text(snapshot.error),
+            titleText: Text(snapshot.error.toString()),
             snackPosition: SnackPosition.BOTTOM,
             colorText: Colors.white);
         return defaultErrorFunction(snapshot, context);
@@ -124,6 +130,7 @@ Widget snapshotHandler(
               snackPosition: SnackPosition.BOTTOM,
               colorText: Colors.white);
           throw e;
+          
         }
       }
     default:

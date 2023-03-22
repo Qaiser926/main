@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
@@ -176,15 +174,10 @@ UserInfo mapLogInDataToUserInfo(
 }
 
 Future<void> storeUserDataToDB(LoginSignupData loginSignupData) async {
-try {
-    String userId = await getUserId();
+  String userId = await getUserId();
   UserInfo userInfo = mapLogInDataToUserInfo(loginSignupData, userId);
-  // TODO clear (extern) error handling
+  // TODO (extern) error handling
   RestService().savePrivateUserInfo(userInfo: userInfo);
-}on SocketException  catch (e) {
-  Get.snackbar("", "",titleText: Text(e.toString()),snackPosition: SnackPosition.BOTTOM);
- rethrow;
-}
 }
 
 Future<String?> signUp(
@@ -249,11 +242,12 @@ class LoginSignUp extends StatelessWidget {
             height: 20,
           ),
           getAssetImage(
-            width: 130,
+            height: 150.h,
+            width: 170.w,
             OthiaConstants.logoName,
           ),
-          const SizedBox(
-            height: 30,
+           SizedBox(
+            height: 25.h,
           ),
           topText != null
               ? Container(
@@ -276,12 +270,7 @@ class LoginSignUp extends StatelessWidget {
               children: textFields,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              betweenButtonAndTextFields ?? const SizedBox.expand(),
-            ],
-          ),
+          betweenButtonAndTextFields ?? const SizedBox.shrink(),
           const SizedBox(
             height: 20,
           ),
@@ -306,15 +295,15 @@ Widget getLoginSignupButton(
     Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: ElevatedButton(
-        //TODO clear (extern) align button Size
+        //TODO (extern) align button Size
         onPressed: () => onPressed(key),
         style: ElevatedButton.styleFrom(
             elevation: 18,
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15))),
+                borderRadius: BorderRadius.circular(20))),
         child: Container(
-          height: 47,
+          height: 45,
           alignment: Alignment.center,
           child: Text(
             buttonText,
@@ -326,7 +315,6 @@ Widget getLoginSignupButton(
         ),
       ),
     )
-  
   ]);
 }
 

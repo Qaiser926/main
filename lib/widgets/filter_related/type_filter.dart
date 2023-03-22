@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:othia/widgets/info_snackbar.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,8 @@ Future<dynamic> typeFilterDialog(
                       child: TypeFilter(
                         dynamicProvider: dynamicProvider,
                       ))),
-            ));
+            )
+            );
       });
 }
 
@@ -61,6 +63,18 @@ class _TypeFilterState<T> extends State<TypeFilter> {
   @override
   void initState() {
     super.initState();
+  }
+   bool _showSnackBar = true;
+
+  void _handleButtonClick() {
+    if (_showSnackBar) {
+      Get.snackbar(AppLocalizations.of(context)!.explanationEA,"",snackPosition: SnackPosition.BOTTOM,colorText: Theme.of(context).colorScheme.inversePrimary);
+     
+     
+      setState(() {
+        _showSnackBar = false;
+      });
+    }
   }
 
   Widget getTypeButton(
@@ -155,10 +169,11 @@ class _TypeFilterState<T> extends State<TypeFilter> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 15.h),
-                      child: eAInfoButton(context),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(left: 15.h),
+                    //   child: eAInfoButton(context),
+                    // ),
+                    IconButton(onPressed: _handleButtonClick, icon: Icon(Icons.info_outline)),
                     CloseButton()
                   ])),
           Padding(

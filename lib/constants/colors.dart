@@ -20,7 +20,6 @@ Color sliverListHeaderColor = bgColor.withOpacity(0.8);
 Color listItemColor = "#1d3344".toColor();
 Color lessListItemColor = listItemColor.withOpacity(0.8);
 
-
 extension ColorExtension on String {
   toColor() {
     var hexColor = replaceAll("#", "");

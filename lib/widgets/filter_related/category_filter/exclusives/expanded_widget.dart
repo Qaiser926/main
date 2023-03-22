@@ -57,7 +57,6 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
 
   @override
   Widget build(BuildContext context) {
-   
     var secHei = (subcategoryIds.length * singleExpandedHeight) +
         containerMarginBottom +
         containerMarginTop +
@@ -103,7 +102,6 @@ class _ExpandedWidgetState extends State<ExpandedWidget> {
         return const Text("An error occured");
       }
     });
-  
   }
 
   List<Widget> getSubcategoryExpandableContent(BuildContext context,

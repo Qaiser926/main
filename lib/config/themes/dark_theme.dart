@@ -67,9 +67,9 @@ ThemeData getDarkThemeData() {
 
     /// Text with a color that contrasts with the card and canvas colors.
     textTheme: TextTheme(
-        headlineSmall: TextStyle(fontWeight: FontWeight.w500, fontSize: 15.sp),
+        headlineSmall: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
         headlineLarge: TextStyle(
-            fontWeight: FontWeight.w700, fontSize: 19.sp, height: 1.h)),
+            fontWeight: FontWeight.w700, fontSize: 17.sp, height: 1.h)),
 
 // This is the theme of your application.
 //

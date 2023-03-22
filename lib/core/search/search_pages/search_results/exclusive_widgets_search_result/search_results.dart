@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -31,8 +32,24 @@ class _SearchResultsState extends State<SearchResults>
         future: Provider.of<SearchNotifier>(context, listen: false)
             .getSearchQueryResult(),
         builder: (context, snapshot) {
-          return snapshotHandler(
+          //  if(snapshot.connectionState==ConnectionState.waiting){
+          //             return Center(child:defaultStillLoadingWidget);
+          //           }
+          //           if(snapshot.hasData){
+        try {
+            return snapshotHandler(
               context, snapshot, getFutureFulfilledContent, []);
+        } catch (e) {
+       return   Container(
+        child: Center(child: Text("No Data Exit")),
+       );
+        }
+              
+              // }else{
+              //   return Center(
+              //     child: Text("No Data Exit"),
+              //   );
+              // }
         });
   }
 
