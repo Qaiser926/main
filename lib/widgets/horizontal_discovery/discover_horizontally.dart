@@ -130,22 +130,23 @@ class HorizontalEADiscovery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 155.h,
-        child: ListView.builder(
-            primary: false,
-            shrinkWrap: true,
-            itemCount: Ids.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              late Future<Object> response =
-                  RestService().getEASummary(id: Ids[index]);
-              return KeepAliveFutureBuilder(
-                  future: response,
-                  builder: (context, snapshot) {
-                    return snapshotHandler(context, snapshot,
-                        getFutureFulfilledContent, [index, context]);
-                  });
-            }));
+      height: 155.h,
+      child: ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: Ids.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            late Future<Object> response =
+                RestService().getEASummary(id: Ids[index]);
+            return KeepAliveFutureBuilder(
+                future: response,
+                builder: (context, snapshot) {
+                  return snapshotHandler(context, snapshot,
+                      getFutureFulfilledContent, [index, context]);
+                });
+          }),
+    );
   }
 
   Widget getFutureFulfilledContent(

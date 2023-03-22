@@ -43,10 +43,12 @@ class _SaveForwardingPageState extends State<SaveForwardingPage> {
   late String eAId;
   GlobalKey _globalKey = new GlobalKey();
   ButtonStyle _buttonStyle = ButtonStyle(
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(10.h),
-  )));
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.h),
+      ),
+    ),
+  );
 
   @override
   void initState() {

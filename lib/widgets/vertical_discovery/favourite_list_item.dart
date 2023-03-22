@@ -16,7 +16,7 @@ Widget getVerticalSummary(
     required Widget actionButton}) {
   return GestureDetector(
     onTap: () {
-      NavigatorConstants.sendToNext(Routes.detailedEventRoute,
+      NavigatorConstants.sendToNext(Routes.detailedEventActivityRoute,
           arguments: {DataConstants.EventActivityId: eASummary.id});
     },
     child: Container(

@@ -16,6 +16,7 @@ class WidgetConstants {
   static const double categoryGridItemTextWidth = categoryGridItemWidth - 58;
 }
 
+//the paths of the Othia API Endpoints
 class APIConstants {
   static const String addFavouriteEA = 'addfavouriteea';
   static const String createEA = 'createea';
