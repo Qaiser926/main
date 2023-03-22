@@ -238,16 +238,14 @@ class LoginSignUp extends StatelessWidget {
         child: SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(
-            height: 20,
-          ),
+         
           getAssetImage(
-            height: 150.h,
-            width: 170.w,
+            height: 200.h,
+            width: 230.w,
             OthiaConstants.logoName,
           ),
            SizedBox(
-            height: 25.h,
+            height: 15.h,
           ),
           topText != null
               ? Container(

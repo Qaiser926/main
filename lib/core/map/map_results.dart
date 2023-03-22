@@ -43,16 +43,17 @@ class _MapResultsState extends State<MapResults> {
   late latLng.LatLng? userPosition;
   late MapResultIds mapResultIds;
   List<String>? eAIds;
-  int activeIndex = 0;
+  int activeIndex = 1;
   int selectedIndex = 10000000000;
   bool isEventSelected = true;
   final CarouselController carouselController = CarouselController();
-
+ 
   @override
   void initState() {
     FirebaseAnalytics.instance.setCurrentScreen(
       screenName: 'mapScreen',
     );
+  
     super.initState();
   }
 
@@ -67,19 +68,9 @@ class _MapResultsState extends State<MapResults> {
               future: Provider.of<MapNotifier>(context, listen: false)
                   .getSearchQueryResult(),
               builder: (context, snapshot) {
-                // show summary is only per true for one search request. As for every search request, the future
-                // builder is called anew, in case show summary is activated, for a new build (new search request) it should
-                // be set to false which is done in the if case
-                // If on the other hand showSummary is false (default) then eAids are set to null. This ensures
-                // that they are reset in case of a new search request
-                if (Provider.of<MapNotifier>(context, listen: false)
-                    .showSummary) {
-                  Provider.of<MapNotifier>(context, listen: false)
-                      .changeShowSummary();
-                } else {
-                  this.eAIds = null;
-                }
-                return snapshotHandler(context, snapshot, futureMap, []);
+              
+                  return snapshotHandler(context, snapshot, futureMap, []);
+              
               });
         });
       } else {
@@ -116,6 +107,7 @@ class _MapResultsState extends State<MapResults> {
                     }
                   },
                   child: Text("get Location"))
+            
             ],
           ),
         );
@@ -127,17 +119,16 @@ class _MapResultsState extends State<MapResults> {
     mapResultIds = MapResultIds.fromJson(json);
     return FlutterMap(
       options: MapOptions(
-
         // to prevent map to rotate
-        interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+        interactiveFlags: InteractiveFlag.pinchZoom|InteractiveFlag.drag,
         center: userPosition,
         zoom: 15.0,
         maxZoom: 18.49,
         minZoom: 3,
       ),
       nonRotatedChildren: [
-        if (this.eAIds != null)
-          Container(
+        if (eAIds != null)
+         Container(
             child: buildSummaryCarousel(),
             alignment: Alignment.bottomCenter,
           ),
@@ -147,7 +138,7 @@ class _MapResultsState extends State<MapResults> {
           padding: const EdgeInsetsDirectional.only(end: 8, bottom: 2),
           child: Text(
             '© OpenStreetMap',
-            style: TextStyle(color: Theme.of(context).focusColor),
+            style: TextStyle(color: Colors.grey)
           ),
         ),
         // TODO clear (extern) align colors, font size of Event and Activity colored box & introduce background color for the legend in order to make it better visible. We highly appreciate your input if you have better ideas.
@@ -157,7 +148,6 @@ class _MapResultsState extends State<MapResults> {
           padding:  EdgeInsetsDirectional.only(start: 8, bottom: 2),
           child: Row(
             children: [
-             
               getHorSpace(5.h),
               Container(
                   // height: 30.h,
@@ -241,11 +231,10 @@ class _MapResultsState extends State<MapResults> {
                 setState(() {
                   this.isEventSelected = isEvent;
                   this.selectedIndex = index;
+                  
                   markerColor = Theme.of(context).colorScheme.primary;
-                  // map widget is build anew to show the summary. It must be idicated that the summary should be shown
-                  Provider.of<MapNotifier>(context, listen: false).showSummary =
-                      true;
-                  this.eAIds = getAllIdsUnderMarker(
+
+                  eAIds = getAllIdsUnderMarker(
                     locationData["coordinates"]["latitude"],
                     locationData["coordinates"]["longitude"],
                   );
@@ -344,40 +333,38 @@ class _MapResultsState extends State<MapResults> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
          eAIds!.length<=22?  indicator():  buildIndicator(),
-          CarouselSlider.builder(
-            carouselController: carouselController,
-            options: CarouselOptions(
-              height: 150.h,
-              
-              viewportFraction: 1,
-              initialPage: 0,
-              enableInfiniteScroll: false,
-              reverse: false,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  activeIndex = index;
-                  // map is build anew but summary should be still shown
-                  Provider.of<MapNotifier>(context, listen: false).showSummary =
-                      true;
-                });
-              },
-              //autoPlay: true,
-              //autoPlayInterval: Duration(seconds: 6),
-              //autoPlayAnimationDuration: Duration(milliseconds: 800),
-              //autoPlayCurve: Curves.fastOutSlowIn,
-              //enlargeCenterPage: true,
-              //enlargeFactor: 1,
-              scrollDirection: Axis.horizontal,
+         Container(
+          height: 120.h,
+           child: CarouselSlider.builder(
+              carouselController: carouselController,
+              options: CarouselOptions(
+                height: 150.h,
+                viewportFraction: 1,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                reverse: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    activeIndex = index;
+                  });
+                },
+                //autoPlay: true,
+                //autoPlayInterval: Duration(seconds: 6),
+                //autoPlayAnimationDuration: Duration(milliseconds: 800),
+                //autoPlayCurve: Curves.fastOutSlowIn,
+                //enlargeCenterPage: true,
+                //enlargeFactor: 1,
+                scrollDirection: Axis.horizontal,
+              ),
+              itemCount: eAIds!.length,
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) =>
+                      Container(
+                child: buildSummaryCard(eAIds![itemIndex]),
+              ),
             ),
-            itemCount: eAIds!.length,
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    Container(
-              child: buildSummaryCard(eAIds![itemIndex]),
-            ),
-          ),
+         ),
          
         ],
       ),
@@ -387,6 +374,7 @@ class _MapResultsState extends State<MapResults> {
   Container indicator() {
     return Container(
     width: Get.size.width,
+  
     child: SingleChildScrollView(
       child: Row(
         
@@ -418,13 +406,12 @@ class _MapResultsState extends State<MapResults> {
 Widget buildIndicator(){
   return    Container(
     margin: EdgeInsets.symmetric(horizontal:eAIds!.length<=20? 105.w:25.w),
-       
+    
         constraints: BoxConstraints(
           maxWidth: Get.size.width,
            maxHeight: 14.h,
         ),
         child: ListView.builder(
-          
           scrollDirection: Axis.horizontal,
           itemCount: eAIds!.length,
           itemBuilder: (context,index){
@@ -480,6 +467,7 @@ Widget buildMapSummary(
                 eASummary: eASummary,
                 context: context)),
       ),
+   
     ),
   );
 }

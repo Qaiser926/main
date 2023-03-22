@@ -288,18 +288,14 @@ Container getProfileSection(
         CircleAvatar(
             radius: 90, backgroundImage: getProfilePictureNullSafe(userInfo)),
         getVerSpace(15.h),
-        Text(
+        SelectableText(
           userInfo.profileName,
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         getVerSpace(15.h),
         InkWell(
-          onTap: () {
-            Clipboard.setData(ClipboardData(
-              text: userInfo.profileEmail,
-            ));
-          },
-          child: Text(
+       
+          child: SelectableText(
             userInfo.profileEmail,
             style: Theme.of(context).textTheme.headlineSmall,
           ),

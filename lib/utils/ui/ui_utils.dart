@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:othia/widgets/readmore/readmore_widgets.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../constants/asset_constants.dart';
@@ -59,22 +60,18 @@ Widget getMultilineCustomFontRestricted({
   TextAlign textAlign = TextAlign.start,
 }) {
 
-  return GestureDetector(
-    onTap: (){
-      Clipboard.setData(ClipboardData(text: text));
-
-    },
-    child: ReadMoreText(
-      text,
-
-      trimLines: maxLines,
-      trimMode: TrimMode.Line,
-      trimCollapsedText: ' Read more',
-      trimExpandedText: ' Show less',
-      textAlign: textAlign,
-      style: textTheme,
-      lessStyle: textTheme,
-      moreStyle: textTheme,
-    ),
+  // return ReadMoreText(
+  //   text,
+  //   trimLines: maxLines,
+  //   trimMode: TrimMode.Line,
+  //   trimCollapsedText: ' Read more',
+  //   trimExpandedText: ' Show less',
+  //   textAlign: textAlign,
+  //   style: textTheme,
+  //   lessStyle: textTheme,
+  //   moreStyle: textTheme,
+  // );
+  return ExpandableTextWidgets(
+    text: text,
   );
 }

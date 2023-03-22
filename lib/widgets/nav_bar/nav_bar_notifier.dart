@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:othia/widgets/filter_related/notifiers/search_notifier.dart';
 
 import '../../constants/app_constants.dart';
@@ -7,11 +6,13 @@ import '../../core/add/add.dart';
 
 class NavigationBarNotifier extends ChangeNotifier {
   int index = 0;
-
+  PageController pageController;
   final SearchNotifier _searchNotifier;
 
-  NavigationBarNotifier({required this.index})
+  NavigationBarNotifier({required this.pageController, required this.index})
+      // the initialized PageController is not the one of the navigationBar in the Main menu, but in the search menu
       : _searchNotifier = SearchNotifier(
+        
           pageController: PageController(initialPage: 0),
         );
 
@@ -19,13 +20,12 @@ class NavigationBarNotifier extends ChangeNotifier {
 
   SearchNotifier get getSearchNotifier => _searchNotifier;
 
-  void setNavigationBarSiteByIndex(
-      {required int index, BuildContext? context}) {
+  void setIndex({required int index, required BuildContext context}) {
     if (index == NavigatorConstants.AddPageIndex) {
-      Get.to(Add());
+      NavigatorConstants.sendToScreen(Add());
     } else {
       this.index = index;
-
+      pageController.jumpToPage(index);
       notifyListeners();
     }
   }

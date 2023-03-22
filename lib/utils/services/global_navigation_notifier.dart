@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:othia/utils/services/rest-api/amplify/amp.dart';
 
-import '../../widgets/nav_bar/nav_bar_notifier.dart';
 import '../services/rest-api/rest_api_service.dart';
 
 class GlobalNavigationNotifier extends ChangeNotifier {
+  int navigationBarIndex = 0;
   bool isDialogOpen = false;
   late bool isUserLoggedIn;
   String? userId;
-
-  NavigationBarNotifier navigationBarNotifier = NavigationBarNotifier(index: 0);
 
   GlobalNavigationNotifier();
 

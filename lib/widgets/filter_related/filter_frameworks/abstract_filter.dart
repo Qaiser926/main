@@ -38,6 +38,7 @@ abstract class AbstractFilter<T> {
                   itemCount: filters.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
+                  
                     return filters[index];
                   },
                 ),

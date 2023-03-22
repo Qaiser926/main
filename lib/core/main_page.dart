@@ -10,13 +10,16 @@ import 'package:provider/provider.dart';
 
 import '../widgets/nav_bar/nav_bar.dart';
 import '../widgets/nav_bar/nav_bar_notifier.dart';
+import 'add/add.dart';
 import 'favourites/favourite_screen.dart';
 
-class MainPage extends StatefulWidget {
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
 
+class MainPage extends StatefulWidget {
+ 
+  @override
+  State<MainPage> createState() =>
+      _MainPageState();
+}
 class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   int currentIndex = 0;
@@ -28,7 +31,7 @@ class _MainPageState extends State<MainPage> {
     SearchPage(),
     // Add(),
     Text("add"),
-    FavouritePage(),
+     FavouritePage(),
     ProfilePage(),
   ];
   final PageStorageBucket bucket = PageStorageBucket();
@@ -39,44 +42,48 @@ class _MainPageState extends State<MainPage> {
       currentIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    NavigationBarNotifier navigationBarNotifier =
+    int initialPage =
         Provider.of<GlobalNavigationNotifier>(context, listen: false)
-            .navigationBarNotifier;
+            .navigationBarIndex;
+    final PageController _pageController =
+        PageController(initialPage: initialPage);
     return MultiProvider(
-      providers: [
+         providers: [
         ChangeNotifierProvider.value(
-          value: navigationBarNotifier,
+          value: NavigationBarNotifier(
+              pageController: _pageController, index: initialPage),
         ),
       ],
-      child: Consumer<NavigationBarNotifier>(
-          builder: (context, navigationBarNotifier, child) {
-        return WillPopScope(
-          onWillPop: () {
+      child:Consumer<NavigationBarNotifier>(
+          builder: (context, navigationBarNotifier, child){
+            return WillPopScope(
+              onWillPop: () {
             return closeAppDialog(context, navigationBarNotifier);
           },
-          child: Scaffold(
-            extendBody: true,
-            key: scaffoldKey,
-            bottomNavigationBar: CustomNavigationBar(
-              index: currentIndex,
-              onChangedTab: onChangeTab,
-            ),
-            body: pages[currentIndex],
-          ),
-        );
-      }),
-    );
+              child:  Scaffold(
+        extendBody: true,
+        key: scaffoldKey,
+        bottomNavigationBar: CustomNavigationBar(
+          
+      
+          index: currentIndex,
+          onChangedTab: onChangeTab,
+    
+        ),
+        body: pages[currentIndex],
+      ),
+);
+          }
+      
+    ));
   }
-
   void onChangeTab(int index) {
     setState(() {
-      currentIndex = index;
+      this.currentIndex = index;
     });
   }
-
   MaterialButton _bottomNavButton(String name, IconData icon,
       Function() onpress, int colorindex, int textindex) {
     return MaterialButton(
@@ -86,26 +93,22 @@ class _MainPageState extends State<MainPage> {
         children: [
           Icon(
             icon,
-            color: currentIndex == colorindex
-                ? Theme.of(context).colorScheme.inversePrimary
-                : Colors.grey,
+            color:
+                currentIndex == colorindex ? Theme.of(context).colorScheme.inversePrimary : Colors.grey,
           ),
-          Text(
-            name,
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: currentIndex == textindex
-                  ? Theme.of(context).colorScheme.inversePrimary
-                  : Colors.grey,
-            ),
-          )
+       
+         Text(
+             name,style: TextStyle(  fontSize: 12.sp,
+            color: currentIndex == textindex ? Theme.of(context).colorScheme.inversePrimary: Colors.grey,),
+           )
         ],
       ),
     );
   }
+ 
 }
 
-Future<bool> closeAppDialog(
+ Future<bool> closeAppDialog(
     BuildContext context, NavigationBarNotifier notifier) async {
   int currentSearchIndex = notifier.getSearchNotifier.currentIndex;
   bool? shouldPop;

@@ -3,18 +3,15 @@ import 'dart:convert';
 import 'package:othia/amplifyconfiguration.dart';
 import 'package:othia/constants/app_constants.dart';
 
-import '../../config/routes/routes.dart';
-
 String eAShareLinkBuilder(String eAId) {
   String shareLink = OthiaConstants.othiaDomain;
   shareLink += "/";
-  shareLink += Routes.detailedEventActivityRoute;
+  shareLink += APIConstants.eADetailPath;
   shareLink += "/";
   shareLink += eAId;
   return shareLink;
 }
 
-//TODO: what does this do @Hannes
 String organizerShareLinkBuilder(String organizerId) {
   String shareLink = OthiaConstants.othiaDomain;
   shareLink += "/";

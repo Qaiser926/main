@@ -9,7 +9,6 @@ import '../../../constants/app_constants.dart';
 class MapNotifier extends AbstractQueryNotifier {
   // Pagecontroller related
   bool isControllerSet = false;
-  bool showSummary = false;
 
   MapNotifier(
       {priceRange = const RangeValues(
@@ -37,9 +36,5 @@ class MapNotifier extends AbstractQueryNotifier {
   void sendRequest() {
     searchQueryResult =
         RestService().getMapResultIds(searchQuery: getSearchQuery());
-  }
-
-  void changeShowSummary() {
-    showSummary = !showSummary;
   }
 }
