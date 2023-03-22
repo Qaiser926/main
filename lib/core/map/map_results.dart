@@ -67,9 +67,19 @@ class _MapResultsState extends State<MapResults> {
               future: Provider.of<MapNotifier>(context, listen: false)
                   .getSearchQueryResult(),
               builder: (context, snapshot) {
-              
-                  return snapshotHandler(context, snapshot, futureMap, []);
-              
+                // show summary is only per true for one search request. As for every search request, the future
+                // builder is called anew, in case show summary is activated, for a new build (new search request) it should
+                // be set to false which is done in the if case
+                // If on the other hand showSummary is false (default) then eAids are set to null. This ensures
+                // that they are reset in case of a new search request
+                if (Provider.of<MapNotifier>(context, listen: false)
+                    .showSummary) {
+                  Provider.of<MapNotifier>(context, listen: false)
+                      .changeShowSummary();
+                } else {
+                  this.eAIds = null;
+                }
+                return snapshotHandler(context, snapshot, futureMap, []);
               });
         });
       } else {
@@ -126,8 +136,7 @@ class _MapResultsState extends State<MapResults> {
         minZoom: 3,
       ),
       nonRotatedChildren: [
-        if (eAIds != null)
-
+        if (this.eAIds != null)
           Container(
             child: buildSummaryCarousel(),
             alignment: Alignment.bottomCenter,
@@ -233,8 +242,10 @@ class _MapResultsState extends State<MapResults> {
                   this.isEventSelected = isEvent;
                   this.selectedIndex = index;
                   markerColor = Theme.of(context).colorScheme.primary;
-
-                  eAIds = getAllIdsUnderMarker(
+                  // map widget is build anew to show the summary. It must be idicated that the summary should be shown
+                  Provider.of<MapNotifier>(context, listen: false).showSummary =
+                      true;
+                  this.eAIds = getAllIdsUnderMarker(
                     locationData["coordinates"]["latitude"],
                     locationData["coordinates"]["longitude"],
                   );
@@ -347,6 +358,9 @@ class _MapResultsState extends State<MapResults> {
               onPageChanged: (index, reason) {
                 setState(() {
                   activeIndex = index;
+                  // map is build anew but summary should be still shown
+                  Provider.of<MapNotifier>(context, listen: false).showSummary =
+                      true;
                 });
               },
               //autoPlay: true,

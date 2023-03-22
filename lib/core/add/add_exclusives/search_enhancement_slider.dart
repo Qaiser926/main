@@ -47,7 +47,7 @@ class SearchEnhancementSlider extends StatelessWidget {
         buildSlider(
             sliderValue: transformIntToSlider(
                 inputNotifierConsumer.physicalLevel, LevelType.physicalLevel),
-            caption: AppLocalizations.of(context)!.socialLevel,
+            caption: AppLocalizations.of(context)!.physicalLevel,
             onChanged: (double sliderInput) {
               dismissKeyboard();
               inputNotifier.physicalLevel = transformSliderValueToInt(
